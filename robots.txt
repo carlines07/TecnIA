@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://carlines07.github.io/TecnIA/sitemap.xml
