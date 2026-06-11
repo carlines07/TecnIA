@@ -493,3 +493,36 @@ footer {
 .card h3 {
   margin-top: 10px;
 }
+/* Artículos relacionados */
+.related-articles {
+  margin-top: 60px;
+  padding: 32px;
+  background: #f8fafc;
+  border-radius: 22px;
+}
+
+.related-articles h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.related-links {
+  display: grid;
+  gap: 14px;
+}
+
+.related-links a {
+  display: block;
+  padding: 16px 18px;
+  background: #ffffff;
+  border-radius: 14px;
+  text-decoration: none;
+  color: #111827;
+  font-weight: 600;
+  border: 1px solid #e5e7eb;
+}
+
+.related-links a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+}
