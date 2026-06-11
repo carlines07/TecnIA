@@ -477,3 +477,19 @@ footer {
     border-radius: 16px;
   }
 }
+/* Imágenes en tarjetas de artículos */
+.card-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 18px;
+}
+
+.card {
+  overflow: hidden;
+}
+
+.card h3 {
+  margin-top: 10px;
+}
