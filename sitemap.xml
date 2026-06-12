@@ -55,9 +55,10 @@
     <url>
     <loc>https://carlines07.github.io/TecnIA/errores-chatgpt-estudiar.html</loc>
   </url>
-</urlset>
-<url>
+  <url>
   <loc>https://carlines07.github.io/TecnIA/laboratorio-prompts-ia.html</loc>
   <changefreq>monthly</changefreq>
   <priority>0.8</priority>
 </url>
+</urlset>
+
