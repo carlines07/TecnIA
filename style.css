@@ -458,74 +458,6 @@ footer {
   color: #4b5563;
   margin-bottom: 32px;
 }
-
-.article-page table {
-  margin: 34px 0;
-}
-
-@media (max-width: 768px) {
-  .article-page {
-    padding: 28px 18px;
-  }
-
-  .article-page h1 {
-    font-size: 2rem;
-  }
-
-  .article-hero-image {
-    height: 230px;
-    border-radius: 16px;
-  }
-}
-/* Imágenes en tarjetas de artículos */
-.card-image {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 16px;
-  margin-bottom: 18px;
-}
-
-.card {
-  overflow: hidden;
-}
-
-.card h3 {
-  margin-top: 10px;
-}
-/* Artículos relacionados */
-.related-articles {
-  margin-top: 60px;
-  padding: 32px;
-  background: #f8fafc;
-  border-radius: 22px;
-}
-
-.related-articles h2 {
-  margin-top: 0;
-  margin-bottom: 20px;
-}
-
-.related-links {
-  display: grid;
-  gap: 14px;
-}
-
-.related-links a {
-  display: block;
-  padding: 16px 18px;
-  background: #ffffff;
-  border-radius: 14px;
-  text-decoration: none;
-  color: #111827;
-  font-weight: 600;
-  border: 1px solid #e5e7eb;
-}
-
-.related-links a:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
-}
 /* Test interactivo de herramientas IA */
 .quiz-box {
   margin-top: 40px;
@@ -593,3 +525,71 @@ footer {
     flex-direction: column;
   }
 }
+.article-page table {
+  margin: 34px 0;
+}
+
+@media (max-width: 768px) {
+  .article-page {
+    padding: 28px 18px;
+  }
+
+  .article-page h1 {
+    font-size: 2rem;
+  }
+
+  .article-hero-image {
+    height: 230px;
+    border-radius: 16px;
+  }
+}
+/* Imágenes en tarjetas de artículos */
+.card-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 18px;
+}
+
+.card {
+  overflow: hidden;
+}
+
+.card h3 {
+  margin-top: 10px;
+}
+/* Artículos relacionados */
+.related-articles {
+  margin-top: 60px;
+  padding: 32px;
+  background: #f8fafc;
+  border-radius: 22px;
+}
+
+.related-articles h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.related-links {
+  display: grid;
+  gap: 14px;
+}
+
+.related-links a {
+  display: block;
+  padding: 16px 18px;
+  background: #ffffff;
+  border-radius: 14px;
+  text-decoration: none;
+  color: #111827;
+  font-weight: 600;
+  border: 1px solid #e5e7eb;
+}
+
+.related-links a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+}
+
