@@ -592,4 +592,30 @@ footer {
   transform: translateY(-2px);
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
 }
+/* Bloque destacado del test en la home */
+.featured-test {
+  margin: 60px 0;
+  padding: 42px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, rgba(79, 140, 255, 0.18), rgba(124, 58, 237, 0.16));
+  border: 1px solid var(--color-border);
+  text-align: center;
+}
 
+.featured-test span {
+  display: inline-block;
+  margin-bottom: 14px;
+  font-weight: 700;
+  color: var(--color-secondary);
+}
+
+.featured-test h2 {
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+
+.featured-test p {
+  max-width: 720px;
+  margin: 0 auto 26px;
+  line-height: 1.8;
+}
