@@ -646,3 +646,10 @@ footer {
   line-height: 1.8;
   font-weight: 500;
 }
+.section-intro {
+  max-width: 720px;
+  margin: 0 auto 34px;
+  text-align: center;
+  line-height: 1.8;
+  color: var(--color-muted);
+}
