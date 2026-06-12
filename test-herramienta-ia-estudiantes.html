@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test: qué herramienta de IA necesitas para estudiar mejor | TecnIA</title>
+  <meta name="description" content="Haz este test interactivo y descubre qué herramienta de inteligencia artificial encaja mejor con tu forma de estudiar, organizar apuntes y preparar exámenes.">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">TecnIA</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="articulos.html">Artículos</a></li>
+        <li><a href="herramientas.html">Herramientas</a></li>
+        <li><a href="noticias.html">Noticias</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container article-page">
+
+```
+<span class="article-tag">Test interactivo</span>
+
+<h1>Test: descubre qué herramienta de IA necesitas para estudiar mejor</h1>
+
+<img 
+  src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" 
+  alt="Estudiante usando herramientas de inteligencia artificial para estudiar"
+  class="article-hero-image"
+>
+
+<p class="article-intro">
+  No todas las herramientas de inteligencia artificial sirven para lo mismo. Algunas son mejores para explicar temas difíciles, otras para buscar información, organizar apuntes o crear materiales visuales. Responde a este test y descubre cuál encaja mejor contigo.
+</p>
+
+<section class="quiz-box">
+
+  <div class="quiz-question">
+    <h2>1. ¿Qué necesitas hacer con más frecuencia?</h2>
+    <button onclick="addPoint('chatgpt')">Entender temas difíciles paso a paso</button>
+    <button onclick="addPoint('perplexity')">Buscar información actualizada</button>
+    <button onclick="addPoint('notion')">Organizar apuntes y tareas</button>
+    <button onclick="addPoint('canva')">Crear presentaciones o trabajos visuales</button>
+  </div>
+
+  <div class="quiz-question">
+    <h2>2. ¿Cómo estudias normalmente?</h2>
+    <button onclick="addPoint('chatgpt')">Haciendo preguntas y practicando</button>
+    <button onclick="addPoint('notion')">Con esquemas, listas y planificación</button>
+    <button onclick="addPoint('copilot')">Usando Word, PowerPoint o Excel</button>
+    <button onclick="addPoint('gemini')">Combinando documentos, vídeos y búsquedas</button>
+  </div>
+
+  <div class="quiz-question">
+    <h2>3. ¿Qué te cuesta más?</h2>
+    <button onclick="addPoint('chatgpt')">Entender explicaciones largas</button>
+    <button onclick="addPoint('notion')">Mantener todo ordenado</button>
+    <button onclick="addPoint('perplexity')">Saber qué fuentes son fiables</button>
+    <button onclick="addPoint('canva')">Hacer trabajos bonitos y claros</button>
+  </div>
+
+  <div class="quiz-question">
+    <h2>4. ¿Qué tipo de resultado prefieres?</h2>
+    <button onclick="addPoint('chatgpt')">Una explicación sencilla</button>
+    <button onclick="addPoint('perplexity')">Respuestas con fuentes</button>
+    <button onclick="addPoint('notion')">Una estructura ordenada</button>
+    <button onclick="addPoint('canva')">Un diseño visual</button>
+  </div>
+
+  <div class="quiz-question">
+    <h2>5. ¿Para qué usarías más la IA?</h2>
+    <button onclick="addPoint('chatgpt')">Preparar exámenes</button>
+    <button onclick="addPoint('copilot')">Trabajos en documentos de Office</button>
+    <button onclick="addPoint('gemini')">Buscar ideas y comparar información</button>
+    <button onclick="addPoint('canva')">Crear presentaciones</button>
+  </div>
+
+  <div class="quiz-actions">
+    <button class="btn" onclick="showResult()">Ver mi resultado</button>
+    <button class="btn btn-outline" onclick="resetQuiz()">Repetir test</button>
+  </div>
+
+  <div id="quiz-result" class="quiz-result"></div>
+
+</section>
+
+<section class="related-articles">
+  <h2>También te puede interesar</h2>
+  <div class="related-links">
+    <a href="herramientas-ia-gratuitas-estudiantes.html">Herramientas IA gratuitas para estudiantes</a>
+    <a href="como-usar-chatgpt-para-estudiar.html">Cómo usar ChatGPT para estudiar</a>
+    <a href="prompts-chatgpt-estudiantes.html">15 prompts de ChatGPT para estudiar mejor</a>
+  </div>
+</section>
+
+<div style="text-align: center; margin-top: 50px;">
+  <a href="articulos.html" class="btn btn-outline">Ver todos los artículos</a>
+</div>
+```
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 TecnIA. Todos los derechos reservados.</p>
+    <p>
+      <a href="sobre-nosotros.html">Sobre nosotros</a> |
+      <a href="contacto.html">Contacto</a> |
+      <a href="politica-privacidad.html">Política de privacidad</a>
+    </p>
+  </footer>
+
+  <script>
+    const scores = {
+      chatgpt: 0,
+      gemini: 0,
+      copilot: 0,
+      perplexity: 0,
+      notion: 0,
+      canva: 0
+    };
+
+    function addPoint(tool) {
+      scores[tool]++;
+    }
+
+    function showResult() {
+      let winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+
+      const results = {
+        chatgpt: {
+          name: "ChatGPT",
+          text: "Tu mejor opción es ChatGPT. Te puede ayudar a entender temas difíciles, crear esquemas, practicar preguntas de examen y estudiar de forma más activa. Es ideal si necesitas explicaciones claras y personalizadas."
+        },
+        gemini: {
+          name: "Gemini",
+          text: "Tu mejor opción es Gemini. Puede encajarte si combinas búsquedas, documentos, vídeos e ideas generales. Es útil para explorar temas desde varios enfoques."
+        },
+        copilot: {
+          name: "Microsoft Copilot",
+          text: "Tu mejor opción es Copilot. Es especialmente útil si trabajas mucho con Word, PowerPoint, Excel o herramientas de Microsoft. Puede ayudarte a redactar, resumir y organizar documentos."
+        },
+        perplexity: {
+          name: "Perplexity",
+          text: "Tu mejor opción es Perplexity. Es buena para buscar información con fuentes y contrastar datos. Te puede servir cuando necesitas investigar un tema y no quedarte solo con una respuesta genérica."
+        },
+        notion: {
+          name: "Notion AI",
+          text: "Tu mejor opción es Notion AI. Encaja contigo si necesitas ordenar apuntes, planificar tareas, resumir contenido y tener todo tu estudio organizado en un mismo sitio."
+        },
+        canva: {
+          name: "Canva IA",
+          text: "Tu mejor opción es Canva IA. Es ideal si necesitas hacer presentaciones, trabajos visuales, diseños o materiales más atractivos para clase."
+        }
+      };
+
+      document.getElementById("quiz-result").innerHTML = `
+        <h2>Tu herramienta recomendada es: ${results[winner].name}</h2>
+        <p>${results[winner].text}</p>
+        <p><strong>Consejo:</strong> no uses la IA para copiar respuestas. Úsala para entender mejor, practicar y mejorar tus propios materiales.</p>
+      `;
+    }
+
+    function resetQuiz() {
+      for (let tool in scores) {
+        scores[tool] = 0;
+      }
+
+      document.getElementById("quiz-result").innerHTML = "";
+    }
+  </script>
+
+</body>
+</html>
