@@ -3,114 +3,819 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <title>Generador de Prompts de Estudio con IA | TecnIA</title>
+  <meta name="description" content="Genera prompts personalizados para estudiar con inteligencia artificial según tu asignatura, nivel, tipo de examen, tiempo disponible y objetivo de estudio.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laboratorio de prompts de IA para estudiar mejor | TecnIA</title>
-  <meta name="description" content="Explora un laboratorio de prompts de inteligencia artificial para estudiar mejor, resumir apuntes, preparar exámenes, crear esquemas y aprender sin copiar.">
   <link rel="stylesheet" href="style.css">
-</head>
 
+  <style>
+    .tool-intro {
+      max-width: 900px;
+      margin: 0 auto 32px;
+      font-size: 1.08rem;
+      line-height: 1.8;
+      color: #374151;
+    }
+
+    .prompt-generator {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+      margin: 36px 0;
+    }
+
+    .generator-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      margin-top: 22px;
+    }
+
+    .generator-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .generator-field label {
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .generator-field select,
+    .generator-field input,
+    .generator-field textarea {
+      border: 1px solid #d1d5db;
+      border-radius: 14px;
+      padding: 13px 14px;
+      font-size: 1rem;
+      font-family: inherit;
+      background: #f9fafb;
+      color: #111827;
+    }
+
+    .generator-field textarea {
+      min-height: 105px;
+      resize: vertical;
+    }
+
+    .generator-field.full {
+      grid-column: 1 / -1;
+    }
+
+    .generator-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .generator-button {
+      border: none;
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      background: #2563eb;
+      color: #ffffff;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .generator-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(37, 99, 235, 0.28);
+    }
+
+    .secondary-button {
+      border: 1px solid #d1d5db;
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      background: #ffffff;
+      color: #111827;
+    }
+
+    .result-panel {
+      display: none;
+      margin-top: 34px;
+      padding: 26px;
+      border-radius: 24px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .result-panel.active {
+      display: block;
+    }
+
+    .result-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #dbeafe;
+      color: #1d4ed8;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .result-section {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 20px;
+      margin-top: 18px;
+    }
+
+    .result-section h3 {
+      margin-top: 0;
+      color: #111827;
+    }
+
+    .generated-prompt {
+      white-space: pre-wrap;
+      background: #0f172a;
+      color: #e5e7eb;
+      border-radius: 18px;
+      padding: 22px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      overflow-x: auto;
+    }
+
+    .copy-message {
+      display: none;
+      margin-top: 10px;
+      font-weight: 700;
+      color: #16a34a;
+    }
+
+    .copy-message.active {
+      display: block;
+    }
+
+    .premium-library {
+      margin-top: 48px;
+    }
+
+    .premium-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+      margin-top: 24px;
+    }
+
+    .premium-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+    }
+
+    .premium-card h3 {
+      margin-top: 0;
+      color: #111827;
+    }
+
+    .mini-prompt {
+      background: #f1f5f9;
+      border-left: 4px solid #2563eb;
+      border-radius: 14px;
+      padding: 16px;
+      white-space: pre-wrap;
+      line-height: 1.7;
+      color: #1f2937;
+      margin-top: 14px;
+    }
+
+    .use-cases {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin: 34px 0;
+    }
+
+    .use-case {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 20px;
+      padding: 20px;
+    }
+
+    .use-case strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .tool-warning {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      color: #9a3412;
+      border-radius: 18px;
+      padding: 18px;
+      margin: 24px 0;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 800px) {
+      .generator-grid,
+      .premium-grid,
+      .use-cases {
+        grid-template-columns: 1fr;
+      }
+
+      .prompt-generator {
+        padding: 20px;
+      }
+
+      .result-panel {
+        padding: 18px;
+      }
+    }
+  </style>
+
+</head>
 <body>
 
-  <header>
-    <nav class="navbar">
-      <a href="index.html" class="logo">TecnIA</a>
-      <ul class="nav-links">
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="articulos.html">Artículos</a></li>
-        <li><a href="herramientas.html">Herramientas</a></li>
-        <li><a href="noticias.html">Noticias</a></li>
-        <li><a href="empieza-aqui.html">Empieza aquí</a></li>
-      </ul>
+<header>
+  <div class="container nav">
+    <h1 class="logo">TecnIA</h1>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="empieza-aqui.html">Empieza aquí</a>
+      <a href="articulos.html">IA/Artículos</a>
+      <a href="herramientas.html">Herramientas</a>
+      <a href="noticias.html">Noticias</a>
     </nav>
-  </header>
+  </div>
+</header>
 
-  <main class="container article-page">
+<main>
+  <section class="hero">
+    <div class="container">
+      <h1>Generador de Prompts de Estudio con IA</h1>
+      <p>
+        Crea un prompt personalizado según tu asignatura, nivel, tiempo disponible, tipo de examen y objetivo de estudio.
+      </p>
+    </div>
+  </section>
 
+  <section class="container article-page">
 
-<span class="article-tag">Laboratorio práctico</span>
+```
+<div class="tool-intro">
+  <p>
+    No todos los estudiantes necesitan el mismo prompt. No es lo mismo preparar un examen tipo test en una tarde que entender un tema desde cero, corregir una respuesta de desarrollo o resumir apuntes largos. Por eso, esta herramienta adapta el prompt a tu situación concreta.
+  </p>
 
-<h1>Laboratorio de prompts de IA para estudiar mejor</h1>
+  <p>
+    Rellena el formulario y TecnIA generará una instrucción avanzada para usar en ChatGPT, Gemini, Copilot u otra herramienta de inteligencia artificial. El objetivo es que la IA te ayude a estudiar mejor, no a copiar sin entender.
+  </p>
+</div>
 
-<p class="article-intro">
-  Un buen prompt no sirve para copiar más rápido, sino para pensar mejor. En este laboratorio encontrarás instrucciones listas para usar con ChatGPT, Gemini, Copilot u otras herramientas de inteligencia artificial.
-</p>
+<div class="tool-warning">
+  <strong>Consejo importante:</strong> usa la IA como tutor, no como sustituto de tu aprendizaje. Comprueba siempre la información importante y adapta el prompt a tu asignatura real.
+</div>
 
-<section class="prompt-lab">
+<div class="use-cases">
+  <div class="use-case">
+    <strong>Para estudiar mejor</strong>
+    Genera prompts para entender temas, memorizar conceptos y practicar preguntas.
+  </div>
+  <div class="use-case">
+    <strong>Para preparar exámenes</strong>
+    Adapta el prompt al tipo de examen: test, desarrollo, oral, práctico o mixto.
+  </div>
+  <div class="use-case">
+    <strong>Para ahorrar tiempo</strong>
+    Prioriza lo importante según el tiempo que tienes disponible.
+  </div>
+</div>
 
-  <div class="prompt-card">
-    <h2>Prompt para resumir apuntes sin perder lo importante</h2>
-    <p>Úsalo cuando tengas un texto largo y quieras quedarte con las ideas principales.</p>
-    <div class="prompt-box">
-      Actúa como profesor particular. Resume este texto en ideas principales, conceptos clave y posibles preguntas de examen. No elimines información importante y explica los términos difíciles con palabras sencillas: [pega aquí tus apuntes].
+<div class="prompt-generator">
+  <h2>Genera tu prompt personalizado</h2>
+  <p>
+    Cuanto más concreto seas, mejor será el resultado. Puedes escribir una asignatura, un tema, una oposición, un examen o incluso una tarea concreta.
+  </p>
+
+  <div class="generator-grid">
+    <div class="generator-field">
+      <label for="goal">¿Qué necesitas hacer?</label>
+      <select id="goal">
+        <option value="entender">Entender un tema desde cero</option>
+        <option value="resumir">Resumir apuntes o un texto largo</option>
+        <option value="test">Preparar un examen tipo test</option>
+        <option value="desarrollo">Preparar preguntas de desarrollo</option>
+        <option value="oral">Practicar un examen oral</option>
+        <option value="corregir">Corregir una respuesta</option>
+        <option value="plan">Crear un plan de estudio</option>
+        <option value="esquema">Ordenar apuntes en un esquema</option>
+      </select>
+    </div>
+
+    <div class="generator-field">
+      <label for="level">¿Cuál es tu nivel?</label>
+      <select id="level">
+        <option value="principiante">Principiante</option>
+        <option value="medio">Intermedio</option>
+        <option value="avanzado">Avanzado</option>
+        <option value="universitario">Universitario</option>
+        <option value="oposicion">Oposición o nivel exigente</option>
+      </select>
+    </div>
+
+    <div class="generator-field">
+      <label for="time">¿Cuánto tiempo tienes?</label>
+      <select id="time">
+        <option value="menos de 1 hora">Menos de 1 hora</option>
+        <option value="una tarde">Una tarde</option>
+        <option value="un día">Un día</option>
+        <option value="tres días">Tres días</option>
+        <option value="una semana">Una semana o más</option>
+      </select>
+    </div>
+
+    <div class="generator-field">
+      <label for="exam">Tipo de examen o tarea</label>
+      <select id="exam">
+        <option value="test">Tipo test</option>
+        <option value="desarrollo">Preguntas de desarrollo</option>
+        <option value="oral">Examen oral</option>
+        <option value="practico">Caso práctico</option>
+        <option value="mixto">Mixto</option>
+        <option value="trabajo">Trabajo o presentación</option>
+        <option value="no lo sé">No lo sé todavía</option>
+      </select>
+    </div>
+
+    <div class="generator-field">
+      <label for="styleHelp">Estilo de ayuda que quieres</label>
+      <select id="styleHelp">
+        <option value="sencillo">Explicación sencilla</option>
+        <option value="profesor">Profesor exigente</option>
+        <option value="paso a paso">Paso a paso</option>
+        <option value="modo examen">Modo examen</option>
+        <option value="resumen rapido">Resumen rápido</option>
+        <option value="tutor socratico">Tutor que me hace pensar</option>
+      </select>
+    </div>
+
+    <div class="generator-field">
+      <label for="tool">Herramienta que vas a usar</label>
+      <select id="tool">
+        <option value="ChatGPT">ChatGPT</option>
+        <option value="Gemini">Gemini</option>
+        <option value="Copilot">Copilot</option>
+        <option value="Perplexity">Perplexity</option>
+        <option value="No lo sé">No lo sé, recomiéndame una</option>
+      </select>
+    </div>
+
+    <div class="generator-field full">
+      <label for="subject">Asignatura, tema o tarea concreta</label>
+      <input id="subject" type="text" placeholder="Ejemplo: Historia Económica, sistema nervioso, balance de situación, marketing digital...">
+    </div>
+
+    <div class="generator-field full">
+      <label for="extraInfo">Añade contexto opcional</label>
+      <textarea id="extraInfo" placeholder="Ejemplo: tengo apuntes desordenados, me cuesta memorizar, el examen es mañana, el profesor suele preguntar teoría, necesito practicar con preguntas difíciles..."></textarea>
     </div>
   </div>
 
-  <div class="prompt-card">
-    <h2>Prompt para entender un tema difícil</h2>
-    <p>Ideal cuando lees algo y no consigues entenderlo bien.</p>
-    <div class="prompt-box">
-      Explícame este tema como si fuera principiante. Primero dame una explicación sencilla, luego un ejemplo práctico y después una mini pregunta para comprobar si lo he entendido: [tema].
-    </div>
+  <div class="generator-actions">
+    <button class="generator-button" onclick="generatePrompt()">Generar prompt personalizado</button>
+    <button class="secondary-button" onclick="resetGenerator()">Limpiar formulario</button>
   </div>
 
-  <div class="prompt-card">
-    <h2>Prompt para preparar un examen tipo test</h2>
-    <p>Convierte tus apuntes en preguntas para practicar.</p>
-    <div class="prompt-box">
-      Crea 10 preguntas tipo test sobre estos apuntes. Dame 4 opciones por pregunta, marca la respuesta correcta al final y explica brevemente por qué es correcta: [pega aquí tus apuntes].
+  <div id="resultPanel" class="result-panel">
+    <span class="result-badge">Prompt personalizado generado</span>
+
+    <div class="result-section">
+      <h3>Herramienta recomendada</h3>
+      <p id="toolRecommendation"></p>
+    </div>
+
+    <div class="result-section">
+      <h3>Estrategia recomendada</h3>
+      <p id="studyStrategy"></p>
+    </div>
+
+    <div class="result-section">
+      <h3>Tu prompt avanzado</h3>
+      <div id="generatedPrompt" class="generated-prompt"></div>
+
+      <div class="generator-actions">
+        <button class="generator-button" onclick="copyPrompt()">Copiar prompt</button>
+      </div>
+      <p id="copyMessage" class="copy-message">Prompt copiado. Ahora puedes pegarlo en tu herramienta de IA.</p>
+    </div>
+
+    <div class="result-section">
+      <h3>Cómo usarlo para sacarle más partido</h3>
+      <ul id="usageTips"></ul>
+    </div>
+
+    <div class="result-section">
+      <h3>Errores que este prompt te ayuda a evitar</h3>
+      <ul id="errorList"></ul>
     </div>
   </div>
+</div>
 
-  <div class="prompt-card">
-    <h2>Prompt para hacer esquemas claros</h2>
-    <p>Útil para ordenar temas antes de estudiar.</p>
-    <div class="prompt-box">
-      Convierte este contenido en un esquema jerárquico claro. Usa títulos, subtítulos y puntos clave. Señala también qué partes son más importantes para estudiar: [contenido].
+<div class="premium-library">
+  <h2>Prompts premium listos para copiar</h2>
+  <p>
+    Además del generador personalizado, aquí tienes prompts avanzados para situaciones muy comunes. Puedes copiarlos y adaptarlos a tu caso.
+  </p>
+
+  <div class="premium-grid">
+
+    <div class="premium-card">
+      <h3>Prompt para entender un tema difícil</h3>
+      <p>Ideal cuando empiezas desde cero y necesitas una explicación clara.</p>
+      <div class="mini-prompt">Actúa como un profesor experto en explicar temas complejos de forma sencilla. Quiero entender el tema [tema]. Primero dame una explicación básica, después divídelo en partes, añade ejemplos, señala conceptos clave de examen y hazme preguntas para comprobar si lo he entendido. No me des todo de golpe: guíame paso a paso.</div>
     </div>
-  </div>
 
-  <div class="prompt-card">
-    <h2>Prompt para corregir una respuesta de examen</h2>
-    <p>Sirve para practicar antes de entregar o estudiar.</p>
-    <div class="prompt-box">
-      Corrige esta respuesta como si fueras profesor. Dime qué está bien, qué falta, qué sobra y cómo podría mejorarla para sacar más nota. No la reescribas directamente, ayúdame a mejorarla: [respuesta].
+    <div class="premium-card">
+      <h3>Prompt para resumir apuntes largos</h3>
+      <p>Convierte apuntes extensos en una guía de estudio útil.</p>
+      <div class="mini-prompt">Actúa como preparador de exámenes. Voy a pegar unos apuntes y quiero que los conviertas en una guía de estudio. Extrae ideas principales, conceptos clave, ejemplos, posibles preguntas de examen y una tabla de repaso. No inventes información. Si algo está incompleto, indícalo claramente.</div>
     </div>
-  </div>
 
-  <div class="prompt-card">
-    <h2>Prompt para estudiar en modo oral</h2>
-    <p>Perfecto para practicar como si alguien te preguntara.</p>
-    <div class="prompt-box">
-      Hazme preguntas una por una sobre este tema. Espera mi respuesta antes de corregirme. Si fallo, dame una pista y luego explícame la respuesta correcta: [tema].
+    <div class="premium-card">
+      <h3>Prompt para examen tipo test</h3>
+      <p>Perfecto para practicar y detectar fallos.</p>
+      <div class="mini-prompt">Actúa como un profesor que crea exámenes tipo test. Hazme preguntas sobre [tema], con 4 opciones y solo una correcta. No me digas la respuesta hasta que conteste. Después corrige mi respuesta, explica por qué es correcta y dime qué concepto debo repasar si fallo.</div>
     </div>
-  </div>
 
-</section>
+    <div class="premium-card">
+      <h3>Prompt para respuesta de desarrollo</h3>
+      <p>Útil para exámenes con preguntas largas.</p>
+      <div class="mini-prompt">Actúa como profesor corrector de examen. Ayúdame a preparar una respuesta de desarrollo sobre [tema]. Dame una estructura ideal, conceptos imprescindibles, respuesta modelo, versión resumida para memorizar y errores que bajarían nota. Después hazme una pregunta parecida para practicar.</div>
+    </div>
+
+    <div class="premium-card">
+      <h3>Prompt para corregir tu respuesta</h3>
+      <p>Te ayuda a mejorar antes del examen.</p>
+      <div class="mini-prompt">Actúa como profesor exigente. Te voy a dar una pregunta y mi respuesta. Corrígela con nota del 1 al 10, señala aciertos, errores, conceptos que faltan, problemas de estructura y reescribe una versión mejorada manteniendo mi idea original.</div>
+    </div>
+
+    <div class="premium-card">
+      <h3>Prompt para plan de estudio urgente</h3>
+      <p>Para cuando queda poco tiempo y necesitas priorizar.</p>
+      <div class="mini-prompt">Actúa como organizador de estudio. Tengo que estudiar [tema] y me queda [tiempo]. Crea un plan realista priorizando lo que más puede subir mi nota. Divide el tiempo en bloques, dime qué estudiar primero, qué practicar y qué evitar para no perder tiempo.</div>
+    </div>
+
+  </div>
+</div>
 
 <section class="related-articles">
   <h2>También te puede interesar</h2>
   <div class="related-links">
     <a href="test-herramienta-ia-estudiantes.html">Test: qué herramienta de IA necesitas</a>
-    <a href="prompts-chatgpt-estudiantes.html">15 prompts de ChatGPT para estudiar mejor</a>
-    <a href="errores-chatgpt-estudiar.html">Errores comunes al usar ChatGPT para estudiar</a>
+    <a href="como-elegir-mejor-herramienta-ia.html">Cómo elegir la mejor herramienta de IA</a>
+    <a href="prompts-chatgpt-estudiantes.html">Prompts de ChatGPT para estudiantes</a>
+    <a href="errores-chatgpt-estudiar.html">Errores al usar ChatGPT para estudiar</a>
   </div>
 </section>
+```
 
-<div style="text-align: center; margin-top: 50px;">
-  <a href="articulos.html" class="btn btn-outline">Ver todos los artículos</a>
-</div>
+  </section>
+</main>
 
-
-  </main>
-
-  <footer>
-    <p>&copy; 2026 TecnIA. Todos los derechos reservados.</p>
+<footer>
+  <div class="container">
+    <p>© 2026 TecnIA. Todos los derechos reservados.</p>
     <p>
       <a href="sobre-nosotros.html">Sobre nosotros</a> |
       <a href="contacto.html">Contacto</a> |
       <a href="politica-privacidad.html">Política de privacidad</a>
     </p>
-  </footer>
+  </div>
+</footer>
+
+<script>
+  function getText(id) {
+    return document.getElementById(id).value.trim();
+  }
+
+  function getValue(id) {
+    return document.getElementById(id).value;
+  }
+
+  function recommendTool(goal, tool) {
+    if (tool !== "No lo sé") {
+      return "Puedes usar " + tool + ". La herramienta funcionará mejor si pegas el prompt completo y después respondes paso a paso a lo que te pida.";
+    }
+
+    if (goal === "resumir" || goal === "corregir" || goal === "desarrollo" || goal === "test" || goal === "oral") {
+      return "Te recomiendo empezar con ChatGPT, porque es muy útil para explicar, practicar, corregir respuestas y adaptar el nivel.";
+    }
+
+    if (goal === "plan" || goal === "esquema") {
+      return "Puedes usar ChatGPT o Notion AI. ChatGPT te ayudará a crear el plan y Notion AI puede servirte para organizarlo después.";
+    }
+
+    return "Te recomiendo ChatGPT o Gemini para empezar. Si necesitas información actual o fuentes, puedes complementar con Perplexity.";
+  }
+
+  function buildStrategy(goal, time, exam, level) {
+    var base = "";
+
+    if (goal === "entender") {
+      base = "Empieza entendiendo la base antes de resumir. Pide una explicación sencilla, ejemplos y preguntas de comprobación.";
+    } else if (goal === "resumir") {
+      base = "Primero ordena la información, después resume y finalmente convierte el resumen en preguntas de repaso.";
+    } else if (goal === "test") {
+      base = "Practica con preguntas tipo test, pero exige siempre explicación de cada opción para aprender de los fallos.";
+    } else if (goal === "desarrollo") {
+      base = "Trabaja estructura, palabras clave y respuesta modelo. Después escribe tu propia respuesta y pide corrección.";
+    } else if (goal === "oral") {
+      base = "Practica en formato pregunta-respuesta. Responde en voz alta antes de leer la corrección.";
+    } else if (goal === "corregir") {
+      base = "Escribe tu respuesta primero. Después deja que la IA la corrija con criterios claros y nota.";
+    } else if (goal === "plan") {
+      base = "Prioriza. No intentes estudiarlo todo con la misma intensidad. Divide el tiempo en bloques realistas.";
+    } else {
+      base = "Ordena la información antes de memorizar. Un buen esquema te ayudará a ver relaciones entre conceptos.";
+    }
+
+    if (time === "menos de 1 hora" || time === "una tarde") {
+      base += " Como tienes poco tiempo, céntrate en conceptos clave, preguntas probables y errores frecuentes.";
+    } else if (time === "un día" || time === "tres días") {
+      base += " Como tienes algo de margen, combina explicación, esquema, práctica y corrección.";
+    } else {
+      base += " Como tienes más tiempo, organiza el estudio por fases: entender, resumir, practicar y repasar.";
+    }
+
+    if (level === "universitario" || level === "oposicion") {
+      base += " Al ser un nivel exigente, pide precisión, vocabulario técnico y ejemplos bien justificados.";
+    }
+
+    if (exam === "oral") {
+      base += " Además, practica explicando en voz alta y pidiendo feedback sobre claridad y orden.";
+    }
+
+    return base;
+  }
+
+  function buildPrompt(goal, level, time, exam, styleHelp, subject, extraInfo, tool) {
+    var topic = subject || "[escribe aquí tu tema o asignatura]";
+    var context = extraInfo || "No tengo contexto adicional.";
+    var selectedTool = tool === "No lo sé" ? "la herramienta de IA que esté usando" : tool;
+
+    var intro = "Actúa como un tutor experto en técnicas de estudio, aprendizaje activo y preparación de exámenes.\n\n";
+    intro += "Voy a usar " + selectedTool + " para estudiar el siguiente tema: " + topic + ".\n";
+    intro += "Mi nivel es: " + level + ".\n";
+    intro += "Tengo este tiempo disponible: " + time + ".\n";
+    intro += "El tipo de examen o tarea es: " + exam + ".\n";
+    intro += "Quiero que me ayudes con un estilo de ayuda: " + styleHelp + ".\n";
+    intro += "Contexto adicional: " + context + ".\n\n";
+    intro += "Reglas importantes:\n";
+    intro += "1. No me des una respuesta para copiar sin entender.\n";
+    intro += "2. Ayúdame a aprender de forma activa.\n";
+    intro += "3. Si falta información, pregúntame antes de inventar.\n";
+    intro += "4. Adapta la explicación a mi nivel.\n";
+    intro += "5. Prioriza lo importante según el tiempo disponible.\n\n";
+
+    var task = "";
+
+    if (goal === "entender") {
+      task += "Tu tarea es ayudarme a entender el tema desde cero.\n\n";
+      task += "Sigue este proceso:\n";
+      task += "1. Dame una explicación inicial muy clara.\n";
+      task += "2. Divide el tema en partes pequeñas.\n";
+      task += "3. Explica cada parte con ejemplos sencillos.\n";
+      task += "4. Señala los conceptos imprescindibles.\n";
+      task += "5. Dime qué suele confundirse en este tema.\n";
+      task += "6. Hazme 5 preguntas para comprobar si lo he entendido.\n";
+      task += "7. Espera mis respuestas y corrígeme.\n";
+      task += "8. Termina con un resumen final y una regla para recordarlo.\n";
+    }
+
+    if (goal === "resumir") {
+      task += "Tu tarea es convertir mis apuntes o texto en una guía de estudio útil.\n\n";
+      task += "Sigue este proceso:\n";
+      task += "1. Identifica las ideas principales.\n";
+      task += "2. Ordena la información en apartados.\n";
+      task += "3. Explica cada apartado con palabras sencillas.\n";
+      task += "4. Marca los conceptos que podrían caer en examen.\n";
+      task += "5. Crea una tabla con concepto, explicación, ejemplo y posible pregunta.\n";
+      task += "6. Añade preguntas tipo test y de desarrollo.\n";
+      task += "7. Señala qué partes debo repasar más.\n";
+      task += "8. Si algo no está claro, indícalo como pendiente de revisar.\n\n";
+      task += "Cuando te pegue los apuntes, no inventes información externa salvo que te lo pida.";
+    }
+
+    if (goal === "test") {
+      task += "Tu tarea es prepararme para un examen tipo test.\n\n";
+      task += "Sigue este proceso:\n";
+      task += "1. Crea preguntas con 4 opciones.\n";
+      task += "2. Solo una opción debe ser correcta.\n";
+      task += "3. Las opciones incorrectas deben ser realistas.\n";
+      task += "4. No me digas la respuesta correcta hasta que responda.\n";
+      task += "5. Corrige cada respuesta explicando por qué es correcta o incorrecta.\n";
+      task += "6. Registra mis fallos.\n";
+      task += "7. Al final, dame una puntuación y un plan de repaso.\n";
+      task += "8. Aumenta la dificultad si respondo bien varias seguidas.\n";
+    }
+
+    if (goal === "desarrollo") {
+      task += "Tu tarea es ayudarme a preparar preguntas de desarrollo.\n\n";
+      task += "Sigue este proceso:\n";
+      task += "1. Propón posibles preguntas de examen.\n";
+      task += "2. Explica qué debe incluir una buena respuesta.\n";
+      task += "3. Crea una estructura con introducción, desarrollo y conclusión.\n";
+      task += "4. Señala palabras clave imprescindibles.\n";
+      task += "5. Dame una respuesta modelo de alto nivel.\n";
+      task += "6. Después, dame una versión más breve para memorizar.\n";
+      task += "7. Hazme una pregunta parecida para que yo responda.\n";
+      task += "8. Corrige mi respuesta con nota y mejoras.\n";
+    }
+
+    if (goal === "oral") {
+      task += "Tu tarea es hacerme practicar como si fuera un examen oral.\n\n";
+      task += "Sigue este proceso:\n";
+      task += "1. Hazme una pregunta general.\n";
+      task += "2. Espera mi respuesta.\n";
+      task += "3. Corrige claridad, precisión, orden y uso de ejemplos.\n";
+      task += "4. Haz preguntas cada vez más concretas.\n";
+      task += "5. Si fallo, dame una pista antes de darme la respuesta.\n";
+      task += "6. Al final, evalúa mi explicación del 1 al 10.\n";
+      task += "7. Dame consejos para sonar más seguro y estructurado.\n";
+    }
+
+    if (goal === "corregir") {
+      task += "Tu tarea es corregir mi respuesta como un profesor exigente.\n\n";
+      task += "Cuando te dé mi respuesta, evalúa:\n";
+      task += "1. Si responde exactamente a la pregunta.\n";
+      task += "2. Qué conceptos están bien.\n";
+      task += "3. Qué conceptos faltan.\n";
+      task += "4. Qué partes son confusas.\n";
+      task += "5. Cómo mejorar la estructura.\n";
+      task += "6. Qué nota tendría del 1 al 10.\n";
+      task += "7. Cómo sería una versión mejorada.\n";
+      task += "8. Qué debería repasar para subir nota.\n";
+    }
+
+    if (goal === "plan") {
+      task += "Tu tarea es crearme un plan de estudio realista.\n\n";
+      task += "Sigue este proceso:\n";
+      task += "1. Prioriza lo más importante según mi tiempo disponible.\n";
+      task += "2. Divide el estudio en bloques.\n";
+      task += "3. Indica qué debo entender, resumir, memorizar y practicar.\n";
+      task += "4. Añade descansos realistas.\n";
+      task += "5. Crea una lista de tareas por orden.\n";
+      task += "6. Incluye una prueba final para comprobar si estoy preparado.\n";
+      task += "7. Dime qué no debo hacer para no perder tiempo.\n";
+    }
+
+    if (goal === "esquema") {
+      task += "Tu tarea es convertir información desordenada en un esquema claro.\n\n";
+      task += "Sigue este proceso:\n";
+      task += "1. Detecta el tema principal.\n";
+      task += "2. Agrupa ideas relacionadas.\n";
+      task += "3. Ordena de lo general a lo específico.\n";
+      task += "4. Crea títulos y subtítulos.\n";
+      task += "5. Elimina repeticiones.\n";
+      task += "6. Señala información incompleta.\n";
+      task += "7. Crea una tabla de conceptos clave.\n";
+      task += "8. Añade preguntas de repaso.\n";
+      task += "9. Sugiere cómo estudiar el esquema.\n";
+    }
+
+    var closing = "\n\nFormato de respuesta que quiero:\n";
+    closing += "- Primero: diagnóstico breve de mi situación.\n";
+    closing += "- Después: explicación o plan principal.\n";
+    closing += "- Después: tabla o esquema si ayuda.\n";
+    closing += "- Después: ejercicios o preguntas para practicar.\n";
+    closing += "- Al final: resumen, errores a evitar y siguiente paso recomendado.\n\n";
+    closing += "Empieza preguntándome cualquier dato que necesites si mi información no es suficiente.";
+
+    return intro + task + closing;
+  }
+
+  function buildTips(goal) {
+    var tips = [
+      "Pega el prompt completo en la herramienta de IA.",
+      "Añade apuntes, temario o ejemplos reales siempre que puedas.",
+      "Pide que te corrija paso a paso, no solo que te dé respuestas.",
+      "Después de cada respuesta, pide una versión más difícil para practicar."
+    ];
+
+    if (goal === "test") {
+      tips.push("Haz primero el test sin mirar apuntes y revisa después los fallos.");
+    }
+
+    if (goal === "oral") {
+      tips.push("Responde en voz alta antes de escribir la respuesta.");
+    }
+
+    if (goal === "plan") {
+      tips.push("Ajusta el plan si ves que un bloque de estudio es demasiado largo.");
+    }
+
+    return tips;
+  }
+
+  function buildErrors(goal) {
+    var errors = [
+      "Evita copiar respuestas sin entenderlas.",
+      "Evita pedir instrucciones demasiado generales.",
+      "Evita estudiar sin comprobar si realmente recuerdas el tema.",
+      "Evita confiar en datos importantes sin revisarlos."
+    ];
+
+    if (goal === "resumir") {
+      errors.push("Evita hacer resúmenes tan largos que sean casi iguales que los apuntes.");
+    }
+
+    if (goal === "desarrollo") {
+      errors.push("Evita responder sin estructura de introducción, desarrollo y conclusión.");
+    }
+
+    if (goal === "test") {
+      errors.push("Evita memorizar solo la respuesta correcta sin entender las opciones falsas.");
+    }
+
+    return errors;
+  }
+
+  function renderList(id, items) {
+    var list = document.getElementById(id);
+    list.innerHTML = "";
+
+    items.forEach(function(item) {
+      var li = document.createElement("li");
+      li.textContent = item;
+      list.appendChild(li);
+    });
+  }
+
+  function generatePrompt() {
+    var goal = getValue("goal");
+    var level = getValue("level");
+    var time = getValue("time");
+    var exam = getValue("exam");
+    var styleHelp = getValue("styleHelp");
+    var tool = getValue("tool");
+    var subject = getText("subject");
+    var extraInfo = getText("extraInfo");
+
+    var prompt = buildPrompt(goal, level, time, exam, styleHelp, subject, extraInfo, tool);
+
+    document.getElementById("toolRecommendation").textContent = recommendTool(goal, tool);
+    document.getElementById("studyStrategy").textContent = buildStrategy(goal, time, exam, level);
+    document.getElementById("generatedPrompt").textContent = prompt;
+
+    renderList("usageTips", buildTips(goal));
+    renderList("errorList", buildErrors(goal));
+
+    document.getElementById("resultPanel").classList.add("active");
+    document.getElementById("copyMessage").classList.remove("active");
+
+    document.getElementById("resultPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function copyPrompt() {
+    var text = document.getElementById("generatedPrompt").textContent;
+
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(function() {
+        document.getElementById("copyMessage").classList.add("active");
+      });
+    } else {
+      var textarea = document.createElement("textarea");
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+      document.getElementById("copyMessage").classList.add("active");
+    }
+  }
+
+  function resetGenerator() {
+    document.getElementById("goal").selectedIndex = 0;
+    document.getElementById("level").selectedIndex = 0;
+    document.getElementById("time").selectedIndex = 0;
+    document.getElementById("exam").selectedIndex = 0;
+    document.getElementById("styleHelp").selectedIndex = 0;
+    document.getElementById("tool").selectedIndex = 0;
+    document.getElementById("subject").value = "";
+    document.getElementById("extraInfo").value = "";
+    document.getElementById("resultPanel").classList.remove("active");
+  }
+</script>
 
 </body>
 </html>
