@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corrector de Respuestas con IA | TecnIA</title>
+  <meta name="description" content="Usa el Corrector de Respuestas con IA para generar un prompt personalizado que te ayude a corregir respuestas de examen, detectar errores, mejorar argumentos y estudiar mejor.">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .tool-intro {
+      background: linear-gradient(135deg, #eef2ff, #f8fafc);
+      border: 1px solid #e5e7eb;
+      border-radius: 26px;
+      padding: 30px;
+      margin: 32px 0;
+    }
+
+    .tool-intro h2 {
+      margin-top: 0;
+    }
+
+    .correction-tool {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 28px;
+      padding: 30px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+      margin-top: 35px;
+    }
+
+    .correction-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field-group label {
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .field-group select,
+    .field-group input,
+    .field-group textarea {
+      border: 1px solid #cbd5e1;
+      border-radius: 16px;
+      padding: 13px 14px;
+      font-size: 1rem;
+      font-family: inherit;
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    .field-group textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .wide-field {
+      grid-column: 1 / -1;
+    }
+
+    .tool-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .result-panel {
+      display: none;
+      margin-top: 34px;
+    }
+
+    .result-highlight {
+      background: linear-gradient(135deg, #0f172a, #1e3a8a);
+      color: #ffffff;
+      border-radius: 28px;
+      padding: 30px;
+      margin-bottom: 22px;
+    }
+
+    .result-highlight h2,
+    .result-highlight h3 {
+      color: #ffffff;
+      margin-top: 0;
+    }
+
+    .result-highlight p,
+    .result-highlight li {
+      color: #e0e7ff;
+      line-height: 1.7;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .result-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+    }
+
+    .result-card h3 {
+      margin-top: 0;
+      color: #0f172a;
+    }
+
+    .result-card p,
+    .result-card li {
+      color: #475569;
+      line-height: 1.65;
+    }
+
+    .prompt-output {
+      background: #ffffff;
+      border: 1px solid #dbeafe;
+      border-radius: 24px;
+      padding: 24px;
+      margin-top: 24px;
+    }
+
+    .prompt-output h3 {
+      margin-top: 0;
+    }
+
+    .prompt-box {
+      background: #f8fafc;
+      color: #111827;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 20px;
+      white-space: pre-wrap;
+      line-height: 1.7;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.92rem;
+      overflow-x: auto;
+    }
+
+    .rubric-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 18px;
+      overflow: hidden;
+      border-radius: 18px;
+    }
+
+    .rubric-table th,
+    .rubric-table td {
+      border: 1px solid #e5e7eb;
+      padding: 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .rubric-table th {
+      background: #eef2ff;
+      color: #0f172a;
+    }
+
+    .use-cases {
+      margin-top: 44px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 28px;
+      padding: 30px;
+    }
+
+    .use-case-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .use-case-card {
+      background: #ffffff;
+      border: 1px solid #dbeafe;
+      border-radius: 22px;
+      padding: 22px;
+    }
+
+    .use-case-card h3 {
+      margin-top: 0;
+      color: #1e3a8a;
+    }
+
+    .warning-box {
+      margin-top: 32px;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 22px;
+      padding: 22px;
+    }
+
+    .warning-box h3 {
+      margin-top: 0;
+      color: #9a3412;
+    }
+
+    @media (max-width: 700px) {
+      .correction-tool {
+        padding: 22px;
+      }
+
+      .result-highlight {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">TecnIA</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="empieza-aqui.html">Empieza aquí</a></li>
+        <li><a href="articulos.html">IA/Artículos</a></li>
+        <li><a href="herramientas.html">Herramientas</a></li>
+        <li><a href="herramientas-interactivas.html">Interactivas</a></li>
+        <li><a href="noticias.html">Noticias</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container article-page">
+
+    <span class="article-tag">Herramienta interactiva</span>
+
+    <h1>Corrector de Respuestas con IA</h1>
+
+    <img 
+      src="https://images.unsplash.com/photo-1456324504439-367cee3b3c32?auto=format&fit=crop&w=1200&q=80" 
+      alt="Persona corrigiendo respuestas de examen con ayuda de inteligencia artificial"
+      class="article-hero-image"
+    >
+
+    <p class="article-intro">
+      Esta herramienta te ayuda a convertir una respuesta de examen en un prompt completo para que una inteligencia artificial pueda corregirla con criterios claros, detectar errores, darte una puntuación orientativa y explicarte cómo mejorarla sin copiar.
+    </p>
+
+    <section class="tool-intro">
+      <h2>¿Para qué sirve esta herramienta?</h2>
+      <p>
+        Sirve para estudiar mejor después de contestar una pregunta. No se trata de que la IA haga el examen por ti, sino de usarla como corrector, profesor y guía de mejora. Puedes usarla para respuestas de desarrollo, preguntas cortas, comentarios de texto, casos prácticos, exposiciones orales o preparación de oposiciones.
+      </p>
+    </section>
+
+    <section class="correction-tool">
+
+      <h2>Genera tu prompt de corrección personalizado</h2>
+      <p>
+        Rellena los campos con tu respuesta y el contexto del examen. Después recibirás una guía de corrección, una rúbrica y un prompt listo para copiar en ChatGPT, Claude, Gemini u otra IA.
+      </p>
+
+      <div class="correction-grid">
+
+        <div class="field-group">
+          <label for="level">Nivel académico</label>
+          <select id="level">
+            <option value="ESO">ESO</option>
+            <option value="Bachillerato">Bachillerato</option>
+            <option value="Universidad">Universidad</option>
+            <option value="Máster">Máster</option>
+            <option value="Oposición">Oposición</option>
+            <option value="Formación profesional">Formación profesional</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="examType">Tipo de prueba</label>
+          <select id="examType">
+            <option value="respuesta de desarrollo">Respuesta de desarrollo</option>
+            <option value="pregunta corta">Pregunta corta</option>
+            <option value="comentario de texto">Comentario de texto</option>
+            <option value="caso práctico">Caso práctico</option>
+            <option value="examen oral">Examen oral</option>
+            <option value="trabajo académico">Trabajo académico</option>
+            <option value="examen tipo test justificado">Test con justificación</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="strictness">Nivel de exigencia</label>
+          <select id="strictness">
+            <option value="equilibrado">Equilibrado</option>
+            <option value="exigente">Exigente</option>
+            <option value="muy exigente">Muy exigente</option>
+            <option value="comprensivo">Comprensivo</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="subject">Asignatura o tema</label>
+          <input id="subject" type="text" placeholder="Ejemplo: Historia Económica, Biología, Derecho, Marketing...">
+        </div>
+
+        <div class="field-group wide-field">
+          <label for="question">Pregunta del examen</label>
+          <textarea id="question" placeholder="Pega aquí la pregunta exacta que tienes que responder."></textarea>
+        </div>
+
+        <div class="field-group wide-field">
+          <label for="answer">Tu respuesta</label>
+          <textarea id="answer" placeholder="Pega aquí tu respuesta tal y como la has escrito."></textarea>
+        </div>
+
+        <div class="field-group wide-field">
+          <label for="criteria">Criterios del profesor o instrucciones opcionales</label>
+          <textarea id="criteria" placeholder="Ejemplo: máximo 10 líneas, usar autores, justificar con ejemplos, mencionar fechas, explicar causas y consecuencias..."></textarea>
+        </div>
+
+      </div>
+
+      <div class="tool-actions">
+        <button class="btn" onclick="generateCorrection()">Generar corrección con IA</button>
+        <button class="btn btn-outline" onclick="copyCorrectionPrompt()">Copiar prompt</button>
+        <button class="btn btn-outline" onclick="resetCorrectionTool()">Limpiar</button>
+      </div>
+
+      <div id="result-panel" class="result-panel">
+
+        <div class="result-highlight">
+          <span class="result-label">Resultado personalizado</span>
+          <h2>Tu guía de corrección está lista</h2>
+          <p id="main-advice"></p>
+        </div>
+
+        <div class="result-grid">
+          <div class="result-card">
+            <h3>Qué debe revisar la IA</h3>
+            <ul id="review-list"></ul>
+          </div>
+
+          <div class="result-card">
+            <h3>Errores frecuentes a vigilar</h3>
+            <ul id="mistake-list"></ul>
+          </div>
+
+          <div class="result-card">
+            <h3>Cómo mejorar tu respuesta</h3>
+            <ul id="improvement-list"></ul>
+          </div>
+        </div>
+
+        <div class="result-card" style="margin-top: 24px;">
+          <h3>Rúbrica sugerida de evaluación</h3>
+          <table class="rubric-table">
+            <thead>
+              <tr>
+                <th>Criterio</th>
+                <th>Qué se valora</th>
+                <th>Peso orientativo</th>
+              </tr>
+            </thead>
+            <tbody id="rubric-body"></tbody>
+          </table>
+        </div>
+
+        <div class="prompt-output">
+          <h3>Prompt completo para copiar en una IA</h3>
+          <div id="correction-prompt" class="prompt-box"></div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <section class="use-cases">
+      <h2>Casos en los que puedes usar este corrector</h2>
+
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <h3>Antes de entregar un trabajo</h3>
+          <p>Usa la herramienta para detectar fallos de claridad, estructura o argumentación antes de enviar una tarea.</p>
+        </div>
+
+        <div class="use-case-card">
+          <h3>Después de practicar un examen</h3>
+          <p>Escribe una respuesta como si estuvieras en el examen y usa la IA para corregirla y mejorarla.</p>
+        </div>
+
+        <div class="use-case-card">
+          <h3>Para preparar oposiciones</h3>
+          <p>Pide una corrección exigente, con rúbrica y puntos de mejora para respuestas de desarrollo o casos prácticos.</p>
+        </div>
+
+        <div class="use-case-card">
+          <h3>Para estudiar de forma activa</h3>
+          <p>No te limites a leer apuntes. Responde, corrige, mejora y vuelve a intentarlo.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="warning-box">
+      <h3>Uso responsable</h3>
+      <p>
+        Esta herramienta no sustituye a un profesor ni garantiza una nota exacta. Su objetivo es ayudarte a estudiar mejor, detectar errores y aprender a construir respuestas más claras, completas y argumentadas.
+      </p>
+    </section>
+
+    <section class="related-articles">
+      <h2>También te puede interesar</h2>
+      <div class="related-links">
+        <a href="modo-examen-ia.html">Modo Examen IA</a>
+        <a href="laboratorio-prompts-ia.html">Generador de Prompts de Estudio con IA</a>
+        <a href="test-herramienta-ia-estudiantes.html">Test: qué herramienta de IA necesitas</a>
+        <a href="como-usar-chatgpt-para-estudiar.html">Cómo usar ChatGPT para estudiar</a>
+      </div>
+    </section>
+
+    <div style="text-align: center; margin-top: 50px;">
+      <a href="herramientas-interactivas.html" class="btn btn-outline">Ver todas las herramientas interactivas</a>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 TecnIA. Todos los derechos reservados.</p>
+    <p>
+      <a href="sobre-nosotros.html">Sobre nosotros</a> |
+      <a href="contacto.html">Contacto</a> |
+      <a href="politica-privacidad.html">Política de privacidad</a>
+    </p>
+  </footer>
+
+  <script>
+    let latestPrompt = "";
+
+    function getValue(id) {
+      return document.getElementById(id).value.trim();
+    }
+
+    function generateCorrection() {
+      const level = getValue("level");
+      const examType = getValue("examType");
+      const strictness = getValue("strictness");
+      const subject = getValue("subject") || "la asignatura indicada";
+      const question = getValue("question");
+      const answer = getValue("answer");
+      const criteria = getValue("criteria");
+
+      if (!question || !answer) {
+        alert("Añade al menos la pregunta del examen y tu respuesta.");
+        return;
+      }
+
+      document.getElementById("result-panel").style.display = "block";
+
+      document.getElementById("main-advice").innerText =
+        "La IA debe corregir tu respuesta como si fuera un profesor de " + level + ", con un nivel de exigencia " + strictness + ". La corrección debe centrarse en el contenido, la estructura, la precisión, los ejemplos y la claridad de la respuesta.";
+
+      buildReviewList(examType, subject);
+      buildMistakeList(examType);
+      buildImprovementList(strictness);
+      buildRubric(examType);
+
+      latestPrompt = buildPrompt(level, examType, strictness, subject, question, answer, criteria);
+      document.getElementById("correction-prompt").innerText = latestPrompt;
+
+      document.getElementById("result-panel").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function buildReviewList(examType, subject) {
+      const items = [
+        "Comprobar si la respuesta contesta exactamente a la pregunta planteada.",
+        "Revisar si los conceptos principales de " + subject + " aparecen explicados correctamente.",
+        "Detectar ideas incompletas, confusas o demasiado generales.",
+        "Valorar si la estructura de la respuesta es clara: introducción, desarrollo y cierre.",
+        "Señalar si faltan ejemplos, autores, fechas, datos o argumentos relevantes."
+      ];
+
+      if (examType.includes("oral")) {
+        items.push("Valorar si la respuesta sería clara y convincente al explicarla en voz alta.");
+      }
+
+      if (examType.includes("caso práctico")) {
+        items.push("Comprobar si la respuesta aplica la teoría al caso concreto y no se queda en definiciones generales.");
+      }
+
+      printList("review-list", items);
+    }
+
+    function buildMistakeList(examType) {
+      const items = [
+        "Responder de forma genérica sin entrar en lo que pide la pregunta.",
+        "Usar conceptos sin explicarlos.",
+        "Mezclar ideas sin orden lógico.",
+        "No justificar las afirmaciones.",
+        "No cerrar la respuesta con una conclusión clara."
+      ];
+
+      if (examType.includes("comentario")) {
+        items.push("Describir el texto sin analizar su significado o contexto.");
+      }
+
+      if (examType.includes("test")) {
+        items.push("Elegir una opción correcta sin justificar por qué las demás no encajan.");
+      }
+
+      printList("mistake-list", items);
+    }
+
+    function buildImprovementList(strictness) {
+      const items = [
+        "Reescribir las frases más confusas con palabras más simples.",
+        "Añadir conectores como: en primer lugar, además, por tanto, en conclusión.",
+        "Incluir al menos un ejemplo concreto.",
+        "Separar la respuesta en párrafos claros.",
+        "Crear una versión mejorada después de leer la corrección."
+      ];
+
+      if (strictness === "muy exigente" || strictness === "exigente") {
+        items.push("Pedir a la IA que sea estricta y que no dé por válidas ideas incompletas.");
+      }
+
+      printList("improvement-list", items);
+    }
+
+    function buildRubric(examType) {
+      const rows = [
+        ["Contenido", "La respuesta incluye los conceptos clave y demuestra comprensión real del tema.", "40%"],
+        ["Precisión", "Las ideas son correctas, no hay errores importantes y se usan términos adecuados.", "20%"],
+        ["Estructura", "La respuesta está ordenada, bien conectada y es fácil de seguir.", "20%"],
+        ["Argumentación", "Las afirmaciones se justifican con ejemplos, datos, autores o razonamientos.", "15%"],
+        ["Claridad", "La redacción es clara, directa y evita repeticiones innecesarias.", "5%"]
+      ];
+
+      if (examType.includes("oral")) {
+        rows[4] = ["Claridad oral", "La respuesta sería comprensible, ordenada y natural al explicarla en voz alta.", "5%"];
+      }
+
+      if (examType.includes("caso práctico")) {
+        rows[3] = ["Aplicación al caso", "La teoría se aplica correctamente al supuesto planteado.", "15%"];
+      }
+
+      const tbody = document.getElementById("rubric-body");
+      tbody.innerHTML = "";
+
+      rows.forEach(function(row) {
+        tbody.innerHTML +=
+          "<tr>" +
+            "<td><strong>" + row[0] + "</strong></td>" +
+            "<td>" + row[1] + "</td>" +
+            "<td>" + row[2] + "</td>" +
+          "</tr>";
+      });
+    }
+
+    function printList(id, items) {
+      const list = document.getElementById(id);
+      list.innerHTML = "";
+
+      items.forEach(function(item) {
+        list.innerHTML += "<li>" + item + "</li>";
+      });
+    }
+
+    function buildPrompt(level, examType, strictness, subject, question, answer, criteria) {
+      let prompt = "";
+
+      prompt += "Actúa como profesor corrector de nivel " + level + ".\n";
+      prompt += "Vas a corregir una " + examType + " de la asignatura o tema: " + subject + ".\n";
+      prompt += "Quiero una corrección con un nivel de exigencia " + strictness + ".\n\n";
+
+      prompt += "PREGUNTA DEL EXAMEN:\n";
+      prompt += question + "\n\n";
+
+      prompt += "RESPUESTA DEL ESTUDIANTE:\n";
+      prompt += answer + "\n\n";
+
+      if (criteria) {
+        prompt += "CRITERIOS O INSTRUCCIONES DEL PROFESOR:\n";
+        prompt += criteria + "\n\n";
+      }
+
+      prompt += "TAREA:\n";
+      prompt += "1. Corrige la respuesta de forma clara y justificada.\n";
+      prompt += "2. Señala qué partes están bien.\n";
+      prompt += "3. Señala errores, imprecisiones o ideas incompletas.\n";
+      prompt += "4. Da una puntuación orientativa del 0 al 10.\n";
+      prompt += "5. Explica por qué darías esa puntuación.\n";
+      prompt += "6. Propón una versión mejorada de la respuesta.\n";
+      prompt += "7. Dame una lista de consejos concretos para mejorar antes del examen.\n";
+      prompt += "8. No inventes información si no estás seguro; indícalo claramente.\n\n";
+
+      prompt += "FORMATO DE RESPUESTA:\n";
+      prompt += "- Nota orientativa\n";
+      prompt += "- Lo que está bien\n";
+      prompt += "- Lo que falta o está mal\n";
+      prompt += "- Versión mejorada\n";
+      prompt += "- Consejos para estudiar mejor\n";
+
+      return prompt;
+    }
+
+    function copyCorrectionPrompt() {
+      if (!latestPrompt) {
+        alert("Primero genera la corrección.");
+        return;
+      }
+
+      navigator.clipboard.writeText(latestPrompt).then(function() {
+        alert("Prompt copiado");
+      });
+    }
+
+    function resetCorrectionTool() {
+      document.getElementById("level").value = "ESO";
+      document.getElementById("examType").value = "respuesta de desarrollo";
+      document.getElementById("strictness").value = "equilibrado";
+      document.getElementById("subject").value = "";
+      document.getElementById("question").value = "";
+      document.getElementById("answer").value = "";
+      document.getElementById("criteria").value = "";
+      document.getElementById("result-panel").style.display = "none";
+      document.getElementById("correction-prompt").innerText = "";
+      latestPrompt = "";
+    }
+  </script>
+
+</body>
+</html>
