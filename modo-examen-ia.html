@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Modo Examen IA: prepara exámenes con inteligencia artificial | TecnIA</title>
+  <meta name="description" content="Usa el Modo Examen IA para generar un plan de repaso, preguntas de práctica y un prompt personalizado según tu tema, nivel, tipo de examen y tiempo disponible.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .exam-tool {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 24px;
+      padding: 28px;
+      margin: 32px 0;
+    }
+
+    .exam-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .exam-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .exam-field label {
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .exam-field input,
+    .exam-field select,
+    .exam-field textarea {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 14px;
+      padding: 13px 14px;
+      font-size: 1rem;
+      background: #ffffff;
+      color: #111827;
+    }
+
+    .exam-field textarea {
+      min-height: 95px;
+      resize: vertical;
+    }
+
+    .exam-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .exam-result {
+      display: none;
+      margin-top: 30px;
+      background: #ffffff;
+      border: 1px solid #d1d5db;
+      border-radius: 24px;
+      padding: 26px;
+    }
+
+    .exam-result.active {
+      display: block;
+    }
+
+    .result-label {
+      display: inline-block;
+      background: #eef2ff;
+      color: #3730a3;
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 8px 14px;
+      margin-bottom: 14px;
+    }
+
+    .generated-exam-prompt {
+      white-space: pre-wrap;
+      background: #ffffff;
+      color: #111827;
+      border: 1px solid #d1d5db;
+      border-radius: 18px;
+      padding: 22px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      overflow-x: auto;
+      margin-top: 18px;
+    }
+
+    .exam-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .exam-mini-card {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .exam-mini-card h3 {
+      margin-top: 0;
+      color: #111827;
+    }
+
+    .exam-warning {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      color: #7c2d12;
+      border-radius: 18px;
+      padding: 18px;
+      margin-top: 26px;
+    }
+
+    @media (max-width: 760px) {
+      .exam-grid,
+      .exam-mini-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .exam-tool {
+        padding: 20px;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+    <h1 class="logo">TecnIA</h1>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="empieza-aqui.html">Empieza aquí</a>
+      <a href="articulos.html">IA/Artículos</a>
+      <a href="herramientas.html">Herramientas</a>
+      <a href="noticias.html">Noticias</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Modo Examen IA</h1>
+      <p>
+        Prepara un examen con ayuda de la inteligencia artificial según tu tema, nivel, tipo de prueba y tiempo disponible.
+      </p>
+    </div>
+  </section>
+
+  <section class="container article-page">
+
+```
+<p class="article-intro">
+  Esta herramienta genera un plan de repaso y un prompt personalizado para practicar con ChatGPT, Gemini o Copilot. Solo tienes que indicar qué examen tienes, cuánto tiempo te queda y qué necesitas mejorar.
+</p>
+
+<div class="exam-tool">
+
+  <h2>Configura tu modo examen</h2>
+  <p>
+    Rellena los campos y TecnIA generará una estrategia de estudio, preguntas recomendadas y un prompt listo para copiar.
+  </p>
+
+  <div class="exam-grid">
+
+    <div class="exam-field">
+      <label for="topic">Tema o asignatura</label>
+      <input id="topic" type="text" placeholder="Ejemplo: Historia Económica, anatomía, marketing...">
+    </div>
+
+    <div class="exam-field">
+      <label for="level">Nivel</label>
+      <select id="level">
+        <option value="principiante">Principiante</option>
+        <option value="medio">Medio</option>
+        <option value="avanzado">Avanzado</option>
+        <option value="universitario">Universitario</option>
+        <option value="oposición">Oposición</option>
+      </select>
+    </div>
+
+    <div class="exam-field">
+      <label for="examType">Tipo de examen</label>
+      <select id="examType">
+        <option value="tipo test">Tipo test</option>
+        <option value="desarrollo">Desarrollo</option>
+        <option value="oral">Oral</option>
+        <option value="práctico">Práctico</option>
+        <option value="mixto">Mixto</option>
+        <option value="no lo sé">No lo sé</option>
+      </select>
+    </div>
+
+    <div class="exam-field">
+      <label for="time">Tiempo disponible</label>
+      <select id="time">
+        <option value="menos de 1 hora">Menos de 1 hora</option>
+        <option value="una tarde">Una tarde</option>
+        <option value="1 día">1 día</option>
+        <option value="3 días">3 días</option>
+        <option value="1 semana">1 semana</option>
+        <option value="más de 1 semana">Más de 1 semana</option>
+      </select>
+    </div>
+
+    <div class="exam-field">
+      <label for="difficulty">Dificultad percibida</label>
+      <select id="difficulty">
+        <option value="me cuesta mucho">Me cuesta mucho</option>
+        <option value="voy regular">Voy regular</option>
+        <option value="lo entiendo pero necesito practicar">Lo entiendo pero necesito practicar</option>
+        <option value="solo quiero repasar">Solo quiero repasar</option>
+      </select>
+    </div>
+
+    <div class="exam-field">
+      <label for="tool">Herramienta que quieres usar</label>
+      <select id="tool">
+        <option value="ChatGPT">ChatGPT</option>
+        <option value="Gemini">Gemini</option>
+        <option value="Copilot">Copilot</option>
+        <option value="no lo sé">No lo sé</option>
+      </select>
+    </div>
+
+    <div class="exam-field" style="grid-column: 1 / -1;">
+      <label for="extra">Información extra opcional</label>
+      <textarea id="extra" placeholder="Ejemplo: entra todo el tema 4, el profesor pregunta mucho definiciones, me cuesta memorizar autores..."></textarea>
+    </div>
+
+  </div>
+
+  <div class="exam-actions">
+    <button class="btn" onclick="generateExamMode()">Generar modo examen</button>
+    <button class="btn-secondary" onclick="copyExamPrompt()">Copiar prompt</button>
+    <button class="btn-secondary" onclick="resetExamMode()">Limpiar</button>
+  </div>
+
+  <div id="examResult" class="exam-result">
+    <span class="result-label">Resultado personalizado</span>
+    <h2 id="resultTitle">Tu modo examen</h2>
+
+    <div class="exam-mini-grid">
+      <div class="exam-mini-card">
+        <h3>Plan recomendado</h3>
+        <p id="studyPlan"></p>
+      </div>
+
+      <div class="exam-mini-card">
+        <h3>Cómo practicar</h3>
+        <p id="practiceMode"></p>
+      </div>
+
+      <div class="exam-mini-card">
+        <h3>Prioridad</h3>
+        <p id="priorityAdvice"></p>
+      </div>
+    </div>
+
+    <h2>Prompt listo para usar</h2>
+    <p>
+      Copia este texto y pégalo en ChatGPT, Gemini o Copilot para empezar a practicar.
+    </p>
+
+    <div id="generatedPrompt" class="generated-exam-prompt"></div>
+  </div>
+
+</div>
+
+<div class="exam-warning">
+  <strong>Importante:</strong> usa esta herramienta para practicar y entender mejor, no para copiar respuestas sin aprender. La IA puede equivocarse, así que revisa siempre lo que te proponga.
+</div>
+
+<section class="related-articles">
+  <h2>También te puede ayudar</h2>
+  <div class="related-links">
+    <a href="laboratorio-prompts-ia.html">Generador de Prompts de Estudio</a>
+    <a href="test-herramienta-ia-estudiantes.html">Test de herramientas IA</a>
+    <a href="como-usar-chatgpt-para-estudiar.html">Cómo usar ChatGPT para estudiar</a>
+    <a href="errores-chatgpt-estudiar.html">Errores al usar ChatGPT para estudiar</a>
+  </div>
+</section>
+```
+
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>© 2026 TecnIA. Todos los derechos reservados.</p>
+    <p>
+      <a href="sobre-nosotros.html">Sobre nosotros</a> |
+      <a href="contacto.html">Contacto</a> |
+      <a href="politica-privacidad.html">Política de privacidad</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+let lastExamPrompt = "";
+
+function getValue(id) {
+  return document.getElementById(id).value.trim();
+}
+
+function generateExamMode() {
+  const topic = getValue("topic") || "mi tema de examen";
+  const level = getValue("level");
+  const examType = getValue("examType");
+  const time = getValue("time");
+  const difficulty = getValue("difficulty");
+  const tool = getValue("tool");
+  const extra = getValue("extra");
+
+  const selectedTool = tool === "no lo sé" ? "ChatGPT o Gemini" : tool;
+
+  const plan = buildStudyPlan(time, difficulty);
+  const practice = buildPracticeMode(examType);
+  const priority = buildPriorityAdvice(examType, difficulty);
+
+  lastExamPrompt = buildExamPrompt(topic, level, examType, time, difficulty, selectedTool, extra);
+
+  document.getElementById("resultTitle").textContent = "Modo examen para: " + topic;
+  document.getElementById("studyPlan").textContent = plan;
+  document.getElementById("practiceMode").textContent = practice;
+  document.getElementById("priorityAdvice").textContent = priority;
+  document.getElementById("generatedPrompt").textContent = lastExamPrompt;
+
+  document.getElementById("examResult").classList.add("active");
+}
+
+function buildStudyPlan(time, difficulty) {
+  if (time === "menos de 1 hora") {
+    return "Haz un repaso urgente: conceptos clave, errores frecuentes y 10 preguntas rápidas para detectar fallos.";
+  }
+
+  if (time === "una tarde" || time === "1 día") {
+    return "Divide el estudio en tres bloques: entender lo básico, practicar preguntas y repasar fallos.";
+  }
+
+  if (time === "3 días") {
+    return "Día 1: entender y resumir. Día 2: practicar preguntas. Día 3: simulacro y corrección.";
+  }
+
+  if (time === "1 semana" || time === "más de 1 semana") {
+    return "Organiza el estudio por temas, alternando teoría, práctica, simulacros y repasos espaciados.";
+  }
+
+  if (difficulty === "me cuesta mucho") {
+    return "Empieza por explicaciones simples antes de hacer preguntas difíciles.";
+  }
+
+  return "Combina comprensión, práctica y revisión de errores.";
+}
+
+function buildPracticeMode(examType) {
+  if (examType === "tipo test") {
+    return "Practica con preguntas tipo test, respuestas justificadas y corrección de errores.";
+  }
+
+  if (examType === "desarrollo") {
+    return "Practica respuestas largas con estructura: introducción, ideas principales, ejemplos y conclusión.";
+  }
+
+  if (examType === "oral") {
+    return "Practica explicando en voz alta y pide a la IA que actúe como profesor exigente.";
+  }
+
+  if (examType === "práctico") {
+    return "Practica ejercicios paso a paso y pide que te explique dónde fallas.";
+  }
+
+  if (examType === "mixto") {
+    return "Combina test, preguntas cortas, desarrollo y explicación oral.";
+  }
+
+  return "Empieza con preguntas generales y ajusta el tipo de práctica cuando conozcas mejor el examen.";
+}
+
+function buildPriorityAdvice(examType, difficulty) {
+  if (difficulty === "me cuesta mucho") {
+    return "Prioriza entender antes de memorizar. Pide ejemplos sencillos y explicaciones paso a paso.";
+  }
+
+  if (examType === "tipo test") {
+    return "Prioriza definiciones, diferencias entre conceptos y preguntas trampa.";
+  }
+
+  if (examType === "desarrollo") {
+    return "Prioriza estructura, argumentos, ejemplos y claridad al escribir.";
+  }
+
+  if (examType === "oral") {
+    return "Prioriza expresarte con claridad y responder preguntas improvisadas.";
+  }
+
+  return "Prioriza los temas que más se repiten y los errores que más cometes.";
+}
+
+function buildExamPrompt(topic, level, examType, time, difficulty, selectedTool, extra) {
+  let prompt = "Actúa como un profesor experto y exigente. Quiero preparar un examen de " + topic + ".\n\n";
+
+  prompt += "Mi nivel es: " + level + ".\n";
+  prompt += "Tipo de examen: " + examType + ".\n";
+  prompt += "Tiempo disponible: " + time + ".\n";
+  prompt += "Mi situación actual: " + difficulty + ".\n";
+  prompt += "Voy a usar: " + selectedTool + ".\n";
+
+  if (extra) {
+    prompt += "Información extra: " + extra + ".\n";
+  }
+
+  prompt += "\nNecesito que hagas lo siguiente:\n";
+  prompt += "1. Explícame cómo debería organizar mi estudio según el tiempo que tengo.\n";
+  prompt += "2. Hazme una lista de los conceptos más importantes que debería dominar.\n";
+  prompt += "3. Créame preguntas de práctica adaptadas al tipo de examen.\n";
+  prompt += "4. Corrige mis respuestas cuando te las envíe, explicando qué está bien y qué falta.\n";
+  prompt += "5. Señala los errores típicos que suelen cometer los estudiantes.\n";
+  prompt += "6. Hazme un mini simulacro final cuando te diga: quiero hacer el simulacro.\n\n";
+
+  prompt += "No me des solo respuestas para memorizar. Ayúdame a entender, practicar y mejorar como si estuviera preparando el examen de verdad.";
+
+  return prompt;
+}
+
+function copyExamPrompt() {
+  if (!lastExamPrompt) {
+    alert("Primero genera tu modo examen.");
+    return;
+  }
+
+  navigator.clipboard.writeText(lastExamPrompt).then(function() {
+    alert("Prompt copiado. Ahora puedes pegarlo en ChatGPT, Gemini o Copilot.");
+  });
+}
+
+function resetExamMode() {
+  document.getElementById("topic").value = "";
+  document.getElementById("extra").value = "";
+  document.getElementById("examResult").classList.remove("active");
+  lastExamPrompt = "";
+}
+</script>
+
+</body>
+</html>
