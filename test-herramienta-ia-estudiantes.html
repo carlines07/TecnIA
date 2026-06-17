@@ -4,9 +4,228 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Test: qué herramienta de IA necesitas para estudiar mejor | TecnIA</title>
-  <meta name="description" content="Haz este test interactivo y descubre qué herramienta de inteligencia artificial encaja mejor con tu forma de estudiar, organizar apuntes y preparar exámenes.">
+  <title>Test: qué herramienta de IA necesitas según tu objetivo | TecnIA</title>
+  <meta name="description" content="Haz este test interactivo y descubre qué herramienta de inteligencia artificial encaja mejor contigo según si quieres estudiar, programar, crear presentaciones, buscar información, diseñar, hacer vídeos o automatizar tareas.">
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    .ai-test-intro {
+      background: linear-gradient(135deg, #eef2ff, #f8fafc);
+      border: 1px solid #e5e7eb;
+      border-radius: 24px;
+      padding: 28px;
+      margin: 32px 0;
+    }
+
+    .ai-test-intro h2 {
+      margin-top: 0;
+    }
+
+    .quiz-box-pro {
+      margin-top: 35px;
+    }
+
+    .quiz-progress {
+      margin-bottom: 28px;
+      background: #f1f5f9;
+      border-radius: 999px;
+      overflow: hidden;
+      height: 12px;
+    }
+
+    .quiz-progress-bar {
+      height: 12px;
+      width: 0%;
+      background: linear-gradient(90deg, #2563eb, #7c3aed);
+      transition: width 0.3s ease;
+    }
+
+    .quiz-question {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 24px;
+      padding: 28px;
+      margin-bottom: 26px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+    }
+
+    .quiz-question h2 {
+      margin-top: 0;
+      font-size: 1.35rem;
+    }
+
+    .quiz-question p {
+      color: #475569;
+      margin-bottom: 18px;
+    }
+
+    .quiz-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+    }
+
+    .quiz-options button {
+      border: 1px solid #dbeafe;
+      background: #f8fafc;
+      color: #0f172a;
+      border-radius: 18px;
+      padding: 16px;
+      text-align: left;
+      cursor: pointer;
+      font-size: 0.98rem;
+      line-height: 1.45;
+      transition: 0.2s ease;
+    }
+
+    .quiz-options button:hover {
+      background: #eef2ff;
+      transform: translateY(-2px);
+    }
+
+    .quiz-options button.selected {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+      box-shadow: 0 10px 20px rgba(37, 99, 235, 0.18);
+    }
+
+    .quiz-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+      justify-content: center;
+    }
+
+    .quiz-result {
+      margin-top: 34px;
+    }
+
+    .result-main {
+      background: linear-gradient(135deg, #0f172a, #1e3a8a);
+      color: #ffffff;
+      border-radius: 28px;
+      padding: 34px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.22);
+      margin-bottom: 24px;
+    }
+
+    .result-main h2 {
+      color: #ffffff;
+      margin-top: 0;
+      font-size: 2rem;
+    }
+
+    .result-main p {
+      color: #e0e7ff;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .result-label {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #ffffff;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .result-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+    }
+
+    .result-card h3 {
+      margin-top: 0;
+      color: #0f172a;
+    }
+
+    .result-card p {
+      color: #475569;
+      line-height: 1.65;
+    }
+
+    .prompt-result {
+      background: #ffffff;
+      border: 1px solid #dbeafe;
+      border-radius: 22px;
+      padding: 22px;
+      margin-top: 22px;
+    }
+
+    .prompt-result h3 {
+      margin-top: 0;
+    }
+
+    .prompt-box-result {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 18px;
+      color: #111827;
+      white-space: pre-wrap;
+      line-height: 1.7;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.92rem;
+    }
+
+    .tool-directory {
+      margin-top: 44px;
+      background: #f8fafc;
+      border-radius: 28px;
+      padding: 30px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .tool-directory h2 {
+      margin-top: 0;
+    }
+
+    .tool-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .tool-tags span {
+      background: #ffffff;
+      border: 1px solid #dbeafe;
+      border-radius: 999px;
+      padding: 9px 13px;
+      font-size: 0.9rem;
+      color: #1e293b;
+    }
+
+    @media (max-width: 700px) {
+      .quiz-question {
+        padding: 22px;
+      }
+
+      .result-main {
+        padding: 26px;
+      }
+
+      .result-main h2 {
+        font-size: 1.55rem;
+      }
+    }
+  </style>
+
 </head>
 
 <body>
@@ -16,76 +235,167 @@
       <a href="index.html" class="logo">TecnIA</a>
       <ul class="nav-links">
         <li><a href="index.html">Inicio</a></li>
-        <li><a href="articulos.html">Artículos</a></li>
-        <li><a href="herramientas.html">Herramientas</a></li>
-        <a href="herramientas-interactivas.html">Interactivas</a>
-        <li><a href="noticias.html">Noticias</a></li>
         <li><a href="empieza-aqui.html">Empieza aquí</a></li>
+        <li><a href="articulos.html">IA/Artículos</a></li>
+        <li><a href="herramientas.html">Herramientas</a></li>
+        <li><a href="herramientas-interactivas.html">Interactivas</a></li>
+        <li><a href="noticias.html">Noticias</a></li>
       </ul>
     </nav>
   </header>
 
   <main class="container article-page">
 
-
+```
 <span class="article-tag">Test interactivo</span>
 
-<h1>Test: descubre qué herramienta de IA necesitas para estudiar mejor</h1>
+<h1>Test: descubre qué herramienta de IA necesitas según tu objetivo</h1>
 
 <img 
   src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" 
-  alt="Estudiante usando herramientas de inteligencia artificial para estudiar"
+  alt="Persona usando herramientas de inteligencia artificial para estudiar y trabajar mejor"
   class="article-hero-image"
 >
 
 <p class="article-intro">
-  No todas las herramientas de inteligencia artificial sirven para lo mismo. Algunas son mejores para explicar temas difíciles, otras para buscar información, organizar apuntes o crear materiales visuales. Responde a este test y descubre cuál encaja mejor contigo.
+  No todas las herramientas de inteligencia artificial sirven para lo mismo. Algunas son mejores para estudiar, otras para crear presentaciones, programar, investigar, diseñar, generar imágenes, hacer vídeos, organizar apuntes o automatizar tareas. Responde a este test y descubre cuál encaja mejor contigo.
 </p>
 
-<section class="quiz-box">
+<section class="ai-test-intro">
+  <h2>¿Qué hace diferente a este test?</h2>
+  <p>
+    En lugar de recomendar siempre la misma IA, este test compara distintas herramientas según tu objetivo principal. Al final recibirás una recomendación principal, alternativas útiles y un prompt inicial para empezar a usarla mejor.
+  </p>
+</section>
+
+<section class="quiz-box quiz-box-pro">
+
+  <div class="quiz-progress">
+    <div id="quiz-progress-bar" class="quiz-progress-bar"></div>
+  </div>
 
   <div class="quiz-question">
     <h2>1. ¿Qué necesitas hacer con más frecuencia?</h2>
-    <button onclick="addPoint('chatgpt')">Entender temas difíciles paso a paso</button>
-    <button onclick="addPoint('perplexity')">Buscar información actualizada</button>
-    <button onclick="addPoint('notion')">Organizar apuntes y tareas</button>
-    <button onclick="addPoint('canva')">Crear presentaciones o trabajos visuales</button>
+    <p>Elige la opción que más se acerca a tu uso principal.</p>
+    <div class="quiz-options">
+      <button onclick="selectOption('q1', 'chatgpt', this)">Entender temas difíciles paso a paso</button>
+      <button onclick="selectOption('q1', 'perplexity', this)">Buscar información actualizada con fuentes</button>
+      <button onclick="selectOption('q1', 'notebooklm', this)">Estudiar PDFs, apuntes o documentos largos</button>
+      <button onclick="selectOption('q1', 'gamma', this)">Crear presentaciones rápidamente</button>
+      <button onclick="selectOption('q1', 'canva', this)">Diseñar trabajos visuales o contenido para redes</button>
+      <button onclick="selectOption('q1', 'claudeCode', this)">Programar o trabajar con código</button>
+      <button onclick="selectOption('q1', 'midjourney', this)">Crear imágenes de alta calidad</button>
+      <button onclick="selectOption('q1', 'runway', this)">Crear o editar vídeos con IA</button>
+    </div>
   </div>
 
   <div class="quiz-question">
-    <h2>2. ¿Cómo estudias normalmente?</h2>
-    <button onclick="addPoint('chatgpt')">Haciendo preguntas y practicando</button>
-    <button onclick="addPoint('notion')">Con esquemas, listas y planificación</button>
-    <button onclick="addPoint('copilot')">Usando Word, PowerPoint o Excel</button>
-    <button onclick="addPoint('gemini')">Combinando documentos, vídeos y búsquedas</button>
+    <h2>2. ¿Qué tipo de resultado quieres conseguir?</h2>
+    <p>Piensa en el resultado final que te gustaría obtener.</p>
+    <div class="quiz-options">
+      <button onclick="selectOption('q2', 'chatgpt', this)">Una explicación clara y personalizada</button>
+      <button onclick="selectOption('q2', 'claude', this)">Un texto largo, bien redactado y con buen razonamiento</button>
+      <button onclick="selectOption('q2', 'perplexity', this)">Una respuesta con enlaces y fuentes</button>
+      <button onclick="selectOption('q2', 'gamma', this)">Una presentación lista para enseñar</button>
+      <button onclick="selectOption('q2', 'nanoBanana', this)">Una imagen rápida para un trabajo o idea visual</button>
+      <button onclick="selectOption('q2', 'suno', this)">Una canción, audio musical o idea sonora</button>
+      <button onclick="selectOption('q2', 'elevenlabs', this)">Una voz realista o narración en audio</button>
+      <button onclick="selectOption('q2', 'cursor', this)">Código o una web mejorada con IA</button>
+    </div>
   </div>
 
   <div class="quiz-question">
-    <h2>3. ¿Qué te cuesta más?</h2>
-    <button onclick="addPoint('chatgpt')">Entender explicaciones largas</button>
-    <button onclick="addPoint('notion')">Mantener todo ordenado</button>
-    <button onclick="addPoint('perplexity')">Saber qué fuentes son fiables</button>
-    <button onclick="addPoint('canva')">Hacer trabajos bonitos y claros</button>
+    <h2>3. ¿Cuál es tu nivel técnico?</h2>
+    <p>Esto ayuda a recomendar una herramienta más sencilla o más avanzada.</p>
+    <div class="quiz-options">
+      <button onclick="selectOption('q3', 'chatgpt', this)">Básico: quiero algo fácil de usar</button>
+      <button onclick="selectOption('q3', 'gemini', this)">Medio: uso varias apps y documentos</button>
+      <button onclick="selectOption('q3', 'copilot', this)">Uso mucho Word, Excel o PowerPoint</button>
+      <button onclick="selectOption('q3', 'notion', this)">Me organizo con plantillas, listas y bases de datos</button>
+      <button onclick="selectOption('q3', 'cursor', this)">Sé algo de programación</button>
+      <button onclick="selectOption('q3', 'claudeCode', this)">Quiero una IA más avanzada para código</button>
+      <button onclick="selectOption('q3', 'antigravity', this)">Me interesan agentes y entornos de desarrollo con IA</button>
+      <button onclick="selectOption('q3', 'lovable', this)">Quiero crear apps o webs sin complicarme demasiado</button>
+    </div>
   </div>
 
   <div class="quiz-question">
-    <h2>4. ¿Qué tipo de resultado prefieres?</h2>
-    <button onclick="addPoint('chatgpt')">Una explicación sencilla</button>
-    <button onclick="addPoint('perplexity')">Respuestas con fuentes</button>
-    <button onclick="addPoint('notion')">Una estructura ordenada</button>
-    <button onclick="addPoint('canva')">Un diseño visual</button>
+    <h2>4. ¿Qué te cuesta más ahora mismo?</h2>
+    <p>Marca el problema principal que quieres resolver.</p>
+    <div class="quiz-options">
+      <button onclick="selectOption('q4', 'chatgpt', this)">Entender un tema y explicarlo con mis palabras</button>
+      <button onclick="selectOption('q4', 'notebooklm', this)">Estudiar muchos apuntes sin perderme</button>
+      <button onclick="selectOption('q4', 'perplexity', this)">Encontrar información fiable</button>
+      <button onclick="selectOption('q4', 'notion', this)">Mantener todo ordenado</button>
+      <button onclick="selectOption('q4', 'gamma', this)">Convertir una idea en presentación</button>
+      <button onclick="selectOption('q4', 'canva', this)">Hacer diseños atractivos</button>
+      <button onclick="selectOption('q4', 'runway', this)">Crear contenido en vídeo</button>
+      <button onclick="selectOption('q4', 'replit', this)">Pasar una idea a un proyecto técnico</button>
+    </div>
   </div>
 
   <div class="quiz-question">
-    <h2>5. ¿Para qué usarías más la IA?</h2>
-    <button onclick="addPoint('chatgpt')">Preparar exámenes</button>
-    <button onclick="addPoint('copilot')">Trabajos en documentos de Office</button>
-    <button onclick="addPoint('gemini')">Buscar ideas y comparar información</button>
-    <button onclick="addPoint('canva')">Crear presentaciones</button>
+    <h2>5. ¿Dónde sueles trabajar más?</h2>
+    <p>El entorno que usas también importa.</p>
+    <div class="quiz-options">
+      <button onclick="selectOption('q5', 'copilot', this)">Microsoft Office: Word, Excel o PowerPoint</button>
+      <button onclick="selectOption('q5', 'gemini', this)">Google: Drive, Docs, Gmail o búsquedas</button>
+      <button onclick="selectOption('q5', 'notion', this)">Notion o sistemas de organización</button>
+      <button onclick="selectOption('q5', 'canva', this)">Canva o herramientas visuales</button>
+      <button onclick="selectOption('q5', 'cursor', this)">Editor de código</button>
+      <button onclick="selectOption('q5', 'replit', this)">Proyectos online o prototipos</button>
+      <button onclick="selectOption('q5', 'chatgpt', this)">No tengo un entorno fijo</button>
+      <button onclick="selectOption('q5', 'perplexity', this)">Navegador y búsqueda de información</button>
+    </div>
+  </div>
+
+  <div class="quiz-question">
+    <h2>6. ¿Qué quieres crear?</h2>
+    <p>Esta pregunta ayuda a detectar herramientas creativas.</p>
+    <div class="quiz-options">
+      <button onclick="selectOption('q6', 'gamma', this)">Presentaciones o documentos visuales</button>
+      <button onclick="selectOption('q6', 'midjourney', this)">Imágenes artísticas o muy cuidadas</button>
+      <button onclick="selectOption('q6', 'nanoBanana', this)">Imágenes rápidas y útiles para trabajos</button>
+      <button onclick="selectOption('q6', 'runway', this)">Vídeos o piezas audiovisuales</button>
+      <button onclick="selectOption('q6', 'elevenlabs', this)">Voz, locución o narración</button>
+      <button onclick="selectOption('q6', 'suno', this)">Música o canciones</button>
+      <button onclick="selectOption('q6', 'lovable', this)">Una app o web desde una idea</button>
+      <button onclick="selectOption('q6', 'chatgpt', this)">Textos, ideas, esquemas o explicaciones</button>
+    </div>
+  </div>
+
+  <div class="quiz-question">
+    <h2>7. ¿Para qué usarías la IA esta semana?</h2>
+    <p>Piensa en una tarea real e inmediata.</p>
+    <div class="quiz-options">
+      <button onclick="selectOption('q7', 'chatgpt', this)">Preparar un examen</button>
+      <button onclick="selectOption('q7', 'notebooklm', this)">Repasar apuntes o PDFs</button>
+      <button onclick="selectOption('q7', 'perplexity', this)">Investigar un tema actual</button>
+      <button onclick="selectOption('q7', 'gamma', this)">Crear una presentación</button>
+      <button onclick="selectOption('q7', 'canva', this)">Diseñar una entrega visual</button>
+      <button onclick="selectOption('q7', 'claude', this)">Redactar o mejorar un texto largo</button>
+      <button onclick="selectOption('q7', 'claudeCode', this)">Resolver un proyecto de código</button>
+      <button onclick="selectOption('q7', 'cursor', this)">Mejorar una web o aplicación</button>
+    </div>
+  </div>
+
+  <div class="quiz-question">
+    <h2>8. ¿Qué prefieres que haga la herramienta por ti?</h2>
+    <p>Elige el tipo de ayuda que más valoras.</p>
+    <div class="quiz-options">
+      <button onclick="selectOption('q8', 'chatgpt', this)">Que me explique y me haga practicar</button>
+      <button onclick="selectOption('q8', 'claude', this)">Que razone bien y escriba con profundidad</button>
+      <button onclick="selectOption('q8', 'perplexity', this)">Que me muestre fuentes y contexto</button>
+      <button onclick="selectOption('q8', 'notebooklm', this)">Que trabaje con mis propios documentos</button>
+      <button onclick="selectOption('q8', 'gamma', this)">Que transforme ideas en presentaciones</button>
+      <button onclick="selectOption('q8', 'canva', this)">Que haga diseños de forma rápida</button>
+      <button onclick="selectOption('q8', 'antigravity', this)">Que ayude a crear o revisar proyectos de desarrollo</button>
+      <button onclick="selectOption('q8', 'lovable', this)">Que convierta una idea en producto visual</button>
+    </div>
   </div>
 
   <div class="quiz-actions">
-    <button class="btn" onclick="showResult()">Ver mi resultado</button>
+    <button class="btn" onclick="showResult()">Ver mi recomendación</button>
     <button class="btn btn-outline" onclick="resetQuiz()">Repetir test</button>
   </div>
 
@@ -93,19 +403,49 @@
 
 </section>
 
+<section class="tool-directory">
+  <h2>Herramientas que puede recomendar este test</h2>
+  <p>
+    El test compara herramientas de IA para estudiar, investigar, programar, diseñar, crear presentaciones, generar imágenes, producir vídeo, crear audio y organizar trabajo.
+  </p>
+
+  <div class="tool-tags">
+    <span>ChatGPT</span>
+    <span>Claude</span>
+    <span>Claude Code</span>
+    <span>Gemini</span>
+    <span>Copilot</span>
+    <span>Perplexity</span>
+    <span>NotebookLM</span>
+    <span>Notion AI</span>
+    <span>Canva AI</span>
+    <span>Gamma</span>
+    <span>Midjourney</span>
+    <span>Nano Banana</span>
+    <span>Runway</span>
+    <span>ElevenLabs</span>
+    <span>Suno</span>
+    <span>Cursor</span>
+    <span>Lovable</span>
+    <span>Replit AI</span>
+    <span>Antigravity</span>
+  </div>
+</section>
+
 <section class="related-articles">
   <h2>También te puede interesar</h2>
   <div class="related-links">
-    <a href="herramientas-ia-gratuitas-estudiantes.html">Herramientas IA gratuitas para estudiantes</a>
-    <a href="como-usar-chatgpt-para-estudiar.html">Cómo usar ChatGPT para estudiar</a>
-    <a href="prompts-chatgpt-estudiantes.html">15 prompts de ChatGPT para estudiar mejor</a>
+    <a href="herramientas-interactivas.html">Ver todas las herramientas interactivas</a>
+    <a href="laboratorio-prompts-ia.html">Generador de Prompts de Estudio con IA</a>
+    <a href="modo-examen-ia.html">Modo Examen IA</a>
+    <a href="como-elegir-mejor-herramienta-ia.html">Cómo elegir la mejor herramienta de IA</a>
   </div>
 </section>
 
 <div style="text-align: center; margin-top: 50px;">
   <a href="articulos.html" class="btn btn-outline">Ver todos los artículos</a>
 </div>
-
+```
 
   </main>
 
@@ -119,75 +459,309 @@
   </footer>
 
   <script>
- const scores = {
-  chatgpt: 0,
-  claude: 0,
-  claudeCode: 0,
-  gemini: 0,
-  copilot: 0,
-  perplexity: 0,
-  notebooklm: 0,
-  notion: 0,
-  canva: 0,
-  gamma: 0,
-  midjourney: 0,
-  nanoBanana: 0,
-  runway: 0,
-  elevenlabs: 0,
-  suno: 0,
-  cursor: 0,
-  lovable: 0,
-  replit: 0,
-  antigravity: 0
-};
+    const selectedAnswers = {};
 
-    function addPoint(tool) {
-      scores[tool]++;
+    const scores = {
+      chatgpt: 0,
+      claude: 0,
+      claudeCode: 0,
+      gemini: 0,
+      copilot: 0,
+      perplexity: 0,
+      notebooklm: 0,
+      notion: 0,
+      canva: 0,
+      gamma: 0,
+      midjourney: 0,
+      nanoBanana: 0,
+      runway: 0,
+      elevenlabs: 0,
+      suno: 0,
+      cursor: 0,
+      lovable: 0,
+      replit: 0,
+      antigravity: 0
+    };
+
+    const results = {
+      chatgpt: {
+        name: "ChatGPT",
+        category: "Estudio, explicación y práctica",
+        bestFor: "entender temas difíciles, preparar exámenes, crear esquemas, practicar preguntas y mejorar textos.",
+        text: "Tu mejor opción es ChatGPT. Es una herramienta muy versátil para estudiar, resolver dudas, crear resúmenes, practicar preguntas de examen y convertir explicaciones complicadas en algo más sencillo.",
+        alternatives: ["Claude", "Gemini", "NotebookLM"],
+        prompt: "Actúa como profesor particular. Explícame este tema paso a paso, con ejemplos sencillos, errores típicos y 5 preguntas de práctica al final: [escribe aquí el tema]."
+      },
+      claude: {
+        name: "Claude",
+        category: "Redacción, análisis y razonamiento",
+        bestFor: "trabajar con textos largos, redactar mejor, analizar ideas y generar respuestas bien estructuradas.",
+        text: "Tu mejor opción es Claude. Encaja muy bien si necesitas razonar, escribir textos largos, mejorar redacciones, analizar contenido complejo o trabajar con explicaciones más elaboradas.",
+        alternatives: ["ChatGPT", "Gemini", "Perplexity"],
+        prompt: "Actúa como editor y profesor. Revisa este texto, mejora la claridad, detecta ideas débiles y propón una versión mejor explicada sin cambiar el sentido: [pega aquí tu texto]."
+      },
+      claudeCode: {
+        name: "Claude Code",
+        category: "Programación avanzada",
+        bestFor: "trabajar con proyectos de código, revisar errores, entender estructuras técnicas y mejorar software.",
+        text: "Tu mejor opción es Claude Code. Es adecuada si tu prioridad es programar, entender proyectos técnicos, revisar código o avanzar en tareas de desarrollo con ayuda de IA.",
+        alternatives: ["Cursor", "Replit AI", "Antigravity"],
+        prompt: "Actúa como asistente senior de programación. Revisa este código, explica qué hace, detecta errores, propón mejoras y dame una versión corregida paso a paso: [pega aquí tu código]."
+      },
+      gemini: {
+        name: "Gemini",
+        category: "Google, documentos y búsqueda general",
+        bestFor: "combinar búsqueda, documentos, ideas, resúmenes y tareas dentro del ecosistema de Google.",
+        text: "Tu mejor opción es Gemini. Puede encajarte si trabajas con documentos, búsquedas, vídeos, ideas generales y herramientas del entorno de Google.",
+        alternatives: ["ChatGPT", "Perplexity", "NotebookLM"],
+        prompt: "Ayúdame a investigar este tema combinando explicación sencilla, ideas principales, ejemplos y posibles preguntas de examen: [escribe aquí el tema]."
+      },
+      copilot: {
+        name: "Microsoft Copilot",
+        category: "Office y productividad",
+        bestFor: "trabajar con Word, Excel, PowerPoint, documentos, tablas y presentaciones dentro del entorno Microsoft.",
+        text: "Tu mejor opción es Microsoft Copilot. Es especialmente útil si trabajas mucho con Word, PowerPoint, Excel o herramientas de Microsoft.",
+        alternatives: ["ChatGPT", "Gamma", "Canva AI"],
+        prompt: "Ayúdame a convertir este contenido en una estructura clara para Word o PowerPoint, con títulos, apartados, ideas clave y conclusión: [pega aquí el contenido]."
+      },
+      perplexity: {
+        name: "Perplexity",
+        category: "Búsqueda e investigación con fuentes",
+        bestFor: "buscar información actualizada, comparar datos, encontrar fuentes y entender un tema con contexto.",
+        text: "Tu mejor opción es Perplexity. Es ideal si necesitas investigar temas actuales, encontrar fuentes y no quedarte solo con una respuesta genérica.",
+        alternatives: ["Gemini", "ChatGPT", "Claude"],
+        prompt: "Busca información actualizada sobre este tema, resume las ideas principales, compara distintas fuentes y señala qué datos debería verificar: [escribe aquí el tema]."
+      },
+      notebooklm: {
+        name: "NotebookLM",
+        category: "Estudio con documentos propios",
+        bestFor: "estudiar apuntes, PDFs, documentos largos, clases y materiales propios.",
+        text: "Tu mejor opción es NotebookLM. Encaja muy bien si tienes apuntes, PDFs o documentos largos y quieres resumirlos, convertirlos en preguntas o estudiar desde tu propio material.",
+        alternatives: ["ChatGPT", "Gemini", "Notion AI"],
+        prompt: "A partir de estos apuntes, crea un resumen por temas, una lista de conceptos clave, posibles preguntas de examen y una explicación sencilla de lo más difícil."
+      },
+      notion: {
+        name: "Notion AI",
+        category: "Organización y productividad personal",
+        bestFor: "ordenar apuntes, planificar tareas, crear listas, calendarios, bases de datos y sistemas de estudio.",
+        text: "Tu mejor opción es Notion AI. Es ideal si necesitas organizar apuntes, planificar tareas, estructurar proyectos y tener tu estudio o trabajo en un mismo sitio.",
+        alternatives: ["NotebookLM", "ChatGPT", "Copilot"],
+        prompt: "Organiza este contenido en una estructura de estudio con temas, tareas pendientes, fechas, prioridades y un plan de repaso: [pega aquí tus apuntes]."
+      },
+      canva: {
+        name: "Canva AI",
+        category: "Diseño visual sencillo",
+        bestFor: "crear presentaciones visuales, infografías, trabajos bonitos, contenido para redes y materiales de clase.",
+        text: "Tu mejor opción es Canva AI. Es perfecta si quieres transformar ideas en diseños claros, visuales y atractivos sin tener conocimientos de diseño.",
+        alternatives: ["Gamma", "Nano Banana", "ChatGPT"],
+        prompt: "Crea una estructura visual para una presentación o infografía sobre este tema, con títulos, bloques, ideas clave y sugerencias de diseño: [escribe aquí el tema]."
+      },
+      gamma: {
+        name: "Gamma",
+        category: "Presentaciones y documentos visuales",
+        bestFor: "crear presentaciones rápidas, documentos visuales, propuestas, trabajos y explicaciones ordenadas.",
+        text: "Tu mejor opción es Gamma. Es muy útil si quieres crear presentaciones o documentos visuales rápidamente a partir de una idea, un tema o unos apuntes.",
+        alternatives: ["Canva AI", "Copilot", "ChatGPT"],
+        prompt: "Crea una presentación clara y visual sobre este tema. Incluye título, índice, 8 diapositivas, ideas clave, ejemplos y una conclusión: [escribe aquí el tema]."
+      },
+      midjourney: {
+        name: "Midjourney",
+        category: "Imagen creativa avanzada",
+        bestFor: "crear imágenes artísticas, conceptuales, visuales de alta calidad e inspiración creativa.",
+        text: "Tu mejor opción es Midjourney. Encaja si necesitas imágenes muy cuidadas, creativas o con un estilo visual potente.",
+        alternatives: ["Nano Banana", "Canva AI", "Runway"],
+        prompt: "Crea un prompt visual detallado para generar una imagen sobre este concepto, indicando estilo, composición, luz, colores y ambiente: [describe la idea]."
+      },
+      nanoBanana: {
+        name: "Nano Banana / Gemini Imagen",
+        category: "Imagen rápida y práctica",
+        bestFor: "generar o editar imágenes para trabajos, ideas visuales, ejemplos rápidos y contenido sencillo.",
+        text: "Tu mejor opción es Nano Banana o las funciones de imagen de Gemini. Es útil si quieres crear imágenes rápidas, editar elementos o visualizar ideas sin complicarte.",
+        alternatives: ["Midjourney", "Canva AI", "ChatGPT"],
+        prompt: "Genera una imagen clara para representar este concepto. Debe ser útil para un trabajo educativo, con estilo limpio y fácil de entender: [describe la idea]."
+      },
+      runway: {
+        name: "Runway",
+        category: "Vídeo con inteligencia artificial",
+        bestFor: "crear vídeos, editar clips, generar escenas visuales y trabajar con contenido audiovisual.",
+        text: "Tu mejor opción es Runway. Encaja si quieres crear o editar vídeos con IA, transformar ideas en escenas o producir contenido audiovisual.",
+        alternatives: ["Canva AI", "Midjourney", "ElevenLabs"],
+        prompt: "Crea una idea de vídeo breve sobre este tema, con escenas, estilo visual, duración aproximada, texto en pantalla y narración sugerida: [escribe aquí el tema]."
+      },
+      elevenlabs: {
+        name: "ElevenLabs",
+        category: "Voz y audio realista",
+        bestFor: "crear voces, narraciones, locuciones, audios educativos y contenido hablado.",
+        text: "Tu mejor opción es ElevenLabs. Es ideal si necesitas convertir texto en voz, crear narraciones o producir audios realistas.",
+        alternatives: ["Suno", "Runway", "Canva AI"],
+        prompt: "Convierte este texto en una narración clara, natural y educativa. Indica tono, ritmo, pausas y estilo de voz recomendado: [pega aquí el texto]."
+      },
+      suno: {
+        name: "Suno",
+        category: "Música y canciones con IA",
+        bestFor: "crear canciones, música, melodías o ideas sonoras para proyectos creativos.",
+        text: "Tu mejor opción es Suno. Encaja si tu objetivo es crear música, canciones o piezas sonoras con ayuda de IA.",
+        alternatives: ["ElevenLabs", "Runway", "Canva AI"],
+        prompt: "Crea una canción sobre este tema. Indica estilo musical, letra, tono, ritmo y tipo de voz: [escribe aquí la idea]."
+      },
+      cursor: {
+        name: "Cursor",
+        category: "Programación asistida por IA",
+        bestFor: "crear webs, revisar código, entender errores, mejorar proyectos y programar con ayuda integrada.",
+        text: "Tu mejor opción es Cursor. Es ideal si trabajas con código y quieres una IA integrada en tu editor para crear, corregir o mejorar proyectos.",
+        alternatives: ["Claude Code", "Replit AI", "Antigravity"],
+        prompt: "Ayúdame a mejorar este proyecto web. Revisa la estructura, detecta errores, propón mejoras y explica cada cambio de forma sencilla: [pega aquí el código o describe el proyecto]."
+      },
+      lovable: {
+        name: "Lovable",
+        category: "Crear apps o webs desde una idea",
+        bestFor: "prototipar aplicaciones, crear webs, transformar ideas en productos visuales y construir sin empezar desde cero.",
+        text: "Tu mejor opción es Lovable. Encaja si tienes una idea y quieres convertirla en una app o web de forma visual y rápida.",
+        alternatives: ["Cursor", "Replit AI", "ChatGPT"],
+        prompt: "Quiero crear una app o web sobre esta idea. Define estructura, pantallas, funciones principales, diseño y pasos para construirla: [describe aquí la idea]."
+      },
+      replit: {
+        name: "Replit AI",
+        category: "Proyectos técnicos y prototipos online",
+        bestFor: "crear prototipos, practicar programación, lanzar proyectos pequeños y trabajar online.",
+        text: "Tu mejor opción es Replit AI. Es útil si quieres crear proyectos técnicos desde el navegador, practicar programación o montar prototipos rápidamente.",
+        alternatives: ["Cursor", "Claude Code", "Lovable"],
+        prompt: "Ayúdame a crear un prototipo funcional de esta idea. Dame estructura de archivos, código base, explicación y mejoras posibles: [describe aquí la idea]."
+      },
+      antigravity: {
+        name: "Google Antigravity",
+        category: "Desarrollo con agentes de IA",
+        bestFor: "explorar flujos de desarrollo avanzados, agentes de IA, programación y proyectos técnicos más complejos.",
+        text: "Tu mejor opción es Antigravity si te interesa trabajar con agentes de IA aplicados al desarrollo y explorar formas más avanzadas de crear software.",
+        alternatives: ["Claude Code", "Cursor", "Replit AI"],
+        prompt: "Actúa como agente de desarrollo. Analiza este proyecto, divide el trabajo en tareas, detecta problemas, sugiere mejoras y prioriza los siguientes pasos: [describe aquí el proyecto]."
+      }
+    };
+
+    function selectOption(questionId, tool, button) {
+      selectedAnswers[questionId] = tool;
+
+      const parent = button.closest(".quiz-question");
+      const buttons = parent.querySelectorAll("button");
+
+      buttons.forEach(function(btn) {
+        btn.classList.remove("selected");
+      });
+
+      button.classList.add("selected");
+      updateProgress();
     }
 
-    function showResult() {
-      let winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
-
-      const results = {
-        chatgpt: {
-          name: "ChatGPT",
-          text: "Tu mejor opción es ChatGPT. Te puede ayudar a entender temas difíciles, crear esquemas, practicar preguntas de examen y estudiar de forma más activa. Es ideal si necesitas explicaciones claras y personalizadas."
-        },
-        gemini: {
-          name: "Gemini",
-          text: "Tu mejor opción es Gemini. Puede encajarte si combinas búsquedas, documentos, vídeos e ideas generales. Es útil para explorar temas desde varios enfoques."
-        },
-        copilot: {
-          name: "Microsoft Copilot",
-          text: "Tu mejor opción es Copilot. Es especialmente útil si trabajas mucho con Word, PowerPoint, Excel o herramientas de Microsoft. Puede ayudarte a redactar, resumir y organizar documentos."
-        },
-        perplexity: {
-          name: "Perplexity",
-          text: "Tu mejor opción es Perplexity. Es buena para buscar información con fuentes y contrastar datos. Te puede servir cuando necesitas investigar un tema y no quedarte solo con una respuesta genérica."
-        },
-        notion: {
-          name: "Notion AI",
-          text: "Tu mejor opción es Notion AI. Encaja contigo si necesitas ordenar apuntes, planificar tareas, resumir contenido y tener todo tu estudio organizado en un mismo sitio."
-        },
-        canva: {
-          name: "Canva IA",
-          text: "Tu mejor opción es Canva IA. Es ideal si necesitas hacer presentaciones, trabajos visuales, diseños o materiales más atractivos para clase."
-        }
-      };
-
-      document.getElementById("quiz-result").innerHTML = `
-        <h2>Tu herramienta recomendada es: ${results[winner].name}</h2>
-        <p>${results[winner].text}</p>
-        <p><strong>Consejo:</strong> no uses la IA para copiar respuestas. Úsala para entender mejor, practicar y mejorar tus propios materiales.</p>
-      `;
+    function updateProgress() {
+      const totalQuestions = document.querySelectorAll(".quiz-question").length;
+      const answeredQuestions = Object.keys(selectedAnswers).length;
+      const progress = Math.round((answeredQuestions / totalQuestions) * 100);
+      document.getElementById("quiz-progress-bar").style.width = progress + "%";
     }
 
-    function resetQuiz() {
+    function calculateScores() {
       for (let tool in scores) {
         scores[tool] = 0;
       }
 
+      for (let question in selectedAnswers) {
+        const tool = selectedAnswers[question];
+        if (scores[tool] !== undefined) {
+          scores[tool]++;
+        }
+      }
+    }
+
+    function showResult() {
+      calculateScores();
+
+      const answeredQuestions = Object.keys(selectedAnswers).length;
+      const totalQuestions = document.querySelectorAll(".quiz-question").length;
+
+      if (answeredQuestions < totalQuestions) {
+        document.getElementById("quiz-result").innerHTML =
+          '<div class="result-card"><h3>Te faltan preguntas</h3><p>Responde todas las preguntas para que la recomendación sea más precisa.</p></div>';
+        return;
+      }
+
+      const sortedTools = Object.keys(scores).sort(function(a, b) {
+        return scores[b] - scores[a];
+      });
+
+      const winner = sortedTools[0];
+      const second = sortedTools[1];
+      const third = sortedTools[2];
+
+      const main = results[winner];
+      const altOne = results[second];
+      const altTwo = results[third];
+
+      let alternativesText = "";
+      if (main.alternatives && main.alternatives.length > 0) {
+        alternativesText = main.alternatives.join(", ");
+      }
+
+      document.getElementById("quiz-result").innerHTML =
+        '<div class="result-main">' +
+          '<span class="result-label">Recomendación principal</span>' +
+          '<h2>Tu herramienta recomendada es: ' + main.name + '</h2>' +
+          '<p><strong>Categoría:</strong> ' + main.category + '</p>' +
+          '<p>' + main.text + '</p>' +
+          '<p><strong>Ideal para:</strong> ' + main.bestFor + '</p>' +
+        '</div>' +
+
+        '<div class="result-grid">' +
+          '<div class="result-card">' +
+            '<h3>Alternativa 1: ' + altOne.name + '</h3>' +
+            '<p>' + altOne.text + '</p>' +
+          '</div>' +
+          '<div class="result-card">' +
+            '<h3>Alternativa 2: ' + altTwo.name + '</h3>' +
+            '<p>' + altTwo.text + '</p>' +
+          '</div>' +
+          '<div class="result-card">' +
+            '<h3>También podrías probar</h3>' +
+            '<p>' + alternativesText + '</p>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="prompt-result">' +
+          '<h3>Prompt recomendado para empezar</h3>' +
+          '<div id="prompt-copy" class="prompt-box-result">' + main.prompt + '</div>' +
+          '<div style="margin-top: 18px;">' +
+            '<button class="btn" onclick="copyPrompt()">Copiar prompt</button>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="result-card" style="margin-top: 22px;">' +
+          '<h3>Consejo de uso responsable</h3>' +
+          '<p>No uses la IA para copiar respuestas sin pensar. Úsala para entender mejor, practicar, comparar opciones, crear borradores y mejorar tus propios materiales.</p>' +
+        '</div>';
+    }
+
+    function copyPrompt() {
+      const promptText = document.getElementById("prompt-copy").innerText;
+      navigator.clipboard.writeText(promptText).then(function() {
+        alert("Prompt copiado");
+      });
+    }
+
+    function resetQuiz() {
+      for (let key in selectedAnswers) {
+        delete selectedAnswers[key];
+      }
+
+      for (let tool in scores) {
+        scores[tool] = 0;
+      }
+
+      const buttons = document.querySelectorAll(".quiz-options button");
+      buttons.forEach(function(button) {
+        button.classList.remove("selected");
+      });
+
       document.getElementById("quiz-result").innerHTML = "";
+      document.getElementById("quiz-progress-bar").style.width = "0%";
     }
   </script>
 
