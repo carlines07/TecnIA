@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Ruta TecnIA: aprende a usar la IA para estudiar en 7 días | TecnIA</title>
+  <meta name="description" content="Sigue la Ruta TecnIA de 7 días para aprender a usar la inteligencia artificial para estudiar, organizar apuntes, crear prompts, preparar exámenes y corregir respuestas.">
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .route-hero {
+      margin: 44px auto 30px;
+      padding: 70px 42px;
+      border-radius: 38px;
+      color: #ffffff;
+      background:
+        linear-gradient(rgba(7, 17, 31, 0.74), rgba(7, 17, 31, 0.84)),
+        url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80") center/cover;
+      box-shadow: 0 28px 70px rgba(15, 23, 42, 0.22);
+    }
+
+    .route-hero .article-tag {
+      color: #5eead4;
+      background: rgba(255, 255, 255, 0.10);
+      border-color: rgba(255, 255, 255, 0.20);
+    }
+
+    .route-hero h1 {
+      max-width: 900px;
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
+      line-height: 1.05;
+      letter-spacing: -1.8px;
+      margin-bottom: 22px;
+      color: #ffffff;
+    }
+
+    .route-hero p {
+      max-width: 760px;
+      color: #dbeafe;
+      font-size: 1.16rem;
+      line-height: 1.85;
+      margin-bottom: 30px;
+    }
+
+    .route-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .method-grid,
+    .audience-grid,
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 18px;
+      margin: 34px 0;
+    }
+
+    .method-card,
+    .route-day,
+    .audience-card,
+    .tool-mini-card,
+    .mistake-card {
+      background: #ffffff;
+      border: 1px solid #dbeafe;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+    }
+
+    .method-number {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #2563eb, #14b8a6);
+      color: #ffffff;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .method-card h3,
+    .route-day h2,
+    .audience-card h3,
+    .tool-mini-card h3,
+    .mistake-card h3 {
+      color: #0f172a;
+      margin-bottom: 10px;
+    }
+
+    .method-card p,
+    .route-day p,
+    .audience-card p,
+    .tool-mini-card p,
+    .mistake-card p {
+      color: #334155;
+      line-height: 1.75;
+    }
+
+    .route-timeline {
+      display: grid;
+      gap: 24px;
+      margin-top: 34px;
+    }
+
+    .route-day {
+      position: relative;
+      overflow: hidden;
+      border-left: 7px solid #2563eb;
+    }
+
+    .route-day:nth-child(even) {
+      border-left-color: #14b8a6;
+    }
+
+    .day-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      color: #1d4ed8;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      font-weight: 900;
+      font-size: 0.85rem;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+
+    .route-day:nth-child(even) .day-label {
+      color: #0f766e;
+      background: #f0fdfa;
+      border-color: #99f6e4;
+    }
+
+    .day-content {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .day-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 18px;
+      margin-top: 14px;
+    }
+
+    .day-box strong {
+      color: #0f172a;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .prompt-ready {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 18px;
+      background: #0f172a;
+      color: #e0f2fe;
+      line-height: 1.75;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+    }
+
+    .prompt-ready strong {
+      color: #5eead4;
+    }
+
+    .tools-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .audience-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .mistakes-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .route-cta {
+      margin: 64px 0 20px;
+      padding: 42px;
+      border-radius: 32px;
+      color: #ffffff;
+      background:
+        radial-gradient(circle at top left, rgba(20, 184, 166, 0.24), transparent 36%),
+        linear-gradient(135deg, #07111f, #1e3a8a);
+      box-shadow: 0 24px 55px rgba(15, 23, 42, 0.20);
+    }
+
+    .route-cta h2 {
+      color: #ffffff;
+      margin-top: 0;
+    }
+
+    .route-cta p {
+      color: #dbeafe;
+    }
+
+    @media (max-width: 980px) {
+      .method-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .tools-grid,
+      .audience-grid,
+      .mistakes-grid,
+      .day-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .route-hero {
+        padding: 48px 24px;
+        border-radius: 28px;
+      }
+
+      .method-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .route-cta {
+        padding: 30px 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <nav class="navbar">
+    <a href="index.html" class="logo">Tecn<span>IA</span></a>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="empieza-aqui.html">Empieza aquí</a></li>
+      <li><a href="articulos.html">IA/Artículos</a></li>
+      <li><a href="herramientas.html">Herramientas</a></li>
+      <li><a href="herramientas-interactivas.html">Interactivas</a></li>
+      <li><a href="noticias.html">Noticias</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+  <section class="route-hero">
+    <span class="article-tag">Ruta guiada TecnIA</span>
+    <h1>Aprende a usar la inteligencia artificial para estudiar en 7 días</h1>
+    <p>
+      Una guía práctica para pasar de usar la IA de forma improvisada a utilizarla con método:
+      entender, organizar, practicar, corregir y mejorar.
+    </p>
+
+    <div class="route-actions">
+      <a href="#ruta-7-dias" class="btn btn-primary">Empezar la ruta</a>
+      <a href="test-herramienta-ia-estudiantes.html" class="btn btn-outline">Hacer el test de IA</a>
+      <a href="herramientas-interactivas.html" class="btn btn-outline">Ver herramientas</a>
+    </div>
+  </section>
+
+  <article class="article-page">
+
+    <span class="article-tag">Método TecnIA</span>
+
+    <h1>Ruta TecnIA: una forma diferente de aprender con IA</h1>
+
+    <p class="article-intro">
+      La mayoría de personas usan la inteligencia artificial de forma desordenada: abren una herramienta,
+      hacen una pregunta rápida y copian parte de la respuesta. La Ruta TecnIA propone algo distinto:
+      usar la IA como apoyo para comprender mejor, practicar más y corregir errores.
+    </p>
+
+    <p>
+      Esta página no es solo un artículo. Es una ruta de aprendizaje que conecta las herramientas y contenidos
+      principales de TecnIA para que cualquier estudiante pueda seguir un camino claro. La idea es que la IA
+      no sustituya tu estudio, sino que lo haga más activo, más estructurado y más útil.
+    </p>
+
+    <h2>Qué es la Ruta TecnIA</h2>
+
+    <p>
+      La Ruta TecnIA es un recorrido de 7 días diseñado para aprender a usar la inteligencia artificial en el estudio.
+      Cada día tiene un objetivo concreto, una herramienta recomendada, una acción práctica y un prompt listo para usar.
+    </p>
+
+    <p>
+      No necesitas saber programación, ni dominar herramientas complejas, ni entender conceptos técnicos. La ruta está
+      pensada para personas que quieren empezar a usar la IA con cabeza y con un sistema.
+    </p>
+
+    <div class="featured-test">
+      <span>Objetivo principal</span>
+      <h2>Usar la IA para aprender mejor, no para copiar</h2>
+      <p>
+        TecnIA se basa en una idea sencilla: la inteligencia artificial puede ayudarte a estudiar, pero el aprendizaje
+        real aparece cuando entiendes, practicas, corriges y mejoras tus propias respuestas.
+      </p>
+    </div>
+
+    <h2>El Método TecnIA</h2>
+
+    <p>
+      Para que la web tenga identidad propia, la Ruta TecnIA se apoya en un método sencillo de cinco pasos.
+      Este método se puede aplicar a cualquier asignatura, examen, trabajo o proceso de aprendizaje.
+    </p>
+
+    <div class="method-grid">
+      <div class="method-card">
+        <div class="method-number">1</div>
+        <h3>Entiende</h3>
+        <p>Usa la IA para explicar conceptos difíciles, pedir ejemplos y aclarar ideas antes de memorizar.</p>
+      </div>
+
+      <div class="method-card">
+        <div class="method-number">2</div>
+        <h3>Organiza</h3>
+        <p>Convierte apuntes desordenados en esquemas, listas de conceptos clave, tablas y resúmenes útiles.</p>
+      </div>
+
+      <div class="method-card">
+        <div class="method-number">3</div>
+        <h3>Practica</h3>
+        <p>Genera preguntas, casos prácticos, ejercicios y simulacros para comprobar si realmente sabes el tema.</p>
+      </div>
+
+      <div class="method-card">
+        <div class="method-number">4</div>
+        <h3>Corrige</h3>
+        <p>Revisa tus respuestas con ayuda de la IA para detectar fallos, ideas incompletas y puntos mejorables.</p>
+      </div>
+
+      <div class="method-card">
+        <div class="method-number">5</div>
+        <h3>Mejora</h3>
+        <p>Vuelve a intentarlo con una respuesta mejorada hasta que puedas explicar el tema con claridad.</p>
+      </div>
+    </div>
+
+    <h2 id="ruta-7-dias">Ruta de 7 días para estudiar con inteligencia artificial</h2>
+
+    <p>
+      La ruta está pensada para que puedas completarla poco a poco. Puedes hacer un día por jornada o adaptar el ritmo
+      a tu disponibilidad. Lo importante es seguir el orden: primero entender, después organizar, practicar, corregir y mejorar.
+    </p>
+
+    <div class="route-timeline">
+
+      <section class="route-day">
+        <span class="day-label">Día 1</span>
+        <div class="day-content">
+          <div>
+            <h2>Entiende qué es la inteligencia artificial</h2>
+            <p>
+              Antes de usar la IA para estudiar, necesitas saber qué puede hacer, qué no puede hacer y cuáles son sus límites.
+              Este primer día sirve para tener una base clara y evitar expectativas irreales.
+            </p>
+
+            <div class="day-box">
+              <strong>Acción práctica</strong>
+              Lee el artículo sobre qué es la inteligencia artificial y apunta tres usos que podrían ayudarte en tus estudios.
+            </div>
+
+            <div class="day-box">
+              <strong>Recurso TecnIA</strong>
+              <a href="que-es-la-inteligencia-artificial.html">Leer: Qué es la inteligencia artificial</a>
+            </div>
+          </div>
+
+          <div class="prompt-ready">
+            <strong>Prompt recomendado:</strong><br>
+            Explícame qué es la inteligencia artificial como si fuera principiante. Usa ejemplos relacionados con estudiar,
+            hacer trabajos y preparar exámenes.
+          </div>
+        </div>
+      </section>
+
+      <section class="route-day">
+        <span class="day-label">Día 2</span>
+        <div class="day-content">
+          <div>
+            <h2>Descubre qué herramienta de IA necesitas</h2>
+            <p>
+              No todas las herramientas sirven para lo mismo. Algunas son mejores para buscar información, otras para resumir,
+              otras para crear presentaciones y otras para programar.
+            </p>
+
+            <div class="day-box">
+              <strong>Acción práctica</strong>
+              Haz el test de TecnIA y descubre qué herramienta encaja mejor con tu forma de estudiar.
+            </div>
+
+            <div class="day-box">
+              <strong>Recurso TecnIA</strong>
+              <a href="test-herramienta-ia-estudiantes.html">Hacer el Test de Herramienta IA</a>
+            </div>
+          </div>
+
+          <div class="prompt-ready">
+            <strong>Prompt recomendado:</strong><br>
+            Quiero estudiar mejor con inteligencia artificial. Hazme preguntas para saber qué herramienta me conviene
+            según mis objetivos, mi nivel y el tipo de tarea que necesito hacer.
+          </div>
+        </div>
+      </section>
+
+      <section class="route-day">
+        <span class="day-label">Día 3</span>
+        <div class="day-content">
+          <div>
+            <h2>Aprende a escribir buenos prompts</h2>
+            <p>
+              Un prompt es la instrucción que le das a la IA. La diferencia entre un prompt vago y uno bien escrito puede cambiar
+              por completo la calidad de la respuesta.
+            </p>
+
+            <div class="day-box">
+              <strong>Acción práctica</strong>
+              Usa el Laboratorio de Prompts para generar una instrucción adaptada a tu asignatura, nivel y objetivo.
+            </div>
+
+            <div class="day-box">
+              <strong>Recurso TecnIA</strong>
+              <a href="laboratorio-prompts-ia.html">Usar el Laboratorio de Prompts</a>
+            </div>
+          </div>
+
+          <div class="prompt-ready">
+            <strong>Prompt recomendado:</strong><br>
+            Actúa como profesor. Explícame este tema en tres niveles: primero de forma sencilla, después como respuesta
+            de examen y finalmente con preguntas de práctica.
+          </div>
+        </div>
+      </section>
+
+      <section class="route-day">
+        <span class="day-label">Día 4</span>
+        <div class="day-content">
+          <div>
+            <h2>Organiza tus apuntes con IA</h2>
+            <p>
+              La IA puede ayudarte a transformar apuntes largos o desordenados en material de estudio más claro:
+              esquemas, resúmenes, tablas, listas de conceptos y preguntas.
+            </p>
+
+            <div class="day-box">
+              <strong>Acción práctica</strong>
+              Copia un tema que estés estudiando y pide a la IA que lo convierta en esquema, resumen y lista de puntos clave.
+            </div>
+
+            <div class="day-box">
+              <strong>Herramientas recomendadas</strong>
+              ChatGPT, NotebookLM, Gemini o Notion AI.
+            </div>
+          </div>
+
+          <div class="prompt-ready">
+            <strong>Prompt recomendado:</strong><br>
+            Organiza estos apuntes en un esquema claro. Después crea un resumen, una lista de conceptos clave y cinco
+            posibles preguntas de examen.
+          </div>
+        </div>
+      </section>
+
+      <section class="route-day">
+        <span class="day-label">Día 5</span>
+        <div class="day-content">
+          <div>
+            <h2>Prepara un examen con IA</h2>
+            <p>
+              Una vez que entiendes y organizas el contenido, toca practicar. La IA puede ayudarte a simular preguntas,
+              crear repasos y entrenar respuestas.
+            </p>
+
+            <div class="day-box">
+              <strong>Acción práctica</strong>
+              Usa el Modo Examen IA para crear un plan de práctica y repaso adaptado a tu tipo de examen.
+            </div>
+
+            <div class="day-box">
+              <strong>Recurso TecnIA</strong>
+              <a href="modo-examen-ia.html">Usar Modo Examen IA</a>
+            </div>
+          </div>
+
+          <div class="prompt-ready">
+            <strong>Prompt recomendado:</strong><br>
+            Actúa como examinador. Hazme preguntas progresivas sobre este tema, corrige mis respuestas y aumenta la dificultad
+            poco a poco.
+          </div>
+        </div>
+      </section>
+
+      <section class="route-day">
+        <span class="day-label">Día 6</span>
+        <div class="day-content">
+          <div>
+            <h2>Corrige tus respuestas</h2>
+            <p>
+              Estudiar bien no consiste solo en responder, sino en revisar qué has hecho bien, qué falta y cómo puedes mejorar
+              tu explicación.
+            </p>
+
+            <div class="day-box">
+              <strong>Acción práctica</strong>
+              Escribe una respuesta de examen y pásala por el Corrector de Respuestas con IA.
+            </div>
+
+            <div class="day-box">
+              <strong>Recurso TecnIA</strong>
+              <a href="corrector-respuestas-ia.html">Usar Corrector de Respuestas con IA</a>
+            </div>
+          </div>
+
+          <div class="prompt-ready">
+            <strong>Prompt recomendado:</strong><br>
+            Corrige mi respuesta como si fueras un profesor exigente. Dime qué está bien, qué falta, qué errores hay,
+            qué nota aproximada tendría y cómo puedo mejorarla.
+          </div>
+        </div>
+      </section>
+
+      <section class="route-day">
+        <span class="day-label">Día 7</span>
+        <div class="day-content">
+          <div>
+            <h2>Crea tu propio sistema de estudio con IA</h2>
+            <p>
+              El último día consiste en unir todo lo aprendido y crear una rutina personal: entender, resumir, practicar,
+              corregir y repetir.
+            </p>
+
+            <div class="day-box">
+              <strong>Acción práctica</strong>
+              Elige una asignatura y diseña una rutina semanal usando el Método TecnIA.
+            </div>
+
+            <div class="day-box">
+              <strong>Recursos TecnIA</strong>
+              <a href="herramientas-interactivas.html">Ver todas las herramientas interactivas</a>
+            </div>
+          </div>
+
+          <div class="prompt-ready">
+            <strong>Prompt recomendado:</strong><br>
+            Ayúdame a crear un sistema de estudio semanal para esta asignatura. Quiero entender los temas, hacer resúmenes,
+            practicar preguntas y corregir mis respuestas.
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <h2>Herramientas TecnIA que vas a usar en esta ruta</h2>
+
+    <p>
+      La Ruta TecnIA está conectada con varias herramientas de la web. Cada una cumple una función distinta dentro
+      del proceso de aprendizaje.
+    </p>
+
+    <div class="tools-grid">
+      <a href="test-herramienta-ia-estudiantes.html" class="tool-mini-card">
+        <h3>Test de Herramienta IA</h3>
+        <p>Te ayuda a elegir la herramienta de inteligencia artificial más adecuada según tu objetivo.</p>
+      </a>
+
+      <a href="laboratorio-prompts-ia.html" class="tool-mini-card">
+        <h3>Laboratorio de Prompts</h3>
+        <p>Genera prompts personalizados para estudiar, resumir, practicar o preparar exámenes.</p>
+      </a>
+
+      <a href="modo-examen-ia.html" class="tool-mini-card">
+        <h3>Modo Examen IA</h3>
+        <p>Te ayuda a preparar un examen con preguntas, repaso y práctica orientada a evaluación.</p>
+      </a>
+
+      <a href="corrector-respuestas-ia.html" class="tool-mini-card">
+        <h3>Corrector de Respuestas</h3>
+        <p>Crea un prompt para corregir respuestas de examen con criterios, rúbrica y consejos.</p>
+      </a>
+
+      <a href="como-corregir-respuestas-examen-ia.html" class="tool-mini-card">
+        <h3>Guía para corregir respuestas</h3>
+        <p>Aprende cómo usar la IA para revisar tus respuestas sin copiar ni depender de ella.</p>
+      </a>
+
+      <a href="como-elegir-mejor-herramienta-ia.html" class="tool-mini-card">
+        <h3>Guía para elegir IA</h3>
+        <p>Aprende a seleccionar la mejor herramienta según la tarea que necesitas resolver.</p>
+      </a>
+    </div>
+
+    <h2>Para quién es esta ruta</h2>
+
+    <p>
+      Esta ruta está pensada para cualquier persona que quiera usar la inteligencia artificial de forma práctica,
+      clara y responsable.
+    </p>
+
+    <div class="audience-grid">
+      <div class="audience-card">
+        <h3>Estudiantes de instituto</h3>
+        <p>Para entender temas difíciles, preparar controles y practicar explicaciones paso a paso.</p>
+      </div>
+
+      <div class="audience-card">
+        <h3>Universitarios</h3>
+        <p>Para organizar apuntes, preparar exámenes, mejorar respuestas y trabajar con más estructura.</p>
+      </div>
+
+      <div class="audience-card">
+        <h3>Opositores</h3>
+        <p>Para crear rutinas de repaso, practicar preguntas y corregir respuestas de desarrollo.</p>
+      </div>
+
+      <div class="audience-card">
+        <h3>Personas principiantes</h3>
+        <p>Para aprender a usar la IA desde cero sin sentirse perdidas entre tantas herramientas.</p>
+      </div>
+
+      <div class="audience-card">
+        <h3>Creadores de contenido</h3>
+        <p>Para organizar ideas, crear guiones, mejorar textos y elegir herramientas adecuadas.</p>
+      </div>
+
+      <div class="audience-card">
+        <h3>Personas curiosas</h3>
+        <p>Para descubrir cómo la IA puede ayudar en el aprendizaje y en la productividad diaria.</p>
+      </div>
+    </div>
+
+    <h2>Errores que evita la Ruta TecnIA</h2>
+
+    <p>
+      Una de las partes más importantes de aprender IA no es solo saber qué hacer, sino saber qué evitar.
+      Esta ruta está pensada para no caer en los errores más comunes.
+    </p>
+
+    <div class="mistakes-grid">
+      <div class="mistake-card">
+        <h3>Usar la IA para copiar</h3>
+        <p>El objetivo no es que la IA haga el trabajo por ti, sino que te ayude a entender y mejorar.</p>
+      </div>
+
+      <div class="mistake-card">
+        <h3>Pedir cosas demasiado vagas</h3>
+        <p>Un prompt poco concreto suele generar respuestas generales, incompletas o poco útiles.</p>
+      </div>
+
+      <div class="mistake-card">
+        <h3>No comprobar la información</h3>
+        <p>La IA puede equivocarse. Siempre conviene revisar datos importantes, fechas y afirmaciones.</p>
+      </div>
+
+      <div class="mistake-card">
+        <h3>No practicar de verdad</h3>
+        <p>Leer un resumen no es suficiente. Hay que hacer preguntas, responder y corregir errores.</p>
+      </div>
+    </div>
+
+    <div class="route-cta">
+      <h2>Empieza ahora con el Método TecnIA</h2>
+      <p>
+        Puedes empezar por hacer el test de herramienta IA o ir directamente al Laboratorio de Prompts.
+        Lo importante es que no uses la inteligencia artificial al azar: úsala con un sistema.
+      </p>
+
+      <div class="route-actions">
+        <a href="test-herramienta-ia-estudiantes.html" class="btn btn-primary">Hacer el test</a>
+        <a href="laboratorio-prompts-ia.html" class="btn btn-outline">Generar un prompt</a>
+        <a href="corrector-respuestas-ia.html" class="btn btn-outline">Corregir una respuesta</a>
+      </div>
+    </div>
+
+    <section class="related-articles">
+      <h2>Continúa aprendiendo</h2>
+
+      <div class="related-links">
+        <a href="herramientas-interactivas.html">Ver todas las herramientas interactivas de TecnIA</a>
+        <a href="articulos.html">Leer todos los artículos sobre inteligencia artificial</a>
+        <a href="empieza-aqui.html">Empezar desde cero con TecnIA</a>
+        <a href="prompts-chatgpt-estudiantes.html">Ver prompts útiles para estudiantes</a>
+      </div>
+    </section>
+
+  </article>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 TecnIA. Todos los derechos reservados.</p>
+    <p>
+      <a href="sobre-nosotros.html">Sobre nosotros</a> |
+      <a href="contacto.html">Contacto</a> |
+      <a href="politica-privacidad.html">Política de privacidad</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
