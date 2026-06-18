@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planificador de Estudio con IA | TecnIA</title>
+  <meta name="description" content="Crea un plan de estudio personalizado con inteligencia artificial según tu examen, asignatura, tiempo disponible, nivel actual y dificultad.">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .planner-hero{margin:44px auto 30px;padding:70px 42px;border-radius:38px;color:#fff;background:linear-gradient(rgba(7,17,31,.76),rgba(7,17,31,.86)),url("https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1400&q=80") center/cover;box-shadow:0 28px 70px rgba(15,23,42,.22)}
+    .planner-hero .article-tag{color:#5eead4;background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.20)}
+    .planner-hero h1{max-width:900px;font-size:clamp(2.4rem,5vw,4.4rem);line-height:1.05;letter-spacing:-1.8px;margin-bottom:22px;color:#fff}
+    .planner-hero p{max-width:760px;color:#dbeafe;font-size:1.16rem;line-height:1.85;margin-bottom:30px}
+    .planner-layout{display:grid;grid-template-columns:.95fr 1.05fr;gap:28px;align-items:start;margin-top:36px}
+    .planner-panel,.planner-result{background:#fff;border:1px solid #dbeafe;border-radius:28px;padding:30px;box-shadow:0 18px 45px rgba(15,23,42,.09)}
+    .planner-panel h2,.planner-result h2{margin-top:0;color:#0f172a}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .form-field{display:grid;gap:7px}.form-field.full{grid-column:1/-1}
+    .form-field label{font-weight:800;color:#0f172a;font-size:.95rem}
+    .helper-text{color:#64748b;font-size:.9rem;line-height:1.5}
+    .planner-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+    .result-empty{color:#64748b;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:20px;padding:22px;line-height:1.7}
+    .result-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0}
+    .summary-card{background:linear-gradient(135deg,#eff6ff,#f8fafc);border:1px solid #dbeafe;border-radius:18px;padding:18px}
+    .summary-card span{display:block;color:#64748b;font-size:.84rem;font-weight:800;text-transform:uppercase;margin-bottom:6px}
+    .summary-card strong{color:#0f172a;font-size:1.25rem}
+    .plan-list{display:grid;gap:16px;margin-top:22px}
+    .plan-day{background:#fff;border:1px solid #e2e8f0;border-left:6px solid #2563eb;border-radius:20px;padding:20px;box-shadow:0 10px 24px rgba(15,23,42,.06)}
+    .plan-day:nth-child(even){border-left-color:#14b8a6}
+    .plan-day h3{margin:0 0 10px;color:#0f172a}.plan-day p,.plan-day li{color:#334155}.plan-day ul{margin:12px 0 0 20px}
+    .prompt-output{margin-top:24px;background:#0f172a!important;color:#e0f2fe!important;border:1px solid rgba(255,255,255,.12)!important;border-radius:22px;padding:22px;line-height:1.75;white-space:pre-wrap}
+    .prompt-output strong{color:#5eead4}
+    .study-warning{margin-top:22px;padding:20px;border-radius:20px;background:#fff7ed;border:1px solid #fed7aa;color:#7c2d12;line-height:1.75}
+    .study-warning strong{color:#9a3412}
+    .mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
+    .mini-card{background:#fff;border:1px solid #dbeafe;border-radius:22px;padding:22px;box-shadow:0 12px 30px rgba(15,23,42,.07)}
+    .mini-card h3{color:#0f172a;margin-bottom:8px}.mini-card p{color:#334155;line-height:1.7}
+    @media(max-width:980px){.planner-layout,.result-summary,.mini-grid{grid-template-columns:1fr}}
+    @media(max-width:680px){.planner-hero{padding:48px 24px;border-radius:28px}.form-grid{grid-template-columns:1fr}.planner-panel,.planner-result{padding:22px}}
+  </style>
+</head>
+<body>
+<header>
+  <nav class="navbar">
+    <a href="index.html" class="logo">Tecn<span>IA</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="empieza-aqui.html">Empieza aquí</a></li>
+      <li><a href="articulos.html">IA/Artículos</a></li>
+      <li><a href="herramientas.html">Herramientas</a></li>
+      <li><a href="herramientas-interactivas.html">Interactivas</a></li>
+      <li><a href="noticias.html">Noticias</a></li>
+    </ul>
+  </nav>
+</header>
+<main>
+  <section class="planner-hero">
+    <span class="article-tag">Herramienta interactiva</span>
+    <h1>Planificador de Estudio con IA</h1>
+    <p>Crea un plan de estudio personalizado según tu examen, asignatura, temas, nivel actual, tiempo disponible y dificultad. Después copia el prompt y úsalo en ChatGPT, Gemini, Claude o Copilot.</p>
+    <div class="route-actions">
+      <a href="#planificador" class="btn btn-primary">Crear mi plan</a>
+      <a href="ruta-tecnia-ia-estudiantes.html" class="btn btn-outline">Ver Ruta TecnIA</a>
+      <a href="modo-examen-ia.html" class="btn btn-outline">Modo Examen IA</a>
+    </div>
+  </section>
+  <article class="article-page">
+    <span class="article-tag">Organización + IA</span>
+    <h1>Organiza tu estudio con inteligencia artificial</h1>
+    <p class="article-intro">Muchas veces el problema no es que no quieras estudiar, sino que no sabes por dónde empezar. Esta herramienta te ayuda a convertir el caos en un plan concreto: qué estudiar, qué repasar, cuándo practicar y cómo usar IA sin depender de ella.</p>
+
+    <h2>Para qué sirve este planificador</h2>
+    <p>El Planificador de Estudio con IA está pensado para estudiantes que tienen un examen, varios temas y poco tiempo para organizarse. A partir de tus datos, genera una estrategia de estudio dividida por días.</p>
+
+    <div class="mini-grid">
+      <div class="mini-card"><h3>Organiza tu tiempo</h3><p>Transforma los días disponibles en una rutina clara de estudio, práctica y repaso.</p></div>
+      <div class="mini-card"><h3>Prioriza temas</h3><p>Te ayuda a decidir qué estudiar primero según dificultad, tiempo y nivel actual.</p></div>
+      <div class="mini-card"><h3>Usa IA con método</h3><p>Genera un prompt completo para que una IA te ayude a perfeccionar el plan.</p></div>
+    </div>
+
+    <section id="planificador" class="planner-layout">
+      <div class="planner-panel">
+        <h2>Genera tu plan de estudio</h2>
+        <p class="helper-text">Rellena los campos. No hace falta que sea perfecto: cuanto más concreto seas, mejor será el plan.</p>
+        <form id="studyPlannerForm" onsubmit="event.preventDefault(); generateStudyPlan();">
+          <div class="form-grid">
+            <div class="form-field"><label for="subject">Asignatura</label><input id="subject" type="text" placeholder="Ej: Historia Económica"></div>
+            <div class="form-field"><label for="examDate">Fecha del examen</label><input id="examDate" type="date"></div>
+            <div class="form-field"><label for="topics">Número de temas</label><input id="topics" type="number" min="1" max="60" placeholder="Ej: 8"></div>
+            <div class="form-field"><label for="hoursDay">Horas al día</label><input id="hoursDay" type="number" min="0.5" max="12" step="0.5" placeholder="Ej: 2"></div>
+            <div class="form-field"><label for="level">Nivel actual</label><select id="level"><option value="">Selecciona</option><option value="bajo">Bajo: voy perdido/a</option><option value="medio">Medio: entiendo algunas cosas</option><option value="alto">Alto: ya llevo base</option></select></div>
+            <div class="form-field"><label for="difficulty">Dificultad</label><select id="difficulty"><option value="">Selecciona</option><option value="baja">Baja</option><option value="media">Media</option><option value="alta">Alta</option></select></div>
+            <div class="form-field"><label for="examType">Tipo de examen</label><select id="examType"><option value="">Selecciona</option><option value="test">Tipo test</option><option value="desarrollo">Preguntas de desarrollo</option><option value="problemas">Problemas o ejercicios</option><option value="oral">Examen oral</option><option value="mixto">Mixto</option></select></div>
+            <div class="form-field"><label for="tool">IA que quieres usar</label><select id="tool"><option value="ChatGPT">ChatGPT</option><option value="Gemini">Gemini</option><option value="Claude">Claude</option><option value="Copilot">Copilot</option><option value="NotebookLM">NotebookLM</option></select></div>
+            <div class="form-field full"><label for="goal">Objetivo concreto</label><textarea id="goal" rows="3" placeholder="Ej: aprobar con buena nota, repasar rápido, practicar preguntas de desarrollo..."></textarea></div>
+            <div class="form-field full"><label for="extra">Información extra opcional</label><textarea id="extra" rows="3" placeholder="Ej: los temas 3 y 4 son los peores, quiero dejar el último día para repasar..."></textarea></div>
+          </div>
+          <div class="planner-actions">
+            <button type="submit" class="btn btn-primary">Crear plan de estudio</button>
+            <button type="button" class="btn btn-outline" onclick="copyPlannerPrompt()">Copiar prompt</button>
+            <button type="button" class="btn btn-outline" onclick="resetPlanner()">Limpiar</button>
+          </div>
+        </form>
+      </div>
+      <div class="planner-result" id="plannerResult">
+        <h2>Tu plan aparecerá aquí</h2>
+        <div class="result-empty">Completa los campos y pulsa “Crear plan de estudio”. La herramienta generará una propuesta organizada por días y un prompt final para usar en tu IA favorita.</div>
+      </div>
+    </section>
+
+    <div class="study-warning"><strong>Importante:</strong> este planificador no sustituye tu criterio. Úsalo como guía para organizarte, pero adapta el plan según tu energía, tu calendario real y la dificultad de cada tema.</div>
+
+    <section class="related-articles">
+      <h2>Continúa con estas herramientas</h2>
+      <div class="related-links">
+        <a href="ruta-tecnia-ia-estudiantes.html">Ruta TecnIA: aprende a usar la IA para estudiar en 7 días</a>
+        <a href="modo-examen-ia.html">Modo Examen IA</a>
+        <a href="corrector-respuestas-ia.html">Corrector de Respuestas con IA</a>
+        <a href="laboratorio-prompts-ia.html">Laboratorio de Prompts de Estudio</a>
+        <a href="test-herramienta-ia-estudiantes.html">Test: qué herramienta de IA necesitas</a>
+      </div>
+    </section>
+  </article>
+</main>
+<footer>
+  <div class="container">
+    <p>&copy; 2026 TecnIA. Todos los derechos reservados.</p>
+    <p><a href="sobre-nosotros.html">Sobre nosotros</a> | <a href="contacto.html">Contacto</a> | <a href="politica-privacidad.html">Política de privacidad</a></p>
+  </div>
+</footer>
+<script>
+let lastPlannerPrompt="";
+function v(id){return document.getElementById(id).value.trim();}
+function daysUntil(dateValue){if(!dateValue)return null;const t=new Date();t.setHours(0,0,0,0);const d=new Date(dateValue);d.setHours(0,0,0,0);return Math.ceil((d-t)/(1000*60*60*24));}
+function getStrategy(level,difficulty,examType){
+  let s=[];
+  if(level==="bajo"){s.push("Empieza por comprensión básica: explicaciones sencillas, ejemplos y esquemas.");s.push("No intentes memorizar todo el primer día. Primero entiende la estructura general.");}
+  else if(level==="medio"){s.push("Combina repaso con práctica desde el principio.");s.push("Detecta qué temas sabes explicar y cuáles solo reconoces de memoria.");}
+  else{s.push("Prioriza práctica, simulacros y corrección de errores.");s.push("Usa la IA para pulir respuestas y encontrar puntos débiles.");}
+  if(difficulty==="alta")s.push("Reserva más tiempo para los temas difíciles y repásalos varias veces.");
+  if(examType==="test")s.push("Incluye preguntas tipo test cada día y revisa por qué cada respuesta es correcta o incorrecta.");
+  if(examType==="desarrollo")s.push("Practica respuestas completas, estructura de argumentos y corrección con rúbrica.");
+  if(examType==="problemas")s.push("Prioriza ejercicios, errores frecuentes y práctica paso a paso.");
+  if(examType==="oral")s.push("Practica explicaciones en voz alta y pide a la IA preguntas de seguimiento.");
+  if(examType==="mixto")s.push("Combina resumen, preguntas tipo test, respuestas cortas y simulacros.");
+  return s;
+}
+function buildDailyPlan(days,topics,hoursDay,difficulty){
+  const totalDays=Math.max(1,Math.min(days||7,14));
+  const totalTopics=Math.max(1,topics||1);
+  const topicsPerDay=Math.max(1,Math.ceil(totalTopics/Math.max(1,totalDays-2)));
+  let plan=[];
+  for(let day=1;day<=totalDays;day++){
+    let title="",tasks=[];
+    if(day===1){title="Diagnóstico y organización";tasks=["Haz una lista de todos los temas y marca cuáles llevas peor.","Pide a la IA un esquema general de la asignatura.","Ordena los temas por dificultad y urgencia.","Crea una lista de dudas iniciales."];}
+    else if(day===totalDays){title="Repaso final y simulacro";tasks=["Repasa solo esquemas, errores frecuentes y conceptos clave.","Haz un simulacro corto adaptado al tipo de examen.","Corrige tus respuestas y revisa los fallos más repetidos.","Evita estudiar contenido nuevo salvo que sea imprescindible."];}
+    else if(day===totalDays-1){title="Práctica intensiva y corrección";tasks=["Haz preguntas de examen de los temas más importantes.","Corrige tus respuestas con el Corrector de Respuestas con IA.","Repasa los temas con más errores.","Crea una lista final de puntos débiles."];}
+    else{const start=Math.min(totalTopics,(day-2)*topicsPerDay+1);const end=Math.min(totalTopics,start+topicsPerDay-1);title="Estudio activo de temas "+start+" - "+end;tasks=["Estudia los temas "+start+" a "+end+" con esquema y resumen.","Pide a la IA una explicación sencilla de los puntos que no entiendas.","Crea preguntas de práctica sobre esos temas.","Haz una mini revisión al final del día con 5 conceptos clave."];}
+    if(hoursDay&&hoursDay<=1.5)tasks.push("Como tienes poco tiempo diario, prioriza lo esencial y evita resúmenes demasiado largos.");
+    if(hoursDay&&hoursDay>=4)tasks.push("Divide el estudio en bloques de 50 minutos con descansos de 10 minutos.");
+    if(difficulty==="alta")tasks.push("Dedica al menos un bloque a los temas más difíciles aunque no toque avanzar temario.");
+    plan.push({day,title,tasks});
+  }
+  return plan;
+}
+function buildPrompt(subject,examDate,days,topics,level,hoursDay,difficulty,examType,goal,extra){
+return `Actúa como un planificador de estudio experto.
+
+Quiero que me ayudes a organizar un plan de estudio realista y eficaz.
+
+Datos:
+- Asignatura: ${subject}
+- Fecha del examen: ${examDate||"no indicada"}
+- Días disponibles: ${days!==null?days:"no indicado"}
+- Número de temas: ${topics}
+- Nivel actual: ${level}
+- Tiempo disponible al día: ${hoursDay} horas
+- Dificultad percibida: ${difficulty}
+- Tipo de examen: ${examType}
+- Objetivo: ${goal||"aprobar y estudiar con orden"}
+- Información extra: ${extra||"sin información adicional"}
+
+Quiero que me prepares:
+1. Un plan día por día.
+2. Qué temas estudiar primero.
+3. Qué repasar cada día.
+4. Qué preguntas practicar.
+5. Cómo usar inteligencia artificial para estudiar sin copiar.
+6. Qué errores debo evitar.
+7. Un resumen final con prioridades.
+
+Hazlo con un tono claro, práctico y exigente.`;
+}
+function generateStudyPlan(){
+  const subject=v("subject")||"Asignatura sin especificar";
+  const examDate=v("examDate");
+  const topics=parseInt(v("topics"))||1;
+  const hoursDay=parseFloat(v("hoursDay"))||1;
+  const level=v("level")||"medio";
+  const difficulty=v("difficulty")||"media";
+  const examType=v("examType")||"mixto";
+  const goal=v("goal");
+  const extra=v("extra");
+  const tool=v("tool")||"ChatGPT";
+  const d=daysUntil(examDate);
+  const usableDays=d!==null&&d>0?d:7;
+  const strategy=getStrategy(level,difficulty,examType);
+  const plan=buildDailyPlan(usableDays,topics,hoursDay,difficulty);
+  lastPlannerPrompt=buildPrompt(subject,examDate,usableDays,topics,level,hoursDay,difficulty,examType,goal,extra);
+  let html=`<h2>Plan de estudio personalizado</h2>
+  <div class="result-summary"><div class="summary-card"><span>Asignatura</span><strong>${subject}</strong></div><div class="summary-card"><span>Días útiles</span><strong>${usableDays}</strong></div><div class="summary-card"><span>Temas</span><strong>${topics}</strong></div></div>
+  <h3>Estrategia recomendada</h3><ul>${strategy.map(x=>`<li>${x}</li>`).join("")}</ul>
+  <h3>Plan diario</h3><div class="plan-list">${plan.map(item=>`<div class="plan-day"><h3>Día ${item.day}: ${item.title}</h3><ul>${item.tasks.map(t=>`<li>${t}</li>`).join("")}</ul></div>`).join("")}</div>
+  <h3>Prompt para usar en ${tool}</h3><div class="prompt-output">${lastPlannerPrompt}</div>`;
+  if(d!==null&&d<=0){html+=`<div class="study-warning"><strong>Atención:</strong> la fecha del examen parece ser hoy o ya haber pasado. He generado un plan base de 7 días para que puedas adaptarlo.</div>`;}
+  document.getElementById("plannerResult").innerHTML=html;
+}
+function copyPlannerPrompt(){
+  if(!lastPlannerPrompt){alert("Primero genera un plan de estudio.");return;}
+  navigator.clipboard.writeText(lastPlannerPrompt).then(()=>alert("Prompt copiado. Ahora puedes pegarlo en tu herramienta de IA.")).catch(()=>alert("No se pudo copiar automáticamente. Selecciona el texto y cópialo manualmente."));
+}
+function resetPlanner(){
+  document.getElementById("studyPlannerForm").reset();lastPlannerPrompt="";
+  document.getElementById("plannerResult").innerHTML='<h2>Tu plan aparecerá aquí</h2><div class="result-empty">Completa los campos y pulsa “Crear plan de estudio”. La herramienta generará una propuesta organizada por días y un prompt final para usar en tu IA favorita.</div>';
+}
+</script>
+</body>
+</html>
