@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Generador de Flashcards con IA | TecnIA</title>
+  <meta name="description" content="Crea flashcards de estudio con inteligencia artificial: tarjetas de definición, pregunta-respuesta, tipo test, verdadero/falso y repaso activo para preparar exámenes.">
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .flash-hero {
+      margin: 44px auto 30px;
+      padding: 72px 42px;
+      border-radius: 38px;
+      color: #ffffff;
+      background:
+        linear-gradient(rgba(7, 17, 31, 0.78), rgba(7, 17, 31, 0.88)),
+        url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80") center/cover;
+      box-shadow: 0 28px 70px rgba(15, 23, 42, 0.22);
+    }
+
+    .flash-hero .article-tag {
+      color: #5eead4;
+      background: rgba(255, 255, 255, 0.10);
+      border-color: rgba(255, 255, 255, 0.20);
+    }
+
+    .flash-hero h1 {
+      max-width: 900px;
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
+      line-height: 1.05;
+      letter-spacing: -1.8px;
+      margin-bottom: 22px;
+      color: #ffffff;
+    }
+
+    .flash-hero p {
+      max-width: 760px;
+      color: #dbeafe;
+      font-size: 1.16rem;
+      line-height: 1.85;
+      margin-bottom: 30px;
+    }
+
+    .flash-layout {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 28px;
+      align-items: start;
+      margin-top: 36px;
+    }
+
+    .flash-panel,
+    .flash-result {
+      background: #ffffff;
+      border: 1px solid #dbeafe;
+      border-radius: 28px;
+      padding: 30px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.09);
+    }
+
+    .flash-panel h2,
+    .flash-result h2 {
+      margin-top: 0;
+      color: #0f172a;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .form-field.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-field label {
+      font-weight: 800;
+      color: #0f172a;
+      font-size: 0.95rem;
+    }
+
+    .helper-text {
+      color: #64748b;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .flash-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .result-empty {
+      color: #64748b;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 20px;
+      padding: 22px;
+      line-height: 1.7;
+    }
+
+    .flash-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 22px 0;
+    }
+
+    .summary-card {
+      background: linear-gradient(135deg, #eff6ff, #f8fafc);
+      border: 1px solid #dbeafe;
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .summary-card span {
+      display: block;
+      color: #64748b;
+      font-size: 0.84rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .summary-card strong {
+      color: #0f172a;
+      font-size: 1.2rem;
+    }
+
+    .flashcard-types {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .flash-type {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-left: 6px solid #2563eb;
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    .flash-type:nth-child(even) {
+      border-left-color: #14b8a6;
+    }
+
+    .flash-type h3 {
+      margin: 0 0 8px;
+      color: #0f172a;
+    }
+
+    .flash-type p,
+    .flash-type li {
+      color: #334155;
+      line-height: 1.7;
+    }
+
+    .method-box {
+      margin-top: 22px;
+      padding: 22px;
+      border-radius: 22px;
+      background: #f8fafc;
+      border: 1px solid #dbeafe;
+    }
+
+    .method-box h3 {
+      margin-top: 0;
+      color: #0f172a;
+    }
+
+    .method-box ol {
+      margin-left: 20px;
+    }
+
+    .method-box li {
+      color: #334155;
+      line-height: 1.8;
+      margin-bottom: 8px;
+    }
+
+    .prompt-output {
+      margin-top: 24px;
+      background: #0f172a !important;
+      color: #e0f2fe !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      border-radius: 22px;
+      padding: 22px;
+      line-height: 1.75;
+      white-space: pre-wrap;
+    }
+
+    .study-warning {
+      margin-top: 22px;
+      padding: 20px;
+      border-radius: 20px;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      color: #7c2d12;
+      line-height: 1.75;
+    }
+
+    .study-warning strong {
+      color: #9a3412;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 26px;
+    }
+
+    .mini-card {
+      background: #ffffff;
+      border: 1px solid #dbeafe;
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.07);
+    }
+
+    .mini-card h3 {
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+
+    .mini-card p {
+      color: #334155;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 980px) {
+      .flash-layout,
+      .flash-summary,
+      .mini-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .flash-hero {
+        padding: 48px 24px;
+        border-radius: 28px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .flash-panel,
+      .flash-result {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <nav class="navbar">
+    <a href="index.html" class="logo">Tecn<span>IA</span></a>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="empieza-aqui.html">Empieza aquí</a></li>
+      <li><a href="articulos.html">IA/Artículos</a></li>
+      <li><a href="herramientas.html">Herramientas</a></li>
+      <li><a href="herramientas-interactivas.html">Interactivas</a></li>
+      <li><a href="noticias.html">Noticias</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+  <section class="flash-hero">
+    <span class="article-tag">Herramienta interactiva</span>
+    <h1>Generador de Flashcards con IA</h1>
+    <p>
+      Convierte tus apuntes, temas o conceptos en flashcards útiles para estudiar: definición,
+      pregunta-respuesta, tipo test, verdadero/falso y explicación con tus palabras.
+    </p>
+
+    <div class="route-actions">
+      <a href="#generador" class="btn btn-primary">Crear flashcards</a>
+      <a href="planificador-estudio-ia.html" class="btn btn-outline">Planificador IA</a>
+      <a href="modo-examen-ia.html" class="btn btn-outline">Modo Examen IA</a>
+    </div>
+  </section>
+
+  <article class="article-page">
+
+    <span class="article-tag">Memorización activa</span>
+
+    <h1>Crea flashcards inteligentes para estudiar con IA</h1>
+
+    <p class="article-intro">
+      Las flashcards no sirven solo para memorizar definiciones. Bien usadas, pueden ayudarte a entender,
+      practicar, detectar lagunas y repasar antes de un examen. Esta herramienta crea un prompt completo
+      para que una IA genere tarjetas adaptadas a tu asignatura, nivel y tipo de examen.
+    </p>
+
+    <h2>Por qué usar flashcards con inteligencia artificial</h2>
+
+    <p>
+      La IA puede ayudarte a transformar apuntes largos en preguntas concretas. Eso es útil porque estudiar
+      no es solo leer: también necesitas recordar, explicar, comparar y corregir errores.
+    </p>
+
+    <div class="mini-grid">
+      <div class="mini-card">
+        <h3>Memoriza mejor</h3>
+        <p>Convierte conceptos largos en preguntas pequeñas y fáciles de repasar.</p>
+      </div>
+
+      <div class="mini-card">
+        <h3>Detecta fallos</h3>
+        <p>Las tarjetas te enseñan rápidamente qué sabes y qué necesitas repasar.</p>
+      </div>
+
+      <div class="mini-card">
+        <h3>Practica activo</h3>
+        <p>No solo lees: respondes, corriges y explicas con tus propias palabras.</p>
+      </div>
+    </div>
+
+    <section id="generador" class="flash-layout">
+
+      <div class="flash-panel">
+        <h2>Genera tus flashcards</h2>
+        <p class="helper-text">
+          Rellena los datos y pega tus apuntes o describe el tema. La herramienta generará una estrategia
+          y un prompt completo para copiar en tu IA favorita.
+        </p>
+
+        <form id="flashForm" onsubmit="event.preventDefault(); generateFlashcardsPrompt();">
+          <div class="form-grid">
+
+            <div class="form-field">
+              <label for="subject">Asignatura</label>
+              <input id="subject" type="text" placeholder="Ej: Biología, Historia, Derecho...">
+            </div>
+
+            <div class="form-field">
+              <label for="topic">Tema concreto</label>
+              <input id="topic" type="text" placeholder="Ej: Revolución Industrial">
+            </div>
+
+            <div class="form-field">
+              <label for="level">Nivel</label>
+              <select id="level">
+                <option value="">Selecciona</option>
+                <option value="básico">Básico</option>
+                <option value="intermedio">Intermedio</option>
+                <option value="avanzado">Avanzado</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="examType">Tipo de examen</label>
+              <select id="examType">
+                <option value="">Selecciona</option>
+                <option value="test">Tipo test</option>
+                <option value="desarrollo">Desarrollo</option>
+                <option value="oral">Oral</option>
+                <option value="problemas">Problemas o ejercicios</option>
+                <option value="mixto">Mixto</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="quantity">Número de flashcards</label>
+              <select id="quantity">
+                <option value="10">10 flashcards</option>
+                <option value="15">15 flashcards</option>
+                <option value="20">20 flashcards</option>
+                <option value="30">30 flashcards</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="tool">IA que quieres usar</label>
+              <select id="tool">
+                <option value="ChatGPT">ChatGPT</option>
+                <option value="Gemini">Gemini</option>
+                <option value="Claude">Claude</option>
+                <option value="Copilot">Copilot</option>
+                <option value="NotebookLM">NotebookLM</option>
+              </select>
+            </div>
+
+            <div class="form-field full">
+              <label for="cardType">Tipo de flashcards</label>
+              <select id="cardType">
+                <option value="mezcladas">Mezcladas: definición, test, verdadero/falso y explicación</option>
+                <option value="definición">Definiciones y conceptos clave</option>
+                <option value="pregunta-respuesta">Pregunta y respuesta corta</option>
+                <option value="tipo test">Tipo test</option>
+                <option value="verdadero/falso">Verdadero o falso</option>
+                <option value="explicar">Explicar con tus palabras</option>
+              </select>
+            </div>
+
+            <div class="form-field full">
+              <label for="goal">Objetivo</label>
+              <select id="goal">
+                <option value="entender y memorizar">Entender y memorizar</option>
+                <option value="repasar rápido">Repasar rápido</option>
+                <option value="preparar examen">Preparar examen</option>
+                <option value="detectar fallos">Detectar fallos</option>
+                <option value="explicar mejor">Aprender a explicar mejor</option>
+              </select>
+            </div>
+
+            <div class="form-field full">
+              <label for="notes">Apuntes, texto o explicación del tema</label>
+              <textarea id="notes" rows="8" placeholder="Pega aquí tus apuntes o describe el tema que quieres convertir en flashcards..."></textarea>
+            </div>
+
+            <div class="form-field full">
+              <label for="extra">Instrucciones extra opcionales</label>
+              <textarea id="extra" rows="3" placeholder="Ej: quiero que sean difíciles, que incluya fechas, que me pregunte como profesor, que evite respuestas muy largas..."></textarea>
+            </div>
+
+          </div>
+
+          <div class="flash-actions">
+            <button type="submit" class="btn btn-primary">Generar estrategia y prompt</button>
+            <button type="button" class="btn btn-outline" onclick="copyFlashPrompt()">Copiar prompt</button>
+            <button type="button" class="btn btn-outline" onclick="resetFlashGenerator()">Limpiar</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="flash-result" id="flashResult">
+        <h2>Tu resultado aparecerá aquí</h2>
+        <div class="result-empty">
+          Completa los campos y pulsa “Generar estrategia y prompt”. Verás qué tipo de tarjetas te conviene usar,
+          cómo repasarlas y el prompt listo para copiar.
+        </div>
+      </div>
+
+    </section>
+
+    <div class="study-warning">
+      <strong>Consejo:</strong> no uses flashcards solo para memorizar palabras. Úsalas también para explicar,
+      comparar conceptos, detectar errores y entrenar respuestas de examen.
+    </div>
+
+    <section class="related-articles">
+      <h2>Continúa estudiando con TecnIA</h2>
+
+      <div class="related-links">
+        <a href="ruta-tecnia-ia-estudiantes.html">Ruta TecnIA de 7 días</a>
+        <a href="planificador-estudio-ia.html">Planificador de Estudio con IA</a>
+        <a href="modo-examen-ia.html">Modo Examen IA</a>
+        <a href="corrector-respuestas-ia.html">Corrector de Respuestas con IA</a>
+        <a href="laboratorio-prompts-ia.html">Laboratorio de Prompts de Estudio</a>
+      </div>
+    </section>
+
+  </article>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 TecnIA. Todos los derechos reservados.</p>
+    <p>
+      <a href="sobre-nosotros.html">Sobre nosotros</a> |
+      <a href="contacto.html">Contacto</a> |
+      <a href="politica-privacidad.html">Política de privacidad</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+  let lastFlashPrompt = "";
+
+  function getValue(id) {
+    return document.getElementById(id).value.trim();
+  }
+
+  function getRecommendedTypes(examType, cardType, goal) {
+    let types = [];
+
+    if (cardType === "mezcladas") {
+      types.push({
+        title: "Flashcards de definición",
+        text: "Útiles para memorizar conceptos clave, autores, fechas, fórmulas o términos importantes."
+      });
+      types.push({
+        title: "Flashcards de pregunta-respuesta",
+        text: "Sirven para practicar recuperación activa: leer una pregunta y responder sin mirar apuntes."
+      });
+      types.push({
+        title: "Flashcards tipo test",
+        text: "Perfectas para entrenar exámenes con opciones y detectar confusiones frecuentes."
+      });
+      types.push({
+        title: "Flashcards de explicación",
+        text: "Te obligan a explicar con tus palabras, no solo a reconocer la respuesta."
+      });
+    } else {
+      types.push({
+        title: "Flashcards de " + cardType,
+        text: "Este formato se adapta a tu objetivo principal y evita mezclar demasiados tipos de pregunta."
+      });
+    }
+
+    if (examType === "desarrollo" || goal === "explicar mejor") {
+      types.push({
+        title: "Tarjetas de respuesta larga",
+        text: "Incluye tarjetas que pidan explicar causas, consecuencias, diferencias o ejemplos."
+      });
+    }
+
+    if (examType === "oral") {
+      types.push({
+        title: "Tarjetas de exposición oral",
+        text: "Formula tarjetas que empiecen por 'explica en voz alta...' para entrenar fluidez."
+      });
+    }
+
+    if (examType === "problemas") {
+      types.push({
+        title: "Tarjetas de procedimiento",
+        text: "Crea tarjetas que pregunten pasos, fórmulas, errores típicos y resolución guiada."
+      });
+    }
+
+    return types;
+  }
+
+  function getStudyMethod(goal) {
+    if (goal === "repasar rápido") {
+      return [
+        "Primera vuelta: responde rápido sin mirar apuntes.",
+        "Segunda vuelta: marca solo las tarjetas falladas.",
+        "Tercera vuelta: repasa únicamente fallos y conceptos dudosos."
+      ];
+    }
+
+    if (goal === "detectar fallos") {
+      return [
+        "Primera vuelta: responde todas las tarjetas y marca errores.",
+        "Segunda vuelta: pide a la IA que agrupe tus fallos por tema.",
+        "Tercera vuelta: crea nuevas tarjetas solo de tus errores frecuentes."
+      ];
+    }
+
+    if (goal === "preparar examen") {
+      return [
+        "Primera vuelta: memoriza conceptos y definiciones clave.",
+        "Segunda vuelta: practica preguntas tipo examen.",
+        "Tercera vuelta: simula el examen mezclando tarjetas difíciles y medias."
+      ];
+    }
+
+    return [
+      "Primera vuelta: entiende el concepto con una respuesta sencilla.",
+      "Segunda vuelta: responde sin mirar y corrige errores.",
+      "Tercera vuelta: explica el concepto con tus propias palabras y un ejemplo."
+    ];
+  }
+
+  function buildFlashPrompt(subject, topic, level, examType, quantity, cardType, goal, notes, extra) {
+    return `Actúa como un profesor experto en técnicas de estudio y creación de flashcards.
+
+Quiero que conviertas el siguiente contenido en flashcards útiles para estudiar.
+
+Datos:
+- Asignatura: ${subject}
+- Tema: ${topic}
+- Nivel del estudiante: ${level}
+- Tipo de examen: ${examType}
+- Número de flashcards: ${quantity}
+- Tipo de flashcards: ${cardType}
+- Objetivo: ${goal}
+- Instrucciones extra: ${extra || "sin instrucciones extra"}
+
+Contenido o apuntes:
+${notes || "No he pegado apuntes. Usa el tema indicado para crear tarjetas generales."}
+
+Quiero que generes:
+1. ${quantity} flashcards claras y útiles.
+2. Mezcla preguntas fáciles, medias y difíciles.
+3. Incluye respuesta correcta.
+4. Añade una explicación breve en cada respuesta.
+5. Señala posibles errores comunes.
+6. Si hay conceptos parecidos, crea tarjetas para diferenciarlos.
+7. Al final, crea una mini rutina de repaso en 3 vueltas.
+
+Formato:
+- Pregunta:
+- Respuesta:
+- Explicación:
+- Dificultad:
+- Error común:`;
+  }
+
+  function generateFlashcardsPrompt() {
+    const subject = getValue("subject") || "Asignatura sin especificar";
+    const topic = getValue("topic") || "Tema sin especificar";
+    const level = getValue("level") || "intermedio";
+    const examType = getValue("examType") || "mixto";
+    const quantity = getValue("quantity") || "15";
+    const tool = getValue("tool") || "ChatGPT";
+    const cardType = getValue("cardType") || "mezcladas";
+    const goal = getValue("goal") || "entender y memorizar";
+    const notes = getValue("notes");
+    const extra = getValue("extra");
+
+    const types = getRecommendedTypes(examType, cardType, goal);
+    const method = getStudyMethod(goal);
+
+    lastFlashPrompt = buildFlashPrompt(subject, topic, level, examType, quantity, cardType, goal, notes, extra);
+
+    const result = document.getElementById("flashResult");
+
+    const html = `
+      <h2>Tu estrategia de flashcards</h2>
+
+      <div class="flash-summary">
+        <div class="summary-card">
+          <span>Asignatura</span>
+          <strong>${subject}</strong>
+        </div>
+        <div class="summary-card">
+          <span>Tema</span>
+          <strong>${topic}</strong>
+        </div>
+        <div class="summary-card">
+          <span>Tarjetas</span>
+          <strong>${quantity}</strong>
+        </div>
+      </div>
+
+      <h3>Tipos de tarjetas recomendadas</h3>
+      <div class="flashcard-types">
+        ${types.map(type => `
+          <div class="flash-type">
+            <h3>${type.title}</h3>
+            <p>${type.text}</p>
+          </div>
+        `).join("")}
+      </div>
+
+      <div class="method-box">
+        <h3>Método de repaso en 3 vueltas</h3>
+        <ol>
+          ${method.map(step => `<li>${step}</li>`).join("")}
+        </ol>
+      </div>
+
+      <h3>Prompt para usar en ${tool}</h3>
+      <div class="prompt-output">${lastFlashPrompt}</div>
+    `;
+
+    result.innerHTML = html;
+  }
+
+  function copyFlashPrompt() {
+    if (!lastFlashPrompt) {
+      alert("Primero genera el prompt de flashcards.");
+      return;
+    }
+
+    navigator.clipboard.writeText(lastFlashPrompt)
+      .then(() => alert("Prompt copiado. Ahora puedes pegarlo en tu herramienta de IA."))
+      .catch(() => alert("No se pudo copiar automáticamente. Selecciona el texto y cópialo manualmente."));
+  }
+
+  function resetFlashGenerator() {
+    document.getElementById("flashForm").reset();
+    lastFlashPrompt = "";
+    document.getElementById("flashResult").innerHTML = `
+      <h2>Tu resultado aparecerá aquí</h2>
+      <div class="result-empty">
+        Completa los campos y pulsa “Generar estrategia y prompt”. Verás qué tipo de tarjetas te conviene usar,
+        cómo repasarlas y el prompt listo para copiar.
+      </div>
+    `;
+  }
+</script>
+
+</body>
+</html>
