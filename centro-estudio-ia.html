@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Centro de Estudio con IA | TecnIA</title>
+  <meta name="description" content="Centro de Estudio con IA de TecnIA: organiza tu estudio, crea flashcards, prepara exámenes, corrige respuestas y aprende a usar inteligencia artificial con método.">
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .study-hero {
+      margin: 44px auto 30px;
+      padding: 76px 42px;
+      border-radius: 38px;
+      color: #ffffff;
+      background:
+        linear-gradient(rgba(7,17,31,.78),rgba(7,17,31,.88)),
+        url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1400&q=80") center/cover;
+      box-shadow: 0 28px 70px rgba(15,23,42,.22);
+    }
+
+    .study-hero .article-tag {
+      color: #5eead4;
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.20);
+    }
+
+    .study-hero h1 {
+      max-width: 940px;
+      font-size: clamp(2.5rem,5vw,4.6rem);
+      line-height: 1.05;
+      letter-spacing: -1.8px;
+      margin-bottom: 22px;
+      color: #fff;
+    }
+
+    .study-hero p {
+      max-width: 800px;
+      color: #dbeafe;
+      font-size: 1.18rem;
+      line-height: 1.85;
+      margin-bottom: 30px;
+    }
+
+    .study-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 22px;
+      margin-top: 34px;
+    }
+
+    .study-card {
+      position: relative;
+      background: #fff;
+      border: 1px solid #dbeafe;
+      border-radius: 26px;
+      padding: 28px;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 16px 38px rgba(15,23,42,.08);
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+      overflow: hidden;
+    }
+
+    .study-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 5px;
+      background: linear-gradient(90deg,#2563eb,#14b8a6);
+    }
+
+    .study-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 24px 55px rgba(15,23,42,.13);
+      border-color: #93c5fd;
+    }
+
+    .study-card span {
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: .82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .study-card h2 {
+      margin: 0 0 12px;
+      color: #0f172a;
+      font-size: 1.32rem;
+    }
+
+    .study-card p {
+      color: #334155;
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .study-card strong {
+      color: #0f172a;
+    }
+
+    .study-section {
+      margin-top: 54px;
+    }
+
+    .study-section h2 {
+      color: #0f172a;
+      margin-bottom: 14px;
+    }
+
+    .study-section > p {
+      color: #334155;
+      line-height: 1.8;
+      max-width: 900px;
+    }
+
+    .exam-route {
+      margin-top: 28px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .exam-step {
+      display: grid;
+      grid-template-columns: 70px 1fr auto;
+      gap: 18px;
+      align-items: center;
+      background: #fff;
+      border: 1px solid #dbeafe;
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 0 12px 30px rgba(15,23,42,.07);
+    }
+
+    .exam-number {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: linear-gradient(135deg,#2563eb,#14b8a6);
+      color: white;
+      font-weight: 900;
+      font-size: 1.25rem;
+    }
+
+    .exam-step h3 {
+      margin: 0 0 6px;
+      color: #0f172a;
+    }
+
+    .exam-step p {
+      margin: 0;
+      color: #334155;
+      line-height: 1.65;
+    }
+
+    .routine-grid {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 18px;
+      margin-top: 26px;
+    }
+
+    .routine-card {
+      background: #ffffff;
+      border: 1px solid #dbeafe;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 12px 30px rgba(15,23,42,.07);
+    }
+
+    .routine-card h3 {
+      margin-top: 0;
+      color: #0f172a;
+    }
+
+    .routine-card p,
+    .routine-card li {
+      color: #334155;
+      line-height: 1.75;
+    }
+
+    .routine-card ul {
+      margin-left: 20px;
+    }
+
+    .study-note {
+      margin-top: 34px;
+      padding: 24px;
+      border-radius: 24px;
+      background: #f8fafc;
+      border: 1px solid #dbeafe;
+      color: #334155;
+      line-height: 1.8;
+    }
+
+    .study-note strong {
+      color: #0f172a;
+    }
+
+    @media(max-width:980px){
+      .study-grid{grid-template-columns:1fr 1fr}
+      .routine-grid{grid-template-columns:1fr}
+      .exam-step{grid-template-columns:60px 1fr}
+      .exam-step .btn{grid-column:1/-1;width:fit-content}
+    }
+
+    @media(max-width:680px){
+      .study-hero{padding:48px 24px;border-radius:28px}
+      .study-grid{grid-template-columns:1fr}
+      .exam-step{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <nav class="navbar">
+    <a href="index.html" class="logo">Tecn<span>IA</span></a>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="que-necesitas-hacer-con-ia.html">Resolver con IA</a></li>
+      <li><a href="metodo-tecnia.html">Método TecnIA</a></li>
+      <li><a href="empieza-aqui.html">Empieza aquí</a></li>
+      <li><a href="articulos.html">IA/Artículos</a></li>
+      <li><a href="herramientas.html">Herramientas</a></li>
+      <li><a href="herramientas-interactivas.html">Interactivas</a></li>
+      <li><a href="noticias.html">Noticias</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+  <section class="study-hero">
+    <span class="article-tag">Centro práctico</span>
+    <h1>Centro de Estudio con IA</h1>
+    <p>
+      Tu espacio para estudiar mejor con inteligencia artificial. Organiza tu tiempo,
+      crea flashcards, practica exámenes, corrige respuestas y sigue el Método TecnIA
+      sin perderte entre herramientas sueltas.
+    </p>
+
+    <div class="route-actions">
+      <a href="#centro" class="btn btn-primary">Empezar a estudiar</a>
+      <a href="planificador-estudio-ia.html" class="btn btn-outline">Organizar mi estudio</a>
+      <a href="ruta-tecnia-ia-estudiantes.html" class="btn btn-outline">Ruta TecnIA</a>
+    </div>
+  </section>
+
+  <article class="article-page">
+
+    <span class="article-tag">Modo estudiante</span>
+
+    <h1>Todo lo que necesitas para estudiar con IA en un solo sitio</h1>
+
+    <p class="article-intro">
+      El Centro de Estudio con IA reúne las herramientas y guías de TecnIA pensadas para estudiantes.
+      La idea es que no tengas que saltar de una web a otra: eliges qué necesitas y vas directo al recurso adecuado.
+    </p>
+
+    <section id="centro" class="study-section">
+      <h2>¿Qué necesitas hacer hoy?</h2>
+      <p>
+        Elige la situación que más se parece a tu problema y empieza por ahí.
+      </p>
+
+      <div class="study-grid">
+
+        <a href="planificador-estudio-ia.html" class="study-card">
+          <span>Organizar</span>
+          <h2>Tengo un examen y no sé cómo organizarme</h2>
+          <p>Crea un plan de estudio según fecha, temas, dificultad, nivel y horas disponibles.</p>
+          <strong>Usar Planificador →</strong>
+        </a>
+
+        <a href="generador-flashcards-ia.html" class="study-card">
+          <span>Repasar</span>
+          <h2>Tengo apuntes y quiero repasarlos</h2>
+          <p>Convierte temas y conceptos en flashcards para memorizar y detectar fallos.</p>
+          <strong>Crear Flashcards →</strong>
+        </a>
+
+        <a href="modo-examen-ia.html" class="study-card">
+          <span>Practicar</span>
+          <h2>Quiero entrenar como si fuera un examen</h2>
+          <p>Genera preguntas tipo test, desarrollo, oral o mixtas para practicar de verdad.</p>
+          <strong>Entrar en Modo Examen →</strong>
+        </a>
+
+        <a href="corrector-respuestas-ia.html" class="study-card">
+          <span>Corregir</span>
+          <h2>Quiero saber si mi respuesta está bien</h2>
+          <p>Corrige respuestas con rúbrica, detecta errores y recibe mejoras concretas.</p>
+          <strong>Corregir respuesta →</strong>
+        </a>
+
+        <a href="laboratorio-prompts-ia.html" class="study-card">
+          <span>Prompts</span>
+          <h2>Quiero pedirle mejor las cosas a la IA</h2>
+          <p>Crea prompts más claros para estudiar, resumir, practicar o corregir.</p>
+          <strong>Crear prompts →</strong>
+        </a>
+
+        <a href="ruta-tecnia-ia-estudiantes.html" class="study-card">
+          <span>Ruta</span>
+          <h2>No sé por dónde empezar</h2>
+          <p>Sigue un camino guiado para aprender a usar IA al estudiar paso a paso.</p>
+          <strong>Seguir Ruta TecnIA →</strong>
+        </a>
+
+      </div>
+    </section>
+
+    <section class="study-section">
+      <h2>Ruta rápida si tienes un examen</h2>
+      <p>
+        Si tienes un examen cerca y quieres usar TecnIA con orden, sigue esta secuencia:
+      </p>
+
+      <div class="exam-route">
+
+        <div class="exam-step">
+          <div class="exam-number">1</div>
+          <div>
+            <h3>Planifica</h3>
+            <p>Organiza temas, días, dificultad y tiempo disponible.</p>
+          </div>
+          <a href="planificador-estudio-ia.html" class="btn btn-primary">Planificador</a>
+        </div>
+
+        <div class="exam-step">
+          <div class="exam-number">2</div>
+          <div>
+            <h3>Entiende</h3>
+            <p>Usa IA para aclarar conceptos, crear ejemplos y ordenar ideas.</p>
+          </div>
+          <a href="metodo-tecnia.html" class="btn btn-primary">Método TecnIA</a>
+        </div>
+
+        <div class="exam-step">
+          <div class="exam-number">3</div>
+          <div>
+            <h3>Memoriza</h3>
+            <p>Crea flashcards para repasar conceptos, fechas, fórmulas o definiciones.</p>
+          </div>
+          <a href="generador-flashcards-ia.html" class="btn btn-primary">Flashcards</a>
+        </div>
+
+        <div class="exam-step">
+          <div class="exam-number">4</div>
+          <div>
+            <h3>Practica</h3>
+            <p>Genera preguntas y simula condiciones de examen.</p>
+          </div>
+          <a href="modo-examen-ia.html" class="btn btn-primary">Modo Examen</a>
+        </div>
+
+        <div class="exam-step">
+          <div class="exam-number">5</div>
+          <div>
+            <h3>Corrige</h3>
+            <p>Revisa tus respuestas y convierte los errores en mejoras.</p>
+          </div>
+          <a href="corrector-respuestas-ia.html" class="btn btn-primary">Corrector</a>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="study-section">
+      <h2>Rutinas de estudio con TecnIA</h2>
+      <p>
+        Puedes usar TecnIA de varias formas según el tiempo que tengas.
+      </p>
+
+      <div class="routine-grid">
+
+        <div class="routine-card">
+          <h3>Si tienes 7 días</h3>
+          <ul>
+            <li>Día 1: organiza temas con el Planificador.</li>
+            <li>Día 2: entiende conceptos difíciles.</li>
+            <li>Día 3: crea flashcards.</li>
+            <li>Día 4: practica preguntas.</li>
+            <li>Día 5: haz simulacros.</li>
+            <li>Día 6: corrige respuestas.</li>
+            <li>Día 7: repasa errores y conceptos clave.</li>
+          </ul>
+        </div>
+
+        <div class="routine-card">
+          <h3>Si tienes poco tiempo</h3>
+          <ul>
+            <li>Prioriza los temas más importantes.</li>
+            <li>Crea flashcards solo de conceptos clave.</li>
+            <li>Haz preguntas tipo examen.</li>
+            <li>Corrige tus respuestas más débiles.</li>
+            <li>No intentes estudiarlo todo desde cero.</li>
+          </ul>
+        </div>
+
+        <div class="routine-card">
+          <h3>Si vas perdido/a</h3>
+          <ul>
+            <li>Empieza por la Ruta TecnIA.</li>
+            <li>Pide explicaciones sencillas.</li>
+            <li>Haz esquemas por bloques.</li>
+            <li>Practica con preguntas fáciles primero.</li>
+            <li>Sube la dificultad poco a poco.</li>
+          </ul>
+        </div>
+
+        <div class="routine-card">
+          <h3>Si quieres subir nota</h3>
+          <ul>
+            <li>Practica respuestas completas.</li>
+            <li>Usa el Corrector con rúbrica.</li>
+            <li>Detecta errores repetidos.</li>
+            <li>Crea nuevas flashcards de tus fallos.</li>
+            <li>Haz simulacros antes del examen.</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="study-note">
+      <strong>Consejo TecnIA:</strong> no uses la inteligencia artificial solo para obtener respuestas rápidas.
+      Úsala para organizar, practicar, corregir y mejorar. La diferencia está en el método.
+    </div>
+
+    <section class="featured-test">
+      <span>Empieza aquí</span>
+      <h2>¿Quieres que TecnIA te guíe?</h2>
+      <p>
+        Si no sabes qué herramienta usar, entra en el panel de soluciones o sigue la Ruta TecnIA.
+      </p>
+      <a href="que-necesitas-hacer-con-ia.html" class="btn btn-primary">Elegir mi problema</a>
+      <a href="ruta-tecnia-ia-estudiantes.html" class="btn btn-outline">Seguir Ruta TecnIA</a>
+    </section>
+
+    <section class="related-articles">
+      <h2>También te puede interesar</h2>
+
+      <div class="related-links">
+        <a href="metodo-tecnia.html">Método TecnIA</a>
+        <a href="que-necesitas-hacer-con-ia.html">¿Qué necesitas hacer con IA?</a>
+        <a href="como-organizar-plan-estudio-ia.html">Cómo organizar un plan de estudio con IA</a>
+        <a href="como-crear-flashcards-ia.html">Cómo crear flashcards con IA</a>
+        <a href="herramientas-interactivas.html">Herramientas interactivas</a>
+      </div>
+    </section>
+
+  </article>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 TecnIA. Todos los derechos reservados.</p>
+    <p>
+      <a href="sobre-nosotros.html">Sobre nosotros</a> |
+      <a href="contacto.html">Contacto</a> |
+      <a href="politica-privacidad.html">Política de privacidad</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
