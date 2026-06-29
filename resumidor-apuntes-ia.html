@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resumidor de Apuntes con IA | TecnIA</title>
+  <meta name="description" content="Crea prompts personalizados para resumir apuntes con inteligencia artificial sin perder lo importante. Ideal para estudiantes que quieren estudiar mejor con ChatGPT, Gemini, Claude o NotebookLM.">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+  <nav class="navbar">
+    <div class="logo">
+      <a href="index.html">TecnIA</a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="que-necesitas-hacer-con-ia.html">Resolver con IA</a></li>
+      <li><a href="metodo-tecnia.html">Método TecnIA</a></li>
+      <li><a href="centro-estudio-ia.html">Centro de Estudio</a></li>
+      <li><a href="empieza-aqui.html">Empieza aquí</a></li>
+      <li><a href="articulos.html">IA</a></li>
+      <li><a href="herramientas.html">Herramientas</a></li>
+      <li><a href="herramientas-interactivas.html">Interactivas</a></li>
+      <li><a href="noticias.html">Noticias</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="container">
+      <span class="eyebrow">Herramienta para estudiantes</span>
+      <h1>Resumidor de Apuntes con IA</h1>
+      <p>
+        Genera un prompt personalizado para resumir tus apuntes con inteligencia artificial
+        sin perder las ideas importantes, los conceptos clave ni las posibles preguntas de examen.
+      </p>
+      <a href="#herramienta" class="btn btn-primary">Crear mi prompt de resumen</a>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="intro-grid">
+        <article class="card">
+          <h2>¿Para qué sirve?</h2>
+          <p>
+            Esta herramienta te ayuda a pedirle a una IA que convierta tus apuntes en un resumen claro,
+            ordenado y útil para estudiar, evitando que el resultado sea demasiado superficial.
+          </p>
+        </article>
+
+        <article class="card">
+          <h2>Cuándo usarla</h2>
+          <p>
+            Úsala cuando tengas apuntes largos, temas densos, documentos desordenados o poco tiempo
+            para estudiar y necesites una versión más clara.
+          </p>
+        </article>
+
+        <article class="card">
+          <h2>Qué obtendrás</h2>
+          <p>
+            Un prompt listo para copiar en ChatGPT, Gemini, Claude, Copilot o NotebookLM,
+            adaptado a tu asignatura, examen y forma de estudiar.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="herramienta">
+    <div class="container">
+      <div class="tool-box">
+        <h2>Crea tu prompt para resumir apuntes</h2>
+        <p>
+          Rellena los campos y TecnIA generará una instrucción clara para que la IA te haga un resumen realmente útil.
+        </p>
+
+        <div class="form-grid">
+
+          <label>
+            Asignatura
+            <input type="text" id="asignatura" placeholder="Ejemplo: Historia, Derecho, Biología, Finanzas...">
+          </label>
+
+          <label>
+            Tema o bloque
+            <input type="text" id="tema" placeholder="Ejemplo: Revolución Industrial, sistema nervioso, fiscalidad...">
+          </label>
+
+          <label>
+            Nivel de estudios
+            <select id="nivel">
+              <option value="ESO">ESO</option>
+              <option value="Bachillerato">Bachillerato</option>
+              <option value="Universidad" selected>Universidad</option>
+              <option value="Oposición">Oposición</option>
+              <option value="Formación profesional">Formación profesional</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </label>
+
+          <label>
+            Tipo de apuntes
+            <select id="tipoApuntes">
+              <option value="apuntes largos y desordenados">Apuntes largos y desordenados</option>
+              <option value="tema de manual o libro">Tema de manual o libro</option>
+              <option value="diapositivas de clase">Diapositivas de clase</option>
+              <option value="transcripción de clase">Transcripción de clase</option>
+              <option value="documento técnico">Documento técnico</option>
+              <option value="mezcla de apuntes, esquemas y texto">Mezcla de apuntes, esquemas y texto</option>
+            </select>
+          </label>
+
+          <label>
+            Tipo de examen
+            <select id="tipoExamen">
+              <option value="tipo test">Tipo test</option>
+              <option value="preguntas cortas">Preguntas cortas</option>
+              <option value="preguntas de desarrollo" selected>Preguntas de desarrollo</option>
+              <option value="examen oral">Examen oral</option>
+              <option value="casos prácticos">Casos prácticos</option>
+              <option value="no lo sé todavía">No lo sé todavía</option>
+            </select>
+          </label>
+
+          <label>
+            Qué necesitas
+            <select id="objetivo">
+              <option value="un resumen completo para estudiar">Resumen completo para estudiar</option>
+              <option value="un resumen breve para repasar rápido">Resumen breve para repasar rápido</option>
+              <option value="un esquema ordenado por apartados">Esquema ordenado por apartados</option>
+              <option value="una explicación sencilla para entender el tema">Explicación sencilla</option>
+              <option value="un resumen con posibles preguntas de examen">Resumen con preguntas de examen</option>
+              <option value="un resumen con conceptos clave y ejemplos">Conceptos clave y ejemplos</option>
+            </select>
+          </label>
+
+          <label>
+            Herramienta de IA que vas a usar
+            <select id="herramientaIA">
+              <option value="ChatGPT" selected>ChatGPT</option>
+              <option value="Gemini">Gemini</option>
+              <option value="Claude">Claude</option>
+              <option value="Copilot">Copilot</option>
+              <option value="NotebookLM">NotebookLM</option>
+              <option value="Perplexity">Perplexity</option>
+              <option value="otra herramienta de IA">Otra herramienta</option>
+            </select>
+          </label>
+
+          <label>
+            Estilo del resumen
+            <select id="estilo">
+              <option value="claro, ordenado y fácil de memorizar">Claro y fácil de memorizar</option>
+              <option value="muy esquemático, con viñetas y apartados">Muy esquemático</option>
+              <option value="explicado como si fuera para alguien que empieza desde cero">Desde cero</option>
+              <option value="académico, preciso y con lenguaje técnico">Académico y técnico</option>
+              <option value="orientado a aprobar un examen">Orientado a aprobar</option>
+            </select>
+          </label>
+
+        </div>
+
+        <label class="full-label">
+          Pega aquí tus apuntes o describe qué vas a pegar en la IA
+          <textarea id="apuntes" rows="8" placeholder="Puedes pegar aquí tus apuntes, un fragmento del tema o simplemente escribir: voy a pegar un tema largo sobre..."></textarea>
+        </label>
+
+        <label class="full-label">
+          Instrucciones extra
+          <textarea id="extra" rows="4" placeholder="Ejemplo: quiero que mantenga fechas importantes, autores, definiciones, fórmulas, ejemplos o posibles preguntas de examen."></textarea>
+        </label>
+
+        <div class="button-row">
+          <button class="btn btn-primary" onclick="generarPrompt()">Generar prompt</button>
+          <button class="btn btn-secondary" onclick="limpiar()">Limpiar</button>
+        </div>
+
+        <div id="resultado" class="result-box" style="display:none;">
+          <h3>Tu prompt personalizado</h3>
+          <textarea id="promptFinal" rows="16" readonly></textarea>
+          <div class="button-row">
+            <button class="btn btn-primary" onclick="copiarPrompt()">Copiar prompt</button>
+          </div>
+          <p id="mensajeCopiado" class="small-note"></p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2>Cómo usar bien este prompt</h2>
+      <div class="steps-grid">
+        <article class="card">
+          <span class="step-number">1</span>
+          <h3>Pega el prompt en tu IA</h3>
+          <p>
+            Copia el prompt generado y pégalo en ChatGPT, Gemini, Claude, Copilot o NotebookLM.
+          </p>
+        </article>
+
+        <article class="card">
+          <span class="step-number">2</span>
+          <h3>Añade tus apuntes</h3>
+          <p>
+            Pega el texto completo de tus apuntes debajo del prompt. Si son muy largos, divídelos por partes.
+          </p>
+        </article>
+
+        <article class="card">
+          <span class="step-number">3</span>
+          <h3>Revisa el resultado</h3>
+          <p>
+            No estudies el resumen sin revisarlo. Comprueba fechas, definiciones, autores y conceptos importantes.
+          </p>
+        </article>
+
+        <article class="card">
+          <span class="step-number">4</span>
+          <h3>Convierte el resumen en práctica</h3>
+          <p>
+            Después, usa el resumen para crear flashcards, preguntas tipo examen o respuestas de desarrollo.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="featured-test">
+        <span>Siguiente paso</span>
+        <h2>Después de resumir, practica</h2>
+        <p>
+          Un resumen ayuda a entender, pero para recordar necesitas practicar. Usa el generador de flashcards,
+          el modo examen o el corrector de respuestas para completar tu estudio.
+        </p>
+        <div class="button-row">
+          <a href="generador-flashcards-ia.html" class="btn btn-primary">Crear flashcards</a>
+          <a href="modo-examen-ia.html" class="btn btn-secondary">Ir al Modo Examen</a>
+          <a href="corrector-respuestas-ia.html" class="btn btn-secondary">Corregir una respuesta</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2>También te puede ayudar</h2>
+      <div class="cards-grid">
+        <a href="centro-estudio-ia.html" class="card">
+          <h3>Centro de Estudio con IA</h3>
+          <p>Organiza tu estudio, resume, practica y corrige respuestas desde un solo lugar.</p>
+        </a>
+
+        <a href="planificador-estudio-ia.html" class="card">
+          <h3>Planificador de Estudio con IA</h3>
+          <p>Crea un plan de estudio adaptado a tu examen, temas y tiempo disponible.</p>
+        </a>
+
+        <a href="como-organizar-plan-estudio-ia.html" class="card">
+          <h3>Cómo organizar un plan de estudio con IA</h3>
+          <p>Aprende a usar la IA para estudiar con orden y no improvisar.</p>
+        </a>
+
+        <a href="que-necesitas-hacer-con-ia.html" class="card">
+          <h3>¿Qué necesitas hacer con IA?</h3>
+          <p>Elige tu problema y encuentra la herramienta adecuada dentro de TecnIA.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 TecnIA. Herramientas y guías para estudiar mejor con inteligencia artificial.</p>
+  </div>
+</footer>
+
+<script>
+function generarPrompt() {
+  const asignatura = document.getElementById("asignatura").value.trim() || "la asignatura";
+  const tema = document.getElementById("tema").value.trim() || "el tema";
+  const nivel = document.getElementById("nivel").value;
+  const tipoApuntes = document.getElementById("tipoApuntes").value;
+  const tipoExamen = document.getElementById("tipoExamen").value;
+  const objetivo = document.getElementById("objetivo").value;
+  const herramientaIA = document.getElementById("herramientaIA").value;
+  const estilo = document.getElementById("estilo").value;
+  const apuntes = document.getElementById("apuntes").value.trim();
+  const extra = document.getElementById("extra").value.trim();
+
+  let textoApuntes = apuntes
+    ? "Estos son mis apuntes o el contenido que quiero trabajar:\n\n" + apuntes
+    : "A continuación pegaré mis apuntes o el contenido que quiero que resumas.";
+
+  let instruccionesExtra = extra
+    ? "\n\nInstrucciones adicionales:\n" + extra
+    : "";
+
+  const prompt = `Actúa como un profesor experto y como un asistente de estudio especializado en ${asignatura}.
+
+Quiero que me ayudes a resumir unos apuntes sobre: ${tema}.
+
+Contexto:
+- Nivel de estudios: ${nivel}
+- Tipo de apuntes: ${tipoApuntes}
+- Tipo de examen: ${tipoExamen}
+- Objetivo principal: ${objetivo}
+- Estilo deseado: ${estilo}
+- Herramienta que estoy usando: ${herramientaIA}
+
+Necesito que hagas lo siguiente:
+
+1. Lee mis apuntes con atención.
+2. Identifica las ideas principales y secundarias.
+3. Elimina repeticiones, pero no elimines información importante.
+4. Ordena el contenido por apartados claros.
+5. Mantén definiciones, fechas, autores, fórmulas, conceptos clave o ejemplos relevantes.
+6. Si hay partes confusas, explícalas de forma sencilla.
+7. Añade una sección final con:
+   - conceptos clave que debo memorizar;
+   - posibles preguntas de examen;
+   - errores típicos que debo evitar;
+   - una mini guía de repaso.
+
+Formato de respuesta:
+- Usa títulos y subtítulos.
+- Usa viñetas cuando ayuden a estudiar.
+- No hagas un resumen demasiado superficial.
+- No inventes información que no esté en los apuntes.
+- Si falta información importante, indícamelo claramente.
+- Si el contenido es muy largo, divide el resumen por bloques.
+
+${textoApuntes}${instruccionesExtra}`;
+
+  document.getElementById("promptFinal").value = prompt;
+  document.getElementById("resultado").style.display = "block";
+  document.getElementById("mensajeCopiado").textContent = "";
+}
+
+function copiarPrompt() {
+  const prompt = document.getElementById("promptFinal");
+  prompt.select();
+  prompt.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.getElementById("mensajeCopiado").textContent = "Prompt copiado. Ahora puedes pegarlo en tu herramienta de IA.";
+}
+
+function limpiar() {
+  document.getElementById("asignatura").value = "";
+  document.getElementById("tema").value = "";
+  document.getElementById("nivel").value = "Universidad";
+  document.getElementById("tipoApuntes").value = "apuntes largos y desordenados";
+  document.getElementById("tipoExamen").value = "preguntas de desarrollo";
+  document.getElementById("objetivo").value = "un resumen completo para estudiar";
+  document.getElementById("herramientaIA").value = "ChatGPT";
+  document.getElementById("estilo").value = "claro, ordenado y fácil de memorizar";
+  document.getElementById("apuntes").value = "";
+  document.getElementById("extra").value = "";
+  document.getElementById("resultado").style.display = "none";
+  document.getElementById("mensajeCopiado").textContent = "";
+}
+</script>
+
+</body>
+</html>
