@@ -255,6 +255,40 @@
       Esta página es el punto de entrada práctico de TecnIA. No tienes que saber qué herramienta usar:
       solo tienes que elegir qué necesitas hacer y la web te lleva al recurso adecuado.
     </p>
+  <section class="tecnia-smart-finder" id="buscador-tecnia">
+  <div class="finder-header">
+    <span class="article-tag">Buscador inteligente TecnIA</span>
+    <h2>Escribe qué necesitas hacer y te llevamos al recurso exacto</h2>
+    <p>
+      No tienes que saber qué herramienta usar. Escribe tu problema con tus palabras y TecnIA te recomendará
+      la mejor ruta, herramienta o guía.
+    </p>
+  </div>
+
+  <div class="finder-box">
+    <label for="tecniaSearchInput">¿Qué quieres conseguir?</label>
+
+    <div class="finder-input-row">
+      <input
+        type="text"
+        id="tecniaSearchInput"
+        placeholder="Ejemplo: tengo examen de historia y quiero aprobarlo"
+        autocomplete="off"
+      >
+      <button type="button" onclick="buscarSolucionTecnIA()">Buscar solución</button>
+    </div>
+
+    <div class="finder-examples">
+      <button type="button" onclick="usarEjemploTecnIA('Tengo examen de historia de España y quiero aprobarlo')">Tengo un examen</button>
+      <button type="button" onclick="usarEjemploTecnIA('Tengo apuntes largos y necesito resumirlos')">Resumir apuntes</button>
+      <button type="button" onclick="usarEjemploTecnIA('Quiero memorizar conceptos rápido')">Memorizar</button>
+      <button type="button" onclick="usarEjemploTecnIA('No sé qué IA usar para estudiar')">Elegir IA</button>
+      <button type="button" onclick="usarEjemploTecnIA('Quiero corregir una respuesta de examen')">Corregir respuesta</button>
+    </div>
+
+    <div id="tecniaFinderResult" class="finder-result" style="display:none;"></div>
+  </div>
+</section>
 
     <section id="problemas" class="hub-section">
       <h2>¿Qué problema quieres resolver?</h2>
