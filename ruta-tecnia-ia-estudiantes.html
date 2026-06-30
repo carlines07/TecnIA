@@ -10,234 +10,595 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
+  /* ================================
+     RUTA TECNIA - ESTILOS COMPLETOS
+  ================================ */
+
+  main {
+    overflow: hidden;
+  }
+
+  .article-page {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .article-page h1,
+  .article-page h2,
+  .article-page h3 {
+    color: #0f172a;
+  }
+
+  .article-page h1 {
+    margin-top: 18px;
+    margin-bottom: 20px;
+  }
+
+  .article-page h2 {
+    margin-top: 54px;
+    margin-bottom: 16px;
+    letter-spacing: -0.4px;
+  }
+
+  .article-page p {
+    color: #334155;
+    line-height: 1.85;
+  }
+
+  .article-intro {
+    font-size: 1.12rem;
+    color: #1e293b;
+    line-height: 1.9;
+    max-width: 920px;
+  }
+
+  .route-hero {
+    max-width: 1180px;
+    margin: 44px auto 30px;
+    padding: 76px 46px;
+    border-radius: 38px;
+    color: #ffffff;
+    background:
+      linear-gradient(rgba(7, 17, 31, 0.74), rgba(7, 17, 31, 0.86)),
+      url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80") center/cover;
+    box-shadow: 0 28px 70px rgba(15, 23, 42, 0.22);
+  }
+
+  .route-hero .article-tag {
+    color: #5eead4;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+  }
+
+  .route-hero h1 {
+    max-width: 920px;
+    font-size: clamp(2.45rem, 5vw, 4.55rem);
+    line-height: 1.05;
+    letter-spacing: -1.8px;
+    margin: 18px 0 22px;
+    color: #ffffff;
+  }
+
+  .route-hero p {
+    max-width: 790px;
+    color: #dbeafe;
+    font-size: 1.17rem;
+    line-height: 1.85;
+    margin-bottom: 30px;
+  }
+
+  .route-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 26px;
+  }
+
+  .route-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    border-radius: 999px;
+    font-weight: 800;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+
+  .route-actions .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .article-tag {
+    display: inline-block;
+    padding: 8px 13px;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    font-size: 0.82rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .featured-test {
+    margin: 36px 0 44px;
+    padding: 32px;
+    border-radius: 30px;
+    background:
+      radial-gradient(circle at top left, rgba(37, 99, 235, 0.10), transparent 34%),
+      #f8fafc;
+    border: 1px solid #dbeafe;
+    box-shadow: 0 16px 38px rgba(15, 23, 42, 0.07);
+  }
+
+  .featured-test span {
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    font-size: 0.82rem;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .featured-test h2 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: #0f172a;
+  }
+
+  .featured-test p {
+    margin-bottom: 0;
+    color: #334155;
+    line-height: 1.85;
+  }
+
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+    margin: 34px 0 54px;
+  }
+
+  .method-card {
+    background: #ffffff;
+    border: 1px solid #dbeafe;
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .method-card:hover {
+    transform: translateY(-4px);
+    border-color: #93c5fd;
+    box-shadow: 0 22px 48px rgba(15, 23, 42, 0.12);
+  }
+
+  .method-number {
+    width: 46px;
+    height: 46px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #2563eb, #14b8a6);
+    color: #ffffff;
+    font-weight: 900;
+    margin-bottom: 16px;
+  }
+
+  .method-card h3 {
+    margin: 0 0 10px;
+    color: #0f172a;
+  }
+
+  .method-card p {
+    margin: 0;
+    color: #334155;
+    line-height: 1.75;
+  }
+
+  .route-timeline {
+    display: grid;
+    gap: 26px;
+    margin-top: 34px;
+  }
+
+  .route-day {
+    position: relative;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #dbeafe;
+    border-left: 7px solid #2563eb;
+    border-radius: 26px;
+    padding: 26px;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+  }
+
+  .route-day:nth-child(even) {
+    border-left-color: #14b8a6;
+  }
+
+  .route-day::after {
+    content: "";
+    position: absolute;
+    top: -70px;
+    right: -70px;
+    width: 160px;
+    height: 160px;
+    border-radius: 999px;
+    background: rgba(37, 99, 235, 0.06);
+  }
+
+  .route-day:nth-child(even)::after {
+    background: rgba(20, 184, 166, 0.08);
+  }
+
+  .day-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    color: #1d4ed8;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    font-weight: 900;
+    font-size: 0.85rem;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+
+  .route-day:nth-child(even) .day-label {
+    color: #0f766e;
+    background: #f0fdfa;
+    border-color: #99f6e4;
+  }
+
+  .day-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+    gap: 26px;
+    align-items: start;
+    position: relative;
+    z-index: 1;
+  }
+
+  .route-day h2 {
+    margin: 0 0 12px;
+    color: #0f172a;
+  }
+
+  .route-day p {
+    color: #334155;
+    line-height: 1.8;
+  }
+
+  .day-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 18px;
+    margin-top: 14px;
+    color: #334155;
+    line-height: 1.7;
+  }
+
+  .day-box strong {
+    color: #0f172a;
+    display: block;
+    margin-bottom: 7px;
+  }
+
+  .day-box a {
+    color: #1d4ed8;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .day-box a:hover {
+    text-decoration: underline;
+  }
+
+  .prompt-ready {
+    margin-top: 18px;
+    padding: 20px;
+    border-radius: 20px;
+    background:
+      radial-gradient(circle at top left, rgba(20, 184, 166, 0.18), transparent 38%),
+      #0f172a;
+    color: #e0f2fe;
+    line-height: 1.8;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.20);
+  }
+
+  .prompt-ready strong {
+    color: #5eead4;
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin: 34px 0 54px;
+  }
+
+  .tool-mini-card {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #dbeafe;
+    border-radius: 24px;
+    padding: 24px;
+    color: inherit;
+    text-decoration: none;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .tool-mini-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 5px;
+    background: linear-gradient(90deg, #2563eb, #14b8a6);
+  }
+
+  .tool-mini-card:hover {
+    transform: translateY(-5px);
+    border-color: #93c5fd;
+    box-shadow: 0 24px 55px rgba(15, 23, 42, 0.13);
+  }
+
+  .tool-mini-card h3 {
+    margin: 0 0 10px;
+    color: #0f172a;
+  }
+
+  .tool-mini-card p {
+    margin: 0;
+    color: #334155;
+    line-height: 1.75;
+  }
+
+  .audience-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin: 34px 0 54px;
+  }
+
+  .audience-card {
+    background: #ffffff;
+    border: 1px solid #dbeafe;
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .audience-card:hover {
+    transform: translateY(-4px);
+    border-color: #93c5fd;
+    box-shadow: 0 22px 48px rgba(15, 23, 42, 0.12);
+  }
+
+  .audience-card h3 {
+    margin: 0 0 10px;
+    color: #0f172a;
+  }
+
+  .audience-card p {
+    margin: 0;
+    color: #334155;
+    line-height: 1.75;
+  }
+
+  .mistakes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin: 30px 0 54px;
+  }
+
+  .mistake-card {
+    background: #ffffff;
+    border: 1px solid #dbeafe;
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .mistake-card:hover {
+    transform: translateY(-4px);
+    border-color: #fecaca;
+    box-shadow: 0 22px 48px rgba(15, 23, 42, 0.12);
+  }
+
+  .mistake-card h3 {
+    margin: 0 0 10px;
+    color: #0f172a;
+  }
+
+  .mistake-card p {
+    margin: 0;
+    color: #334155;
+    line-height: 1.75;
+  }
+
+  .route-cta {
+    margin: 64px 0 28px;
+    padding: 44px;
+    border-radius: 34px;
+    color: #ffffff;
+    background:
+      radial-gradient(circle at top left, rgba(20, 184, 166, 0.24), transparent 36%),
+      radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.24), transparent 34%),
+      linear-gradient(135deg, #07111f, #1e3a8a);
+    box-shadow: 0 24px 55px rgba(15, 23, 42, 0.20);
+  }
+
+  .route-cta h2 {
+    color: #ffffff;
+    margin-top: 0;
+    margin-bottom: 12px;
+  }
+
+  .route-cta p {
+    color: #dbeafe;
+    line-height: 1.85;
+    max-width: 850px;
+  }
+
+  .related-articles {
+    margin-top: 54px;
+    padding-top: 28px;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  .related-articles h2 {
+    margin-top: 0;
+  }
+
+  .related-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  .related-links a {
+    display: inline-flex;
+    align-items: center;
+    padding: 11px 15px;
+    border-radius: 999px;
+    background: #f8fafc;
+    border: 1px solid #dbeafe;
+    color: #1d4ed8;
+    font-weight: 800;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .related-links a:hover {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 1080px) {
     .route-hero {
-      margin: 44px auto 30px;
-      padding: 70px 42px;
-      border-radius: 38px;
-      color: #ffffff;
-      background:
-        linear-gradient(rgba(7, 17, 31, 0.74), rgba(7, 17, 31, 0.84)),
-        url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80") center/cover;
-      box-shadow: 0 28px 70px rgba(15, 23, 42, 0.22);
+      margin-left: 18px;
+      margin-right: 18px;
     }
 
-    .route-hero .article-tag {
-      color: #5eead4;
-      background: rgba(255, 255, 255, 0.10);
-      border-color: rgba(255, 255, 255, 0.20);
+    .method-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
 
-    .route-hero h1 {
-      max-width: 900px;
-      font-size: clamp(2.4rem, 5vw, 4.4rem);
-      line-height: 1.05;
-      letter-spacing: -1.8px;
-      margin-bottom: 22px;
-      color: #ffffff;
-    }
-
-    .route-hero p {
-      max-width: 760px;
-      color: #dbeafe;
-      font-size: 1.16rem;
-      line-height: 1.85;
-      margin-bottom: 30px;
-    }
-
-    .route-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 26px;
-    }
-
-    .method-grid,
-    .audience-grid,
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 18px;
-      margin: 34px 0;
-    }
-
-    .method-card,
-    .route-day,
-    .audience-card,
-    .tool-mini-card,
-    .mistake-card {
-      background: #ffffff;
-      border: 1px solid #dbeafe;
-      border-radius: 24px;
-      padding: 24px;
-      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
-    }
-
-    .method-number {
-      width: 46px;
-      height: 46px;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #2563eb, #14b8a6);
-      color: #ffffff;
-      font-weight: 900;
-      margin-bottom: 16px;
-    }
-
-    .method-card h3,
-    .route-day h2,
-    .audience-card h3,
-    .tool-mini-card h3,
-    .mistake-card h3 {
-      color: #0f172a;
-      margin-bottom: 10px;
-    }
-
-    .method-card p,
-    .route-day p,
-    .audience-card p,
-    .tool-mini-card p,
-    .mistake-card p {
-      color: #334155;
-      line-height: 1.75;
-    }
-
-    .route-timeline {
-      display: grid;
-      gap: 24px;
-      margin-top: 34px;
-    }
-
-    .route-day {
-      position: relative;
-      overflow: hidden;
-      border-left: 7px solid #2563eb;
-    }
-
-    .route-day:nth-child(even) {
-      border-left-color: #14b8a6;
-    }
-
-    .day-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      color: #1d4ed8;
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      font-weight: 900;
-      font-size: 0.85rem;
-      margin-bottom: 14px;
-      text-transform: uppercase;
-    }
-
-    .route-day:nth-child(even) .day-label {
-      color: #0f766e;
-      background: #f0fdfa;
-      border-color: #99f6e4;
+    .tools-grid,
+    .audience-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
 
     .day-content {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-
-    .day-box {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 18px;
-      padding: 18px;
-      margin-top: 14px;
-    }
-
-    .day-box strong {
-      color: #0f172a;
-      display: block;
-      margin-bottom: 6px;
+      grid-template-columns: 1fr;
     }
 
     .prompt-ready {
-      margin-top: 18px;
-      padding: 18px;
-      border-radius: 18px;
-      background: #0f172a;
-      color: #e0f2fe;
-      line-height: 1.75;
-      border: 1px solid rgba(255, 255, 255, 0.10);
+      margin-top: 4px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .route-hero {
+      padding: 48px 24px;
+      border-radius: 28px;
     }
 
-    .prompt-ready strong {
-      color: #5eead4;
+    .route-hero h1 {
+      letter-spacing: -1px;
     }
 
-    .tools-grid {
-      grid-template-columns: repeat(3, 1fr);
+    .route-hero p {
+      font-size: 1.04rem;
     }
 
-    .audience-grid {
-      grid-template-columns: repeat(3, 1fr);
+    .route-actions {
+      flex-direction: column;
     }
 
+    .route-actions .btn {
+      width: 100%;
+      text-align: center;
+    }
+
+    .method-grid,
+    .tools-grid,
+    .audience-grid,
     .mistakes-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr;
+    }
+
+    .route-day {
+      padding: 22px;
+      border-radius: 22px;
+    }
+
+    .day-content {
       gap: 18px;
+    }
+
+    .featured-test,
+    .route-cta {
+      padding: 28px 22px;
+      border-radius: 26px;
+    }
+
+    .related-links {
+      flex-direction: column;
+    }
+
+    .related-links a {
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 440px) {
+    .route-hero {
+      padding: 40px 20px;
       margin-top: 28px;
     }
 
-    .route-cta {
-      margin: 64px 0 20px;
-      padding: 42px;
-      border-radius: 32px;
-      color: #ffffff;
-      background:
-        radial-gradient(circle at top left, rgba(20, 184, 166, 0.24), transparent 36%),
-        linear-gradient(135deg, #07111f, #1e3a8a);
-      box-shadow: 0 24px 55px rgba(15, 23, 42, 0.20);
+    .route-day,
+    .method-card,
+    .tool-mini-card,
+    .audience-card,
+    .mistake-card {
+      padding: 20px;
     }
 
-    .route-cta h2 {
-      color: #ffffff;
-      margin-top: 0;
+    .day-box,
+    .prompt-ready {
+      padding: 16px;
     }
 
-    .route-cta p {
-      color: #dbeafe;
+    .article-page h2 {
+      margin-top: 42px;
     }
-
-    @media (max-width: 980px) {
-      .method-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .tools-grid,
-      .audience-grid,
-      .mistakes-grid,
-      .day-content {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 680px) {
-      .route-hero {
-        padding: 48px 24px;
-        border-radius: 28px;
-      }
-
-      .method-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .route-cta {
-        padding: 30px 22px;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 
 <body>
