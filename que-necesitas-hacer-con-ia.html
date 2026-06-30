@@ -437,7 +437,411 @@
     }
   </style>
 </head>
+<script>
+  const solucionesTecnIA = [
+    {
+      id: "examen",
+      titulo: "Ruta para preparar y aprobar un examen",
+      etiqueta: "Ruta recomendada",
+      descripcion: "He entendido que necesitas preparar un examen. Lo mejor no es ir a una sola herramienta, sino seguir una ruta corta: planificar, resumir, memorizar, practicar y corregir.",
+      url: "ruta-tecnia-ia-estudiantes.html",
+      boton: "Ver ruta completa",
+      palabras: [
+        "examen", "aprobar", "suspender", "recuperacion", "final", "parcial", "evaluacion",
+        "selectividad", "evau", "ebau", "test", "desarrollo", "oral", "preguntas", "estudiar",
+        "historia", "historia de espana", "biologia", "derecho", "finanzas", "economia", "medicina",
+        "filosofia", "lengua", "mates", "matematicas", "asignatura", "tema", "temario", "oposicion"
+      ],
+      frases: [
+        "quiero aprobar", "tengo examen", "preparar examen", "no se por donde empezar",
+        "quiero estudiar", "ayudame a aprobar", "sacar buena nota", "estudiar para un examen"
+      ],
+      ruta: [
+        {
+          titulo: "Organiza tu plan",
+          texto: "Calcula días, temas y horas reales de estudio.",
+          url: "planificador-estudio-ia.html",
+          boton: "Planificar"
+        },
+        {
+          titulo: "Resume tus apuntes",
+          texto: "Convierte apuntes largos en un resumen orientado a examen.",
+          url: "resumidor-apuntes-ia.html",
+          boton: "Resumir"
+        },
+        {
+          titulo: "Crea flashcards",
+          texto: "Memoriza conceptos, fechas, autores y definiciones.",
+          url: "generador-flashcards-ia.html",
+          boton: "Flashcards"
+        },
+        {
+          titulo: "Practica como en el examen",
+          texto: "Genera preguntas tipo test, desarrollo u oral.",
+          url: "modo-examen-ia.html",
+          boton: "Practicar"
+        },
+        {
+          titulo: "Corrige tus respuestas",
+          texto: "Detecta fallos y mejora antes del examen real.",
+          url: "corrector-respuestas-ia.html",
+          boton: "Corregir"
+        }
+      ]
+    },
+    {
+      id: "resumir",
+      titulo: "Resumidor de Apuntes con IA",
+      etiqueta: "Apuntes",
+      descripcion: "Parece que necesitas reducir, ordenar o entender apuntes. Esta herramienta te ayuda a convertir textos largos en resúmenes, esquemas, conceptos clave y preguntas.",
+      url: "resumidor-apuntes-ia.html",
+      boton: "Ir al Resumidor",
+      palabras: [
+        "resumir", "resumen", "sintetizar", "apuntes", "pdf", "documento", "texto largo",
+        "tema largo", "ordenar", "esquema", "subrayar", "ideas principales", "conceptos clave",
+        "libro", "manual", "clase", "temario", "tocho", "largo", "no entiendo"
+      ],
+      frases: [
+        "tengo apuntes largos", "quiero resumir", "hacer resumen", "ordenar mis apuntes",
+        "sacar ideas principales", "convertir apuntes en resumen"
+      ],
+      ruta: [
+        {
+          titulo: "Lee la guía",
+          texto: "Aprende cómo resumir sin perder información importante.",
+          url: "como-resumir-apuntes-con-ia.html",
+          boton: "Leer guía"
+        },
+        {
+          titulo: "Usa el resumidor",
+          texto: "Pega tus apuntes y genera un prompt avanzado.",
+          url: "resumidor-apuntes-ia.html",
+          boton: "Resumir"
+        },
+        {
+          titulo: "Convierte en flashcards",
+          texto: "Pasa del resumen a repaso activo.",
+          url: "generador-flashcards-ia.html",
+          boton: "Crear tarjetas"
+        }
+      ]
+    },
+    {
+      id: "memorizar",
+      titulo: "Generador de Flashcards con IA",
+      etiqueta: "Memorizar",
+      descripcion: "He entendido que quieres memorizar o repasar. Lo mejor es crear flashcards para practicar recuperación activa.",
+      url: "generador-flashcards-ia.html",
+      boton: "Crear flashcards",
+      palabras: [
+        "memorizar", "memoria", "repasar", "recordar", "flashcards", "tarjetas", "anki",
+        "definiciones", "fechas", "autores", "conceptos", "vocabulario", "retener", "aprender rapido"
+      ],
+      frases: [
+        "quiero memorizar", "necesito recordar", "hacer tarjetas", "crear flashcards", "repasar rapido"
+      ],
+      ruta: [
+        {
+          titulo: "Crea tarjetas",
+          texto: "Convierte conceptos en preguntas y respuestas.",
+          url: "generador-flashcards-ia.html",
+          boton: "Crear"
+        },
+        {
+          titulo: "Practica examen",
+          texto: "Comprueba si realmente lo recuerdas.",
+          url: "modo-examen-ia.html",
+          boton: "Practicar"
+        }
+      ]
+    },
+    {
+      id: "corregir",
+      titulo: "Corrector de Respuestas con IA",
+      etiqueta: "Corrección",
+      descripcion: "Parece que quieres mejorar una respuesta. Usa el corrector para recibir una evaluación con fallos, mejoras y versión optimizada.",
+      url: "corrector-respuestas-ia.html",
+      boton: "Corregir respuesta",
+      palabras: [
+        "corregir", "correccion", "respuesta", "redaccion", "ensayo", "desarrollo", "mejorar",
+        "rubrica", "fallos", "errores", "nota", "evaluar", "profesor", "feedback", "revision"
+      ],
+      frases: [
+        "corrige mi respuesta", "mejorar una respuesta", "quiero saber si esta bien",
+        "evaluar mi examen", "revisar redaccion"
+      ],
+      ruta: [
+        {
+          titulo: "Pega tu respuesta",
+          texto: "La herramienta la evalúa con criterios claros.",
+          url: "corrector-respuestas-ia.html",
+          boton: "Corregir"
+        },
+        {
+          titulo: "Practica otra pregunta",
+          texto: "Después genera más preguntas parecidas.",
+          url: "modo-examen-ia.html",
+          boton: "Practicar"
+        }
+      ]
+    },
+    {
+      id: "organizar",
+      titulo: "Planificador de Estudio con IA",
+      etiqueta: "Organización",
+      descripcion: "He entendido que necesitas organizarte. El planificador te ayuda a dividir temas, días, repasos y simulacros.",
+      url: "planificador-estudio-ia.html",
+      boton: "Crear plan",
+      palabras: [
+        "organizar", "plan", "calendario", "horario", "tiempo", "dias", "semanas", "agenda",
+        "planificar", "rutina", "productividad", "no me da tiempo", "agobio", "bloqueado", "procrastinar"
+      ],
+      frases: [
+        "no se por donde empezar", "organizar mi estudio", "hacer un plan", "tengo poco tiempo",
+        "me quedan pocos dias", "quiero planificar"
+      ],
+      ruta: [
+        {
+          titulo: "Crea un plan",
+          texto: "Organiza temas y días disponibles.",
+          url: "planificador-estudio-ia.html",
+          boton: "Planificar"
+        },
+        {
+          titulo: "Sigue una ruta",
+          texto: "Después estudia con el método TecnIA.",
+          url: "ruta-tecnia-ia-estudiantes.html",
+          boton: "Ver ruta"
+        }
+      ]
+    },
+    {
+      id: "herramienta",
+      titulo: "Comparador de Herramientas de IA",
+      etiqueta: "Elegir IA",
+      descripcion: "Parece que no sabes qué herramienta usar. El comparador te ayuda a elegir entre ChatGPT, Gemini, Claude, Copilot, Perplexity, NotebookLM y otras.",
+      url: "comparador-herramientas-ia.html",
+      boton: "Comparar herramientas",
+      palabras: [
+        "chatgpt", "gemini", "claude", "copilot", "perplexity", "notebooklm", "canva", "gamma",
+        "herramienta", "cual usar", "mejor ia", "comparar", "gratis", "alternativa", "recomendar"
+      ],
+      frases: [
+        "no se que ia usar", "que herramienta uso", "mejor herramienta", "que ia me conviene",
+        "quiero que me recomienden una ia"
+      ],
+      ruta: [
+        {
+          titulo: "Haz el test",
+          texto: "Descubre qué IA encaja con tu caso.",
+          url: "test-herramienta-ia-estudiantes.html",
+          boton: "Hacer test"
+        },
+        {
+          titulo: "Compara herramientas",
+          texto: "Mira ventajas y usos de cada IA.",
+          url: "comparador-herramientas-ia.html",
+          boton: "Comparar"
+        }
+      ]
+    },
+    {
+      id: "prompts",
+      titulo: "Laboratorio de Prompts de IA",
+      etiqueta: "Prompts",
+      descripcion: "He entendido que necesitas pedirle mejor las cosas a la IA. El laboratorio te da prompts listos para estudiar, resumir, crear y corregir.",
+      url: "laboratorio-prompts-ia.html",
+      boton: "Ver prompts",
+      palabras: [
+        "prompt", "prompts", "instruccion", "pedir", "chatgpt no entiende", "me responde mal",
+        "orden", "plantilla", "copiar", "mejorar prompt", "como se lo digo"
+      ],
+      frases: [
+        "no se como pedirlo", "quiero un prompt", "chatgpt me responde mal",
+        "escribir mejores prompts"
+      ],
+      ruta: [
+        {
+          titulo: "Busca un prompt",
+          texto: "Encuentra plantillas listas para copiar.",
+          url: "laboratorio-prompts-ia.html",
+          boton: "Ver laboratorio"
+        },
+        {
+          titulo: "Aprende el método",
+          texto: "Entiende cómo pedir mejor a la IA.",
+          url: "metodo-tecnia.html",
+          boton: "Método"
+        }
+      ]
+    }
+  ];
 
+  function normalizarTecnIA(texto) {
+    return texto
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[¿?¡!.,;:()]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function calcularPuntuacionTecnIA(consulta, solucion) {
+    let score = 0;
+
+    solucion.frases.forEach(frase => {
+      if (consulta.includes(normalizarTecnIA(frase))) score += 9;
+    });
+
+    solucion.palabras.forEach(palabra => {
+      const palabraNormalizada = normalizarTecnIA(palabra);
+      if (consulta.includes(palabraNormalizada)) score += 4;
+    });
+
+    const tokens = consulta.split(" ");
+
+    solucion.palabras.forEach(palabra => {
+      const partes = normalizarTecnIA(palabra).split(" ");
+      partes.forEach(parte => {
+        if (parte.length > 3 && tokens.includes(parte)) score += 1;
+      });
+    });
+
+    if (
+      consulta.includes("aprobar") ||
+      consulta.includes("suspender") ||
+      consulta.includes("examen") ||
+      consulta.includes("estudiar")
+    ) {
+      if (solucion.id === "examen") score += 8;
+    }
+
+    if (
+      consulta.includes("historia") ||
+      consulta.includes("biologia") ||
+      consulta.includes("derecho") ||
+      consulta.includes("matematicas") ||
+      consulta.includes("filosofia") ||
+      consulta.includes("economia")
+    ) {
+      if (solucion.id === "examen") score += 5;
+      if (solucion.id === "resumir") score += 2;
+    }
+
+    return score;
+  }
+
+  function buscarSolucionTecnIA() {
+    const input = document.getElementById("tecniaSearchInput");
+    const resultBox = document.getElementById("tecniaFinderResult");
+    const consulta = normalizarTecnIA(input.value);
+
+    if (!consulta || consulta.length < 3) {
+      resultBox.style.display = "block";
+      resultBox.innerHTML = `
+        <div class="finder-result-main">
+          <span>Escribe un poco más</span>
+          <h3>Cuéntanos qué necesitas</h3>
+          <p>Por ejemplo: “tengo examen”, “quiero resumir apuntes”, “necesito memorizar” o “no sé qué IA usar”.</p>
+        </div>
+      `;
+      return;
+    }
+
+    const resultados = solucionesTecnIA
+      .map(solucion => ({
+        ...solucion,
+        score: calcularPuntuacionTecnIA(consulta, solucion)
+      }))
+      .sort((a, b) => b.score - a.score);
+
+    const principal = resultados[0];
+    const secundarios = resultados.slice(1, 4);
+
+    if (principal.score === 0) {
+      resultBox.style.display = "block";
+      resultBox.innerHTML = `
+        <div class="finder-result-main">
+          <span>Recomendación general</span>
+          <h3>Empieza por el Centro de Estudio con IA</h3>
+          <p>No he detectado una intención concreta, pero el Centro de Estudio te ayuda a elegir entre organizar, resumir, practicar, memorizar o corregir.</p>
+          <div class="finder-actions">
+            <a href="centro-estudio-ia.html">Ir al Centro de Estudio</a>
+            <a href="que-necesitas-hacer-con-ia.html#problemas">Ver opciones</a>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    const rutaHTML = principal.ruta.map((paso, index) => `
+      <div class="finder-step">
+        <div class="finder-step-number">${index + 1}</div>
+        <div>
+          <strong>${paso.titulo}</strong>
+          <p>${paso.texto}</p>
+        </div>
+        <a href="${paso.url}">${paso.boton}</a>
+      </div>
+    `).join("");
+
+    const secundariosHTML = secundarios.map(item => `
+      <a href="${item.url}" class="finder-secondary-card">
+        <strong>${item.titulo}</strong>
+        <small>${item.descripcion}</small>
+      </a>
+    `).join("");
+
+    resultBox.style.display = "block";
+    resultBox.innerHTML = `
+      <div class="finder-result-main">
+        <span>${principal.etiqueta}</span>
+        <h3>${principal.titulo}</h3>
+        <p>${principal.descripcion}</p>
+        <div class="finder-actions">
+          <a href="${principal.url}">${principal.boton}</a>
+          <a href="#problemas">Ver todas las opciones</a>
+        </div>
+      </div>
+
+      <div class="finder-route">
+        ${rutaHTML}
+      </div>
+
+      <div class="finder-secondary">
+        <h4>También podría ayudarte</h4>
+        <div class="finder-secondary-grid">
+          ${secundariosHTML}
+        </div>
+      </div>
+    `;
+  }
+
+  function usarEjemploTecnIA(texto) {
+    const input = document.getElementById("tecniaSearchInput");
+    input.value = texto;
+    buscarSolucionTecnIA();
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const input = document.getElementById("tecniaSearchInput");
+
+    if (input) {
+      input.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+          buscarSolucionTecnIA();
+        }
+      });
+
+      input.addEventListener("input", function() {
+        if (input.value.length > 4) {
+          buscarSolucionTecnIA();
+        }
+      });
+    }
+  });
+</script>
 <body>
 
 <header>
