@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Cómo resumir apuntes con IA sin perder lo importante | TecnIA</title>
+  <meta name="description" content="Aprende cómo resumir apuntes con IA de forma útil: convierte apuntes largos en resúmenes claros, esquemas, conceptos clave, preguntas de examen y material de repaso.">
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .summary-hero {
+      max-width: 1180px;
+      margin: 44px auto 30px;
+      padding: 76px 46px;
+      border-radius: 38px;
+      color: #ffffff;
+      background:
+        linear-gradient(rgba(7, 17, 31, 0.76), rgba(7, 17, 31, 0.88)),
+        url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80") center/cover;
+      box-shadow: 0 28px 70px rgba(15, 23, 42, 0.22);
+    }
+
+    .summary-hero .article-tag {
+      color: #5eead4;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+    }
+
+    .summary-hero h1 {
+      max-width: 920px;
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
+      line-height: 1.05;
+      letter-spacing: -1.8px;
+      margin: 18px 0 22px;
+      color: #ffffff;
+    }
+
+    .summary-hero p {
+      max-width: 790px;
+      color: #dbeafe;
+      font-size: 1.15rem;
+      line-height: 1.85;
+      margin-bottom: 30px;
+    }
+
+    .summary-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .quick-grid,
+    .steps-grid,
+    .mistake-grid,
+    .route-grid {
+      display: grid;
+      gap: 18px;
+      margin: 30px 0 54px;
+    }
+
+    .quick-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .steps-grid {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .mistake-grid,
+    .route-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .quick-card,
+    .step-card,
+    .mistake-card,
+    .route-card,
+    .example-box,
+    .prompt-card,
+    .tool-cta {
+      background: #ffffff;
+      border: 1px solid #dbeafe;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+    }
+
+    .quick-card h3,
+    .step-card h3,
+    .mistake-card h3,
+    .route-card h3,
+    .prompt-card h3 {
+      margin-top: 0;
+      color: #0f172a;
+    }
+
+    .quick-card p,
+    .step-card p,
+    .mistake-card p,
+    .route-card p,
+    .example-box p,
+    .prompt-card p {
+      color: #334155;
+      line-height: 1.75;
+    }
+
+    .step-number {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #2563eb, #14b8a6);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .example-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin: 30px 0 54px;
+    }
+
+    .example-box.bad {
+      border-color: #fecaca;
+      background: #fff7f7;
+    }
+
+    .example-box.good {
+      border-color: #99f6e4;
+      background: #f0fdfa;
+    }
+
+    .example-label {
+      display: inline-block;
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .bad .example-label {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .good .example-label {
+      background: #ccfbf1;
+      color: #0f766e;
+    }
+
+    .prompt-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin: 30px 0 54px;
+    }
+
+    .prompt-text {
+      margin-top: 16px;
+      padding: 18px;
+      border-radius: 18px;
+      background: #0f172a;
+      color: #e0f2fe;
+      line-height: 1.75;
+      font-size: 0.96rem;
+    }
+
+    .prompt-card button {
+      margin-top: 14px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .tool-cta {
+      margin: 58px 0;
+      color: #ffffff;
+      background:
+        radial-gradient(circle at top left, rgba(20, 184, 166, 0.26), transparent 36%),
+        radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.26), transparent 34%),
+        linear-gradient(135deg, #07111f, #1e3a8a);
+      border: none;
+    }
+
+    .tool-cta h2 {
+      color: #ffffff;
+      margin-top: 0;
+    }
+
+    .tool-cta p {
+      color: #dbeafe;
+      line-height: 1.85;
+      max-width: 850px;
+    }
+
+    .tool-cta .btn {
+      margin-top: 12px;
+    }
+
+    .mini-note {
+      background: #f8fafc;
+      border-left: 5px solid #2563eb;
+      padding: 20px;
+      border-radius: 18px;
+      color: #334155;
+      line-height: 1.75;
+      margin: 28px 0;
+    }
+
+    .related-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .related-links a {
+      display: inline-flex;
+      align-items: center;
+      padding: 11px 15px;
+      border-radius: 999px;
+      background: #f8fafc;
+      border: 1px solid #dbeafe;
+      color: #1d4ed8;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    @media (max-width: 980px) {
+      .quick-grid,
+      .steps-grid,
+      .mistake-grid,
+      .route-grid,
+      .prompt-grid,
+      .example-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-hero {
+        margin-left: 18px;
+        margin-right: 18px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .summary-hero {
+        padding: 48px 24px;
+        border-radius: 28px;
+      }
+
+      .summary-actions {
+        flex-direction: column;
+      }
+
+      .summary-actions .btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <nav class="navbar">
+    <a href="index.html" class="logo">Tecn<span>IA</span></a>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="que-necesitas-hacer-con-ia.html">Resolver con IA</a></li>
+      <li><a href="metodo-tecnia.html">Método TecnIA</a></li>
+      <li><a href="centro-estudio-ia.html">Centro de Estudio</a></li>
+      <li><a href="empieza-aqui.html">Empieza aquí</a></li>
+      <li><a href="articulos.html">IA/Artículos</a></li>
+      <li><a href="herramientas.html">Herramientas</a></li>
+      <li><a href="herramientas-interactivas.html">Interactivas</a></li>
+      <li><a href="noticias.html">Noticias</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+  <section class="summary-hero">
+    <span class="article-tag">Guía práctica para estudiantes</span>
+    <h1>Cómo resumir apuntes con IA sin perder lo importante</h1>
+    <p>
+      Resumir apuntes con inteligencia artificial no consiste en pedir “hazme un resumen” y copiar lo primero que salga.
+      La clave está en convertir tus apuntes en material útil para estudiar: ideas claras, conceptos clave, esquemas,
+      preguntas de examen y repasos.
+    </p>
+
+    <div class="summary-actions">
+      <a href="resumidor-apuntes-ia.html" class="btn btn-primary">Usar el Resumidor de Apuntes</a>
+      <a href="#prompts" class="btn btn-outline">Ver prompts listos</a>
+      <a href="#metodo" class="btn btn-outline">Aprender el método</a>
+    </div>
+  </section>
+
+  <article class="article-page">
+
+    <span class="article-tag">Resumen + estudio activo</span>
+
+    <h1>Resumir no es acortar: es entender mejor</h1>
+
+    <p class="article-intro">
+      Un buen resumen no es simplemente un texto más corto. Es una versión organizada de tus apuntes que te ayuda
+      a ver qué es importante, qué debes memorizar, qué puedes explicar y qué podrías encontrarte en un examen.
+    </p>
+
+    <div class="quick-grid">
+      <div class="quick-card">
+        <h3>Resume sin perder contenido</h3>
+        <p>La IA puede ayudarte a reducir apuntes largos sin eliminar conceptos esenciales, fechas, autores, ejemplos o definiciones importantes.</p>
+      </div>
+
+      <div class="quick-card">
+        <h3>Detecta ideas clave</h3>
+        <p>En vez de leer todo igual, puedes pedir a la IA que separe ideas principales, ideas secundarias y detalles de examen.</p>
+      </div>
+
+      <div class="quick-card">
+        <h3>Convierte apuntes en práctica</h3>
+        <p>Después del resumen puedes generar preguntas, flashcards, esquemas y simulacros para estudiar de forma activa.</p>
+      </div>
+    </div>
+
+    <div class="mini-note">
+      <strong>Idea clave:</strong> la IA no debe estudiar por ti. Debe ayudarte a ordenar, comprender y practicar mejor.
+      Si solo copias el resumen sin revisarlo, pierdes la parte más importante: aprender.
+    </div>
+
+    <h2 id="metodo">El método TecnIA para resumir apuntes con IA</h2>
+
+    <p>
+      Para que la IA no te dé un resumen genérico, sigue este proceso de cinco pasos. Es simple, pero cambia mucho
+      la calidad del resultado.
+    </p>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <h3>Pega</h3>
+        <p>Pega tus apuntes completos o una parte concreta del tema. No pasa nada si están desordenados.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <h3>Limpia</h3>
+        <p>Pide a la IA que ordene el contenido antes de resumirlo: títulos, apartados, conceptos y ejemplos.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <h3>Resume</h3>
+        <p>Solicita un resumen claro, pero no demasiado corto. Debe servir para estudiar, no solo para leer rápido.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-number">4</div>
+        <h3>Pregunta</h3>
+        <p>Convierte el resumen en preguntas de examen, tipo test, desarrollo o explicación oral.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-number">5</div>
+        <h3>Repasa</h3>
+        <p>Usa el resumen para crear flashcards, practicar respuestas y corregir lo que todavía no dominas.</p>
+      </div>
+    </div>
+
+    <h2>Antes y después: la diferencia entre resumir mal y resumir bien</h2>
+
+    <div class="example-layout">
+      <div class="example-box bad">
+        <span class="example-label">Antes</span>
+        <h3>Prompt demasiado vago</h3>
+        <p>
+          “Hazme un resumen de estos apuntes.”
+        </p>
+        <p>
+          Resultado habitual: un texto corto, general, con poca estructura y sin distinguir qué puede caer en el examen.
+        </p>
+      </div>
+
+      <div class="example-box good">
+        <span class="example-label">Después</span>
+        <h3>Prompt útil para estudiar</h3>
+        <p>
+          “Resume estos apuntes para preparar un examen. Separa ideas principales, conceptos clave, ejemplos, posibles preguntas y errores típicos.”
+        </p>
+        <p>
+          Resultado útil: resumen estructurado, orientado a examen y mucho más fácil de convertir en material de repaso.
+        </p>
+      </div>
+    </div>
+
+    <section class="tool-cta">
+      <h2>Hazlo más fácil con el Resumidor de Apuntes de TecnIA</h2>
+      <p>
+        Si no quieres escribir el prompt desde cero, puedes usar el Resumidor de Apuntes con IA de TecnIA.
+        Pega o adjunta tus apuntes y la herramienta te prepara instrucciones avanzadas para convertirlos en resumen,
+        esquema, preguntas de examen o flashcards.
+      </p>
+      <a href="resumidor-apuntes-ia.html" class="btn btn-primary">Usar el Resumidor de Apuntes con IA</a>
+    </section>
+
+    <h2 id="prompts">Prompts listos para resumir apuntes con IA</h2>
+
+    <p>
+      Copia estos prompts y adáptalos a tu asignatura. Funcionan mejor si pegas tus apuntes justo después de la instrucción.
+    </p>
+
+    <div class="prompt-grid">
+
+      <div class="prompt-card">
+        <h3>Resumen completo para estudiar</h3>
+        <p>Úsalo cuando tengas apuntes largos y quieras una versión clara para empezar a estudiar.</p>
+        <div class="prompt-text" id="prompt1">
+Actúa como profesor y preparador de exámenes. Resume estos apuntes de forma clara y estructurada. Separa ideas principales, conceptos clave, ejemplos importantes, definiciones, fechas o autores relevantes y posibles preguntas de examen. No elimines información importante. Si algo está incompleto o confuso, indícalo.
+        </div>
+        <button class="btn btn-outline" onclick="copyPrompt('prompt1')">Copiar prompt</button>
+      </div>
+
+      <div class="prompt-card">
+        <h3>Resumen orientado a examen</h3>
+        <p>Ideal si quieres estudiar pensando en lo que puede preguntar el profesor.</p>
+        <div class="prompt-text" id="prompt2">
+Convierte estos apuntes en una guía de estudio orientada a examen. Organiza el contenido por apartados, destaca lo que probablemente sería preguntable, crea una lista de conceptos imprescindibles y añade preguntas tipo test y preguntas de desarrollo al final.
+        </div>
+        <button class="btn btn-outline" onclick="copyPrompt('prompt2')">Copiar prompt</button>
+      </div>
+
+      <div class="prompt-card">
+        <h3>Esquema visual</h3>
+        <p>Perfecto cuando tus apuntes están desordenados o mezclan demasiadas ideas.</p>
+        <div class="prompt-text" id="prompt3">
+Ordena estos apuntes en un esquema jerárquico. Usa títulos, subtítulos, viñetas y relaciones entre ideas. Distingue entre ideas principales, ideas secundarias, ejemplos y detalles que debo memorizar. Al final, añade un resumen de 10 líneas.
+        </div>
+        <button class="btn btn-outline" onclick="copyPrompt('prompt3')">Copiar prompt</button>
+      </div>
+
+      <div class="prompt-card">
+        <h3>Preguntas para comprobar si lo sabes</h3>
+        <p>Úsalo después de resumir, para pasar de leer a practicar.</p>
+        <div class="prompt-text" id="prompt4">
+A partir de estos apuntes, crea preguntas para comprobar si realmente entiendo el tema. Incluye preguntas fáciles, medias y difíciles. No me des todas las respuestas al principio: primero hazme las preguntas y después corrige mis respuestas con explicación.
+        </div>
+        <button class="btn btn-outline" onclick="copyPrompt('prompt4')">Copiar prompt</button>
+      </div>
+
+    </div>
+
+    <h2>Errores típicos al resumir apuntes con IA</h2>
+
+    <div class="mistake-grid">
+      <div class="mistake-card">
+        <h3>Pedir un resumen demasiado corto</h3>
+        <p>Si le dices a la IA que resuma mucho, puede eliminar detalles que sí son importantes para el examen.</p>
+      </div>
+
+      <div class="mistake-card">
+        <h3>No decir el tipo de examen</h3>
+        <p>No se resume igual para un test, una pregunta de desarrollo, un oral o una oposición.</p>
+      </div>
+
+      <div class="mistake-card">
+        <h3>No revisar el resultado</h3>
+        <p>La IA puede equivocarse, mezclar ideas o inventar conexiones. Siempre revisa con tus apuntes delante.</p>
+      </div>
+
+      <div class="mistake-card">
+        <h3>Quedarse solo en el resumen</h3>
+        <p>Leer un resumen ayuda, pero practicar preguntas, explicar y corregir respuestas ayuda mucho más.</p>
+      </div>
+    </div>
+
+    <h2>Ruta recomendada después de resumir</h2>
+
+    <p>
+      El resumen es solo el primer paso. Para estudiar mejor, conviértelo en práctica.
+    </p>
+
+    <div class="route-grid">
+      <a href="resumidor-apuntes-ia.html" class="route-card">
+        <h3>1. Resume tus apuntes</h3>
+        <p>Empieza creando una versión clara y estructurada del tema.</p>
+      </a>
+
+      <a href="generador-flashcards-ia.html" class="route-card">
+        <h3>2. Crea flashcards</h3>
+        <p>Transforma el resumen en tarjetas de repaso para memorizar y detectar fallos.</p>
+      </a>
+
+      <a href="modo-examen-ia.html" class="route-card">
+        <h3>3. Practica en modo examen</h3>
+        <p>Genera preguntas, simulacros y ejercicios adaptados al tipo de prueba.</p>
+      </a>
+
+      <a href="corrector-respuestas-ia.html" class="route-card">
+        <h3>4. Corrige tus respuestas</h3>
+        <p>Comprueba qué falta, qué está mal y cómo mejorar antes del examen.</p>
+      </a>
+    </div>
+
+    <section class="related-articles">
+      <h2>También te puede ayudar</h2>
+      <div class="related-links">
+        <a href="resumidor-apuntes-ia.html">Resumidor de Apuntes con IA</a>
+        <a href="ruta-tecnia-ia-estudiantes.html">Ruta TecnIA de 7 días</a>
+        <a href="planificador-estudio-ia.html">Planificador de Estudio con IA</a>
+        <a href="generador-flashcards-ia.html">Generador de Flashcards con IA</a>
+        <a href="modo-examen-ia.html">Modo Examen IA</a>
+        <a href="corrector-respuestas-ia.html">Corrector de Respuestas con IA</a>
+        <a href="laboratorio-prompts-ia.html">Laboratorio de Prompts</a>
+      </div>
+    </section>
+
+  </article>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 TecnIA. Todos los derechos reservados.</p>
+    <p>
+      <a href="sobre-nosotros.html">Sobre nosotros</a> |
+      <a href="contacto.html">Contacto</a> |
+      <a href="politica-privacidad.html">Política de privacidad</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+  function copyPrompt(id) {
+    const text = document.getElementById(id).innerText.trim();
+    navigator.clipboard.writeText(text).then(function() {
+      alert("Prompt copiado. Ahora puedes pegarlo en ChatGPT, Gemini, Claude o Copilot.");
+    });
+  }
+</script>
+
+</body>
+</html>
