@@ -3,643 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Corrector de Respuestas con IA | TecnIA</title>
-  <meta name="description" content="Usa el Corrector de Respuestas con IA para generar un prompt personalizado que te ayude a corregir respuestas de examen, detectar errores, mejorar argumentos y estudiar mejor.">
+  <title>Corrector de Respuestas con IA | Nota, rúbrica y mejora | TecnIA</title>
+  <meta name="description" content="Pega tus respuestas de examen y recibe una corrección exigente: nota orientativa, puntos fuertes, errores, conceptos que faltan, versión mejorada, rúbrica y plan de repaso.">
+  <link rel="canonical" href="https://tecniaia.com/corrector-respuestas-ia.html">
+  <meta property="og:title" content="Corrector de Respuestas con IA | TecnIA">
+  <meta property="og:description" content="Corrige respuestas de examen con nota orientativa, rúbrica, fallos, mejora y repaso personalizado.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tecniaia.com/corrector-respuestas-ia.html">
+  <meta property="og:site_name" content="TecnIA">
   <link rel="stylesheet" href="style.css">
-
   <style>
-    .tool-intro {
-      background: linear-gradient(135deg, #eef2ff, #f8fafc);
-      border: 1px solid #e5e7eb;
-      border-radius: 26px;
-      padding: 30px;
-      margin: 32px 0;
-    }
-
-    .tool-intro h2 {
-      margin-top: 0;
-    }
-
-    .correction-tool {
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 28px;
-      padding: 30px;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
-      margin-top: 35px;
-    }
-
-    .correction-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 18px;
-      margin-bottom: 22px;
-    }
-
-    .field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .field-group label {
-      font-weight: 700;
-      color: #0f172a;
-    }
-
-    .field-group select,
-    .field-group input,
-    .field-group textarea {
-      border: 1px solid #cbd5e1;
-      border-radius: 16px;
-      padding: 13px 14px;
-      font-size: 1rem;
-      font-family: inherit;
-      background: #f8fafc;
-      color: #0f172a;
-    }
-
-    .field-group textarea {
-      min-height: 130px;
-      resize: vertical;
-    }
-
-    .wide-field {
-      grid-column: 1 / -1;
-    }
-
-    .tool-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 24px;
-    }
-
-    .result-panel {
-      display: none;
-      margin-top: 34px;
-    }
-
-    .result-highlight {
-      background: linear-gradient(135deg, #0f172a, #1e3a8a);
-      color: #ffffff;
-      border-radius: 28px;
-      padding: 30px;
-      margin-bottom: 22px;
-    }
-
-    .result-highlight h2,
-    .result-highlight h3 {
-      color: #ffffff;
-      margin-top: 0;
-    }
-
-    .result-highlight p,
-    .result-highlight li {
-      color: #e0e7ff;
-      line-height: 1.7;
-    }
-
-    .result-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 18px;
-      margin-top: 20px;
-    }
-
-    .result-card {
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 22px;
-      padding: 22px;
-      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
-    }
-
-    .result-card h3 {
-      margin-top: 0;
-      color: #0f172a;
-    }
-
-    .result-card p,
-    .result-card li {
-      color: #475569;
-      line-height: 1.65;
-    }
-
-    .prompt-output {
-      background: #ffffff;
-      border: 1px solid #dbeafe;
-      border-radius: 24px;
-      padding: 24px;
-      margin-top: 24px;
-    }
-
-    .prompt-output h3 {
-      margin-top: 0;
-    }
-
-    .prompt-box {
-      background: #f8fafc;
-      color: #111827;
-      border: 1px solid #e5e7eb;
-      border-radius: 18px;
-      padding: 20px;
-      white-space: pre-wrap;
-      line-height: 1.7;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 0.92rem;
-      overflow-x: auto;
-    }
-
-    .rubric-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 18px;
-      overflow: hidden;
-      border-radius: 18px;
-    }
-
-    .rubric-table th,
-    .rubric-table td {
-      border: 1px solid #e5e7eb;
-      padding: 14px;
-      text-align: left;
-      vertical-align: top;
-    }
-
-    .rubric-table th {
-      background: #eef2ff;
-      color: #0f172a;
-    }
-
-    .use-cases {
-      margin-top: 44px;
-      background: #f8fafc;
-      border: 1px solid #e5e7eb;
-      border-radius: 28px;
-      padding: 30px;
-    }
-
-    .use-case-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 18px;
-      margin-top: 20px;
-    }
-
-    .use-case-card {
-      background: #ffffff;
-      border: 1px solid #dbeafe;
-      border-radius: 22px;
-      padding: 22px;
-    }
-
-    .use-case-card h3 {
-      margin-top: 0;
-      color: #1e3a8a;
-    }
-
-    .warning-box {
-      margin-top: 32px;
-      background: #fff7ed;
-      border: 1px solid #fed7aa;
-      border-radius: 22px;
-      padding: 22px;
-    }
-
-    .warning-box h3 {
-      margin-top: 0;
-      color: #9a3412;
-    }
-
-    @media (max-width: 700px) {
-      .correction-tool {
-        padding: 22px;
-      }
-
-      .result-highlight {
-        padding: 24px;
-      }
-    }
+    .correction-hero{position:relative;overflow:hidden;margin:42px auto 34px;padding:clamp(54px,8vw,96px) clamp(24px,5vw,58px);border-radius:42px;color:#fff;background:radial-gradient(circle at 16% 18%,rgba(20,184,166,.34),transparent 30%),radial-gradient(circle at 82% 16%,rgba(37,99,235,.36),transparent 28%),linear-gradient(135deg,#07111f 0%,#0f172a 48%,#111827 100%);box-shadow:0 34px 90px rgba(15,23,42,.28)}
+    .correction-hero h1{max-width:1120px;margin:18px 0 20px;color:#fff;font-size:clamp(2.6rem,6vw,5.3rem);line-height:.98;letter-spacing:-2.2px}.correction-hero p{max-width:860px;color:#dbeafe;font-size:1.14rem;line-height:1.85;margin-bottom:30px}.hero-kicker{display:inline-flex;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#99f6e4;font-weight:900}.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:34px}.hero-panel{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:28px;padding:24px}.hero-panel h2,.hero-panel h3{color:#fff;margin-top:0}.hero-panel p{color:#dbeafe;line-height:1.75}
+    .correction-layout{display:grid;grid-template-columns:minmax(360px,.9fr) minmax(0,1.1fr);gap:28px;align-items:start;margin-top:32px}.tool-panel,.result-panel,.info-card{background:#fff;border:1px solid #dbeafe;border-radius:30px;padding:30px;box-shadow:0 18px 45px rgba(15,23,42,.08)}.tool-panel h2,.result-panel h2,.info-card h2{margin-top:0;color:#0f172a}.helper{color:#64748b;line-height:1.65;margin-bottom:20px}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:grid;gap:8px}.field.full{grid-column:1/-1}.field label{font-weight:900;color:#0f172a;font-size:.94rem}.field input,.field select,.field textarea{width:100%;border:1px solid #cbd5e1;border-radius:16px;padding:13px 14px;font:inherit;color:#0f172a;background:#fff}.field textarea{resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 4px rgba(37,99,235,.1)}
+    .file-drop{position:relative;display:grid;place-items:center;min-height:150px;padding:22px;text-align:center;border:2px dashed #93c5fd;border-radius:24px;background:linear-gradient(135deg,#eff6ff,#f8fafc);cursor:pointer}.file-drop input{position:absolute;inset:0;opacity:0;cursor:pointer}.file-drop strong{display:block;color:#0f172a;font-size:1.1rem;margin-bottom:8px}.file-drop span{display:block;color:#475569;line-height:1.55}.file-list{display:grid;gap:10px;margin-top:14px}.file-item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 14px;border-radius:16px;background:#f8fafc;border:1px solid #e2e8f0;color:#334155;font-size:.92rem}.file-status{font-weight:900;color:#1d4ed8;white-space:nowrap}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.copy-note{margin-top:12px;color:#16a34a;font-weight:900;display:none}.result-empty{color:#64748b;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:20px;padding:22px;line-height:1.7}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 0}.stat{background:linear-gradient(135deg,#eff6ff,#f8fafc);border:1px solid #dbeafe;border-radius:18px;padding:18px}.stat span{display:block;color:#64748b;font-size:.78rem;font-weight:900;text-transform:uppercase;margin-bottom:6px}.stat strong{color:#0f172a;font-size:1.18rem}
+    .score-panel{display:grid;grid-template-columns:180px 1fr;gap:20px;align-items:center;margin-top:18px;padding:22px;border-radius:28px;background:#0f172a;color:#e0f2fe}.score-circle{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#1d4ed8,#0f172a);border:8px solid rgba(153,246,228,.38)}.score-circle strong{font-size:2.35rem;color:#fff}.score-panel h3{color:#99f6e4;margin:0 0 8px}.score-panel p{color:#e0f2fe;line-height:1.7;margin:0}
+    .pill{display:inline-flex;width:fit-content;padding:8px 12px;border-radius:999px;background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8;font-size:.78rem;font-weight:950;text-transform:uppercase;letter-spacing:.04em;margin-bottom:12px}.correction-section{margin-top:22px;padding:22px;border-radius:24px;border:1px solid #dbeafe;background:#fff}.correction-section h3{margin:0 0 12px;color:#0f172a}.correction-section p,.correction-section li{color:#334155;line-height:1.68}.correction-section ul{margin:0 0 0 20px}.correction-section li{margin-bottom:8px}.warning-section{background:linear-gradient(135deg,#fff7ed,#fff);border-color:#fed7aa}.warning-section h3{color:#9a3412}.good-section{background:linear-gradient(135deg,#ecfdf5,#fff);border-color:#bbf7d0}.good-section h3{color:#166534}.improved-answer{background:#f8fafc;border:1px solid #e2e8f0;border-radius:20px;padding:18px;white-space:pre-wrap;line-height:1.75;color:#334155}.rubric-table{width:100%;border-collapse:collapse;overflow:hidden;border-radius:18px;margin-top:10px}.rubric-table th,.rubric-table td{border:1px solid #e2e8f0;padding:12px;vertical-align:top;color:#334155}.rubric-table th{background:#eff6ff;color:#0f172a}.prompt-box{background:#0f172a;color:#e0f2fe;border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:22px;white-space:pre-wrap;line-height:1.75;margin-top:22px}.prompt-box h3{color:#99f6e4;margin-top:0}.prompt-box p{color:#e0f2fe}
+    .mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}.mini-card{background:#fff;border:1px solid #dbeafe;border-radius:24px;padding:24px;box-shadow:0 14px 34px rgba(15,23,42,.07)}.mini-card h3{color:#0f172a;margin:0 0 8px}.mini-card p{color:#334155;line-height:1.7;margin:0}.warning{margin-top:22px;padding:24px;border-radius:26px;border:1px solid #bfdbfe;background:linear-gradient(135deg,#eff6ff,#f8fafc);color:#334155;line-height:1.8}.warning strong{color:#0f172a}
+    @media(max-width:1080px){.hero-grid,.correction-layout,.stats,.mini-grid,.score-panel{grid-template-columns:1fr}.score-circle{margin:auto}}@media(max-width:680px){.correction-hero{border-radius:30px}.form-grid{grid-template-columns:1fr}.tool-panel,.result-panel,.info-card{padding:22px}}
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Corrector de Respuestas con IA","url":"https://tecniaia.com/corrector-respuestas-ia.html","applicationCategory":"EducationalApplication","operatingSystem":"All","description":"Herramienta para corregir respuestas de examen con nota orientativa, rúbrica, errores, versión mejorada y plan de repaso.","inLanguage":"es","publisher":{"@type":"Organization","name":"TecnIA"}}</script>
 </head>
-
 <body>
+  <header><div class="container navbar"><a href="index.html" class="logo">Tecn<span>IA</span></a><nav aria-label="Navegación principal"><ul class="nav-links"><li><a href="index.html">Inicio</a></li><li><a href="que-necesitas-hacer-con-ia.html">Resolver con IA</a></li><li><a href="herramientas-interactivas.html">Herramientas</a></li><li><a href="ia-para-estudiar.html">Estudiar con IA</a></li><li><a href="articulos.html">Guías</a></li></ul></nav></div></header>
 
-  <header>
-    <nav class="navbar">
-      <a href="index.html" class="logo">TecnIA</a>
-      <ul class="nav-links">
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="que-necesitas-hacer-con-ia.html">Resolver con IA</a></li>
-        <li><a href="metodo-tecnia.html">Método TecnIA</a></li>
-        <li><a href="centro-estudio-ia.html">Centro de Estudio</a></li>
-        <li><a href="empieza-aqui.html">Empieza aquí</a></li>
-        <li><a href="articulos.html">IA/Artículos</a></li>
-        <li><a href="herramientas.html">Herramientas</a></li>
-        <li><a href="herramientas-interactivas.html">Interactivas</a></li>
-        <li><a href="noticias.html">Noticias</a></li>
-      </ul>
-    </nav>
-  </header>
+  <main>
+    <section class="container"><div class="correction-hero"><div class="hero-kicker">Corrección exigente de examen</div><h1>Corrige tus respuestas y descubre exactamente dónde pierdes puntos</h1><p>Pega la pregunta, tu respuesta y, si quieres, el temario o la respuesta esperada. TecnIA genera una corrección con nota orientativa, rúbrica, errores, conceptos que faltan, versión mejorada y plan de repaso.</p><div class="hero-actions"><a href="#corrector" class="btn btn-primary">Corregir respuesta</a><a href="modo-examen-ia.html" class="btn btn-outline">Hacer simulacro antes</a></div><div class="hero-grid"><div class="hero-panel"><h2>No basta con saber “más o menos”</h2><p>El corrector busca precisión, estructura, datos concretos, relación con el temario y claridad de examen.</p></div><div class="hero-panel"><h3>Aprende de tus fallos</h3><p>Convierte cada error en una acción: qué repasar, cómo reescribir y qué tarjeta crear para no volver a fallar.</p></div></div></div></section>
 
-  <main class="container article-page">
+    <article class="container">
+      <section class="info-card"><span class="article-tag">Nota + rúbrica + mejora</span><h2>El cierre del sistema de estudio TecnIA</h2><p class="helper">Planificas, resumes, memorizas, haces simulacros y ahora corriges. Esta herramienta convierte tus respuestas en aprendizaje medible.</p><div class="mini-grid"><div class="mini-card"><h3>Nota orientativa</h3><p>Calcula una puntuación aproximada según cobertura, precisión, estructura y claridad.</p></div><div class="mini-card"><h3>Fallos concretos</h3><p>Detecta respuestas genéricas, conceptos ausentes, falta de datos y errores de enfoque.</p></div><div class="mini-card"><h3>Mejora accionable</h3><p>Propone una versión mejorada, plan de repaso y flashcards de error.</p></div></div></section>
 
-    <span class="article-tag">Herramienta interactiva</span>
-
-    <h1>Corrector de Respuestas con IA</h1>
-
-    <img 
-      src="https://images.unsplash.com/photo-1456324504439-367cee3b3c32?auto=format&fit=crop&w=1200&q=80" 
-      alt="Persona corrigiendo respuestas de examen con ayuda de inteligencia artificial"
-      class="article-hero-image"
-    >
-
-    <p class="article-intro">
-      Esta herramienta te ayuda a convertir una respuesta de examen en un prompt completo para que una inteligencia artificial pueda corregirla con criterios claros, detectar errores, darte una puntuación orientativa y explicarte cómo mejorarla sin copiar.
-    </p>
-
-    <section class="tool-intro">
-      <h2>¿Para qué sirve esta herramienta?</h2>
-      <p>
-        Sirve para estudiar mejor después de contestar una pregunta. No se trata de que la IA haga el examen por ti, sino de usarla como corrector, profesor y guía de mejora. Puedes usarla para respuestas de desarrollo, preguntas cortas, comentarios de texto, casos prácticos, exposiciones orales o preparación de oposiciones.
-      </p>
-    </section>
-
-    <section class="correction-tool">
-
-      <h2>Genera tu prompt de corrección personalizado</h2>
-      <p>
-        Rellena los campos con tu respuesta y el contexto del examen. Después recibirás una guía de corrección, una rúbrica y un prompt listo para copiar en ChatGPT, Claude, Gemini u otra IA.
-      </p>
-
-      <div class="correction-grid">
-
-        <div class="field-group">
-          <label for="level">Nivel académico</label>
-          <select id="level">
-            <option value="ESO">ESO</option>
-            <option value="Bachillerato">Bachillerato</option>
-            <option value="Universidad">Universidad</option>
-            <option value="Máster">Máster</option>
-            <option value="Oposición">Oposición</option>
-            <option value="Formación profesional">Formación profesional</option>
-          </select>
+      <section id="corrector" class="correction-layout">
+        <div class="tool-panel"><h2>Corrige tu respuesta</h2><p class="helper">Pega la pregunta y tu respuesta. Añade material de referencia si quieres una corrección más ajustada al temario.</p>
+          <form id="correctionForm" onsubmit="event.preventDefault();generateCorrection();">
+            <div class="form-grid">
+              <div class="field"><label for="subject">Asignatura</label><input id="subject" type="text" placeholder="Ej: Historia Económica, Biología, Derecho..."></div>
+              <div class="field"><label for="level">Nivel</label><select id="level"><option value="medio">Medio</option><option value="bajo">Bajo</option><option value="alto">Alto</option><option value="universitario">Universitario</option><option value="oposicion">Oposición</option></select></div>
+              <div class="field"><label for="examType">Tipo de examen</label><select id="examType"><option value="desarrollo">Desarrollo</option><option value="pregunta corta">Pregunta corta</option><option value="test justificado">Test justificado</option><option value="oral">Oral</option><option value="caso práctico">Caso práctico</option><option value="mixto">Mixto</option></select></div>
+              <div class="field"><label for="strictness">Exigencia</label><select id="strictness"><option value="exigente">Exigente</option><option value="muy exigente">Muy exigente</option><option value="equilibrado">Equilibrado</option><option value="comprensivo">Comprensivo</option></select></div>
+              <div class="field full"><label>Adjuntar temario, rúbrica o respuesta esperada</label><div class="file-drop" id="fileDrop"><input id="studyFiles" type="file" multiple accept=".txt,.md,.csv,.html,.htm,.pdf,.docx"><div><strong>Arrastra archivos aquí o pulsa para seleccionarlos</strong><span>TXT, MD, CSV, HTML, PDF o DOCX. Sirve para comparar tu respuesta con el material real.</span></div></div><div id="fileList" class="file-list"></div></div>
+              <div class="field full"><label for="question">Pregunta del examen</label><textarea id="question" rows="4" placeholder="Pega aquí la pregunta exacta del examen o del simulacro."></textarea></div>
+              <div class="field full"><label for="answer">Tu respuesta</label><textarea id="answer" rows="8" placeholder="Pega aquí tu respuesta tal y como la has escrito, aunque esté incompleta."></textarea></div>
+              <div class="field full"><label for="notes">Material de referencia, temario o respuesta esperada</label><textarea id="notes" rows="6" placeholder="Opcional: pega aquí el resumen, temario, rúbrica del profesor o respuesta esperada. Si adjuntas archivos, el texto aparecerá aquí."></textarea></div>
+              <div class="field full"><label for="teacherFocus">Criterios del profesor o matices importantes</label><textarea id="teacherFocus" rows="3" placeholder="Ej: valora autores, exige fechas, penaliza falta de estructura, pide ejemplos, quiere causas y consecuencias..."></textarea></div>
+            </div>
+            <div class="actions"><button type="submit" class="btn btn-primary">Corregir respuesta</button><button type="button" class="btn btn-outline" onclick="copyCorrection()">Copiar corrección</button><button type="button" class="btn btn-outline" onclick="copyPrompt()">Copiar prompt experto</button><button type="button" class="btn btn-outline" onclick="resetCorrection()">Limpiar</button></div><div id="copyNote" class="copy-note">Copiado al portapapeles.</div>
+          </form>
         </div>
+        <div class="result-panel" id="correctionResult"><h2>Tu corrección aparecerá aquí</h2><div class="result-empty">Pega una pregunta y tu respuesta. TecnIA calculará una nota orientativa, detectará fallos y propondrá una versión mejorada.</div></div>
+      </section>
 
-        <div class="field-group">
-          <label for="examType">Tipo de prueba</label>
-          <select id="examType">
-            <option value="respuesta de desarrollo">Respuesta de desarrollo</option>
-            <option value="pregunta corta">Pregunta corta</option>
-            <option value="comentario de texto">Comentario de texto</option>
-            <option value="caso práctico">Caso práctico</option>
-            <option value="examen oral">Examen oral</option>
-            <option value="trabajo académico">Trabajo académico</option>
-            <option value="examen tipo test justificado">Test con justificación</option>
-          </select>
-        </div>
-
-        <div class="field-group">
-          <label for="strictness">Nivel de exigencia</label>
-          <select id="strictness">
-            <option value="equilibrado">Equilibrado</option>
-            <option value="exigente">Exigente</option>
-            <option value="muy exigente">Muy exigente</option>
-            <option value="comprensivo">Comprensivo</option>
-          </select>
-        </div>
-
-        <div class="field-group">
-          <label for="subject">Asignatura o tema</label>
-          <input id="subject" type="text" placeholder="Ejemplo: Historia Económica, Biología, Derecho, Marketing...">
-        </div>
-
-        <div class="field-group wide-field">
-          <label for="question">Pregunta del examen</label>
-          <textarea id="question" placeholder="Pega aquí la pregunta exacta que tienes que responder."></textarea>
-        </div>
-
-        <div class="field-group wide-field">
-          <label for="answer">Tu respuesta</label>
-          <textarea id="answer" placeholder="Pega aquí tu respuesta tal y como la has escrito."></textarea>
-        </div>
-
-        <div class="field-group wide-field">
-          <label for="criteria">Criterios del profesor o instrucciones opcionales</label>
-          <textarea id="criteria" placeholder="Ejemplo: máximo 10 líneas, usar autores, justificar con ejemplos, mencionar fechas, explicar causas y consecuencias..."></textarea>
-        </div>
-
-      </div>
-
-      <div class="tool-actions">
-        <button class="btn" onclick="generateCorrection()">Generar corrección con IA</button>
-        <button class="btn btn-outline" onclick="copyCorrectionPrompt()">Copiar prompt</button>
-        <button class="btn btn-outline" onclick="resetCorrectionTool()">Limpiar</button>
-      </div>
-
-      <div id="result-panel" class="result-panel">
-
-        <div class="result-highlight">
-          <span class="result-label">Resultado personalizado</span>
-          <h2>Tu guía de corrección está lista</h2>
-          <p id="main-advice"></p>
-        </div>
-
-        <div class="result-grid">
-          <div class="result-card">
-            <h3>Qué debe revisar la IA</h3>
-            <ul id="review-list"></ul>
-          </div>
-
-          <div class="result-card">
-            <h3>Errores frecuentes a vigilar</h3>
-            <ul id="mistake-list"></ul>
-          </div>
-
-          <div class="result-card">
-            <h3>Cómo mejorar tu respuesta</h3>
-            <ul id="improvement-list"></ul>
-          </div>
-        </div>
-
-        <div class="result-card" style="margin-top: 24px;">
-          <h3>Rúbrica sugerida de evaluación</h3>
-          <table class="rubric-table">
-            <thead>
-              <tr>
-                <th>Criterio</th>
-                <th>Qué se valora</th>
-                <th>Peso orientativo</th>
-              </tr>
-            </thead>
-            <tbody id="rubric-body"></tbody>
-          </table>
-        </div>
-
-        <div class="prompt-output">
-          <h3>Prompt completo para copiar en una IA</h3>
-          <div id="correction-prompt" class="prompt-box"></div>
-        </div>
-
-      </div>
-
-    </section>
-
-    <section class="use-cases">
-      <h2>Casos en los que puedes usar este corrector</h2>
-
-      <div class="use-case-grid">
-        <div class="use-case-card">
-          <h3>Antes de entregar un trabajo</h3>
-          <p>Usa la herramienta para detectar fallos de claridad, estructura o argumentación antes de enviar una tarea.</p>
-        </div>
-
-        <div class="use-case-card">
-          <h3>Después de practicar un examen</h3>
-          <p>Escribe una respuesta como si estuvieras en el examen y usa la IA para corregirla y mejorarla.</p>
-        </div>
-
-        <div class="use-case-card">
-          <h3>Para preparar oposiciones</h3>
-          <p>Pide una corrección exigente, con rúbrica y puntos de mejora para respuestas de desarrollo o casos prácticos.</p>
-        </div>
-
-        <div class="use-case-card">
-          <h3>Para estudiar de forma activa</h3>
-          <p>No te limites a leer apuntes. Responde, corrige, mejora y vuelve a intentarlo.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="warning-box">
-      <h3>Uso responsable</h3>
-      <p>
-        Esta herramienta no sustituye a un profesor ni garantiza una nota exacta. Su objetivo es ayudarte a estudiar mejor, detectar errores y aprender a construir respuestas más claras, completas y argumentadas.
-      </p>
-    </section>
-
-   <section class="related-articles">
-  <h2>También te puede interesar</h2>
-  <div class="related-links">
-    <a href="resumidor-apuntes-ia.html">Resumidor de Apuntes con IA</a>
-    <a href="generador-flashcards-ia.html">Generador de Flashcards con IA</a>
-    <a href="como-corregir-respuestas-examen-ia.html">Cómo corregir tus respuestas de examen con inteligencia artificial</a>
-    <a href="modo-examen-ia.html">Modo Examen IA</a>
-    <a href="laboratorio-prompts-ia.html">Generador de Prompts de Estudio con IA</a>
-    <a href="test-herramienta-ia-estudiantes.html">Test: qué herramienta de IA necesitas</a>
-    <a href="como-usar-chatgpt-para-estudiar.html">Cómo usar ChatGPT para estudiar</a>
-  </div>
-</section>
-    <div style="text-align: center; margin-top: 50px;">
-      <a href="herramientas-interactivas.html" class="btn btn-outline">Ver todas las herramientas interactivas</a>
-    </div>
-
+      <div class="warning"><strong>Importante:</strong> la nota es orientativa. La corrección sirve para estudiar mejor, no para sustituir el criterio real del profesor.</div>
+      <section class="info-card" style="margin-top:28px;"><span class="article-tag">Después de corregir</span><h2>Convierte tus errores en progreso</h2><p class="helper">Después de corregir, vuelve al sistema: repasa lo que falta, crea flashcards y haz otro simulacro.</p><div class="home-grid"><a href="generador-flashcards-ia.html" class="card tool-card"><span class="article-tag">Errores</span><h3>Crear flashcards de fallos</h3><p>Convierte los conceptos que has fallado en tarjetas de repaso.</p><span class="read-more">Crear →</span></a><a href="modo-examen-ia.html" class="card tool-card"><span class="article-tag">Simulacro</span><h3>Repetir examen</h3><p>Haz otro simulacro con los puntos débiles detectados.</p><span class="read-more">Practicar →</span></a><a href="resumidor-apuntes-ia.html" class="card tool-card"><span class="article-tag">Teoría</span><h3>Volver al resumen</h3><p>Refuerza los apartados que no has explicado bien.</p><span class="read-more">Resumir →</span></a></div><div class="home-mini-links"><a href="planificador-estudio-ia.html">Planificador</a><a href="centro-estudio-ia.html">Centro de Estudio</a><a href="ia-para-estudiar.html">Guía IA para estudiar</a><a href="herramientas-interactivas.html">Todas las herramientas</a></div></section>
+    </article>
   </main>
 
-  <footer>
-    <p>&copy; 2026 TecnIA. Todos los derechos reservados.</p>
-    <p>
-      <a href="sobre-nosotros.html">Sobre nosotros</a> |
-      <a href="contacto.html">Contacto</a> |
-      <a href="politica-privacidad.html">Política de privacidad</a>
-    </p>
-  </footer>
+  <footer><div class="container"><p>&copy; 2026 TecnIA. Todos los derechos reservados.</p><p class="mt-2"><a href="sobre-nosotros.html">Sobre nosotros</a> | <a href="contacto.html">Contacto</a> | <a href="politica-privacidad.html">Política de privacidad</a> | <a href="noticias.html">Noticias</a></p></div></footer>
 
   <script>
-    let latestPrompt = "";
-
-    function getValue(id) {
-      return document.getElementById(id).value.trim();
-    }
-
-    function generateCorrection() {
-      const level = getValue("level");
-      const examType = getValue("examType");
-      const strictness = getValue("strictness");
-      const subject = getValue("subject") || "la asignatura indicada";
-      const question = getValue("question");
-      const answer = getValue("answer");
-      const criteria = getValue("criteria");
-
-      if (!question || !answer) {
-        alert("Añade al menos la pregunta del examen y tu respuesta.");
-        return;
-      }
-
-      document.getElementById("result-panel").style.display = "block";
-
-      document.getElementById("main-advice").innerText =
-        "La IA debe corregir tu respuesta como si fuera un profesor de " + level + ", con un nivel de exigencia " + strictness + ". La corrección debe centrarse en el contenido, la estructura, la precisión, los ejemplos y la claridad de la respuesta.";
-
-      buildReviewList(examType, subject);
-      buildMistakeList(examType);
-      buildImprovementList(strictness);
-      buildRubric(examType);
-
-      latestPrompt = buildPrompt(level, examType, strictness, subject, question, answer, criteria);
-      document.getElementById("correction-prompt").innerText = latestPrompt;
-
-      document.getElementById("result-panel").scrollIntoView({ behavior: "smooth" });
-    }
-
-    function buildReviewList(examType, subject) {
-      const items = [
-        "Comprobar si la respuesta contesta exactamente a la pregunta planteada.",
-        "Revisar si los conceptos principales de " + subject + " aparecen explicados correctamente.",
-        "Detectar ideas incompletas, confusas o demasiado generales.",
-        "Valorar si la estructura de la respuesta es clara: introducción, desarrollo y cierre.",
-        "Señalar si faltan ejemplos, autores, fechas, datos o argumentos relevantes."
-      ];
-
-      if (examType.includes("oral")) {
-        items.push("Valorar si la respuesta sería clara y convincente al explicarla en voz alta.");
-      }
-
-      if (examType.includes("caso práctico")) {
-        items.push("Comprobar si la respuesta aplica la teoría al caso concreto y no se queda en definiciones generales.");
-      }
-
-      printList("review-list", items);
-    }
-
-    function buildMistakeList(examType) {
-      const items = [
-        "Responder de forma genérica sin entrar en lo que pide la pregunta.",
-        "Usar conceptos sin explicarlos.",
-        "Mezclar ideas sin orden lógico.",
-        "No justificar las afirmaciones.",
-        "No cerrar la respuesta con una conclusión clara."
-      ];
-
-      if (examType.includes("comentario")) {
-        items.push("Describir el texto sin analizar su significado o contexto.");
-      }
-
-      if (examType.includes("test")) {
-        items.push("Elegir una opción correcta sin justificar por qué las demás no encajan.");
-      }
-
-      printList("mistake-list", items);
-    }
-
-    function buildImprovementList(strictness) {
-      const items = [
-        "Reescribir las frases más confusas con palabras más simples.",
-        "Añadir conectores como: en primer lugar, además, por tanto, en conclusión.",
-        "Incluir al menos un ejemplo concreto.",
-        "Separar la respuesta en párrafos claros.",
-        "Crear una versión mejorada después de leer la corrección."
-      ];
-
-      if (strictness === "muy exigente" || strictness === "exigente") {
-        items.push("Pedir a la IA que sea estricta y que no dé por válidas ideas incompletas.");
-      }
-
-      printList("improvement-list", items);
-    }
-
-    function buildRubric(examType) {
-      const rows = [
-        ["Contenido", "La respuesta incluye los conceptos clave y demuestra comprensión real del tema.", "40%"],
-        ["Precisión", "Las ideas son correctas, no hay errores importantes y se usan términos adecuados.", "20%"],
-        ["Estructura", "La respuesta está ordenada, bien conectada y es fácil de seguir.", "20%"],
-        ["Argumentación", "Las afirmaciones se justifican con ejemplos, datos, autores o razonamientos.", "15%"],
-        ["Claridad", "La redacción es clara, directa y evita repeticiones innecesarias.", "5%"]
-      ];
-
-      if (examType.includes("oral")) {
-        rows[4] = ["Claridad oral", "La respuesta sería comprensible, ordenada y natural al explicarla en voz alta.", "5%"];
-      }
-
-      if (examType.includes("caso práctico")) {
-        rows[3] = ["Aplicación al caso", "La teoría se aplica correctamente al supuesto planteado.", "15%"];
-      }
-
-      const tbody = document.getElementById("rubric-body");
-      tbody.innerHTML = "";
-
-      rows.forEach(function(row) {
-        tbody.innerHTML +=
-          "<tr>" +
-            "<td><strong>" + row[0] + "</strong></td>" +
-            "<td>" + row[1] + "</td>" +
-            "<td>" + row[2] + "</td>" +
-          "</tr>";
-      });
-    }
-
-    function printList(id, items) {
-      const list = document.getElementById(id);
-      list.innerHTML = "";
-
-      items.forEach(function(item) {
-        list.innerHTML += "<li>" + item + "</li>";
-      });
-    }
-
-    function buildPrompt(level, examType, strictness, subject, question, answer, criteria) {
-      let prompt = "";
-
-      prompt += "Actúa como profesor corrector de nivel " + level + ".\n";
-      prompt += "Vas a corregir una " + examType + " de la asignatura o tema: " + subject + ".\n";
-      prompt += "Quiero una corrección con un nivel de exigencia " + strictness + ".\n\n";
-
-      prompt += "PREGUNTA DEL EXAMEN:\n";
-      prompt += question + "\n\n";
-
-      prompt += "RESPUESTA DEL ESTUDIANTE:\n";
-      prompt += answer + "\n\n";
-
-      if (criteria) {
-        prompt += "CRITERIOS O INSTRUCCIONES DEL PROFESOR:\n";
-        prompt += criteria + "\n\n";
-      }
-
-      prompt += "TAREA:\n";
-      prompt += "1. Corrige la respuesta de forma clara y justificada.\n";
-      prompt += "2. Señala qué partes están bien.\n";
-      prompt += "3. Señala errores, imprecisiones o ideas incompletas.\n";
-      prompt += "4. Da una puntuación orientativa del 0 al 10.\n";
-      prompt += "5. Explica por qué darías esa puntuación.\n";
-      prompt += "6. Propón una versión mejorada de la respuesta.\n";
-      prompt += "7. Dame una lista de consejos concretos para mejorar antes del examen.\n";
-      prompt += "8. No inventes información si no estás seguro; indícalo claramente.\n\n";
-
-      prompt += "FORMATO DE RESPUESTA:\n";
-      prompt += "- Nota orientativa\n";
-      prompt += "- Lo que está bien\n";
-      prompt += "- Lo que falta o está mal\n";
-      prompt += "- Versión mejorada\n";
-      prompt += "- Consejos para estudiar mejor\n";
-
-      return prompt;
-    }
-
-    function copyCorrectionPrompt() {
-      if (!latestPrompt) {
-        alert("Primero genera la corrección.");
-        return;
-      }
-
-      navigator.clipboard.writeText(latestPrompt).then(function() {
-        alert("Prompt copiado");
-      });
-    }
-
-    function resetCorrectionTool() {
-      document.getElementById("level").value = "ESO";
-      document.getElementById("examType").value = "respuesta de desarrollo";
-      document.getElementById("strictness").value = "equilibrado";
-      document.getElementById("subject").value = "";
-      document.getElementById("question").value = "";
-      document.getElementById("answer").value = "";
-      document.getElementById("criteria").value = "";
-      document.getElementById("result-panel").style.display = "none";
-      document.getElementById("correction-prompt").innerText = "";
-      latestPrompt = "";
-    }
+    let extractedFiles=[], lastCorrectionText="", lastPrompt="";
+    const stopwords=new Set("para como pero porque sobre entre desde hasta donde cuando este esta estos estas tambien también tiene tienen puede pueden ser son con sin los las una uno unos unas del por que qué se su sus al el la de en y o u a un es no más mas muy tema unidad capitulo capítulo apartado parte pagina página clase apuntes estudio estudiar ejemplo ejemplos concepto conceptos definicion definición".split(" "));
+    document.addEventListener("DOMContentLoaded",()=>{const input=document.getElementById("studyFiles"),drop=document.getElementById("fileDrop");if(window.pdfjsLib){pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"}input.addEventListener("change",async e=>handleFiles(e.target.files));["dragenter","dragover"].forEach(n=>drop.addEventListener(n,e=>{e.preventDefault();drop.classList.add("dragover")}));["dragleave","drop"].forEach(n=>drop.addEventListener(n,e=>{e.preventDefault();drop.classList.remove("dragover")}));drop.addEventListener("drop",async e=>handleFiles(e.dataTransfer.files));});
+    function v(id){return document.getElementById(id).value.trim()} function norm(t){return(t||"").replace(/\r/g,"\n").replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim()}
+    async function handleFiles(files){const list=document.getElementById("fileList"),notes=document.getElementById("notes");for(const file of files){const item=document.createElement("div");item.className="file-item";item.innerHTML=`<span>${esc(file.name)} · ${bytes(file.size)}</span><span class="file-status">Leyendo...</span>`;list.appendChild(item);try{const text=norm(await extractText(file));extractedFiles.push({name:file.name,size:file.size,text});notes.value=norm(notes.value+"\n\nARCHIVO: "+file.name+"\n"+text);item.querySelector(".file-status").textContent=text.length>80?"Leído":"Poco texto"}catch(e){item.querySelector(".file-status").textContent="No leído";item.title=e.message}}}
+    async function extractText(file){const name=file.name.toLowerCase();if(name.endsWith(".pdf"))return pdfText(file);if(name.endsWith(".docx"))return docxText(file);return file.text()} async function pdfText(file){if(!window.pdfjsLib)throw new Error("No se pudo cargar PDF");const pdf=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;let out="";for(let i=1;i<=pdf.numPages;i++){const page=await pdf.getPage(i),content=await page.getTextContent();out+="\n\nPágina "+i+"\n"+content.items.map(x=>x.str).join(" ")}return out} async function docxText(file){if(!window.mammoth)throw new Error("No se pudo cargar DOCX");const result=await mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()});return result.value||""}
+    function generateCorrection(){const subject=v("subject")||"la asignatura",level=v("level")||"medio",examType=v("examType")||"desarrollo",strictness=v("strictness")||"exigente",question=norm(v("question")),answer=norm(v("answer")),reference=norm(v("notes")),focus=norm(v("teacherFocus"));if(!question||!answer){document.getElementById("correctionResult").innerHTML='<h2>Falta información</h2><div class="result-empty">Añade como mínimo la pregunta y tu respuesta para poder corregir.</div>';return}const expectedTerms=getExpectedTerms(question+" "+reference+" "+focus);const answerTerms=getExpectedTerms(answer);const missing=expectedTerms.filter(t=>!answerTerms.some(a=>similar(a.raw,t.raw))).slice(0,12);const present=expectedTerms.filter(t=>answerTerms.some(a=>similar(a.raw,t.raw))).slice(0,12);const metrics=scoreAnswer({question,answer,reference,focus,expectedTerms,answerTerms,strictness,examType});const strengths=getStrengths(answer,metrics,present);const weaknesses=getWeaknesses(answer,missing,metrics,examType);const improvements=getImprovements(missing,weaknesses,examType,strictness);const improved=buildImprovedAnswer(subject,missing,present);const flashcards=buildErrorFlashcards(missing,weaknesses,subject);const rubric=buildRubric(metrics);lastPrompt=buildPrompt({subject,level,examType,strictness,question,answer,reference,focus,missing,present});renderCorrection({subject,examType,strictness,metrics,missing,present,strengths,weaknesses,improvements,improved,flashcards,rubric})}
+    function getExpectedTerms(text){const words=text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9ñáéíóúü\s-]/gi," ").split(/\s+/).filter(w=>w.length>4&&!stopwords.has(w));const counts={};words.forEach(w=>counts[w]=(counts[w]||0)+1);return Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,28).map(([raw,count])=>({raw,term:cap(raw.replace(/-/g," ")),count}))}
+    function similar(a,b){return a===b||a.includes(b)||b.includes(a)} function countWords(t){return(t||"").trim().split(/\s+/).filter(Boolean).length}
+    function scoreAnswer({answer,reference,focus,expectedTerms,answerTerms,strictness,examType}){const words=countWords(answer);const coverage=expectedTerms.length?expectedTerms.filter(t=>answerTerms.some(a=>similar(a.raw,t.raw))).length/expectedTerms.length:.45;const lengthScore=Math.min(1,words/(examType==="pregunta corta"?65:examType==="test justificado"?55:160));const structureScore=(/[.?!]\s+/.test(answer)&&/(por tanto|además|en primer lugar|por otro lado|en conclusión|sin embargo|porque|debido|causa|consecuencia)/i.test(answer))?.9:words>80?.65:.42;const precisionScore=(/\d{3,4}|\d+%|autor|fecha|ejemplo|causa|consecuencia|tipo|fase|modelo|teor/i.test(answer))?.82:.55;const focusScore=focus?Math.min(1,getExpectedTerms(focus).filter(t=>answer.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").includes(t.raw)).length/Math.max(1,getExpectedTerms(focus).length)):.65;const penalty=strictness==="muy exigente"?.82:strictness==="exigente"?.9:strictness==="comprensivo"?1.08:1;const final=Math.max(1,Math.min(10,(coverage*4.2+lengthScore*1.6+structureScore*1.55+precisionScore*1.55+focusScore*1.1)*penalty+(reference?.25:0)));return{score:Number(final.toFixed(1)),coverage:Math.round(coverage*100),length:Math.round(lengthScore*100),structure:Math.round(structureScore*100),precision:Math.round(precisionScore*100),focus:Math.round(focusScore*100),words}}
+    function getStrengths(answer,m,present){const items=[];if(m.coverage>=55)items.push("Cubre una parte relevante de los conceptos esperados.");if(m.structure>=70)items.push("Tiene una estructura razonablemente clara.");if(m.precision>=70)items.push("Incluye algún dato, ejemplo, causa, consecuencia o término concreto.");if(countWords(answer)>90)items.push("Hay suficiente desarrollo para evaluar con detalle.");if(present.length)items.push("Conceptos bien incorporados: "+present.slice(0,6).map(x=>x.term).join(", ")+".");return items.length?items:["La respuesta tiene una base aprovechable, pero necesita más precisión y desarrollo."]}
+    function getWeaknesses(answer,missing,m,examType){const items=[];if(m.coverage<55)items.push("Faltan varios conceptos importantes que deberían aparecer.");if(m.structure<70)items.push("La estructura puede mejorar: separa idea principal, explicación y cierre.");if(m.precision<70)items.push("Faltan datos, ejemplos, fechas, autores, clasificaciones o matices.");if(countWords(answer)<60&&examType!=="pregunta corta")items.push("La respuesta parece demasiado breve para una pregunta de desarrollo o mixta.");if(!/(porque|debido|por tanto|causa|consecuencia|implica|relaciona|compar)/i.test(answer))items.push("Falta razonamiento: no basta con nombrar conceptos.");if(missing.length)items.push("Conceptos ausentes o flojos: "+missing.slice(0,7).map(x=>x.term).join(", ")+".");return items}
+    function getImprovements(missing,weaknesses,examType,strictness){const items=["Empieza respondiendo exactamente a lo que pregunta el enunciado.","Añade una frase de contexto antes de desarrollar los conceptos.","Usa conectores: primero, además, por tanto, en conclusión.","Cierra con una frase que resuma la idea principal."];if(missing.length)items.unshift("Incluye estos conceptos que faltan: "+missing.slice(0,5).map(x=>x.term).join(", ")+".");if(examType==="desarrollo"||examType==="mixto")items.push("Añade al menos un ejemplo o dato concreto.");if(strictness==="muy exigente")items.push("Evita frases vagas como “es importante” sin explicar por qué.");return items}
+    function buildImprovedAnswer(subject,missing,present){return `La respuesta debería situar el tema dentro de ${subject} y contestar directamente al enunciado.\n\n${present.length?`Conviene mantener conceptos ya presentes como ${present.slice(0,5).map(x=>x.term).join(", ")}.`:"La respuesta actual necesita incorporar mejor los conceptos centrales."}\n\n${missing.length?`Además, habría que añadir o aclarar: ${missing.slice(0,6).map(x=>x.term).join(", ")}.`:"No se detectan grandes conceptos ausentes, pero sí conviene mejorar precisión y estructura."}\n\nUna versión mejorada debe cerrar explicando por qué estos elementos son relevantes, evitando enumeraciones sin conexión.`}
+    function buildErrorFlashcards(missing,weaknesses,subject){const cards=[];missing.slice(0,5).forEach(t=>cards.push(`¿Qué papel tiene ${t.term} en ${subject} y por qué no debería faltar en una respuesta de examen?`));weaknesses.slice(0,4).forEach(w=>cards.push(`Error a corregir: ${w}`));return cards.length?cards:["¿Estoy contestando exactamente a la pregunta o solo escribiendo lo que recuerdo del tema?"]}
+    function buildRubric(m){return[["Cobertura del contenido",m.coverage+"%","Incluye los conceptos clave que exige la pregunta."],["Precisión",m.precision+"%","Usa datos concretos y evita vaguedades."],["Estructura",m.structure+"%","Ordena la respuesta con lógica y conectores."],["Desarrollo suficiente",m.length+"%","La extensión permite explicar y justificar."],["Ajuste a criterios",m.focus+"%","Respeta matices del profesor o instrucciones."]]}
+    function renderCorrection(d){const verdict=d.metrics.score>=8?"Muy buena base":d.metrics.score>=6?"Aprobable, pero mejorable":d.metrics.score>=4.5?"Riesgo de quedarse corta":"Necesita rehacerse";lastCorrectionText=[`CORRECCIÓN TECNIA - ${d.subject}`,`Nota orientativa: ${d.metrics.score}/10`,`Veredicto: ${verdict}`,"","PUNTOS FUERTES",d.strengths.map(x=>"- "+x).join("\n"),"","FALLOS",d.weaknesses.map(x=>"- "+x).join("\n"),"","MEJORAS",d.improvements.map(x=>"- "+x).join("\n"),"","VERSIÓN MEJORADA",d.improved,"","FLASHCARDS DE ERROR",d.flashcards.map(x=>"- "+x).join("\n"),"","PROMPT EXPERTO",lastPrompt].join("\n");document.getElementById("correctionResult").innerHTML=`<h2>Corrección generada</h2><div class="score-panel"><div class="score-circle"><strong>${d.metrics.score}/10</strong></div><div><h3>${esc(verdict)}</h3><p>Nota orientativa calculada según cobertura, precisión, estructura, desarrollo y ajuste a criterios.</p></div></div><div class="stats"><div class="stat"><span>Cobertura</span><strong>${d.metrics.coverage}%</strong></div><div class="stat"><span>Precisión</span><strong>${d.metrics.precision}%</strong></div><div class="stat"><span>Estructura</span><strong>${d.metrics.structure}%</strong></div><div class="stat"><span>Palabras</span><strong>${d.metrics.words}</strong></div></div><div class="correction-section good-section"><span class="pill">Bien</span><h3>Puntos fuertes</h3><ul>${d.strengths.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div><div class="correction-section warning-section"><span class="pill">A corregir</span><h3>Fallos que te pueden quitar puntos</h3><ul>${d.weaknesses.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div><div class="correction-section"><span class="pill">Conceptos</span><h3>Conceptos presentes y conceptos que faltan</h3><p><strong>Presentes:</strong> ${d.present.length?esc(d.present.slice(0,8).map(x=>x.term).join(", ")):"No se han detectado suficientes conceptos clave."}</p><p><strong>Faltan o están flojos:</strong> ${d.missing.length?esc(d.missing.slice(0,10).map(x=>x.term).join(", ")):"No se detectan grandes ausencias, pero revisa precisión."}</p></div><div class="correction-section"><span class="pill">Mejora</span><h3>Qué tienes que hacer para subir nota</h3><ul>${d.improvements.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div><div class="correction-section"><span class="pill">Versión mejorada</span><h3>Modelo de mejora, sin inventar contenido</h3><div class="improved-answer">${esc(d.improved)}</div></div><div class="correction-section"><span class="pill">Rúbrica</span><h3>Rúbrica orientativa</h3><table class="rubric-table"><thead><tr><th>Criterio</th><th>Resultado</th><th>Qué significa</th></tr></thead><tbody>${d.rubric.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join("")}</tbody></table></div><div class="correction-section"><span class="pill">Repaso</span><h3>Flashcards de error recomendadas</h3><ul>${d.flashcards.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div><div class="prompt-box"><h3>Prompt experto para una corrección aún más profunda con IA</h3><p>${esc(lastPrompt)}</p></div>`}
+    function buildPrompt({subject,level,examType,strictness,question,answer,reference,focus,missing,present}){return `Actúa como un profesor corrector muy riguroso y útil.\n\nCorrige mi respuesta de examen de ${subject}.\n\nNivel: ${level}\nTipo de examen: ${examType}\nExigencia: ${strictness}\nCriterios del profesor: ${focus||"no indicado"}\n\nPregunta:\n${question}\n\nMi respuesta:\n${answer}\n\nMaterial de referencia:\n${reference||"No se ha añadido material de referencia."}\n\nConceptos presentes:\n${present.slice(0,10).map(x=>"- "+x.term).join("\n")||"No detectado"}\n\nConceptos que faltan:\n${missing.slice(0,10).map(x=>"- "+x.term).join("\n")||"No detectado"}\n\nNecesito: nota orientativa sobre 10, qué está bien, qué falta, errores, versión mejorada, rúbrica, plan de repaso y flashcards de error. No inventes información fuera del material.`}
+    async function copyText(t){if(!t)return;await navigator.clipboard.writeText(t);const n=document.getElementById("copyNote");n.style.display="block";setTimeout(()=>n.style.display="none",2200)} function copyCorrection(){copyText(lastCorrectionText||"Todavía no has generado una corrección.")} function copyPrompt(){copyText(lastPrompt||"Todavía no has generado un prompt.")} function resetCorrection(){document.getElementById("correctionForm").reset();document.getElementById("fileList").innerHTML="";extractedFiles=[];lastCorrectionText="";lastPrompt="";document.getElementById("correctionResult").innerHTML='<h2>Tu corrección aparecerá aquí</h2><div class="result-empty">Pega una pregunta y tu respuesta. TecnIA calculará una nota orientativa, detectará fallos y propondrá una versión mejorada.</div>'}
+    function bytes(b){if(!b)return"0 KB";const s=["Bytes","KB","MB","GB"],i=Math.floor(Math.log(b)/Math.log(1024));return`${(b/Math.pow(1024,i)).toFixed(1)} ${s[i]}`} function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")} function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
   </script>
-
+  <script src="tecnia-memory.js"></script>
 </body>
 </html>
