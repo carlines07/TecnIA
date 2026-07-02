@@ -87,6 +87,7 @@
     async function copyText(t){if(!t)return;await navigator.clipboard.writeText(t);const n=document.getElementById("copyNote");n.style.display="block";setTimeout(()=>n.style.display="none",2200)} function copyCorrection(){copyText(lastCorrectionText||"Todavía no has generado una corrección.")} function copyPrompt(){copyText(lastPrompt||"Todavía no has generado un prompt.")} function resetCorrection(){document.getElementById("correctionForm").reset();document.getElementById("fileList").innerHTML="";extractedFiles=[];lastCorrectionText="";lastPrompt="";document.getElementById("correctionResult").innerHTML='<h2>Tu corrección aparecerá aquí</h2><div class="result-empty">Pega una pregunta y tu respuesta. TecnIA calculará una nota orientativa, detectará fallos y propondrá una versión mejorada.</div>'}
     function bytes(b){if(!b)return"0 KB";const s=["Bytes","KB","MB","GB"],i=Math.floor(Math.log(b)/Math.log(1024));return`${(b/Math.pow(1024,i)).toFixed(1)} ${s[i]}`} function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")} function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
   </script>
-  <script src="tecnia-memory.js"><script src="tecnia-quality.js"></script></script>
+  <script src="tecnia-memory.js"></script>
+  <script src="tecnia-quality.js"></script>
 </body>
 </html>
