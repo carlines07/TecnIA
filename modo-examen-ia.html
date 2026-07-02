@@ -1,468 +1,621 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Modo Examen IA: prepara exámenes con inteligencia artificial | TecnIA</title>
-  <meta name="description" content="Usa el Modo Examen IA para generar un plan de repaso, preguntas de práctica y un prompt personalizado según tu tema, nivel, tipo de examen y tiempo disponible.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Modo Examen IA | Simulacros difíciles y preguntas adaptadas | TecnIA</title>
+  <meta name="description" content="Adjunta apuntes, resúmenes o flashcards y genera un simulacro de examen exigente con preguntas cortas, largas, concretas, tipo test, rúbrica, soluciones y curiosidades útiles para recordar.">
+
+  <link rel="canonical" href="https://tecniaia.com/modo-examen-ia.html">
+
+  <meta property="og:title" content="Modo Examen IA | TecnIA">
+  <meta property="og:description" content="Entrena con preguntas difíciles, variadas y adaptadas a tu temario para llegar al examen por encima del nivel esperado.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tecniaia.com/modo-examen-ia.html">
+  <meta property="og:site_name" content="TecnIA">
+
   <link rel="stylesheet" href="style.css">
 
   <style>
-    .exam-tool {
-      background: #f8fafc;
-      border: 1px solid #e5e7eb;
-      border-radius: 24px;
-      padding: 28px;
-      margin: 32px 0;
-    }
-
-    .exam-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-      margin-top: 22px;
-    }
-
-    .exam-field {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .exam-field label {
-      font-weight: 700;
-      color: #111827;
-    }
-
-    .exam-field input,
-    .exam-field select,
-    .exam-field textarea {
-      width: 100%;
-      border: 1px solid #d1d5db;
-      border-radius: 14px;
-      padding: 13px 14px;
-      font-size: 1rem;
-      background: #ffffff;
-      color: #111827;
-    }
-
-    .exam-field textarea {
-      min-height: 95px;
-      resize: vertical;
-    }
-
-    .exam-actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 24px;
-    }
-
-    .exam-result {
-      display: none;
-      margin-top: 30px;
-      background: #ffffff;
-      border: 1px solid #d1d5db;
-      border-radius: 24px;
-      padding: 26px;
-    }
-
-    .exam-result.active {
-      display: block;
-    }
-
-    .result-label {
-      display: inline-block;
-      background: #eef2ff;
-      color: #3730a3;
-      font-weight: 800;
-      border-radius: 999px;
-      padding: 8px 14px;
-      margin-bottom: 14px;
-    }
-
-    .generated-exam-prompt {
-      white-space: pre-wrap;
-      background: #ffffff;
-      color: #111827;
-      border: 1px solid #d1d5db;
-      border-radius: 18px;
-      padding: 22px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size: 0.95rem;
-      line-height: 1.7;
-      overflow-x: auto;
-      margin-top: 18px;
-    }
-
-    .exam-mini-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 24px;
-    }
-
-    .exam-mini-card {
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
-      border-radius: 18px;
-      padding: 18px;
-    }
-
-    .exam-mini-card h3 {
-      margin-top: 0;
-      color: #111827;
-    }
-
-    .exam-warning {
-      background: #fff7ed;
-      border: 1px solid #fed7aa;
-      color: #7c2d12;
-      border-radius: 18px;
-      padding: 18px;
-      margin-top: 26px;
-    }
-
-    @media (max-width: 760px) {
-      .exam-grid,
-      .exam-mini-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .exam-tool {
-        padding: 20px;
-      }
-    }
+    .exam-hero{position:relative;overflow:hidden;margin:42px auto 34px;padding:clamp(54px,8vw,96px) clamp(24px,5vw,58px);border-radius:42px;color:#fff;background:radial-gradient(circle at 16% 18%,rgba(20,184,166,.34),transparent 30%),radial-gradient(circle at 82% 16%,rgba(37,99,235,.36),transparent 28%),radial-gradient(circle at 72% 92%,rgba(139,92,246,.22),transparent 32%),linear-gradient(135deg,#07111f 0%,#0f172a 48%,#111827 100%);box-shadow:0 34px 90px rgba(15,23,42,.28)}
+    .exam-hero:after{content:"";position:absolute;inset:auto -12% -42% 38%;height:300px;background:linear-gradient(90deg,rgba(20,184,166,.24),rgba(37,99,235,.3),rgba(139,92,246,.2));filter:blur(42px);transform:rotate(-8deg);pointer-events:none}
+    .exam-hero>*{position:relative;z-index:1}.exam-hero .hero-kicker{color:#99f6e4;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18)}
+    .exam-hero h1{max-width:1120px;margin:18px 0 20px;color:#fff;font-size:clamp(2.6rem,6vw,5.3rem);line-height:.98;letter-spacing:-2.2px}
+    .exam-hero p{max-width:860px;color:#dbeafe;font-size:1.14rem;line-height:1.85;margin-bottom:30px}
+    .hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:24px;margin-top:34px}.hero-panel{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:28px;padding:24px;backdrop-filter:blur(14px)}.hero-panel h2,.hero-panel h3{color:#fff;margin-top:0}.hero-panel p,.hero-panel li{color:#dbeafe;line-height:1.75}
+    .exam-layout{display:grid;grid-template-columns:minmax(360px,.9fr) minmax(0,1.1fr);gap:28px;align-items:start;margin-top:32px}.tool-panel,.result-panel,.info-card{background:#fff;border:1px solid #dbeafe;border-radius:30px;padding:30px;box-shadow:0 18px 45px rgba(15,23,42,.08)}.tool-panel h2,.result-panel h2,.info-card h2{margin-top:0;color:#0f172a}.helper{color:#64748b;line-height:1.65;margin-bottom:20px}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:grid;gap:8px}.field.full{grid-column:1/-1}.field label{font-weight:900;color:#0f172a;font-size:.94rem}.field input,.field select,.field textarea{width:100%;border:1px solid #cbd5e1;border-radius:16px;padding:13px 14px;font:inherit;color:#0f172a;background:#fff}.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 4px rgba(37,99,235,.1)}
+    .file-drop{position:relative;display:grid;place-items:center;min-height:166px;padding:24px;text-align:center;border:2px dashed #93c5fd;border-radius:24px;background:linear-gradient(135deg,#eff6ff,#f8fafc);cursor:pointer;transition:.2s}.file-drop:hover,.file-drop.dragover{border-color:#14b8a6;transform:translateY(-2px);background:linear-gradient(135deg,#ecfeff,#eff6ff)}.file-drop input{position:absolute;inset:0;opacity:0;cursor:pointer}.file-drop strong{display:block;color:#0f172a;font-size:1.1rem;margin-bottom:8px}.file-drop span{display:block;color:#475569;line-height:1.55}
+    .file-list{display:grid;gap:10px;margin-top:14px}.file-item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 14px;border-radius:16px;background:#f8fafc;border:1px solid #e2e8f0;color:#334155;font-size:.92rem}.file-status{font-weight:900;color:#1d4ed8;white-space:nowrap}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.copy-note{margin-top:12px;color:#16a34a;font-weight:900;display:none}.result-empty{color:#64748b;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:20px;padding:22px;line-height:1.7}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 0}.stat{background:linear-gradient(135deg,#eff6ff,#f8fafc);border:1px solid #dbeafe;border-radius:18px;padding:18px}.stat span{display:block;color:#64748b;font-size:.78rem;font-weight:900;text-transform:uppercase;margin-bottom:6px}.stat strong{color:#0f172a;font-size:1.18rem}
+    .pill{display:inline-flex;width:fit-content;padding:8px 12px;border-radius:999px;background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8;font-size:.78rem;font-weight:950;text-transform:uppercase;letter-spacing:.04em;margin-bottom:12px}
+    .question-list{display:grid;gap:18px;margin-top:22px}.question-card{border:1px solid #dbeafe;border-radius:26px;overflow:hidden;background:#fff;box-shadow:0 12px 30px rgba(15,23,42,.07)}.question-head{display:flex;justify-content:space-between;gap:12px;align-items:center;background:#0f172a;color:#fff;padding:16px 18px}.question-head strong{color:#fff}.question-tags{display:flex;gap:8px;flex-wrap:wrap}.qtag{font-size:.74rem;font-weight:950;border-radius:999px;padding:6px 9px;background:rgba(20,184,166,.18);color:#99f6e4;border:1px solid rgba(20,184,166,.28)}
+    .question-body{padding:20px}.question-body h3{margin:0 0 10px;color:#0f172a}.question-body p,.question-body li{color:#334155;line-height:1.68}.question-body ul{margin:10px 0 0 20px}
+    .answer-box{padding:18px 20px;background:#f8fafc;border-top:1px solid #e2e8f0;color:#334155;line-height:1.65}.answer-box strong{color:#0f172a}.curiosity{margin-top:12px;padding:14px;border-radius:18px;background:#fff7ed;border:1px solid #fed7aa;color:#7c2d12}.curiosity strong{color:#9a3412}
+    .rubric-box,.strategy-box,.prompt-box{margin-top:22px;padding:22px;border-radius:24px;border:1px solid #dbeafe;background:#fff}.rubric-box h3,.strategy-box h3{margin:0 0 12px;color:#0f172a}.rubric-box li,.strategy-box li{color:#334155;line-height:1.65;margin-bottom:8px}.rubric-box ul,.strategy-box ol{margin:0 0 0 20px}
+    .prompt-box{background:#0f172a;color:#e0f2fe;border:1px solid rgba(255,255,255,.12);white-space:pre-wrap;line-height:1.75}.prompt-box h3{color:#99f6e4;margin-top:0}.prompt-box p{color:#e0f2fe}
+    .mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}.mini-card{background:#fff;border:1px solid #dbeafe;border-radius:24px;padding:24px;box-shadow:0 14px 34px rgba(15,23,42,.07)}.mini-card h3{color:#0f172a;margin:0 0 8px}.mini-card p{color:#334155;line-height:1.7;margin:0}
+    .warning{margin-top:22px;padding:24px;border-radius:26px;border:1px solid #bfdbfe;background:linear-gradient(135deg,#eff6ff,#f8fafc);color:#334155;line-height:1.8}.warning strong{color:#0f172a}
+    @media(max-width:1080px){.hero-grid,.exam-layout,.stats,.mini-grid{grid-template-columns:1fr}}@media(max-width:680px){.exam-hero{border-radius:30px}.form-grid{grid-template-columns:1fr}.tool-panel,.result-panel,.info-card{padding:22px}.question-head{align-items:flex-start;flex-direction:column}}
   </style>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Modo Examen IA","url":"https://tecniaia.com/modo-examen-ia.html","applicationCategory":"EducationalApplication","operatingSystem":"All","description":"Herramienta para adjuntar apuntes, resúmenes o flashcards y generar simulacros de examen exigentes, variados y adaptados al estudiante.","inLanguage":"es","publisher":{"@type":"Organization","name":"TecnIA"}}
+  </script>
 </head>
 
 <body>
+  <header>
+    <div class="container navbar">
+      <a href="index.html" class="logo">Tecn<span>IA</span></a>
+      <nav aria-label="Navegación principal">
+        <ul class="nav-links">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="que-necesitas-hacer-con-ia.html">Resolver con IA</a></li>
+          <li><a href="herramientas-interactivas.html">Herramientas</a></li>
+          <li><a href="ia-para-estudiar.html">Estudiar con IA</a></li>
+          <li><a href="articulos.html">Guías</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-<header>
-  <div class="container nav">
-    <h1 class="logo">TecnIA</h1>
-    <nav>
-      <a href="index.html">Inicio</a>
-      <a href="que-necesitas-hacer-con-ia.html">Resolver con IA</a>
-      <a href="metodo-tecnia.html">Método TecnIA</a>
-      <a href="centro-estudio-ia.html">Centro de Estudio</a>
-      <a href="empieza-aqui.html">Empieza aquí</a>
-      <a href="articulos.html">IA/Artículos</a>
-      <a href="herramientas.html">Herramientas</a>
-      <a href="herramientas-interactivas.html">Interactivas</a>
-      <a href="noticias.html">Noticias</a>
-    </nav>
-  </div>
-</header>
+  <main>
+    <section class="container">
+      <div class="exam-hero">
+        <div class="hero-kicker">Simulador exigente de examen</div>
+        <h1>Entrena con preguntas difíciles sin salirte del temario</h1>
+        <p>Adjunta apuntes, resúmenes o flashcards. TecnIA genera un simulacro adaptado a tu nivel con preguntas cortas, largas, concretas, tipo test, rúbrica, soluciones y alguna mnemotecnia puntual para recordar mejor.</p>
+        <div class="hero-actions">
+          <a href="#simulador" class="btn btn-primary">Crear simulacro</a>
+          <a href="corrector-respuestas-ia.html" class="btn btn-outline">Corregir respuestas después</a>
+        </div>
+        <div class="hero-grid">
+          <div class="hero-panel">
+            <h2>Preguntas por encima del nivel cómodo</h2>
+            <p>El objetivo es entrenar más difícil que el examen real, pero siempre usando los conceptos detectados en tus materiales.</p>
+          </div>
+          <div class="hero-panel">
+            <h3>Variedad real</h3>
+            <p>Mezcla desarrollo, preguntas concretas, test, verdadero/falso, relaciones, casos y trampas razonables para evitar práctica repetitiva.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<main>
+    <article class="container">
+      <section class="info-card">
+        <span class="article-tag">Exigencia + adaptación + temario</span>
+        <h2>Un modo examen pensado para llegar con ventaja</h2>
+        <p class="helper">No se trata de hacer preguntas fáciles para sentir que ya sabes. Esta herramienta intenta detectar conceptos importantes y convertirlos en preguntas que obliguen a razonar, explicar, comparar y corregir fallos.</p>
+        <div class="mini-grid">
+          <div class="mini-card"><h3>Lee tus materiales</h3><p>Usa apuntes, resúmenes o flashcards generadas por TecnIA.</p></div>
+          <div class="mini-card"><h3>Se adapta a ti</h3><p>Ajusta dificultad, tipo de examen, debilidades y nivel objetivo.</p></div>
+          <div class="mini-card"><h3>No inventa fuera del temario</h3><p>Las preguntas se construyen a partir de los conceptos y frases detectadas.</p></div>
+        </div>
+      </section>
 
-  <section class="hero">
+      <section id="simulador" class="exam-layout">
+        <div class="tool-panel">
+          <h2>Configura tu simulacro</h2>
+          <p class="helper">Sube tus apuntes o pega el resumen. Cuanto más concreto sea el material, más ajustadas serán las preguntas.</p>
+
+          <form id="examForm" onsubmit="event.preventDefault();generateExam();">
+            <div class="form-grid">
+              <div class="field">
+                <label for="subject">Asignatura</label>
+                <input id="subject" type="text" placeholder="Ej: Historia Económica, Derecho, Biología...">
+              </div>
+
+              <div class="field">
+                <label for="examType">Tipo de examen</label>
+                <select id="examType">
+                  <option value="mixto">Mixto</option>
+                  <option value="test">Tipo test</option>
+                  <option value="desarrollo">Desarrollo</option>
+                  <option value="oral">Oral</option>
+                  <option value="problemas">Problemas o casos prácticos</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="level">Nivel actual</label>
+                <select id="level">
+                  <option value="bajo">Bajo: voy justo/a</option>
+                  <option value="medio">Medio: sé parte del temario</option>
+                  <option value="alto">Alto: quiero afinar</option>
+                  <option value="excelente">Excelente: quiero máxima exigencia</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="difficulty">Dificultad del simulacro</label>
+                <select id="difficulty">
+                  <option value="exigente">Exigente</option>
+                  <option value="muy exigente">Muy exigente</option>
+                  <option value="nivel superior">Nivel superior al examen</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="questionCount">Número de preguntas</label>
+                <select id="questionCount">
+                  <option value="12">12 preguntas</option>
+                  <option value="20" selected>20 preguntas</option>
+                  <option value="30">30 preguntas</option>
+                  <option value="40">40 preguntas</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="need">Necesidad principal</label>
+                <select id="need">
+                  <option value="detectar fallos">Detectar fallos</option>
+                  <option value="subir nivel">Subir mucho el nivel</option>
+                  <option value="practicar desarrollo">Practicar desarrollo</option>
+                  <option value="dominar datos concretos">Dominar datos concretos</option>
+                  <option value="ganar seguridad">Ganar seguridad</option>
+                </select>
+              </div>
+
+              <div class="field full">
+                <label>Adjuntar apuntes, resumen o flashcards</label>
+                <div class="file-drop" id="fileDrop">
+                  <input id="studyFiles" type="file" multiple accept=".txt,.md,.csv,.html,.htm,.pdf,.docx">
+                  <div><strong>Arrastra archivos aquí o pulsa para seleccionarlos</strong><span>TXT, MD, CSV, HTML, PDF o DOCX. Puedes usar resúmenes o flashcards generadas por TecnIA.</span></div>
+                </div>
+                <div id="fileList" class="file-list"></div>
+              </div>
+
+              <div class="field full">
+                <label for="notes">Pega aquí apuntes, resumen o flashcards</label>
+                <textarea id="notes" rows="10" placeholder="Pega aquí el material que quieres entrenar: apuntes, resumen de TecnIA, flashcards o temario."></textarea>
+              </div>
+
+              <div class="field full">
+                <label for="teacherFocus">Qué suele preguntar o matizar el profesor</label>
+                <textarea id="teacherFocus" rows="3" placeholder="Ej: insiste en fechas, autores, causas/consecuencias, comparaciones, definiciones literales, casos prácticos..."></textarea>
+              </div>
+
+              <div class="field full">
+                <label for="extra">Tus puntos débiles o necesidades concretas</label>
+                <textarea id="extra" rows="3" placeholder="Ej: fallo en preguntas largas, confundo conceptos, me cuestan fechas, necesito preguntas trampa, quiero entrenar redacción..."></textarea>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button type="submit" class="btn btn-primary">Crear simulacro exigente</button>
+              <button type="button" class="btn btn-outline" onclick="copyExam()">Copiar simulacro</button>
+              <button type="button" class="btn btn-outline" onclick="copyPrompt()">Copiar prompt experto</button>
+              <button type="button" class="btn btn-outline" onclick="resetExam()">Limpiar</button>
+            </div>
+            <div id="copyNote" class="copy-note">Copiado al portapapeles.</div>
+          </form>
+        </div>
+
+        <div class="result-panel" id="examResult">
+          <h2>Tu simulacro aparecerá aquí</h2>
+          <div class="result-empty">Sube material o pega tus apuntes y pulsa “Crear simulacro exigente”. TecnIA generará preguntas variadas, difíciles y ajustadas al temario.</div>
+        </div>
+      </section>
+
+      <div class="warning">
+        <strong>Importante:</strong> las curiosidades se usan como ayuda de memoria, no como información externa obligatoria. Si la herramienta no encuentra una mnemotecnia útil, es mejor no forzarla.
+      </div>
+
+      <section class="info-card" style="margin-top:28px;">
+        <span class="article-tag">Después del simulacro</span>
+        <h2>Corrige y mejora tus respuestas</h2>
+        <p class="helper">El modo examen sirve para entrenar. El siguiente paso es corregir lo que contestas y detectar exactamente dónde pierdes puntos.</p>
+        <div class="home-grid">
+          <a href="corrector-respuestas-ia.html" class="card tool-card"><span class="article-tag">Corrección</span><h3>Corrector de Respuestas</h3><p>Pega tus respuestas y revisa qué está bien, qué falta y cómo mejorar.</p><span class="read-more">Corregir →</span></a>
+          <a href="generador-flashcards-ia.html" class="card tool-card"><span class="article-tag">Repaso</span><h3>Flashcards</h3><p>Convierte los fallos del simulacro en tarjetas para memorizarlos.</p><span class="read-more">Crear tarjetas →</span></a>
+          <a href="resumidor-apuntes-ia.html" class="card tool-card"><span class="article-tag">Apuntes</span><h3>Resumidor</h3><p>Vuelve al resumen si hay un bloque que no dominas.</p><span class="read-more">Resumir →</span></a>
+        </div>
+        <div class="home-mini-links">
+          <a href="planificador-estudio-ia.html">Planificador</a>
+          <a href="centro-estudio-ia.html">Centro de Estudio</a>
+          <a href="ia-para-estudiar.html">Guía IA para estudiar</a>
+          <a href="herramientas-interactivas.html">Todas las herramientas</a>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer>
     <div class="container">
-      <h1>Modo Examen IA</h1>
-      <p>
-        Prepara un examen con ayuda de la inteligencia artificial según tu tema, nivel, tipo de prueba y tiempo disponible.
-      </p>
+      <p>&copy; 2026 TecnIA. Todos los derechos reservados.</p>
+      <p class="mt-2"><a href="sobre-nosotros.html">Sobre nosotros</a> | <a href="contacto.html">Contacto</a> | <a href="politica-privacidad.html">Política de privacidad</a> | <a href="noticias.html">Noticias</a></p>
     </div>
-  </section>
+  </footer>
 
-  <section class="container article-page">
+  <script>
+    let extractedFiles=[], lastExamQuestions=[], lastExamText="", lastPrompt="";
+    const stopwords=new Set("para como pero porque sobre entre desde hasta donde cuando este esta estos estas tambien también tiene tienen puede pueden ser son con sin los las una uno unos unas del por que qué se su sus al el la de en y o u a un es no más mas muy tema unidad capitulo capítulo apartado parte pagina página clase apuntes estudio estudiar ejemplo ejemplos concepto conceptos definicion definición".split(" "));
 
-<p class="article-intro">
-  Esta herramienta genera un plan de repaso y un prompt personalizado para practicar con ChatGPT, Gemini o Copilot. Solo tienes que indicar qué examen tienes, cuánto tiempo te queda y qué necesitas mejorar.
-</p>
+    document.addEventListener("DOMContentLoaded",()=>{
+      const input=document.getElementById("studyFiles"),drop=document.getElementById("fileDrop");
+      if(window.pdfjsLib){pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"}
+      input.addEventListener("change",async e=>handleFiles(e.target.files));
+      ["dragenter","dragover"].forEach(n=>drop.addEventListener(n,e=>{e.preventDefault();drop.classList.add("dragover")}));
+      ["dragleave","drop"].forEach(n=>drop.addEventListener(n,e=>{e.preventDefault();drop.classList.remove("dragover")}));
+      drop.addEventListener("drop",async e=>handleFiles(e.dataTransfer.files));
+    });
 
-<div class="exam-tool">
+    function v(id){return document.getElementById(id).value.trim()}
+    function norm(t){return(t||"").replace(/\r/g,"\n").replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim()}
 
-  <h2>Configura tu modo examen</h2>
-  <p>
-    Rellena los campos y TecnIA generará una estrategia de estudio, preguntas recomendadas y un prompt listo para copiar.
-  </p>
+    async function handleFiles(files){
+      const list=document.getElementById("fileList"),notes=document.getElementById("notes");
+      for(const file of files){
+        const item=document.createElement("div");
+        item.className="file-item";
+        item.innerHTML=`<span>${esc(file.name)} · ${bytes(file.size)}</span><span class="file-status">Leyendo...</span>`;
+        list.appendChild(item);
+        try{
+          const text=norm(await extractText(file));
+          extractedFiles.push({name:file.name,size:file.size,text});
+          notes.value=norm(notes.value+"\n\nARCHIVO: "+file.name+"\n"+text);
+          item.querySelector(".file-status").textContent=text.length>80?"Leído":"Poco texto";
+        }catch(e){
+          item.querySelector(".file-status").textContent="No leído";
+          item.title=e.message;
+        }
+      }
+    }
 
-  <div class="exam-grid">
+    async function extractText(file){
+      const name=file.name.toLowerCase();
+      if(name.endsWith(".pdf"))return pdfText(file);
+      if(name.endsWith(".docx"))return docxText(file);
+      return file.text();
+    }
 
-    <div class="exam-field">
-      <label for="topic">Tema o asignatura</label>
-      <input id="topic" type="text" placeholder="Ejemplo: Historia Económica, anatomía, marketing...">
-    </div>
+    async function pdfText(file){
+      if(!window.pdfjsLib)throw new Error("No se pudo cargar PDF");
+      const pdf=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;
+      let out="";
+      for(let i=1;i<=pdf.numPages;i++){
+        const page=await pdf.getPage(i),content=await page.getTextContent();
+        out+="\n\nPágina "+i+"\n"+content.items.map(x=>x.str).join(" ");
+      }
+      return out;
+    }
 
-    <div class="exam-field">
-      <label for="level">Nivel</label>
-      <select id="level">
-        <option value="principiante">Principiante</option>
-        <option value="medio">Medio</option>
-        <option value="avanzado">Avanzado</option>
-        <option value="universitario">Universitario</option>
-        <option value="oposición">Oposición</option>
-      </select>
-    </div>
+    async function docxText(file){
+      if(!window.mammoth)throw new Error("No se pudo cargar DOCX");
+      const result=await mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()});
+      return result.value||"";
+    }
 
-    <div class="exam-field">
-      <label for="examType">Tipo de examen</label>
-      <select id="examType">
-        <option value="tipo test">Tipo test</option>
-        <option value="desarrollo">Desarrollo</option>
-        <option value="oral">Oral</option>
-        <option value="práctico">Práctico</option>
-        <option value="mixto">Mixto</option>
-        <option value="no lo sé">No lo sé</option>
-      </select>
-    </div>
+    function generateExam(){
+      const subject=v("subject")||"la asignatura", examType=v("examType")||"mixto", level=v("level")||"medio", difficulty=v("difficulty")||"exigente", count=parseInt(v("questionCount")||"20"), need=v("need")||"detectar fallos", focus=v("teacherFocus"), extra=v("extra"), text=norm(v("notes"));
 
-    <div class="exam-field">
-      <label for="time">Tiempo disponible</label>
-      <select id="time">
-        <option value="menos de 1 hora">Menos de 1 hora</option>
-        <option value="una tarde">Una tarde</option>
-        <option value="1 día">1 día</option>
-        <option value="3 días">3 días</option>
-        <option value="1 semana">1 semana</option>
-        <option value="más de 1 semana">Más de 1 semana</option>
-      </select>
-    </div>
+      if(!text || countWords(text)<40){
+        document.getElementById("examResult").innerHTML='<h2>Falta material</h2><div class="result-empty">Pega apuntes, resumen o flashcards para que el simulacro no se salga del temario.</div>';
+        return;
+      }
 
-    <div class="exam-field">
-      <label for="difficulty">Dificultad percibida</label>
-      <select id="difficulty">
-        <option value="me cuesta mucho">Me cuesta mucho</option>
-        <option value="voy regular">Voy regular</option>
-        <option value="lo entiendo pero necesito practicar">Lo entiendo pero necesito practicar</option>
-        <option value="solo quiero repasar">Solo quiero repasar</option>
-      </select>
-    </div>
+      const sentences=splitSentences(text);
+      const concepts=getConcepts(text,focus+" "+extra);
+      const facts=getFacts(sentences,focus+" "+extra);
+      const questions=buildQuestions({subject,examType,level,difficulty,count,need,focus,extra,text,sentences,concepts,facts});
+      lastExamQuestions=questions;
+      lastPrompt=buildPrompt({subject,examType,level,difficulty,count,need,focus,extra,text,concepts,facts});
+      renderExam({subject,examType,level,difficulty,count,need,focus,extra,text,concepts,facts,questions});
+    }
 
-    <div class="exam-field">
-      <label for="tool">Herramienta que quieres usar</label>
-      <select id="tool">
-        <option value="ChatGPT">ChatGPT</option>
-        <option value="Gemini">Gemini</option>
-        <option value="Copilot">Copilot</option>
-        <option value="no lo sé">No lo sé</option>
-      </select>
-    </div>
+    function splitSentences(text){
+      return norm(text).split(/(?<=[.!?])\s+|\n+/).map(s=>s.trim()).filter(s=>s.length>35&&s.length<520);
+    }
 
-    <div class="exam-field" style="grid-column: 1 / -1;">
-      <label for="extra">Información extra opcional</label>
-      <textarea id="extra" placeholder="Ejemplo: entra todo el tema 4, el profesor pregunta mucho definiciones, me cuesta memorizar autores..."></textarea>
-    </div>
+    function getConcepts(text,focus){
+      const focusWords=(focus||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").split(/\W+/).filter(w=>w.length>4);
+      const words=text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9ñáéíóúü\s-]/gi," ").split(/\s+/).filter(w=>w.length>4&&!stopwords.has(w));
+      const counts={};words.forEach(w=>counts[w]=(counts[w]||0)+1);focusWords.forEach(w=>counts[w]=(counts[w]||0)+12);
+      const sentences=splitSentences(text);
+      return Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,34).map(([raw,count])=>{
+        const evidence=sentences.find(s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").includes(raw));
+        return{term:cap(raw.replace(/-/g," ")),raw,count,evidence:evidence||"Concepto repetido o marcado como importante en el material."};
+      });
+    }
 
-  </div>
+    function getFacts(sentences,focus){
+      const focusWords=(focus||"").toLowerCase().split(/\W+/).filter(w=>w.length>4);
+      return sentences.filter(s=>/\d{3,4}|\d+%|\b(causa|consecuencia|definici[oó]n|autor|fecha|tipo|fase|modelo|teor[ií]a|ley|f[oó]rmula|ejemplo|diferencia|comparaci[oó]n|ventaja|desventaja|clasificaci[oó]n)\b/i.test(s)||focusWords.some(w=>s.toLowerCase().includes(w))).slice(0,32);
+    }
 
-  <div class="exam-actions">
-    <button class="btn" onclick="generateExamMode()">Generar modo examen</button>
-    <button class="btn-secondary" onclick="copyExamPrompt()">Copiar prompt</button>
-    <button class="btn-secondary" onclick="resetExamMode()">Limpiar</button>
-  </div>
+    function buildQuestions(data){
+      const {subject,examType,level,difficulty,count,need,focus,extra,text,sentences,concepts,facts}=data;
+      const questions=[], used=new Set();
+      const templates=getTemplates(examType,need);
+      const sourcePool=[...facts,...sentences].filter(Boolean);
+      const curiosityIndex=Math.min(count-1, Math.max(4, Math.floor(count*0.65)));
 
-  <div id="examResult" class="exam-result">
-    <span class="result-label">Resultado personalizado</span>
-    <h2 id="resultTitle">Tu modo examen</h2>
+      for(let i=0;i<count;i++){
+        const concept=concepts[i % Math.max(1,concepts.length)] || {term:subject,evidence:sourcePool[i%sourcePool.length]||text.slice(0,180)};
+        const evidence=sourcePool[i % Math.max(1,sourcePool.length)] || concept.evidence;
+        const type=templates[i % templates.length];
+        const key=(type+"-"+concept.term+"-"+evidence.slice(0,30)).toLowerCase();
+        if(used.has(key) && sourcePool.length>1){
+          continue;
+        }
+        used.add(key);
 
-    <div class="exam-mini-grid">
-      <div class="exam-mini-card">
-        <h3>Plan recomendado</h3>
-        <p id="studyPlan"></p>
-      </div>
+        const q=makeQuestion(type,concept,evidence,{subject,examType,level,difficulty,need,focus,extra,index:i});
+        if(i===curiosityIndex && shouldAddCuriosity(concept,evidence)){
+          q.curiosity=buildCuriosity(concept,evidence);
+        }
+        questions.push(q);
+      }
 
-      <div class="exam-mini-card">
-        <h3>Cómo practicar</h3>
-        <p id="practiceMode"></p>
-      </div>
+      let guard=0;
+      while(questions.length<count && guard<80){
+        const i=questions.length+guard;
+        const concept=concepts[i % Math.max(1,concepts.length)] || {term:subject,evidence:text.slice(0,220)};
+        questions.push(makeQuestion("concreta",concept,concept.evidence,{subject,examType,level,difficulty,need,focus,extra,index:i}));
+        guard++;
+      }
 
-      <div class="exam-mini-card">
-        <h3>Prioridad</h3>
-        <p id="priorityAdvice"></p>
-      </div>
-    </div>
+      return questions.slice(0,count);
+    }
 
-    <h2>Prompt listo para usar</h2>
-    <p>
-      Copia este texto y pégalo en ChatGPT, Gemini o Copilot para empezar a practicar.
-    </p>
+    function getTemplates(examType,need){
+      let base=["concreta","corta","desarrollo","relacion","trampa","aplicacion","comparacion","test","verdadero-falso","definicion-exigente"];
+      if(examType==="test")base=["test","trampa","verdadero-falso","concreta","comparacion","definicion-exigente","relacion"];
+      if(examType==="desarrollo")base=["desarrollo","comparacion","relacion","aplicacion","concreta","trampa","definicion-exigente"];
+      if(examType==="oral")base=["oral","corta","relacion","concreta","desarrollo","comparacion","trampa"];
+      if(examType==="problemas")base=["aplicacion","procedimiento","concreta","trampa","comparacion","test","desarrollo"];
+      if(need==="dominar datos concretos")base.unshift("dato-exacto","concreta","test");
+      if(need==="subir nivel")base.unshift("trampa","relacion","desarrollo");
+      return base;
+    }
 
-    <div id="generatedPrompt" class="generated-exam-prompt"></div>
-  </div>
+    function makeQuestion(type,concept,evidence,ctx){
+      const clean=cleanText(evidence);
+      const term=concept.term;
+      let front="", answer="", rubric=[], kind=type;
 
-</div>
+      if(type==="desarrollo"){
+        front=`Desarrolla de forma ordenada el papel de "${term}" dentro del tema. Incluye definición, contexto, importancia y al menos una relación con otra idea del material.`;
+        answer=`Debe aparecer una definición clara de ${term}, una explicación de su función dentro del tema y una conexión con el fragmento: "${clean}".`;
+        rubric=["Define el concepto sin vaguedades.","Sitúalo en el tema.","Incluye datos concretos si aparecen.","Relaciona con otra idea.","Cierra con una conclusión breve."];
+      } else if(type==="corta"){
+        front=`Responde en 3-5 líneas: ¿por qué "${term}" es relevante en este tema?`;
+        answer=`La respuesta debe ser breve pero precisa: ${clean}`;
+        rubric=["No alargarse.","Incluir la idea central.","Usar vocabulario del temario.","No quedarse en una definición vacía."];
+      } else if(type==="concreta"){
+        front=`Pregunta concreta: identifica el dato, idea o matiz más importante de este fragmento y explica por qué podría caer en el examen: "${clean}"`;
+        answer=`Lo importante es detectar la idea examinable y justificarla. No basta con copiar: hay que explicar qué concepto evalúa y qué error podría cometerse.`;
+        rubric=["Extrae el dato principal.","Explica su relevancia.","Señala posible pregunta de examen.","Evita responder de forma genérica."];
+      } else if(type==="relacion"){
+        front=`Relaciona "${term}" con otro concepto del temario. Explica la conexión y qué pasaría si confundieras ambos en el examen.`;
+        answer=`Debe conectar ${term} con otro concepto cercano del material. Base: "${clean}".`;
+        rubric=["Explica ambos conceptos.","Marca la relación.","Señala una diferencia o matiz.","Incluye ejemplo si procede."];
+      } else if(type==="comparacion"){
+        front=`Compara "${term}" con otra idea del tema. Indica una semejanza, una diferencia y una consecuencia de confundirlas.`;
+        answer=`La comparación debe usar el temario y no una opinión externa. Punto de partida: "${clean}".`;
+        rubric=["Semejanza clara.","Diferencia clara.","Consecuencia de la confusión.","Respuesta ordenada."];
+      } else if(type==="test"){
+        const options=getOptions(term,ctx.index);
+        front=`Tipo test difícil: según el temario, ¿cuál es la opción más correcta sobre "${term}"?\nA) ${options[0]}\nB) ${options[1]}\nC) ${options[2]}\nD) ${options[3]}`;
+        answer=`Respuesta esperada: A. La opción A es la más ajustada al material: "${clean}". Las otras opciones son distractores para entrenar precisión.`;
+        rubric=["No elegir por familiaridad.","Buscar el matiz exacto.","Descartar opciones demasiado generales.","Justificar la respuesta."];
+      } else if(type==="verdadero-falso"){
+        front=`Verdadero o falso, justificando: "${term}" puede explicarse correctamente a partir de esta idea: "${clean}".`;
+        answer=`La clave está en justificar. Aunque la afirmación sea compatible, debes explicar qué parte del fragmento la sostiene y qué matiz falta.`;
+        rubric=["Responder V/F.","Justificar con el material.","Añadir el matiz que falta.","No inventar información externa."];
+      } else if(type==="trampa"){
+        front=`Pregunta trampa razonable: ¿qué error cometería un estudiante si memorizara "${term}" de forma superficial? Corrige ese error.`;
+        answer=`El error típico sería quedarse con una palabra clave sin entender el matiz. Debe corregirse usando el material: "${clean}".`;
+        rubric=["Identifica el error.","Corrige con precisión.","Usa datos del temario.","Demuestra comprensión real."];
+      } else if(type==="aplicacion"){
+        front=`Aplica "${term}" a un caso o ejemplo del propio temario. ¿Cómo lo explicarías si el profesor te pidiera razonar y no solo definir?`;
+        answer=`Debe convertir el concepto en razonamiento. Apoyo del material: "${clean}".`;
+        rubric=["Define antes de aplicar.","Usa un ejemplo coherente.","Razona paso a paso.","No se va fuera del temario."];
+      } else if(type==="procedimiento"){
+        front=`Si este tema exige resolver o explicar un procedimiento, enumera los pasos relacionados con "${term}" y señala el fallo más probable.`;
+        answer=`Debe responder con pasos ordenados y un error típico. Base del material: "${clean}".`;
+        rubric=["Pasos claros.","Orden lógico.","Fallo probable.","Corrección del fallo."];
+      } else if(type==="dato-exacto"){
+        front=`Dato concreto: extrae del material un dato específico relacionado con "${term}" y formula una respuesta breve que no pierda ese detalle.`;
+        answer=`El dato debe salir del texto. Fragmento base: "${clean}".`;
+        rubric=["Dato exacto.","Sin rodeos.","Explicación mínima.","No inventar."];
+      } else if(type==="oral"){
+        front=`Responde en voz alta durante 60 segundos: explica "${term}" sin mirar apuntes e incluye una conexión con otra parte del tema.`;
+        answer=`Debe sonar claro, ordenado y con vocabulario del temario. Apoyo: "${clean}".`;
+        rubric=["Claridad oral.","Orden.","Conexión conceptual.","Cierre breve."];
+      } else {
+        front=`Define "${term}" con precisión y añade un matiz que demuestre que no lo has memorizado de forma superficial.`;
+        answer=`Debe incluir definición y matiz. Base: "${clean}".`;
+        rubric=["Definición exacta.","Matiz relevante.","Dato concreto si existe.","Lenguaje claro."];
+      }
 
-<div class="exam-warning">
-  <strong>Importante:</strong> usa esta herramienta para practicar y entender mejor, no para copiar respuestas sin aprender. La IA puede equivocarse, así que revisa siempre lo que te proponga.
-</div>
+      return{
+        number:ctx.index+1,
+        type:labelType(type),
+        difficulty:getQuestionDifficulty(ctx.index,ctx.difficulty),
+        front,
+        answer,
+        rubric,
+        source:clean
+      };
+    }
 
-<section class="related-articles">
-  <h2>También te puede ayudar</h2>
-  <div class="related-links">
-    <a href="resumidor-apuntes-ia.html">Resumidor de Apuntes con IA</a>
-    <a href="generador-flashcards-ia.html">Generador de Flashcards con IA</a>
-    <a href="laboratorio-prompts-ia.html">Generador de Prompts de Estudio</a>
-    <a href="test-herramienta-ia-estudiantes.html">Test de herramientas IA</a>
-    <a href="como-usar-chatgpt-para-estudiar.html">Cómo usar ChatGPT para estudiar</a>
-    <a href="errores-chatgpt-estudiar.html">Errores al usar ChatGPT para estudiar</a>
-  </div>
-</section>
+    function getOptions(term,index){
+      const distractors=[
+        `Es un concepto secundario que no necesita relacionarse con el resto del tema.`,
+        `Solo importa si aparece literalmente en una definición.`,
+        `Es una idea aislada y no se puede conectar con causas o consecuencias.`,
+        `Su importancia depende de memorizar una palabra exacta, no de entender el contexto.`
+      ];
+      return[
+        `Es un concepto que debe definirse, contextualizarse y relacionarse con el resto del temario.`,
+        distractors[index%distractors.length],
+        distractors[(index+1)%distractors.length],
+        distractors[(index+2)%distractors.length]
+      ];
+    }
 
-  </section>
+    function shouldAddCuriosity(concept,evidence){
+      const txt=(concept.term+" "+evidence).toLowerCase();
+      return concept.term.length>4 && !/archivo|página|pagina/.test(txt);
+    }
 
-</main>
+    function buildCuriosity(concept,evidence){
+      const term=concept.term;
+      const year=(evidence.match(/\b\d{3,4}\b/)||[])[0];
+      if(year){
+        return `Mnemotecnia útil: asocia ${term} con el número ${year}. Cuando veas esa fecha, pregúntate: “¿qué cambió aquí y por qué importa?”. Esa pregunta suele desbloquear la respuesta.`;
+      }
+      if(term.length<=8){
+        return `Truco de memoria: convierte "${term}" en una palabra ancla. Antes de responder, di mentalmente: definición → contexto → ejemplo. Así evitas quedarte en una respuesta plana.`;
+      }
+      return `Curiosidad de estudio: si un concepto cuesta recordarlo, muchas veces no falta memoria, falta conexión. Une "${term}" con una causa, una consecuencia o una comparación y será mucho más difícil olvidarlo.`;
+    }
 
-<footer>
-  <div class="container">
-    <p>© 2026 TecnIA. Todos los derechos reservados.</p>
-    <p>
-      <a href="sobre-nosotros.html">Sobre nosotros</a> |
-      <a href="contacto.html">Contacto</a> |
-      <a href="politica-privacidad.html">Política de privacidad</a>
-    </p>
-  </div>
-</footer>
+    function labelType(type){
+      const labels={
+        "desarrollo":"Desarrollo",
+        "corta":"Respuesta corta",
+        "concreta":"Concreta",
+        "relacion":"Relación",
+        "comparacion":"Comparación",
+        "test":"Tipo test",
+        "verdadero-falso":"Verdadero/falso",
+        "trampa":"Pregunta trampa",
+        "aplicacion":"Aplicación",
+        "procedimiento":"Procedimiento",
+        "dato-exacto":"Dato exacto",
+        "oral":"Oral",
+        "definicion-exigente":"Definición exigente"
+      };
+      return labels[type]||"Pregunta";
+    }
 
-<script>
-let lastExamPrompt = "";
+    function getQuestionDifficulty(i,d){
+      if(d==="nivel superior")return i%3===0?"Muy difícil":"Difícil";
+      if(d==="muy exigente")return i%4===0?"Muy difícil":"Exigente";
+      return i%5===0?"Difícil":"Exigente";
+    }
 
-function getValue(id) {
-  return document.getElementById(id).value.trim();
-}
+    function renderExam(data){
+      const {subject,examType,level,difficulty,count,need,text,concepts,facts,questions}=data;
+      lastExamText=[
+        `SIMULACRO TECNIA - ${subject}`,
+        `Tipo: ${examType}`,
+        `Nivel: ${level}`,
+        `Dificultad: ${difficulty}`,
+        "",
+        ...questions.map(q=>`PREGUNTA ${q.number} (${q.type} · ${q.difficulty})\n${q.front}\n\nRespuesta esperada:\n${q.answer}\n\nRúbrica:\n- ${q.rubric.join("\n- ")}${q.curiosity?`\n\nCuriosidad/mnemotecnia:\n${q.curiosity}`:""}`)
+      ].join("\n\n");
 
-function generateExamMode() {
-  const topic = getValue("topic") || "mi tema de examen";
-  const level = getValue("level");
-  const examType = getValue("examType");
-  const time = getValue("time");
-  const difficulty = getValue("difficulty");
-  const tool = getValue("tool");
-  const extra = getValue("extra");
+      document.getElementById("examResult").innerHTML=`
+        <h2>Simulacro exigente generado</h2>
+        <div class="stats">
+          <div class="stat"><span>Preguntas</span><strong>${questions.length}</strong></div>
+          <div class="stat"><span>Conceptos</span><strong>${concepts.length}</strong></div>
+          <div class="stat"><span>Datos base</span><strong>${facts.length}</strong></div>
+          <div class="stat"><span>Dificultad</span><strong>${esc(difficulty)}</strong></div>
+        </div>
 
-  const selectedTool = tool === "no lo sé" ? "ChatGPT o Gemini" : tool;
+        <div class="strategy-box">
+          <span class="pill">Estrategia</span>
+          <h3>Cómo usar este simulacro</h3>
+          <ol>
+            <li>Contesta primero sin mirar la respuesta esperada.</li>
+            <li>Corrige usando la rúbrica, no solo mirando si “te suena”.</li>
+            <li>Marca como peligrosas las preguntas que falles por matiz.</li>
+            <li>Convierte esas preguntas falladas en flashcards o llévalas al corrector.</li>
+          </ol>
+        </div>
 
-  const plan = buildStudyPlan(time, difficulty);
-  const practice = buildPracticeMode(examType);
-  const priority = buildPriorityAdvice(examType, difficulty);
+        <div class="question-list">
+          ${questions.map(q=>`
+            <div class="question-card">
+              <div class="question-head">
+                <strong>${q.number}. ${esc(q.type)}</strong>
+                <div class="question-tags"><span class="qtag">${esc(q.difficulty)}</span><span class="qtag">Temario</span></div>
+              </div>
+              <div class="question-body">
+                <h3>Pregunta</h3>
+                <p>${esc(q.front)}</p>
+              </div>
+              <div class="answer-box">
+                <strong>Respuesta esperada:</strong>
+                <p>${esc(q.answer)}</p>
+                <strong>Rúbrica:</strong>
+                <ul>${q.rubric.map(r=>`<li>${esc(r)}</li>`).join("")}</ul>
+                ${q.curiosity?`<div class="curiosity"><strong>Curiosidad/mnemotecnia:</strong> ${esc(q.curiosity)}</div>`:""}
+              </div>
+            </div>
+          `).join("")}
+        </div>
 
-  lastExamPrompt = buildExamPrompt(topic, level, examType, time, difficulty, selectedTool, extra);
+        <div class="rubric-box">
+          <span class="pill">Criterio de corrección</span>
+          <h3>Qué significa hacerlo bien</h3>
+          <ul>
+            <li>Responder con conceptos del temario, no con frases vacías.</li>
+            <li>Incluir datos concretos cuando existan: fechas, autores, ejemplos, fórmulas o clasificaciones.</li>
+            <li>Relacionar ideas cuando la pregunta lo pida.</li>
+            <li>Detectar trampas razonables y no confundir conceptos cercanos.</li>
+          </ul>
+        </div>
 
-  document.getElementById("resultTitle").textContent = "Modo examen para: " + topic;
-  document.getElementById("studyPlan").textContent = plan;
-  document.getElementById("practiceMode").textContent = practice;
-  document.getElementById("priorityAdvice").textContent = priority;
-  document.getElementById("generatedPrompt").textContent = lastExamPrompt;
+        <div class="prompt-box"><h3>Prompt experto para continuar el entrenamiento con IA</h3><p>${esc(lastPrompt)}</p></div>
+      `;
+    }
 
-  document.getElementById("examResult").classList.add("active");
-}
+    function buildPrompt(data){
+      const {subject,examType,level,difficulty,count,need,focus,extra,text,concepts,facts}=data;
+      return `Actúa como un profesor extremadamente exigente pero justo.
 
-function buildStudyPlan(time, difficulty) {
-  if (time === "menos de 1 hora") {
-    return "Haz un repaso urgente: conceptos clave, errores frecuentes y 10 preguntas rápidas para detectar fallos.";
-  }
+Quiero preparar un examen de ${subject} con un nivel superior al cómodo, sin salirme del temario.
 
-  if (time === "una tarde" || time === "1 día") {
-    return "Divide el estudio en tres bloques: entender lo básico, practicar preguntas y repasar fallos.";
-  }
+Datos:
+- Tipo de examen: ${examType}
+- Nivel actual: ${level}
+- Dificultad deseada: ${difficulty}
+- Número de preguntas: ${count}
+- Necesidad principal: ${need}
+- Matices del profesor: ${focus||"no indicado"}
+- Puntos débiles: ${extra||"no indicado"}
 
-  if (time === "3 días") {
-    return "Día 1: entender y resumir. Día 2: practicar preguntas. Día 3: simulacro y corrección.";
-  }
+Conceptos detectados:
+${concepts.slice(0,22).map((c,i)=>`${i+1}. ${c.term}: ${c.evidence}`).join("\n")}
 
-  if (time === "1 semana" || time === "más de 1 semana") {
-    return "Organiza el estudio por temas, alternando teoría, práctica, simulacros y repasos espaciados.";
-  }
+Datos o frases importantes del material:
+${facts.slice(0,18).map((f,i)=>`${i+1}. ${f}`).join("\n")}
 
-  if (difficulty === "me cuesta mucho") {
-    return "Empieza por explicaciones simples antes de hacer preguntas difíciles.";
-  }
+Instrucciones:
+1. Genera preguntas variadas: desarrollo, cortas, concretas, test, relación, comparación y preguntas trampa razonables.
+2. Las preguntas deben ser difíciles y obligar a razonar, pero no deben salirse del temario.
+3. Evita repetir la misma pregunta con otras palabras.
+4. Incluye respuesta esperada y rúbrica de corrección.
+5. Da más peso a los matices del profesor y a mis puntos débiles.
+6. En alguna pregunta aislada, si resulta natural, añade una curiosidad o mnemotecnia interesante para recordar mejor. Si queda forzada, no la pongas.
+7. Entréname para llegar al examen con un nivel superior al que tengo ahora.
 
-  return "Combina comprensión, práctica y revisión de errores.";
-}
+Material:
+${text.slice(0,7500)}`;
+    }
 
-function buildPracticeMode(examType) {
-  if (examType === "tipo test") {
-    return "Practica con preguntas tipo test, respuestas justificadas y corrección de errores.";
-  }
-
-  if (examType === "desarrollo") {
-    return "Practica respuestas largas con estructura: introducción, ideas principales, ejemplos y conclusión.";
-  }
-
-  if (examType === "oral") {
-    return "Practica explicando en voz alta y pide a la IA que actúe como profesor exigente.";
-  }
-
-  if (examType === "práctico") {
-    return "Practica ejercicios paso a paso y pide que te explique dónde fallas.";
-  }
-
-  if (examType === "mixto") {
-    return "Combina test, preguntas cortas, desarrollo y explicación oral.";
-  }
-
-  return "Empieza con preguntas generales y ajusta el tipo de práctica cuando conozcas mejor el examen.";
-}
-
-function buildPriorityAdvice(examType, difficulty) {
-  if (difficulty === "me cuesta mucho") {
-    return "Prioriza entender antes de memorizar. Pide ejemplos sencillos y explicaciones paso a paso.";
-  }
-
-  if (examType === "tipo test") {
-    return "Prioriza definiciones, diferencias entre conceptos y preguntas trampa.";
-  }
-
-  if (examType === "desarrollo") {
-    return "Prioriza estructura, argumentos, ejemplos y claridad al escribir.";
-  }
-
-  if (examType === "oral") {
-    return "Prioriza expresarte con claridad y responder preguntas improvisadas.";
-  }
-
-  return "Prioriza los temas que más se repiten y los errores que más cometes.";
-}
-
-function buildExamPrompt(topic, level, examType, time, difficulty, selectedTool, extra) {
-  let prompt = "Actúa como un profesor experto y exigente. Quiero preparar un examen de " + topic + ".\n\n";
-
-  prompt += "Mi nivel es: " + level + ".\n";
-  prompt += "Tipo de examen: " + examType + ".\n";
-  prompt += "Tiempo disponible: " + time + ".\n";
-  prompt += "Mi situación actual: " + difficulty + ".\n";
-  prompt += "Voy a usar: " + selectedTool + ".\n";
-
-  if (extra) {
-    prompt += "Información extra: " + extra + ".\n";
-  }
-
-  prompt += "\nNecesito que hagas lo siguiente:\n";
-  prompt += "1. Explícame cómo debería organizar mi estudio según el tiempo que tengo.\n";
-  prompt += "2. Hazme una lista de los conceptos más importantes que debería dominar.\n";
-  prompt += "3. Créame preguntas de práctica adaptadas al tipo de examen.\n";
-  prompt += "4. Corrige mis respuestas cuando te las envíe, explicando qué está bien y qué falta.\n";
-  prompt += "5. Señala los errores típicos que suelen cometer los estudiantes.\n";
-  prompt += "6. Hazme un mini simulacro final cuando te diga: quiero hacer el simulacro.\n\n";
-
-  prompt += "No me des solo respuestas para memorizar. Ayúdame a entender, practicar y mejorar como si estuviera preparando el examen de verdad.";
-
-  return prompt;
-}
-
-function copyExamPrompt() {
-  if (!lastExamPrompt) {
-    alert("Primero genera tu modo examen.");
-    return;
-  }
-
-  navigator.clipboard.writeText(lastExamPrompt).then(function() {
-    alert("Prompt copiado. Ahora puedes pegarlo en ChatGPT, Gemini o Copilot.");
-  });
-}
-
-function resetExamMode() {
-  document.getElementById("topic").value = "";
-  document.getElementById("extra").value = "";
-  document.getElementById("examResult").classList.remove("active");
-  lastExamPrompt = "";
-}
-</script>
-
+    function cleanText(s){return String(s||"").replace(/\s+/g," ").trim().slice(0,360)}
+    function countWords(t){return(t||"").trim().split(/\s+/).filter(Boolean).length}
+    function bytes(b){if(!b)return"0 KB";const s=["Bytes","KB","MB","GB"],i=Math.floor(Math.log(b)/Math.log(1024));return`${(b/Math.pow(1024,i)).toFixed(1)} ${s[i]}`}
+    function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+    function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+    async function copyText(t){if(!t)return;await navigator.clipboard.writeText(t);const n=document.getElementById("copyNote");n.style.display="block";setTimeout(()=>n.style.display="none",2200)}
+    function copyExam(){copyText(lastExamText||"Todavía no has generado un simulacro.")}
+    function copyPrompt(){copyText(lastPrompt||"Todavía no has generado un prompt.")}
+    function resetExam(){document.getElementById("examForm").reset();document.getElementById("fileList").innerHTML="";extractedFiles=[];lastExamQuestions=[];lastExamText="";lastPrompt="";document.getElementById("examResult").innerHTML='<h2>Tu simulacro aparecerá aquí</h2><div class="result-empty">Sube material o pega tus apuntes y pulsa “Crear simulacro exigente”. TecnIA generará preguntas variadas, difíciles y ajustadas al temario.</div>'}
+  </script>
+  <script src="tecnia-memory.js"></script>
 </body>
 </html>
