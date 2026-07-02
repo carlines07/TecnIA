@@ -1,469 +1,180 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Resumidor de Apuntes con IA | Resume sin perder datos clave | TecnIA</title>
-  <meta name="description" content="Adjunta apuntes o pega tu temario y genera un resumen de estudio completo, directo y orientado a examen, con conceptos clave, datos concretos, apartados destacados por el profesor y preguntas probables.">
-  <link rel="canonical" href="https://tecniaia.com/resumidor-apuntes-ia.html">
-  <meta property="og:title" content="Resumidor de Apuntes con IA | TecnIA">
-  <meta property="og:description" content="Sube apuntes, marca lo que insistió el profesor y crea un resumen completo sin perder datos esenciales para el examen.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://tecniaia.com/resumidor-apuntes-ia.html">
-  <meta property="og:site_name" content="TecnIA">
-  <link rel="stylesheet" href="style.css">
-  <style>
-    .summary-hero{position:relative;overflow:hidden;margin:42px auto 34px;padding:clamp(54px,8vw,96px) clamp(24px,5vw,58px);border-radius:42px;color:#fff;background:radial-gradient(circle at 16% 18%,rgba(20,184,166,.34),transparent 30%),radial-gradient(circle at 82% 16%,rgba(37,99,235,.36),transparent 28%),radial-gradient(circle at 70% 90%,rgba(139,92,246,.22),transparent 32%),linear-gradient(135deg,#07111f 0%,#0f172a 48%,#111827 100%);box-shadow:0 34px 90px rgba(15,23,42,.28)}
-    .summary-hero:after{content:"";position:absolute;inset:auto -12% -42% 38%;height:300px;background:linear-gradient(90deg,rgba(20,184,166,.24),rgba(37,99,235,.3),rgba(139,92,246,.2));filter:blur(42px);transform:rotate(-8deg);pointer-events:none}
-    .summary-hero>*{position:relative;z-index:1}.summary-hero .hero-kicker{color:#99f6e4;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18)}
-    .summary-hero h1{max-width:1080px;margin:18px 0 20px;color:#fff;font-size:clamp(2.6rem,6vw,5.3rem);line-height:.98;letter-spacing:-2.2px}
-    .summary-hero p{max-width:840px;color:#dbeafe;font-size:1.14rem;line-height:1.85;margin-bottom:30px}
-    .hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:24px;margin-top:34px}.hero-panel{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:28px;padding:24px;backdrop-filter:blur(14px)}.hero-panel h2,.hero-panel h3{color:#fff;margin-top:0}.hero-panel p,.hero-panel li{color:#dbeafe;line-height:1.75}
-    .summary-layout{display:grid;grid-template-columns:minmax(360px,.88fr) minmax(0,1.12fr);gap:28px;align-items:start;margin-top:32px}.tool-panel,.result-panel,.info-card{background:#fff;border:1px solid #dbeafe;border-radius:30px;padding:30px;box-shadow:0 18px 45px rgba(15,23,42,.08)}.tool-panel h2,.result-panel h2,.info-card h2{margin-top:0;color:#0f172a}.helper{color:#64748b;line-height:1.65;margin-bottom:20px}
-    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:grid;gap:8px}.field.full{grid-column:1/-1}.field label{font-weight:900;color:#0f172a;font-size:.94rem}.field input,.field select,.field textarea{width:100%;border:1px solid #cbd5e1;border-radius:16px;padding:13px 14px;font:inherit;color:#0f172a;background:#fff}.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 4px rgba(37,99,235,.1)}
-    .file-drop{position:relative;display:grid;place-items:center;min-height:166px;padding:24px;text-align:center;border:2px dashed #93c5fd;border-radius:24px;background:linear-gradient(135deg,#eff6ff,#f8fafc);cursor:pointer;transition:.2s}.file-drop:hover,.file-drop.dragover{border-color:#14b8a6;transform:translateY(-2px);background:linear-gradient(135deg,#ecfeff,#eff6ff)}.file-drop input{position:absolute;inset:0;opacity:0;cursor:pointer}.file-drop strong{display:block;color:#0f172a;font-size:1.1rem;margin-bottom:8px}.file-drop span{display:block;color:#475569;line-height:1.55}
-    .file-list{display:grid;gap:10px;margin-top:14px}.file-item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 14px;border-radius:16px;background:#f8fafc;border:1px solid #e2e8f0;color:#334155;font-size:.92rem}.file-status{font-weight:900;color:#1d4ed8;white-space:nowrap}
-    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.copy-note{margin-top:12px;color:#16a34a;font-weight:900;display:none}.result-empty{color:#64748b;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:20px;padding:22px;line-height:1.7}
-    .summary-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 0}.stat{background:linear-gradient(135deg,#eff6ff,#f8fafc);border:1px solid #dbeafe;border-radius:18px;padding:18px}.stat span{display:block;color:#64748b;font-size:.78rem;font-weight:900;text-transform:uppercase;margin-bottom:6px}.stat strong{color:#0f172a;font-size:1.18rem}
-    .output-section{margin-top:22px;padding:22px;border-radius:24px;border:1px solid #dbeafe;background:#fff}.output-section h3{margin:0 0 12px;color:#0f172a}.output-section p,.output-section li{color:#334155;line-height:1.68}.output-section ul{margin:0 0 0 20px}.output-section li{margin-bottom:9px}
-    .exam-box{background:linear-gradient(135deg,#fff7ed,#fff);border-color:#fed7aa}.exam-box h3{color:#9a3412}.strong-box{background:#0f172a;color:#e0f2fe;border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:22px;white-space:pre-wrap;line-height:1.75;margin-top:22px}.strong-box h3{color:#99f6e4;margin-top:0}.strong-box p{color:#e0f2fe}
-    .tagline{display:inline-flex;width:fit-content;padding:8px 12px;border-radius:999px;background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8;font-size:.78rem;font-weight:950;text-transform:uppercase;letter-spacing:.04em;margin-bottom:12px}
-    .mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}.mini-card{background:#fff;border:1px solid #dbeafe;border-radius:24px;padding:24px;box-shadow:0 14px 34px rgba(15,23,42,.07)}.mini-card h3{color:#0f172a;margin:0 0 8px}.mini-card p{color:#334155;line-height:1.7;margin:0}
-    .warning{margin-top:22px;padding:24px;border-radius:26px;border:1px solid #bfdbfe;background:linear-gradient(135deg,#eff6ff,#f8fafc);color:#334155;line-height:1.8}.warning strong{color:#0f172a}
-    @media(max-width:1080px){.hero-grid,.summary-layout,.summary-stats,.mini-grid{grid-template-columns:1fr}}@media(max-width:680px){.summary-hero{border-radius:30px}.form-grid{grid-template-columns:1fr}.tool-panel,.result-panel,.info-card{padding:22px}}
-  </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"WebApplication","name":"Resumidor de Apuntes con IA","url":"https://tecniaia.com/resumidor-apuntes-ia.html","applicationCategory":"EducationalApplication","operatingSystem":"All","description":"Herramienta para adjuntar apuntes o temarios y generar resúmenes completos, esquemas, conceptos clave y preguntas de examen.","inLanguage":"es","publisher":{"@type":"Organization","name":"TecnIA"}}
-  </script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resumidor de Apuntes con IA | Resúmenes claros para estudiar | TecnIA</title>
+<meta name="description" content="Pega o adjunta apuntes y genera un resumen claro, limpio y útil para estudiar, con conceptos bien interpretados y preguntas variadas.">
+<link rel="canonical" href="https://tecniaia.com/resumidor-apuntes-ia.html">
+<link rel="stylesheet" href="style.css">
+<style>
+.summary-hero{margin:42px auto 34px;padding:clamp(54px,8vw,96px) clamp(24px,5vw,58px);border-radius:42px;color:#fff;background:linear-gradient(135deg,#07111f,#0f172a 48%,#111827);box-shadow:0 34px 90px rgba(15,23,42,.28)}
+.summary-hero h1{color:#fff;font-size:clamp(2.6rem,6vw,5.1rem);line-height:1;letter-spacing:-2px}.summary-hero p{max-width:850px;color:#dbeafe;line-height:1.85;font-size:1.14rem}
+.layout{display:grid;grid-template-columns:minmax(360px,.9fr) minmax(0,1.1fr);gap:28px;align-items:start}.panel{background:#fff;border:1px solid #dbeafe;border-radius:30px;padding:30px;box-shadow:0 18px 45px rgba(15,23,42,.08)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:grid;gap:8px}.full{grid-column:1/-1}label{font-weight:900;color:#0f172a}input,select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:16px;padding:13px 14px;font:inherit}.file-drop{position:relative;display:grid;place-items:center;min-height:150px;padding:22px;text-align:center;border:2px dashed #93c5fd;border-radius:24px;background:#eff6ff;cursor:pointer}.file-drop input{position:absolute;inset:0;opacity:0}.file-list{display:grid;gap:10px;margin-top:12px}.file-item{display:flex;justify-content:space-between;padding:12px;border:1px solid #e2e8f0;border-radius:16px;background:#f8fafc}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.empty{color:#64748b;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:20px;padding:22px;line-height:1.7}
+
+#tecniaResultOverlay{display:none;position:fixed;inset:0;z-index:9999}
+#tecniaResultOverlay.active{display:block}
+.tecnia-result-backdrop{position:absolute;inset:0;background:rgba(15,23,42,.68);backdrop-filter:blur(5px)}
+.tecnia-result-window{position:relative;z-index:2;width:min(1120px,calc(100vw - 32px));max-height:calc(100vh - 36px);margin:18px auto;padding:28px;border-radius:30px;background:#fff;box-shadow:0 30px 90px rgba(15,23,42,.35);overflow:auto}
+.tecnia-result-close{position:sticky;top:0;float:right;z-index:3;border:0;border-radius:999px;background:#0f172a;color:#fff;padding:10px 15px;font-weight:900;cursor:pointer}
+.result-block{margin-top:22px;padding:22px;border-radius:24px;border:1px solid #dbeafe;background:#fff}
+.result-block h3{margin-top:0;color:#0f172a}
+.result-block p,.result-block li{color:#334155;line-height:1.72}
+.clean-card{border:1px solid #dbeafe;border-radius:24px;overflow:hidden;background:#fff;margin:16px 0;box-shadow:0 10px 30px rgba(15,23,42,.07)}
+.clean-card-head{background:#0f172a;color:#fff;padding:16px 18px;font-weight:900}
+.clean-card-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.clean-card-side{padding:18px}
+.clean-card-side:first-child{border-right:1px solid #e2e8f0}
+.clean-card-side span{display:block;text-transform:uppercase;font-size:.78rem;font-weight:950;color:#64748b;margin-bottom:8px}
+.clean-answer{background:#f8fafc;border-top:1px solid #e2e8f0;padding:18px;color:#334155;line-height:1.72}
+@media(max-width:760px){.clean-card-body{grid-template-columns:1fr}.clean-card-side:first-child{border-right:0;border-bottom:1px solid #e2e8f0}.tecnia-result-window{padding:20px}}
+
+@media(max-width:1080px){.layout{grid-template-columns:1fr}}@media(max-width:680px){.form-grid{grid-template-columns:1fr}.panel{padding:22px}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 </head>
 <body>
-  <header>
-    <div class="container navbar">
-      <a href="index.html" class="logo">Tecn<span>IA</span></a>
-      <nav aria-label="Navegación principal">
-        <ul class="nav-links">
-          <li><a href="index.html">Inicio</a></li>
-          <li><a href="que-necesitas-hacer-con-ia.html">Resolver con IA</a></li>
-          <li><a href="herramientas-interactivas.html">Herramientas</a></li>
-          <li><a href="ia-para-estudiar.html">Estudiar con IA</a></li>
-          <li><a href="articulos.html">Guías</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+<header><div class="container navbar"><a href="index.html" class="logo">Tecn<span>IA</span></a><nav><ul class="nav-links"><li><a href="index.html">Inicio</a></li><li><a href="herramientas-interactivas.html">Herramientas</a></li><li><a href="ia-para-estudiar.html">Estudiar con IA</a></li><li><a href="articulos.html">Guías</a></li></ul></nav></div></header>
+<main class="container">
+<section class="summary-hero"><div class="hero-kicker">Resumen limpio y entendible</div><h1>Resume apuntes sin símbolos raros y sin perder conceptos</h1><p>Sube tus apuntes o pega texto. TecnIA limpia el material, interpreta los conceptos principales y genera un resumen claro, ordenado y útil para estudiar.</p><a href="#tool" class="btn btn-primary">Crear resumen</a></section>
+<section id="tool" class="layout">
+<div class="panel"><h2>Crear resumen</h2><p>Cuanto mejor esté el material, mejor saldrá el resumen. La herramienta limpiará restos de PDF y símbolos extraños.</p>
+<form id="summaryForm" onsubmit="event.preventDefault();generateSummary();"><div class="form-grid">
+<div class="field"><label for="subject">Asignatura</label><input id="subject" placeholder="Ej: Principios de Economía"></div>
+<div class="field"><label for="examType">Tipo de examen</label><select id="examType"><option value="mixto">Mixto</option><option value="test">Tipo test</option><option value="desarrollo">Desarrollo</option></select></div>
+<div class="field full"><label>Adjuntar apuntes</label><div class="file-drop"><input id="studyFiles" type="file" multiple accept=".txt,.md,.csv,.html,.htm,.pdf,.docx"><div><strong>Arrastra archivos aquí o pulsa</strong><br><span>TXT, MD, CSV, HTML, PDF o DOCX</span></div></div><div id="fileList" class="file-list"></div></div>
+<div class="field full"><label for="notes">Apuntes</label><textarea id="notes" rows="12" placeholder="Pega aquí tus apuntes..."></textarea></div>
+<div class="field full"><label for="teacherFocus">Qué ha destacado el profesor</label><textarea id="teacherFocus" rows="3" placeholder="Ej: restricciones, función de producción, trabajo y ocio..."></textarea></div>
+</div><div class="actions"><button class="btn btn-primary">Crear resumen claro</button><button type="button" class="btn btn-outline" onclick="copyOutput()">Copiar resultado</button><button type="button" class="btn btn-outline" onclick="resetTool()">Limpiar</button></div></form></div>
+<div class="panel" id="preview"><h2>Resultado</h2><div class="empty">El resumen se abrirá en una ventana grande para que se lea limpio y sin apelmazarse.</div></div>
+</section>
+</main><footer><div class="container"><p>&copy; 2026 TecnIA.</p></div></footer>
+<script>
 
-  <main>
-    <section class="container">
-      <div class="summary-hero">
-        <div class="hero-kicker">Herramienta de resumen para exámenes</div>
-        <h1>Resume apuntes sin perder datos que pueden caer en el examen</h1>
-        <p>Adjunta tus apuntes, marca en qué insistió el profesor y genera un resumen directo, completo y orientado a estudiar: ideas esenciales, datos concretos, esquema, preguntas probables y repaso final.</p>
-        <div class="hero-actions">
-          <a href="#resumidor" class="btn btn-primary">Resumir apuntes</a>
-          <a href="planificador-estudio-ia.html" class="btn btn-outline">Planificar estudio</a>
-        </div>
-        <div class="hero-grid">
-          <div class="hero-panel">
-            <h2>No resume “a lo bruto”</h2>
-            <p>Conserva definiciones, fechas, autores, cifras, ejemplos, clasificaciones, causas, consecuencias y matices del profesor.</p>
-          </div>
-          <div class="hero-panel">
-            <h3>Modo examen</h3>
-            <p>Prioriza lo que suele caer: datos concretos, comparaciones, conceptos clave, preguntas típicas y errores frecuentes.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+function cleanInputText(text){
+  return String(text||"")
+    .replace(/\r/g,"\n")
+    .replace(/[§¤•●▪◦]+/g," ")
+    .replace(/\bUC3M\b/gi,"")
+    .replace(/Principios de Economía\s*\d*/gi,"Principios de Economía")
+    .replace(/\s+:/g,":")
+    .replace(/([a-záéíóúñ])\s+([,.])/gi,"$1$2")
+    .replace(/\b([A-ZÁÉÍÓÚÑ])\s+([A-ZÁÉÍÓÚÑ])\s+([A-ZÁÉÍÓÚÑ])\b/g,"$1$2$3")
+    .replace(/[ \t]+/g," ")
+    .replace(/\n{3,}/g,"\n\n")
+    .trim();
+}
+function cleanSentence(sentence){
+  return cleanInputText(sentence)
+    .replace(/^\W+/,"")
+    .replace(/\s+/g," ")
+    .replace(/\bPagina\b/gi,"Página")
+    .trim();
+}
+function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+function countWords(t){return(String(t||"").trim().match(/\S+/g)||[]).length}
+function splitSentences(text){
+  return cleanInputText(text)
+    .split(/(?<=[.!?])\s+|\n+/)
+    .map(cleanSentence)
+    .filter(s=>s.length>55 && s.length<520 && !/^(introducci[oó]n|p[aá]gina|tema|unidad)$/i.test(s));
+}
+function normalizeKey(t){
+  return String(t||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9ñ\s-]/g," ").replace(/\s+/g," ").trim();
+}
+function getCandidateConcepts(text, focus=""){
+  const clean=cleanInputText(text);
+  const sentences=splitSentences(clean);
+  const candidates=[];
+  const add=(term,evidence,score=1)=>{
+    term=cleanSentence(term).replace(/[:.;,]+$/,"").trim();
+    if(term.length<7 || term.length>90) return;
+    if(/^(que|para|como|porque|donde|cuando|pagina|tema|unidad|introduccion)$/i.test(term)) return;
+    const key=normalizeKey(term);
+    if(key.split(" ").length>7) return;
+    candidates.push({term, key, evidence:cleanSentence(evidence||""), score});
+  };
 
-    <article class="container">
-      <section class="info-card">
-        <span class="article-tag">Resumen + examen + precisión</span>
-        <h2>Diseñada para que el resumen sea útil, no bonito</h2>
-        <p class="helper">El objetivo no es hacer un texto corto sin más. El objetivo es que puedas estudiar mejor sin perder información concreta que después puede aparecer en el examen.</p>
-        <div class="mini-grid">
-          <div class="mini-card"><h3>Adjunta apuntes</h3><p>Lee TXT, MD, CSV, HTML, PDF y DOCX si el navegador puede extraer texto.</p></div>
-          <div class="mini-card"><h3>Marca énfasis del profesor</h3><p>Indica temas, apartados o palabras que el profesor ha repetido o matizado.</p></div>
-          <div class="mini-card"><h3>Salida completa</h3><p>Resumen, esquema, datos concretos, conceptos, preguntas y prompt experto.</p></div>
-        </div>
-      </section>
+  clean.split(/\n+/).forEach(line=>{
+    const l=cleanSentence(line);
+    const m=l.match(/^([A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚÑáéíóúñüÜ\s-]{5,70})\s*:\s*(.+)$/);
+    if(m) add(m[1], m[2], 10);
+  });
 
-      <section id="resumidor" class="summary-layout">
-        <div class="tool-panel">
-          <h2>Genera tu resumen impecable</h2>
-          <p class="helper">Sube tus apuntes o pega el texto. Después indica cómo quieres el resumen y qué apartados ha destacado el profesor.</p>
-
-          <form id="summaryForm" onsubmit="event.preventDefault();generateSummary();">
-            <div class="form-grid">
-              <div class="field">
-                <label for="subject">Asignatura</label>
-                <input id="subject" type="text" placeholder="Ej: Historia Económica">
-              </div>
-              <div class="field">
-                <label for="examType">Tipo de examen</label>
-                <select id="examType">
-                  <option value="mixto">Mixto</option>
-                  <option value="test">Tipo test</option>
-                  <option value="desarrollo">Desarrollo</option>
-                  <option value="oral">Oral</option>
-                  <option value="problemas">Problemas o casos prácticos</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="summaryMode">Tipo de resumen</label>
-                <select id="summaryMode">
-                  <option value="completo">Completo: no perder datos</option>
-                  <option value="examen">Orientado a examen</option>
-                  <option value="ultradirecto">Muy directo pero con datos clave</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="detailLevel">Nivel de detalle</label>
-                <select id="detailLevel">
-                  <option value="alto">Alto: conservar datos concretos</option>
-                  <option value="medio">Medio: equilibrado</option>
-                  <option value="compacto">Compacto: solo imprescindible</option>
-                </select>
-              </div>
-              <div class="field full">
-                <label>Adjuntar apuntes</label>
-                <div class="file-drop" id="fileDrop">
-                  <input id="studyFiles" type="file" multiple accept=".txt,.md,.csv,.html,.htm,.pdf,.docx">
-                  <div><strong>Arrastra archivos aquí o pulsa para seleccionarlos</strong><span>TXT, MD, CSV, HTML, PDF o DOCX. Si el PDF es escaneado como imagen, puede que no se lea.</span></div>
-                </div>
-                <div id="fileList" class="file-list"></div>
-              </div>
-              <div class="field full">
-                <label for="notes">Pega aquí tus apuntes o revisa el texto cargado</label>
-                <textarea id="notes" rows="10" placeholder="Pega aquí tus apuntes completos. Si subes archivos compatibles, el texto se añadirá automáticamente."></textarea>
-              </div>
-              <div class="field full">
-                <label for="teacherFocus">Qué ha matizado o repetido el profesor</label>
-                <textarea id="teacherFocus" rows="4" placeholder="Ej: insistió en Bretton Woods, causas de la Revolución Industrial, autores concretos, diferencias entre Taylorismo y Fordismo, fechas importantes..."></textarea>
-              </div>
-              <div class="field full">
-                <label for="mustKeep">Datos que NO quieres perder</label>
-                <textarea id="mustKeep" rows="3" placeholder="Ej: fechas, autores, fórmulas, nombres, ejemplos de clase, artículos, cifras, definiciones literales..."></textarea>
-              </div>
-            </div>
-
-            <div class="actions">
-              <button type="submit" class="btn btn-primary">Crear resumen impecable</button>
-              <button type="button" class="btn btn-outline" onclick="copySummary()">Copiar resumen</button>
-              <button type="button" class="btn btn-outline" onclick="copyPrompt()">Copiar prompt experto</button>
-              <button type="button" class="btn btn-outline" onclick="resetSummary()">Limpiar</button>
-            </div>
-            <div id="copyNote" class="copy-note">Copiado al portapapeles.</div>
-          </form>
-        </div>
-
-        <div class="result-panel" id="summaryResult">
-          <h2>Tu resumen aparecerá aquí</h2>
-          <div class="result-empty">Sube apuntes o pega texto y pulsa “Crear resumen impecable”. La herramienta generará un resumen estructurado, conservando datos concretos y apartados relevantes para examen.</div>
-        </div>
-      </section>
-
-      <div class="warning">
-        <strong>Privacidad y precisión:</strong> los archivos se leen en tu navegador. Revisa siempre el resultado con tus apuntes originales. Si un PDF es una imagen escaneada, puede que no se pueda extraer texto.
-      </div>
-
-      <section class="info-card" style="margin-top:28px;">
-        <span class="article-tag">Después del resumen</span>
-        <h2>Convierte el resumen en estudio activo</h2>
-        <p class="helper">Cuando tengas el resumen, lo ideal es practicar. No te quedes solo leyendo.</p>
-        <div class="home-grid">
-          <a href="generador-flashcards-ia.html" class="card tool-card"><span class="article-tag">Memoria</span><h3>Crear flashcards</h3><p>Convierte el resumen en tarjetas de repaso activo.</p><span class="read-more">Crear →</span></a>
-          <a href="modo-examen-ia.html" class="card tool-card"><span class="article-tag">Examen</span><h3>Practicar preguntas</h3><p>Genera simulacros y preguntas probables a partir del resumen.</p><span class="read-more">Practicar →</span></a>
-          <a href="corrector-respuestas-ia.html" class="card tool-card"><span class="article-tag">Corrección</span><h3>Corregir respuestas</h3><p>Comprueba si sabes explicar lo resumido.</p><span class="read-more">Corregir →</span></a>
-        </div>
-        <div class="home-mini-links">
-          <a href="planificador-estudio-ia.html">Planificador</a>
-          <a href="centro-estudio-ia.html">Centro de Estudio</a>
-          <a href="ia-para-estudiar.html">Guía IA para estudiar</a>
-          <a href="como-resumir-apuntes-con-ia.html">Guía para resumir apuntes</a>
-        </div>
-      </section>
-    </article>
-  </main>
-
-  <footer>
-    <div class="container">
-      <p>&copy; 2026 TecnIA. Todos los derechos reservados.</p>
-      <p class="mt-2"><a href="sobre-nosotros.html">Sobre nosotros</a> | <a href="contacto.html">Contacto</a> | <a href="politica-privacidad.html">Política de privacidad</a> | <a href="noticias.html">Noticias</a></p>
-    </div>
-  </footer>
-
-  <script>
-    let extractedFiles=[], lastSummary="", lastPrompt="";
-    const stopwords=new Set("para como pero porque sobre entre desde hasta donde cuando este esta estos estas tambien también tiene tienen puede pueden ser son con sin los las una uno unos unas del por que qué se su sus al el la de en y o u a un es no más mas muy tema unidad capitulo capítulo apartado parte pagina página clase apuntes estudio estudiar ejemplo ejemplos concepto conceptos definicion definición".split(" "));
-
-    document.addEventListener("DOMContentLoaded",()=>{
-      const input=document.getElementById("studyFiles"),drop=document.getElementById("fileDrop"),notes=document.getElementById("notes");
-      if(window.pdfjsLib){pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"}
-      input.addEventListener("change",async e=>handleFiles(e.target.files));
-      notes.addEventListener("input",()=>updateStats());
-      ["dragenter","dragover"].forEach(n=>drop.addEventListener(n,e=>{e.preventDefault();drop.classList.add("dragover")}));
-      ["dragleave","drop"].forEach(n=>drop.addEventListener(n,e=>{e.preventDefault();drop.classList.remove("dragover")}));
-      drop.addEventListener("drop",async e=>handleFiles(e.dataTransfer.files));
-    });
-
-    function v(id){return document.getElementById(id).value.trim()}
-    function norm(t){return(t||"").replace(/\r/g,"\n").replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim()}
-
-    async function handleFiles(files){
-      const list=document.getElementById("fileList"),notes=document.getElementById("notes");
-      for(const file of files){
-        const item=document.createElement("div");
-        item.className="file-item";
-        item.innerHTML=`<span>${esc(file.name)} · ${bytes(file.size)}</span><span class="file-status">Leyendo...</span>`;
-        list.appendChild(item);
-        try{
-          const text=norm(await extractText(file));
-          extractedFiles.push({name:file.name,size:file.size,text});
-          notes.value=norm(notes.value+"\n\n"+"ARCHIVO: "+file.name+"\n"+text);
-          item.querySelector(".file-status").textContent=text.length>80?"Leído":"Poco texto";
-        }catch(e){
-          item.querySelector(".file-status").textContent="No leído";
-          item.title=e.message;
-        }
-      }
-      updateStats();
+  const phrasePatterns=[
+    /\b(funci[oó]n de producci[oó]n)\b/gi,
+    /\b(restricci[oó]n presupuestaria)\b/gi,
+    /\b(conjunto factible)\b/gi,
+    /\b(preferencias individuales)\b/gi,
+    /\b(mapa de indiferencia)\b/gi,
+    /\b(curvas? de indiferencia)\b/gi,
+    /\b(trabajo y ocio)\b/gi,
+    /\b(cost[e|e] de oportunidad)\b/gi,
+    /\b(equilibrio entre trabajo y ocio)\b/gi,
+    /\b(aumento del nivel de vida)\b/gi,
+    /\b(distribuci[oó]n de ganancias)\b/gi,
+    /\b(conflicto de intereses)\b/gi,
+    /\b(decisi[oó]n individual)\b/gi,
+    /\b(consumo y ocio)\b/gi
+  ];
+  phrasePatterns.forEach(re=>{
+    let m; while((m=re.exec(clean))!==null){
+      const ev=sentences.find(s=>normalizeKey(s).includes(normalizeKey(m[1]))) || "";
+      add(m[1],ev,9);
     }
+  });
 
-    async function extractText(file){
-      const name=file.name.toLowerCase();
-      if(name.endsWith(".pdf"))return pdfText(file);
-      if(name.endsWith(".docx"))return docxText(file);
-      return file.text();
-    }
+  sentences.forEach(s=>{
+    const beforeColon=s.match(/^(.{7,70}):/);
+    if(beforeColon) add(beforeColon[1],s,7);
+    const quoted=[...s.matchAll(/"([^"]{6,70})"/g)];
+    quoted.forEach(q=>add(q[1],s,5));
+  });
 
-    async function pdfText(file){
-      if(!window.pdfjsLib)throw new Error("No se pudo cargar PDF");
-      const pdf=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;
-      let out="";
-      for(let i=1;i<=pdf.numPages;i++){
-        const page=await pdf.getPage(i), content=await page.getTextContent();
-        out+="\n\nPágina "+i+"\n"+content.items.map(x=>x.str).join(" ");
-      }
-      return out;
-    }
+  const counts={};
+  candidates.forEach(c=>{
+    if(!counts[c.key]) counts[c.key]={...c, score:0};
+    counts[c.key].score+=c.score;
+    if(c.evidence.length>counts[c.key].evidence.length) counts[c.key].evidence=c.evidence;
+  });
 
-    async function docxText(file){
-      if(!window.mammoth)throw new Error("No se pudo cargar DOCX");
-      const result=await mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()});
-      return result.value||"";
-    }
+  return Object.values(counts)
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,22)
+    .map(c=>({term:smartCap(c.term), key:c.key, evidence:c.evidence || sentences.find(s=>normalizeKey(s).includes(c.key)) || ""}));
+}
+function smartCap(s){
+  s=String(s||"").trim();
+  if(!s) return s;
+  return s.charAt(0).toUpperCase()+s.slice(1);
+}
+function makeOverlay(){
+  let overlay=document.getElementById("tecniaResultOverlay");
+  if(overlay) return overlay;
+  overlay=document.createElement("div");
+  overlay.id="tecniaResultOverlay";
+  overlay.innerHTML=`<div class="tecnia-result-backdrop" onclick="closeTecnIAResult()"></div><div class="tecnia-result-window"><button class="tecnia-result-close" onclick="closeTecnIAResult()">Cerrar ×</button><div id="tecniaResultContent"></div></div>`;
+  document.body.appendChild(overlay);
+  return overlay;
+}
+function openResult(html){
+  const overlay=makeOverlay();
+  document.getElementById("tecniaResultContent").innerHTML=html;
+  overlay.classList.add("active");
+  document.body.style.overflow="hidden";
+}
+function closeTecnIAResult(){
+  const overlay=document.getElementById("tecniaResultOverlay");
+  if(overlay) overlay.classList.remove("active");
+  document.body.style.overflow="";
+}
 
-    function updateStats(){
-      const text=v("notes"),words=countWords(text),rec=words<80?"Añade más texto":words>4500?"Divide por bloques":"Listo";
-      let ext="Sin texto"; if(words>0)ext=words<600?"Corto":words<2200?"Medio":"Largo";
-      if(!document.getElementById("summaryResult"))return;
-    }
-
-    function generateSummary(){
-      const subject=v("subject")||"la asignatura", type=v("examType")||"mixto", mode=v("summaryMode")||"completo", detail=v("detailLevel")||"alto", focus=v("teacherFocus"), keep=v("mustKeep");
-      const text=norm(v("notes"));
-      if(!text || countWords(text)<30){
-        document.getElementById("summaryResult").innerHTML='<h2>Faltan apuntes</h2><div class="result-empty">Pega apuntes o adjunta un archivo con texto suficiente para crear un resumen útil.</div>';
-        return;
-      }
-      const sections=splitSections(text), sentences=splitSentences(text), keywords=getKeywords(text,focus+" "+keep), important=rankSentences(sentences,focus,keep,type,detail);
-      const selected=selectSummary(important,mode,detail);
-      const concepts=getConcepts(text,keywords,focus);
-      const dataPoints=getDataPoints(sentences,focus,keep);
-      const outline=buildOutline(sections,focus,keep);
-      const questions=buildQuestions(concepts,dataPoints,type);
-      const warnings=getWarnings(text,selected,dataPoints);
-      renderSummary({subject,type,mode,detail,focus,keep,text,sections,sentences,keywords,selected,concepts,dataPoints,outline,questions,warnings});
-    }
-
-    function splitSections(text){
-      const lines=text.split(/\n+/).map(x=>x.trim()).filter(Boolean),sections=[];let current={title:"Bloque principal",content:[]};
-      lines.forEach(line=>{
-        const words=line.split(/\s+/),heading=/^(tema|unidad|cap[ií]tulo|apartado|bloque|m[oó]dulo|lecci[oó]n|parte)\s*[\dIVXLC]+/i.test(line)||/^\d+[\.\)]\s+[A-ZÁÉÍÓÚÑ]/.test(line)||/^[A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ\s:,-]{8,}$/.test(line)||(words.length>=3&&words.length<=12&&line.length<=95&&!line.endsWith("."));
-        if(heading&&current.content.length){sections.push(current);current={title:line,content:[]}}else{current.content.push(line)}
-      });
-      if(current.content.length)sections.push(current);
-      return sections.slice(0,18);
-    }
-
-    function splitSentences(text){
-      return norm(text).split(/(?<=[.!?])\s+|\n+/).map(s=>s.trim()).filter(s=>s.length>35&&s.length<450);
-    }
-
-    function getKeywords(text,focus){
-      const words=text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9ñáéíóúü\s-]/gi," ").split(/\s+/).filter(w=>w.length>4&&!stopwords.has(w));
-      const counts={};words.forEach(w=>counts[w]=(counts[w]||0)+1);
-      const focusWords=(focus||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").split(/\W+/).filter(w=>w.length>4);
-      focusWords.forEach(w=>counts[w]=(counts[w]||0)+8);
-      return Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,18).map(([w,n])=>({word:cap(w.replace(/-/g," ")),raw:w,count:n}));
-    }
-
-    function rankSentences(sentences,focus,keep,type,detail){
-      const focusLower=(focus+" "+keep).toLowerCase();
-      return sentences.map((s,i)=>{
-        const l=s.toLowerCase();let score=0;
-        if(/\b(es|son|se define|consiste|significa|se caracteriza)\b/i.test(s))score+=16;
-        if(/\b(causa|consecuencia|ventaja|desventaja|tipo|fase|etapa|modelo|teor[ií]a|ley|autor|fecha|f[oó]rmula|ejemplo|clasificaci[oó]n|diferencia|comparaci[oó]n)\b/i.test(s))score+=14;
-        if(/\d{3,4}|\d+%|\b(siglo|artículo|articulo|ley|real decreto|capítulo|capitulo)\b/i.test(s))score+=16;
-        if(type==="test"&&/\b(definici[oó]n|fecha|autor|tipo|caracter[ií]stica)\b/i.test(s))score+=12;
-        if(type==="desarrollo"&&/\b(causa|consecuencia|explica|relaci[oó]n|comparaci[oó]n|argumento)\b/i.test(s))score+=12;
-        if(type==="problemas"&&/\b(f[oó]rmula|paso|c[aá]lculo|procedimiento|caso|resultado)\b/i.test(s))score+=12;
-        focusLower.split(/\W+/).filter(w=>w.length>4).forEach(w=>{if(l.includes(w))score+=24});
-        score+=Math.max(0,8-Math.floor(i/8));
-        return{sentence:s,score};
-      }).sort((a,b)=>b.score-a.score);
-    }
-
-    function selectSummary(ranked,mode,detail){
-      let limit=detail==="alto"?28:detail==="medio"?20:14;
-      if(mode==="ultradirecto")limit=Math.max(10,limit-8);
-      if(mode==="completo")limit+=8;
-      const selected=ranked.slice(0,limit).sort((a,b)=>0);
-      return selected.map(x=>x.sentence);
-    }
-
-    function getConcepts(text,keywords,focus){
-      return keywords.slice(0,14).map(k=>{
-        const evidence=splitSentences(text).find(s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").includes(k.raw));
-        return{concept:k.word,evidence:evidence?evidence.slice(0,220):"Concepto repetido o marcado como relevante."};
-      });
-    }
-
-    function getDataPoints(sentences,focus,keep){
-      const signals=(focus+" "+keep).toLowerCase().split(/\W+/).filter(w=>w.length>4);
-      return sentences.filter(s=>/\d{3,4}|\d+%|\b(autor|autores|fecha|f[oó]rmula|artículo|articulo|ley|definici[oó]n|ejemplo|clasificaci[oó]n|tipo|fase|causa|consecuencia)\b/i.test(s)||signals.some(w=>s.toLowerCase().includes(w))).slice(0,18);
-    }
-
-    function buildOutline(sections,focus,keep){
-      return sections.slice(0,10).map(sec=>{
-        const content=sec.content.join(" ");
-        const top=rankSentences(splitSentences(content),focus,keep,"mixto","medio").slice(0,3).map(x=>x.sentence);
-        return{title:sec.title,points:top.length?top:[content.slice(0,180)]};
-      });
-    }
-
-    function buildQuestions(concepts,data,type){
-      const qs=[];
-      concepts.slice(0,6).forEach(c=>qs.push(`¿Qué es ${c.concept} y por qué es importante?`));
-      if(type==="desarrollo"||type==="mixto")qs.push("Explica las causas y consecuencias principales del tema.");
-      if(type==="test"||type==="mixto")qs.push("Identifica fechas, autores, definiciones y clasificaciones que podrían aparecer en tipo test.");
-      data.slice(0,5).forEach(d=>qs.push(`Pregunta probable: desarrolla o identifica este dato: ${d.slice(0,120)}...`));
-      return qs.slice(0,12);
-    }
-
-    function getWarnings(text,selected,dataPoints){
-      const warnings=[];
-      if(countWords(text)>5000)warnings.push("Los apuntes son largos. Para máxima precisión, resume por bloques o temas y después junta los resúmenes.");
-      if(dataPoints.length<4)warnings.push("Se han detectado pocos datos concretos. Revisa si faltan fechas, autores, fórmulas o ejemplos de clase.");
-      if(selected.length<8)warnings.push("El texto parece corto o poco estructurado. Añadir el temario o matices del profesor mejorará el resultado.");
-      return warnings;
-    }
-
-    function renderSummary(data){
-      const {subject,type,mode,detail,focus,keep,text,sections,sentences,keywords,selected,concepts,dataPoints,outline,questions,warnings}=data;
-      lastPrompt=buildPrompt(data);
-      lastSummary=[
-        `RESUMEN TECNIA - ${subject}`,
-        "",
-        "RESUMEN DIRECTO",
-        selected.map(s=>"- "+s).join("\n"),
-        "",
-        "DATOS CONCRETOS QUE NO DEBERÍAS PERDER",
-        dataPoints.map(s=>"- "+s).join("\n"),
-        "",
-        "CONCEPTOS CLAVE",
-        concepts.map(c=>`- ${c.concept}: ${c.evidence}`).join("\n"),
-        "",
-        "PREGUNTAS PROBABLES",
-        questions.map(q=>"- "+q).join("\n"),
-        "",
-        "PROMPT EXPERTO",
-        lastPrompt
-      ].join("\n");
-
-      document.getElementById("summaryResult").innerHTML=`
-        <h2>Resumen generado</h2>
-        <div class="summary-stats">
-          <div class="stat"><span>Palabras</span><strong>${countWords(text)}</strong></div>
-          <div class="stat"><span>Apartados</span><strong>${sections.length}</strong></div>
-          <div class="stat"><span>Datos clave</span><strong>${dataPoints.length}</strong></div>
-          <div class="stat"><span>Modo</span><strong>${mode}</strong></div>
-        </div>
-
-        ${warnings.length?`<div class="output-section exam-box"><h3>Avisos para no perder precisión</h3><ul>${warnings.map(w=>`<li>${esc(w)}</li>`).join("")}</ul></div>`:""}
-
-        <div class="output-section">
-          <span class="tagline">Resumen directo</span>
-          <h3>Lo esencial explicado sin rodeos</h3>
-          <ul>${selected.map(s=>`<li>${esc(s)}</li>`).join("")}</ul>
-        </div>
-
-        <div class="output-section exam-box">
-          <span class="tagline">Examen</span>
-          <h3>Datos concretos que conviene conservar</h3>
-          <ul>${dataPoints.slice(0,16).map(s=>`<li>${esc(s)}</li>`).join("")||"<li>No se han detectado muchos datos concretos. Añade matices del profesor o apuntes más completos.</li>"}</ul>
-        </div>
-
-        <div class="output-section">
-          <span class="tagline">Conceptos</span>
-          <h3>Conceptos clave con evidencia</h3>
-          <ul>${concepts.slice(0,12).map(c=>`<li><strong>${esc(c.concept)}:</strong> ${esc(c.evidence)}</li>`).join("")}</ul>
-        </div>
-
-        <div class="output-section">
-          <span class="tagline">Esquema</span>
-          <h3>Esquema por apartados</h3>
-          ${outline.map(sec=>`<h4>${esc(sec.title)}</h4><ul>${sec.points.map(p=>`<li>${esc(p)}</li>`).join("")}</ul>`).join("")}
-        </div>
-
-        <div class="output-section exam-box">
-          <span class="tagline">Preguntas probables</span>
-          <h3>Preguntas para comprobar si lo dominas</h3>
-          <ul>${questions.map(q=>`<li>${esc(q)}</li>`).join("")}</ul>
-        </div>
-
-        <div class="strong-box"><h3>Prompt experto para perfeccionar el resumen</h3><p>${esc(lastPrompt)}</p></div>
-      `;
-    }
-
-    function buildPrompt(data){
-      const {subject,type,mode,detail,focus,keep,text}=data;
-      return `Actúa como un profesor experto y resumidor académico.
-
-Necesito un resumen impecable de estos apuntes de ${subject}.
-
-Condiciones:
-- Tipo de examen: ${type}
-- Tipo de resumen: ${mode}
-- Nivel de detalle: ${detail}
-- El profesor ha insistido en: ${focus||"no indicado"}
-- Datos que no quiero perder: ${keep||"fechas, autores, definiciones, ejemplos, cifras y matices concretos"}
-
-Instrucciones:
-1. No hagas un resumen superficial.
-2. Conserva datos concretos que puedan caer en examen: fechas, autores, definiciones, cifras, ejemplos, clasificaciones, causas, consecuencias y comparaciones.
-3. Da más peso a lo que el profesor ha matizado.
-4. Estructura por apartados.
-5. Incluye conceptos clave, esquema, preguntas probables y errores típicos.
-6. Si algo parece secundario, indícalo, pero no elimines datos relevantes.
-7. Mantén el resumen directo, claro y útil para estudiar.
-
-Apuntes:
-${text.slice(0,7000)}`;
-    }
-
-    async function copyText(t){if(!t)return;await navigator.clipboard.writeText(t);const n=document.getElementById("copyNote");n.style.display="block";setTimeout(()=>n.style.display="none",2200)}
-    function copySummary(){copyText(lastSummary||"Todavía no has generado un resumen.")}
-    function copyPrompt(){copyText(lastPrompt||"Todavía no has generado un prompt.")}
-    function resetSummary(){document.getElementById("summaryForm").reset();document.getElementById("fileList").innerHTML="";extractedFiles=[];lastSummary="";lastPrompt="";document.getElementById("summaryResult").innerHTML='<h2>Tu resumen aparecerá aquí</h2><div class="result-empty">Sube apuntes o pega texto y pulsa “Crear resumen impecable”. La herramienta generará un resumen estructurado, conservando datos concretos y apartados relevantes para examen.</div>'}
-
-    function countWords(t){return(t||"").trim().split(/\s+/).filter(Boolean).length}
-    function bytes(b){if(!b)return"0 KB";const s=["Bytes","KB","MB","GB"],i=Math.floor(Math.log(b)/Math.log(1024));return`${(b/Math.pow(1024,i)).toFixed(1)} ${s[i]}`}
-    function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
-    function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
-  </script>
-  <script src="tecnia-memory.js"></script>
-</body>
-</html>
+let lastOutput="";
+document.addEventListener("DOMContentLoaded",()=>{if(window.pdfjsLib)pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";document.getElementById("studyFiles").addEventListener("change",e=>handleFiles(e.target.files));});
+async function handleFiles(files){const list=document.getElementById("fileList"),notes=document.getElementById("notes");for(const file of files){const item=document.createElement("div");item.className="file-item";item.innerHTML=`<span>${esc(file.name)}</span><strong>Leyendo...</strong>`;list.appendChild(item);try{const text=cleanInputText(await extractText(file));notes.value=cleanInputText(notes.value+"\n\n"+text);item.querySelector("strong").textContent="Leído"}catch(e){item.querySelector("strong").textContent="No leído"}}}
+async function extractText(file){const n=file.name.toLowerCase();if(n.endsWith(".pdf")){const pdf=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;let out="";for(let i=1;i<=pdf.numPages;i++){const p=await pdf.getPage(i),c=await p.getTextContent();out+="\n"+c.items.map(x=>x.str).join(" ")}return out}if(n.endsWith(".docx"))return (await mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()})).value||"";return file.text()}
+function generateSummary(){const subject=document.getElementById("subject").value||"la asignatura";const text=cleanInputText(document.getElementById("notes").value);const focus=document.getElementById("teacherFocus").value;if(countWords(text)<40){openResult("<h2>Falta texto</h2><p>Añade apuntes más completos.</p>");return}const sentences=splitSentences(text);const concepts=getCandidateConcepts(text,focus);const important=sentences.filter(s=>/trabajo|ocio|producci[oó]n|restricci[oó]n|preferencias|equilibrio|empresa|ganancias|coste|consumo|salario|PIB|horas/i.test(s)).slice(0,12);const clearPoints=important.length?important:sentences.slice(0,10);const questions=buildQuestions(concepts,clearPoints,subject);lastOutput=["RESUMEN CLARO",...clearPoints.map(s=>"- "+s),"","CONCEPTOS CLAVE",...concepts.slice(0,10).map(c=>"- "+c.term+": "+explainConcept(c)),"","PREGUNTAS",...questions.map(q=>"- "+q)].join("\n");openResult(`<h2>Resumen claro de ${esc(subject)}</h2><div class="result-block"><h3>Ideas principales</h3><ul>${clearPoints.map(s=>`<li>${esc(s)}</li>`).join("")}</ul></div><div class="result-block"><h3>Conceptos clave explicados</h3><ul>${concepts.slice(0,10).map(c=>`<li><strong>${esc(c.term)}:</strong> ${esc(explainConcept(c))}</li>`).join("")}</ul></div><div class="result-block"><h3>Preguntas variadas para comprobar si lo dominas</h3><ul>${questions.map(q=>`<li>${esc(q)}</li>`).join("")}</ul></div>`)}
+function explainConcept(c){const ev=c.evidence||"";if(/funci[oó]n de producci[oó]n/i.test(c.term))return "Explica cómo se transforma un input, como el tiempo de estudio o trabajo, en un output. Sirve para analizar decisiones con recursos limitados.";if(/restricci[oó]n presupuestaria/i.test(c.term))return "Marca las combinaciones posibles dadas unas horas, un salario o una renta. Ayuda a ver qué opciones son factibles y cuáles no.";if(/trabajo y ocio/i.test(c.term))return "Relaciona la decisión de dedicar tiempo a trabajar o descansar. Es clave para entender cómo cambia el comportamiento cuando sube el nivel de vida.";return ev?ev.slice(0,260):"Concepto importante del tema que conviene definir, contextualizar y relacionar con otros conceptos."}
+function buildQuestions(concepts,points,subject){const qs=[];concepts.slice(0,8).forEach((c,i)=>{if(i%4===0)qs.push(`Explica con tus palabras qué significa "${c.term}" y para qué sirve dentro de ${subject}.`);else if(i%4===1)qs.push(`Compara "${c.term}" con otro concepto del tema y señala una diferencia importante.`);else if(i%4===2)qs.push(`Plantea un ejemplo sencillo donde aparezca "${c.term}".`);else qs.push(`¿Qué error cometería un estudiante si memorizara "${c.term}" sin entenderlo?`)});points.slice(0,4).forEach(p=>qs.push("Pregunta concreta: ¿qué idea examinable aparece en esta frase y cómo la explicarías? "+p.slice(0,160)));return qs.slice(0,12)}
+function copyOutput(){navigator.clipboard.writeText(lastOutput||"")}function resetTool(){document.getElementById("summaryForm").reset();document.getElementById("fileList").innerHTML=""}
+</script><script src="tecnia-memory.js"></script></body></html>
