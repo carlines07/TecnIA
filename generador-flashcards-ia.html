@@ -1,532 +1,164 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generador de Flashcards con IA | Tarjetas claras y conceptos conectados | TecnIA</title>
+<meta name="description" content="Genera flashcards claras, bien explicadas y conectadas entre conceptos a partir de apuntes o resúmenes.">
+<link rel="canonical" href="https://tecniaia.com/generador-flashcards-ia.html"><link rel="stylesheet" href="style.css">
+<style>
+.hero{margin:42px auto 34px;padding:clamp(54px,8vw,96px) clamp(24px,5vw,58px);border-radius:42px;color:#fff;background:linear-gradient(135deg,#07111f,#0f172a 48%,#111827);box-shadow:0 34px 90px rgba(15,23,42,.28)}.hero h1{color:#fff;font-size:clamp(2.6rem,6vw,5.1rem);line-height:1;letter-spacing:-2px}.hero p{max-width:850px;color:#dbeafe;line-height:1.85;font-size:1.14rem}
+.layout{display:grid;grid-template-columns:minmax(360px,.9fr) minmax(0,1.1fr);gap:28px;align-items:start}.panel{background:#fff;border:1px solid #dbeafe;border-radius:30px;padding:30px;box-shadow:0 18px 45px rgba(15,23,42,.08)}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:grid;gap:8px}.full{grid-column:1/-1}label{font-weight:900}input,select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:16px;padding:13px 14px;font:inherit}.file-drop{position:relative;display:grid;place-items:center;min-height:150px;padding:22px;text-align:center;border:2px dashed #93c5fd;border-radius:24px;background:#eff6ff;cursor:pointer}.file-drop input{position:absolute;inset:0;opacity:0}.file-list{display:grid;gap:10px;margin-top:12px}.file-item{display:flex;justify-content:space-between;padding:12px;border:1px solid #e2e8f0;border-radius:16px;background:#f8fafc}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.empty{color:#64748b;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:20px;padding:22px;line-height:1.7}
 
-  <title>Generador de Flashcards con IA | Memorización activa y conceptos relacionados | TecnIA</title>
-  <meta name="description" content="Adjunta apuntes o resúmenes y genera flashcards inteligentes: definición, explicación, relación entre conceptos, verdadero/falso, tipo test y completar huecos para estudiar mejor.">
+#tecniaResultOverlay{display:none;position:fixed;inset:0;z-index:9999}
+#tecniaResultOverlay.active{display:block}
+.tecnia-result-backdrop{position:absolute;inset:0;background:rgba(15,23,42,.68);backdrop-filter:blur(5px)}
+.tecnia-result-window{position:relative;z-index:2;width:min(1120px,calc(100vw - 32px));max-height:calc(100vh - 36px);margin:18px auto;padding:28px;border-radius:30px;background:#fff;box-shadow:0 30px 90px rgba(15,23,42,.35);overflow:auto}
+.tecnia-result-close{position:sticky;top:0;float:right;z-index:3;border:0;border-radius:999px;background:#0f172a;color:#fff;padding:10px 15px;font-weight:900;cursor:pointer}
+.result-block{margin-top:22px;padding:22px;border-radius:24px;border:1px solid #dbeafe;background:#fff}
+.result-block h3{margin-top:0;color:#0f172a}
+.result-block p,.result-block li{color:#334155;line-height:1.72}
+.clean-card{border:1px solid #dbeafe;border-radius:24px;overflow:hidden;background:#fff;margin:16px 0;box-shadow:0 10px 30px rgba(15,23,42,.07)}
+.clean-card-head{background:#0f172a;color:#fff;padding:16px 18px;font-weight:900}
+.clean-card-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.clean-card-side{padding:18px}
+.clean-card-side:first-child{border-right:1px solid #e2e8f0}
+.clean-card-side span{display:block;text-transform:uppercase;font-size:.78rem;font-weight:950;color:#64748b;margin-bottom:8px}
+.clean-answer{background:#f8fafc;border-top:1px solid #e2e8f0;padding:18px;color:#334155;line-height:1.72}
+@media(max-width:760px){.clean-card-body{grid-template-columns:1fr}.clean-card-side:first-child{border-right:0;border-bottom:1px solid #e2e8f0}.tecnia-result-window{padding:20px}}
 
-  <link rel="canonical" href="https://tecniaia.com/generador-flashcards-ia.html">
+@media(max-width:1080px){.layout{grid-template-columns:1fr}}@media(max-width:680px){.form-grid{grid-template-columns:1fr}.panel{padding:22px}}
+</style><script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script></head>
+<body><header><div class="container navbar"><a href="index.html" class="logo">Tecn<span>IA</span></a><nav><ul class="nav-links"><li><a href="index.html">Inicio</a></li><li><a href="herramientas-interactivas.html">Herramientas</a></li><li><a href="ia-para-estudiar.html">Estudiar con IA</a></li></ul></nav></div></header>
+<main class="container"><section class="hero"><div class="hero-kicker">Flashcards claras</div><h1>Tarjetas que explican, no que confunden</h1><p>Convierte apuntes o resúmenes en flashcards con pregunta clara, respuesta directa, explicación entendible y conexión con otros conceptos.</p><a href="#tool" class="btn btn-primary">Crear flashcards</a></section>
+<section id="tool" class="layout"><div class="panel"><h2>Crear flashcards</h2><form id="flashForm" onsubmit="event.preventDefault();generateCards();"><div class="form-grid">
+<div class="field"><label for="subject">Asignatura</label><input id="subject" placeholder="Ej: Principios de Economía"></div><div class="field"><label for="quantity">Número</label><select id="quantity"><option>12</option><option selected>20</option><option>30</option></select></div>
+<div class="field full"><label>Adjuntar apuntes o resumen</label><div class="file-drop"><input id="studyFiles" type="file" multiple accept=".txt,.md,.csv,.html,.htm,.pdf,.docx"><div><strong>Arrastra archivos aquí o pulsa</strong><br><span>TXT, MD, CSV, HTML, PDF o DOCX</span></div></div><div id="fileList" class="file-list"></div></div>
+<div class="field full"><label for="notes">Apuntes o resumen</label><textarea id="notes" rows="12"></textarea></div>
+<div class="field full"><label for="teacherFocus">Conceptos que entran seguro</label><textarea id="teacherFocus" rows="3"></textarea></div>
+</div><div class="actions"><button class="btn btn-primary">Crear flashcards claras</button><button type="button" class="btn btn-outline" onclick="copyOutput()">Copiar tarjetas</button><button type="button" class="btn btn-outline" onclick="resetTool()">Limpiar</button></div></form></div><div class="panel"><h2>Resultado</h2><div class="empty">Las flashcards se abrirán en una ventana grande para que se lean limpias.</div></div></section></main><footer><div class="container"><p>&copy; 2026 TecnIA.</p></div></footer>
+<script>
 
-  <meta property="og:title" content="Generador de Flashcards con IA | TecnIA">
-  <meta property="og:description" content="Convierte apuntes o resúmenes en tarjetas de estudio útiles, conectadas entre sí y orientadas a examen.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://tecniaia.com/generador-flashcards-ia.html">
-  <meta property="og:site_name" content="TecnIA">
+function cleanInputText(text){
+  return String(text||"")
+    .replace(/\r/g,"\n")
+    .replace(/[§¤•●▪◦]+/g," ")
+    .replace(/\bUC3M\b/gi,"")
+    .replace(/Principios de Economía\s*\d*/gi,"Principios de Economía")
+    .replace(/\s+:/g,":")
+    .replace(/([a-záéíóúñ])\s+([,.])/gi,"$1$2")
+    .replace(/\b([A-ZÁÉÍÓÚÑ])\s+([A-ZÁÉÍÓÚÑ])\s+([A-ZÁÉÍÓÚÑ])\b/g,"$1$2$3")
+    .replace(/[ \t]+/g," ")
+    .replace(/\n{3,}/g,"\n\n")
+    .trim();
+}
+function cleanSentence(sentence){
+  return cleanInputText(sentence)
+    .replace(/^\W+/,"")
+    .replace(/\s+/g," ")
+    .replace(/\bPagina\b/gi,"Página")
+    .trim();
+}
+function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+function countWords(t){return(String(t||"").trim().match(/\S+/g)||[]).length}
+function splitSentences(text){
+  return cleanInputText(text)
+    .split(/(?<=[.!?])\s+|\n+/)
+    .map(cleanSentence)
+    .filter(s=>s.length>55 && s.length<520 && !/^(introducci[oó]n|p[aá]gina|tema|unidad)$/i.test(s));
+}
+function normalizeKey(t){
+  return String(t||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9ñ\s-]/g," ").replace(/\s+/g," ").trim();
+}
+function getCandidateConcepts(text, focus=""){
+  const clean=cleanInputText(text);
+  const sentences=splitSentences(clean);
+  const candidates=[];
+  const add=(term,evidence,score=1)=>{
+    term=cleanSentence(term).replace(/[:.;,]+$/,"").trim();
+    if(term.length<7 || term.length>90) return;
+    if(/^(que|para|como|porque|donde|cuando|pagina|tema|unidad|introduccion)$/i.test(term)) return;
+    const key=normalizeKey(term);
+    if(key.split(" ").length>7) return;
+    candidates.push({term, key, evidence:cleanSentence(evidence||""), score});
+  };
 
-  <link rel="stylesheet" href="style.css">
+  clean.split(/\n+/).forEach(line=>{
+    const l=cleanSentence(line);
+    const m=l.match(/^([A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚÑáéíóúñüÜ\s-]{5,70})\s*:\s*(.+)$/);
+    if(m) add(m[1], m[2], 10);
+  });
 
-  <style>
-    .flash-hero{position:relative;overflow:hidden;margin:42px auto 34px;padding:clamp(54px,8vw,96px) clamp(24px,5vw,58px);border-radius:42px;color:#fff;background:radial-gradient(circle at 16% 18%,rgba(20,184,166,.34),transparent 30%),radial-gradient(circle at 82% 16%,rgba(37,99,235,.36),transparent 28%),radial-gradient(circle at 70% 90%,rgba(139,92,246,.22),transparent 32%),linear-gradient(135deg,#07111f 0%,#0f172a 48%,#111827 100%);box-shadow:0 34px 90px rgba(15,23,42,.28)}
-    .flash-hero:after{content:"";position:absolute;inset:auto -12% -42% 38%;height:300px;background:linear-gradient(90deg,rgba(20,184,166,.24),rgba(37,99,235,.3),rgba(139,92,246,.2));filter:blur(42px);transform:rotate(-8deg);pointer-events:none}
-    .flash-hero>*{position:relative;z-index:1}.flash-hero .hero-kicker{color:#99f6e4;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18)}
-    .flash-hero h1{max-width:1080px;margin:18px 0 20px;color:#fff;font-size:clamp(2.6rem,6vw,5.3rem);line-height:.98;letter-spacing:-2.2px}
-    .flash-hero p{max-width:840px;color:#dbeafe;font-size:1.14rem;line-height:1.85;margin-bottom:30px}
-    .hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:24px;margin-top:34px}.hero-panel{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:28px;padding:24px;backdrop-filter:blur(14px)}.hero-panel h2,.hero-panel h3{color:#fff;margin-top:0}.hero-panel p,.hero-panel li{color:#dbeafe;line-height:1.75}
-    .flash-layout{display:grid;grid-template-columns:minmax(360px,.9fr) minmax(0,1.1fr);gap:28px;align-items:start;margin-top:32px}.tool-panel,.result-panel,.info-card{background:#fff;border:1px solid #dbeafe;border-radius:30px;padding:30px;box-shadow:0 18px 45px rgba(15,23,42,.08)}.tool-panel h2,.result-panel h2,.info-card h2{margin-top:0;color:#0f172a}.helper{color:#64748b;line-height:1.65;margin-bottom:20px}
-    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:grid;gap:8px}.field.full{grid-column:1/-1}.field label{font-weight:900;color:#0f172a;font-size:.94rem}.field input,.field select,.field textarea{width:100%;border:1px solid #cbd5e1;border-radius:16px;padding:13px 14px;font:inherit;color:#0f172a;background:#fff}.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 4px rgba(37,99,235,.1)}
-    .file-drop{position:relative;display:grid;place-items:center;min-height:166px;padding:24px;text-align:center;border:2px dashed #93c5fd;border-radius:24px;background:linear-gradient(135deg,#eff6ff,#f8fafc);cursor:pointer;transition:.2s}.file-drop:hover,.file-drop.dragover{border-color:#14b8a6;transform:translateY(-2px);background:linear-gradient(135deg,#ecfeff,#eff6ff)}.file-drop input{position:absolute;inset:0;opacity:0;cursor:pointer}.file-drop strong{display:block;color:#0f172a;font-size:1.1rem;margin-bottom:8px}.file-drop span{display:block;color:#475569;line-height:1.55}
-    .file-list{display:grid;gap:10px;margin-top:14px}.file-item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 14px;border-radius:16px;background:#f8fafc;border:1px solid #e2e8f0;color:#334155;font-size:.92rem}.file-status{font-weight:900;color:#1d4ed8;white-space:nowrap}
-    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.copy-note{margin-top:12px;color:#16a34a;font-weight:900;display:none}.result-empty{color:#64748b;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:20px;padding:22px;line-height:1.7}
-    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 0}.stat{background:linear-gradient(135deg,#eff6ff,#f8fafc);border:1px solid #dbeafe;border-radius:18px;padding:18px}.stat span{display:block;color:#64748b;font-size:.78rem;font-weight:900;text-transform:uppercase;margin-bottom:6px}.stat strong{color:#0f172a;font-size:1.18rem}
-    .deck-tools{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}.pill{display:inline-flex;width:fit-content;padding:8px 12px;border-radius:999px;background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8;font-size:.78rem;font-weight:950;text-transform:uppercase;letter-spacing:.04em}
-    .flashcard-grid{display:grid;gap:16px;margin-top:22px}.flashcard{border:1px solid #dbeafe;border-radius:24px;overflow:hidden;background:#fff;box-shadow:0 12px 30px rgba(15,23,42,.07)}.flashcard-head{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:16px 18px;background:#0f172a;color:#fff}.flashcard-head strong{color:#fff}.difficulty{font-size:.78rem;font-weight:950;border-radius:999px;padding:6px 10px;background:rgba(20,184,166,.18);color:#99f6e4;border:1px solid rgba(20,184,166,.28)}
-    .flashcard-body{display:grid;grid-template-columns:1fr 1fr;gap:0}.flash-side{padding:18px}.flash-side:first-child{border-right:1px solid #e2e8f0}.flash-side span{display:block;color:#64748b;font-size:.78rem;font-weight:950;text-transform:uppercase;margin-bottom:8px}.flash-side p{color:#334155;line-height:1.65;margin:0}.flash-extra{padding:16px 18px;background:#f8fafc;border-top:1px solid #e2e8f0;color:#334155;line-height:1.6}.flash-extra strong{color:#0f172a}
-    .map-box,.method-box{margin-top:22px;padding:22px;border-radius:24px;border:1px solid #dbeafe;background:#fff}.map-box h3,.method-box h3{margin:0 0 12px;color:#0f172a}.map-box li,.method-box li{color:#334155;line-height:1.65;margin-bottom:8px}.map-box ul,.method-box ol{margin:0 0 0 20px}
-    .prompt-box{background:#0f172a;color:#e0f2fe;border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:22px;white-space:pre-wrap;line-height:1.75;margin-top:22px}.prompt-box h3{color:#99f6e4;margin-top:0}.prompt-box p{color:#e0f2fe}
-    .mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}.mini-card{background:#fff;border:1px solid #dbeafe;border-radius:24px;padding:24px;box-shadow:0 14px 34px rgba(15,23,42,.07)}.mini-card h3{color:#0f172a;margin:0 0 8px}.mini-card p{color:#334155;line-height:1.7;margin:0}
-    .warning{margin-top:22px;padding:24px;border-radius:26px;border:1px solid #bfdbfe;background:linear-gradient(135deg,#eff6ff,#f8fafc);color:#334155;line-height:1.8}.warning strong{color:#0f172a}
-    @media(max-width:1080px){.hero-grid,.flash-layout,.stats,.mini-grid{grid-template-columns:1fr}.flashcard-body{grid-template-columns:1fr}.flash-side:first-child{border-right:none;border-bottom:1px solid #e2e8f0}}@media(max-width:680px){.flash-hero{border-radius:30px}.form-grid{grid-template-columns:1fr}.tool-panel,.result-panel,.info-card{padding:22px}.flashcard-head{align-items:flex-start;flex-direction:column}}
-  </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"WebApplication","name":"Generador de Flashcards con IA","url":"https://tecniaia.com/generador-flashcards-ia.html","applicationCategory":"EducationalApplication","operatingSystem":"All","description":"Herramienta para adjuntar apuntes o resúmenes y generar flashcards de memorización activa, explicación y relación entre conceptos.","inLanguage":"es","publisher":{"@type":"Organization","name":"TecnIA"}}
-  </script>
-</head>
-
-<body>
-  <header>
-    <div class="container navbar">
-      <a href="index.html" class="logo">Tecn<span>IA</span></a>
-      <nav aria-label="Navegación principal">
-        <ul class="nav-links">
-          <li><a href="index.html">Inicio</a></li>
-          <li><a href="que-necesitas-hacer-con-ia.html">Resolver con IA</a></li>
-          <li><a href="herramientas-interactivas.html">Herramientas</a></li>
-          <li><a href="ia-para-estudiar.html">Estudiar con IA</a></li>
-          <li><a href="articulos.html">Guías</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-    <section class="container">
-      <div class="flash-hero">
-        <div class="hero-kicker">Memorización activa con IA</div>
-        <h1>Convierte apuntes y resúmenes en flashcards que sí ayudan a entender</h1>
-        <p>Adjunta apuntes, pega un resumen de TecnIA o introduce un tema. La herramienta crea tarjetas con explicación, dificultad, relación entre conceptos y preguntas pensadas para recordar, no solo para leer.</p>
-        <div class="hero-actions">
-          <a href="#generador" class="btn btn-primary">Crear flashcards</a>
-          <a href="resumidor-apuntes-ia.html" class="btn btn-outline">Resumir apuntes antes</a>
-        </div>
-        <div class="hero-grid">
-          <div class="hero-panel">
-            <h2>Más que pregunta-respuesta</h2>
-            <p>Crea tarjetas de definición, explicación, comparación, relación, completar huecos, verdadero/falso y tipo test.</p>
-          </div>
-          <div class="hero-panel">
-            <h3>Conceptos entrelazados</h3>
-            <p>Detecta conceptos importantes y genera relaciones para que el estudiante vea cómo se conectan las ideas.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <article class="container">
-      <section class="info-card">
-        <span class="article-tag">Flashcards + comprensión + conexiones</span>
-        <h2>Diseñada para estudiar mejor, no para acumular tarjetas</h2>
-        <p class="helper">Una buena flashcard debe obligarte a recordar, explicar y conectar. Por eso esta herramienta no solo extrae conceptos: también crea tarjetas que relacionan ideas y te dicen por qué importa cada respuesta.</p>
-        <div class="mini-grid">
-          <div class="mini-card"><h3>Adjunta apuntes o resúmenes</h3><p>Usa documentos originales o resúmenes generados por TecnIA.</p></div>
-          <div class="mini-card"><h3>Explicaciones claras</h3><p>Cada tarjeta incluye respuesta y explicación para entender el concepto.</p></div>
-          <div class="mini-card"><h3>Relaciones entre ideas</h3><p>Crea tarjetas que conectan conceptos, causas, consecuencias y comparaciones.</p></div>
-        </div>
-      </section>
-
-      <section id="generador" class="flash-layout">
-        <div class="tool-panel">
-          <h2>Genera flashcards inteligentes</h2>
-          <p class="helper">Sube apuntes, pega un resumen o escribe el tema. Después elige cantidad, dificultad y tipo de tarjetas.</p>
-
-          <form id="flashForm" onsubmit="event.preventDefault();generateDeck();">
-            <div class="form-grid">
-              <div class="field">
-                <label for="subject">Asignatura</label>
-                <input id="subject" type="text" placeholder="Ej: Historia, Derecho, Biología...">
-              </div>
-              <div class="field">
-                <label for="examType">Tipo de examen</label>
-                <select id="examType">
-                  <option value="mixto">Mixto</option>
-                  <option value="test">Tipo test</option>
-                  <option value="desarrollo">Desarrollo</option>
-                  <option value="oral">Oral</option>
-                  <option value="problemas">Problemas o casos prácticos</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="quantity">Número de tarjetas</label>
-                <select id="quantity">
-                  <option value="12">12 tarjetas</option>
-                  <option value="20">20 tarjetas</option>
-                  <option value="30">30 tarjetas</option>
-                  <option value="40">40 tarjetas</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="difficulty">Nivel</label>
-                <select id="difficulty">
-                  <option value="mezclado">Mezclado</option>
-                  <option value="basico">Básico</option>
-                  <option value="medio">Medio</option>
-                  <option value="avanzado">Avanzado</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="deckMode">Enfoque</label>
-                <select id="deckMode">
-                  <option value="comprension">Entender y memorizar</option>
-                  <option value="examen">Preparar examen</option>
-                  <option value="relaciones">Relacionar conceptos</option>
-                  <option value="repaso">Repaso rápido</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="cardMix">Tipo de tarjetas</label>
-                <select id="cardMix">
-                  <option value="mezcladas">Mezcladas</option>
-                  <option value="definicion">Definición y explicación</option>
-                  <option value="relacion">Relación entre conceptos</option>
-                  <option value="test">Tipo test</option>
-                  <option value="huecos">Completar huecos</option>
-                </select>
-              </div>
-
-              <div class="field full">
-                <label>Adjuntar apuntes o resumen</label>
-                <div class="file-drop" id="fileDrop">
-                  <input id="studyFiles" type="file" multiple accept=".txt,.md,.csv,.html,.htm,.pdf,.docx">
-                  <div><strong>Arrastra archivos aquí o pulsa para seleccionarlos</strong><span>TXT, MD, CSV, HTML, PDF o DOCX. Puedes adjuntar el resumen generado por TecnIA.</span></div>
-                </div>
-                <div id="fileList" class="file-list"></div>
-              </div>
-
-              <div class="field full">
-                <label for="notes">Pega aquí apuntes, resumen o tema</label>
-                <textarea id="notes" rows="10" placeholder="Pega aquí tus apuntes, el resumen generado por TecnIA o el tema que quieres convertir en flashcards."></textarea>
-              </div>
-
-              <div class="field full">
-                <label for="teacherFocus">Conceptos imprescindibles o insistidos por el profesor</label>
-                <textarea id="teacherFocus" rows="3" placeholder="Ej: fechas, autores, diferencias concretas, tema que repitió mucho, causas/consecuencias, fórmulas..."></textarea>
-              </div>
-            </div>
-
-            <div class="actions">
-              <button type="submit" class="btn btn-primary">Crear flashcards inteligentes</button>
-              <button type="button" class="btn btn-outline" onclick="copyDeck()">Copiar tarjetas</button>
-              <button type="button" class="btn btn-outline" onclick="downloadCSV()">Descargar CSV</button>
-              <button type="button" class="btn btn-outline" onclick="copyPrompt()">Copiar prompt experto</button>
-              <button type="button" class="btn btn-outline" onclick="resetDeck()">Limpiar</button>
-            </div>
-            <div id="copyNote" class="copy-note">Copiado al portapapeles.</div>
-          </form>
-        </div>
-
-        <div class="result-panel" id="flashResult">
-          <h2>Tus flashcards aparecerán aquí</h2>
-          <div class="result-empty">Sube apuntes o pega un resumen y pulsa “Crear flashcards inteligentes”. La herramienta generará tarjetas con pregunta, respuesta, explicación, dificultad y conexiones entre conceptos.</div>
-        </div>
-      </section>
-
-      <div class="warning"><strong>Consejo:</strong> después de crear las tarjetas, no las leas como apuntes. Tapa la respuesta, intenta contestar y revisa la explicación solo después. Ahí empieza el aprendizaje real.</div>
-
-      <section class="info-card" style="margin-top:28px;">
-        <span class="article-tag">Después de memorizar</span>
-        <h2>Convierte las tarjetas en práctica real</h2>
-        <p class="helper">Las flashcards te dan base. El siguiente paso es practicar como si estuvieras en examen.</p>
-        <div class="home-grid">
-          <a href="modo-examen-ia.html" class="card tool-card"><span class="article-tag">Examen</span><h3>Modo Examen IA</h3><p>Practica preguntas y simulacros con los conceptos que has memorizado.</p><span class="read-more">Practicar →</span></a>
-          <a href="corrector-respuestas-ia.html" class="card tool-card"><span class="article-tag">Corrección</span><h3>Corrector de Respuestas</h3><p>Comprueba si sabes explicar las respuestas con claridad.</p><span class="read-more">Corregir →</span></a>
-          <a href="resumidor-apuntes-ia.html" class="card tool-card"><span class="article-tag">Apuntes</span><h3>Resumidor de Apuntes</h3><p>Vuelve al resumen si notas que alguna tarjeta no está clara.</p><span class="read-more">Resumir →</span></a>
-        </div>
-        <div class="home-mini-links">
-          <a href="planificador-estudio-ia.html">Planificador</a>
-          <a href="centro-estudio-ia.html">Centro de Estudio</a>
-          <a href="ia-para-estudiar.html">Guía IA para estudiar</a>
-          <a href="como-crear-flashcards-ia.html">Guía para crear flashcards</a>
-        </div>
-      </section>
-    </article>
-  </main>
-
-  <footer>
-    <div class="container">
-      <p>&copy; 2026 TecnIA. Todos los derechos reservados.</p>
-      <p class="mt-2"><a href="sobre-nosotros.html">Sobre nosotros</a> | <a href="contacto.html">Contacto</a> | <a href="politica-privacidad.html">Política de privacidad</a> | <a href="noticias.html">Noticias</a></p>
-    </div>
-  </footer>
-
-  <script>
-    let extractedFiles=[], lastDeck=[], lastDeckText="", lastPrompt="";
-    const stopwords=new Set("para como pero porque sobre entre desde hasta donde cuando este esta estos estas tambien también tiene tienen puede pueden ser son con sin los las una uno unos unas del por que qué se su sus al el la de en y o u a un es no más mas muy tema unidad capitulo capítulo apartado parte pagina página clase apuntes estudio estudiar ejemplo ejemplos concepto conceptos definicion definición".split(" "));
-
-    document.addEventListener("DOMContentLoaded",()=>{
-      const input=document.getElementById("studyFiles"),drop=document.getElementById("fileDrop"),notes=document.getElementById("notes");
-      if(window.pdfjsLib){pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"}
-      input.addEventListener("change",async e=>handleFiles(e.target.files));
-      ["dragenter","dragover"].forEach(n=>drop.addEventListener(n,e=>{e.preventDefault();drop.classList.add("dragover")}));
-      ["dragleave","drop"].forEach(n=>drop.addEventListener(n,e=>{e.preventDefault();drop.classList.remove("dragover")}));
-      drop.addEventListener("drop",async e=>handleFiles(e.dataTransfer.files));
-    });
-
-    function v(id){return document.getElementById(id).value.trim()}
-    function norm(t){return(t||"").replace(/\r/g,"\n").replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim()}
-
-    async function handleFiles(files){
-      const list=document.getElementById("fileList"),notes=document.getElementById("notes");
-      for(const file of files){
-        const item=document.createElement("div");
-        item.className="file-item";
-        item.innerHTML=`<span>${esc(file.name)} · ${bytes(file.size)}</span><span class="file-status">Leyendo...</span>`;
-        list.appendChild(item);
-        try{
-          const text=norm(await extractText(file));
-          extractedFiles.push({name:file.name,size:file.size,text});
-          notes.value=norm(notes.value+"\n\nARCHIVO: "+file.name+"\n"+text);
-          item.querySelector(".file-status").textContent=text.length>80?"Leído":"Poco texto";
-        }catch(e){
-          item.querySelector(".file-status").textContent="No leído";
-          item.title=e.message;
-        }
-      }
+  const phrasePatterns=[
+    /\b(funci[oó]n de producci[oó]n)\b/gi,
+    /\b(restricci[oó]n presupuestaria)\b/gi,
+    /\b(conjunto factible)\b/gi,
+    /\b(preferencias individuales)\b/gi,
+    /\b(mapa de indiferencia)\b/gi,
+    /\b(curvas? de indiferencia)\b/gi,
+    /\b(trabajo y ocio)\b/gi,
+    /\b(cost[e|e] de oportunidad)\b/gi,
+    /\b(equilibrio entre trabajo y ocio)\b/gi,
+    /\b(aumento del nivel de vida)\b/gi,
+    /\b(distribuci[oó]n de ganancias)\b/gi,
+    /\b(conflicto de intereses)\b/gi,
+    /\b(decisi[oó]n individual)\b/gi,
+    /\b(consumo y ocio)\b/gi
+  ];
+  phrasePatterns.forEach(re=>{
+    let m; while((m=re.exec(clean))!==null){
+      const ev=sentences.find(s=>normalizeKey(s).includes(normalizeKey(m[1]))) || "";
+      add(m[1],ev,9);
     }
+  });
 
-    async function extractText(file){
-      const name=file.name.toLowerCase();
-      if(name.endsWith(".pdf"))return pdfText(file);
-      if(name.endsWith(".docx"))return docxText(file);
-      return file.text();
-    }
+  sentences.forEach(s=>{
+    const beforeColon=s.match(/^(.{7,70}):/);
+    if(beforeColon) add(beforeColon[1],s,7);
+    const quoted=[...s.matchAll(/"([^"]{6,70})"/g)];
+    quoted.forEach(q=>add(q[1],s,5));
+  });
 
-    async function pdfText(file){
-      if(!window.pdfjsLib)throw new Error("No se pudo cargar PDF");
-      const pdf=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;
-      let out="";
-      for(let i=1;i<=pdf.numPages;i++){
-        const page=await pdf.getPage(i),content=await page.getTextContent();
-        out+="\n\nPágina "+i+"\n"+content.items.map(x=>x.str).join(" ");
-      }
-      return out;
-    }
+  const counts={};
+  candidates.forEach(c=>{
+    if(!counts[c.key]) counts[c.key]={...c, score:0};
+    counts[c.key].score+=c.score;
+    if(c.evidence.length>counts[c.key].evidence.length) counts[c.key].evidence=c.evidence;
+  });
 
-    async function docxText(file){
-      if(!window.mammoth)throw new Error("No se pudo cargar DOCX");
-      const result=await mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()});
-      return result.value||"";
-    }
+  return Object.values(counts)
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,22)
+    .map(c=>({term:smartCap(c.term), key:c.key, evidence:c.evidence || sentences.find(s=>normalizeKey(s).includes(c.key)) || ""}));
+}
+function smartCap(s){
+  s=String(s||"").trim();
+  if(!s) return s;
+  return s.charAt(0).toUpperCase()+s.slice(1);
+}
+function makeOverlay(){
+  let overlay=document.getElementById("tecniaResultOverlay");
+  if(overlay) return overlay;
+  overlay=document.createElement("div");
+  overlay.id="tecniaResultOverlay";
+  overlay.innerHTML=`<div class="tecnia-result-backdrop" onclick="closeTecnIAResult()"></div><div class="tecnia-result-window"><button class="tecnia-result-close" onclick="closeTecnIAResult()">Cerrar ×</button><div id="tecniaResultContent"></div></div>`;
+  document.body.appendChild(overlay);
+  return overlay;
+}
+function openResult(html){
+  const overlay=makeOverlay();
+  document.getElementById("tecniaResultContent").innerHTML=html;
+  overlay.classList.add("active");
+  document.body.style.overflow="hidden";
+}
+function closeTecnIAResult(){
+  const overlay=document.getElementById("tecniaResultOverlay");
+  if(overlay) overlay.classList.remove("active");
+  document.body.style.overflow="";
+}
 
-    function generateDeck(){
-      const subject=v("subject")||"la asignatura", examType=v("examType")||"mixto", quantity=parseInt(v("quantity")||"20"), difficulty=v("difficulty")||"mezclado", mode=v("deckMode")||"comprension", mix=v("cardMix")||"mezcladas", focus=v("teacherFocus"), text=norm(v("notes"));
-      if(!text || countWords(text)<30){
-        document.getElementById("flashResult").innerHTML='<h2>Falta contenido</h2><div class="result-empty">Pega un resumen, apuntes o adjunta un archivo con texto suficiente para crear flashcards útiles.</div>';
-        return;
-      }
-
-      const sentences=splitSentences(text), concepts=getConcepts(text,focus), relations=getRelations(concepts,sentences,focus), cards=[];
-      const coreConcepts=concepts.slice(0,Math.max(8,Math.min(quantity,20)));
-
-      coreConcepts.forEach((c,i)=>{
-        if(cards.length<quantity)cards.push(definitionCard(c,subject,i,difficulty));
-        if(cards.length<quantity && (mix==="mezcladas"||mix==="relacion"||mode==="relaciones")){
-          const rel=relations.find(r=>r.a===c.term||r.b===c.term);
-          if(rel)cards.push(relationCard(rel,cards.length,difficulty));
-        }
-        if(cards.length<quantity && (mix==="mezcladas"||mix==="huecos"))cards.push(clozeCard(c,cards.length,difficulty));
-        if(cards.length<quantity && (mix==="mezcladas"||mix==="test"||examType==="test"))cards.push(testCard(c,concepts,cards.length,difficulty));
-      });
-
-      sentences.slice(0,quantity).forEach(s=>{
-        if(cards.length<quantity && importantSentence(s,focus)){
-          cards.push(explanationCard(s,cards.length,difficulty,examType));
-        }
-      });
-
-      while(cards.length<quantity && concepts.length){
-        const c=concepts[cards.length % concepts.length];
-        cards.push(definitionCard(c,subject,cards.length,difficulty));
-      }
-
-      lastDeck=cards.slice(0,quantity);
-      lastPrompt=buildPrompt({subject,examType,quantity,difficulty,mode,mix,focus,text,concepts,relations});
-      renderDeck({subject,examType,quantity,difficulty,mode,mix,focus,text,concepts,relations,cards:lastDeck});
-    }
-
-    function splitSentences(text){
-      return norm(text).split(/(?<=[.!?])\s+|\n+/).map(s=>s.trim()).filter(s=>s.length>35&&s.length<420);
-    }
-
-    function getConcepts(text,focus){
-      const focusWords=(focus||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").split(/\W+/).filter(w=>w.length>4);
-      const words=text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9ñáéíóúü\s-]/gi," ").split(/\s+/).filter(w=>w.length>4&&!stopwords.has(w));
-      const counts={};words.forEach(w=>counts[w]=(counts[w]||0)+1);focusWords.forEach(w=>counts[w]=(counts[w]||0)+10);
-      const sentences=splitSentences(text);
-      return Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,28).map(([raw,count])=>{
-        const evidence=sentences.find(s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").includes(raw));
-        return{term:cap(raw.replace(/-/g," ")),raw,count,evidence:evidence||"Concepto repetido o marcado como importante en el material."};
-      });
-    }
-
-    function getRelations(concepts,sentences,focus){
-      const rel=[];
-      for(let i=0;i<concepts.length;i++){
-        for(let j=i+1;j<Math.min(concepts.length,i+9);j++){
-          const a=concepts[i],b=concepts[j];
-          const joint=sentences.find(s=>{
-            const l=s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-            return l.includes(a.raw)&&l.includes(b.raw);
-          });
-          if(joint)rel.push({a:a.term,b:b.term,evidence:joint,reason:"Aparecen conectados en el mismo bloque de apuntes."});
-        }
-      }
-      if(rel.length<6){
-        concepts.slice(0,8).forEach((c,i)=>{
-          const other=concepts[i+1];
-          if(other)rel.push({a:c.term,b:other.term,evidence:`${c.evidence} ${other.evidence}`.slice(0,260),reason:"Son conceptos próximos o relevantes dentro del material."});
-        });
-      }
-      return rel.slice(0,16);
-    }
-
-    function definitionCard(c,subject,index,difficulty){
-      return{
-        type:"Definición + explicación",
-        difficulty:getDifficulty(index,difficulty),
-        front:`¿Qué es ${c.term} en ${subject}?`,
-        back:`${cleanEvidence(c.evidence)}\n\nExplicación: ${c.term} es un concepto que debes poder definir con precisión y situar dentro del tema. No basta con reconocerlo: intenta explicarlo con tus palabras y añadir un ejemplo si aparece en tus apuntes.`,
-        link:`Relaciona ${c.term} con otros conceptos del tema para no memorizarlo aislado.`
-      };
-    }
-
-    function relationCard(r,index,difficulty){
-      return{
-        type:"Relación entre conceptos",
-        difficulty:getDifficulty(index,difficulty),
-        front:`Relaciona ${r.a} con ${r.b}. ¿Por qué aparecen conectados?`,
-        back:`Relación: ${r.reason}\n\nEvidencia del material: ${cleanEvidence(r.evidence)}\n\nExplicación: esta tarjeta sirve para no estudiar conceptos sueltos. Di primero qué significa cada uno y después explica el vínculo entre ambos.`,
-        link:`Conceptos conectados: ${r.a} ↔ ${r.b}.`
-      };
-    }
-
-    function clozeCard(c,index,difficulty){
-      const sentence=cleanEvidence(c.evidence);
-      const hidden=sentence.replace(new RegExp(reg(c.raw),"ig"),"______");
-      return{
-        type:"Completar huecos",
-        difficulty:getDifficulty(index,difficulty),
-        front:`Completa el hueco: ${hidden}`,
-        back:`Respuesta: ${c.term}.\n\nExplicación: este formato ayuda a recordar el concepto dentro de una frase real de tus apuntes, no como palabra aislada.`,
-        link:`Repasa también la definición completa de ${c.term}.`
-      };
-    }
-
-    function testCard(c,concepts,index,difficulty){
-      const distractors=concepts.filter(x=>x.term!==c.term).slice(index%5,index%5+3).map(x=>x.term);
-      return{
-        type:"Tipo test",
-        difficulty:getDifficulty(index,difficulty),
-        front:`Tipo test: ¿cuál de estos conceptos encaja mejor con esta explicación?\n"${cleanEvidence(c.evidence).slice(0,180)}"\nA) ${c.term}\nB) ${distractors[0]||"Concepto secundario"}\nC) ${distractors[1]||"Otro concepto"}\nD) ${distractors[2]||"Ninguna de las anteriores"}`,
-        back:`Respuesta correcta: A) ${c.term}.\n\nExplicación: reconoce la idea por su significado, no solo por la palabra. Revisa por qué las otras opciones podrían confundirte.`,
-        link:`Cuidado con confundir ${c.term} con conceptos parecidos.`
-      };
-    }
-
-    function explanationCard(sentence,index,difficulty,examType){
-      return{
-        type:examType==="desarrollo"?"Respuesta de desarrollo":"Explicación con tus palabras",
-        difficulty:getDifficulty(index,difficulty),
-        front:`Explica con tus palabras esta idea y añade un ejemplo si puedes:\n${sentence.slice(0,190)}...`,
-        back:`Respuesta esperada: debes explicar la idea central, mencionar los datos concretos y conectar la frase con el tema general.\n\nBase de los apuntes: ${sentence}`,
-        link:"Esta tarjeta entrena comprensión, no solo memoria."
-      };
-    }
-
-    function importantSentence(s,focus){
-      const l=s.toLowerCase(),f=(focus||"").toLowerCase().split(/\W+/).filter(w=>w.length>4);
-      return /\d{3,4}|\d+%|\b(causa|consecuencia|definici[oó]n|autor|fecha|tipo|fase|modelo|teor[ií]a|ley|f[oó]rmula|ejemplo|diferencia|comparaci[oó]n)\b/i.test(s)||f.some(w=>l.includes(w));
-    }
-
-    function getDifficulty(i,d){
-      if(d==="basico")return"Básica";
-      if(d==="medio")return"Media";
-      if(d==="avanzado")return"Avanzada";
-      return ["Básica","Media","Avanzada"][i%3];
-    }
-
-    function cleanEvidence(s){return String(s||"").replace(/\s+/g," ").trim().slice(0,340)}
-
-    function renderDeck(data){
-      const {subject,examType,quantity,difficulty,mode,mix,text,concepts,relations,cards}=data;
-      lastDeckText=cards.map((c,i)=>`FLASHCARD ${i+1}\nTipo: ${c.type}\nDificultad: ${c.difficulty}\nPregunta: ${c.front}\nRespuesta: ${c.back}\nRelación: ${c.link}`).join("\n\n");
-      const map=relations.slice(0,10).map(r=>`<li><strong>${esc(r.a)} ↔ ${esc(r.b)}:</strong> ${esc(r.reason)}</li>`).join("");
-      document.getElementById("flashResult").innerHTML=`
-        <h2>Deck de flashcards generado</h2>
-        <div class="stats">
-          <div class="stat"><span>Tarjetas</span><strong>${cards.length}</strong></div>
-          <div class="stat"><span>Conceptos</span><strong>${concepts.length}</strong></div>
-          <div class="stat"><span>Relaciones</span><strong>${relations.length}</strong></div>
-          <div class="stat"><span>Modo</span><strong>${esc(mode)}</strong></div>
-        </div>
-
-        <div class="map-box">
-          <span class="pill">Mapa de conceptos</span>
-          <h3>Ideas conectadas</h3>
-          <ul>${map||"<li>No se han detectado relaciones suficientes. Añade más apuntes o un resumen más completo.</li>"}</ul>
-        </div>
-
-        <div class="method-box">
-          <span class="pill">Método de repaso</span>
-          <h3>Cómo usar estas tarjetas</h3>
-          <ol>
-            <li>Primera vuelta: responde sin mirar la solución.</li>
-            <li>Segunda vuelta: marca las falladas y explica por qué fallaste.</li>
-            <li>Tercera vuelta: repasa solo tarjetas medias y avanzadas.</li>
-            <li>Última vuelta: convierte las tarjetas difíciles en preguntas de examen.</li>
-          </ol>
-        </div>
-
-        <div class="deck-tools">
-          <span class="pill">Definición</span>
-          <span class="pill">Relación</span>
-          <span class="pill">Explicación</span>
-          <span class="pill">Test</span>
-          <span class="pill">Huecos</span>
-        </div>
-
-        <div class="flashcard-grid">
-          ${cards.map((c,i)=>`
-            <div class="flashcard">
-              <div class="flashcard-head"><strong>${i+1}. ${esc(c.type)}</strong><span class="difficulty">${esc(c.difficulty)}</span></div>
-              <div class="flashcard-body">
-                <div class="flash-side"><span>Pregunta</span><p>${esc(c.front)}</p></div>
-                <div class="flash-side"><span>Respuesta + explicación</span><p>${esc(c.back)}</p></div>
-              </div>
-              <div class="flash-extra"><strong>Conexión:</strong> ${esc(c.link)}</div>
-            </div>
-          `).join("")}
-        </div>
-
-        <div class="prompt-box"><h3>Prompt experto para perfeccionar el deck con IA</h3><p>${esc(lastPrompt)}</p></div>
-      `;
-    }
-
-    function buildPrompt(data){
-      const {subject,examType,quantity,difficulty,mode,mix,focus,text,concepts,relations}=data;
-      return `Actúa como un profesor experto en técnicas de estudio y creación de flashcards.
-
-Quiero crear un deck excelente para estudiar ${subject}.
-
-Datos:
-- Tipo de examen: ${examType}
-- Número de tarjetas: ${quantity}
-- Nivel de dificultad: ${difficulty}
-- Enfoque: ${mode}
-- Tipo de tarjetas: ${mix}
-- Conceptos insistidos por el profesor: ${focus||"no indicado"}
-
-Conceptos detectados:
-${concepts.slice(0,20).map((c,i)=>`${i+1}. ${c.term}: ${c.evidence}`).join("\n")}
-
-Relaciones detectadas:
-${relations.slice(0,12).map((r,i)=>`${i+1}. ${r.a} ↔ ${r.b}: ${r.reason}`).join("\n")}
-
-Instrucciones:
-1. Crea flashcards útiles, no superficiales.
-2. Cada tarjeta debe tener pregunta, respuesta, explicación y conexión con otro concepto.
-3. Incluye tarjetas de definición, relación, comparación, completar huecos, verdadero/falso y tipo test.
-4. Las respuestas deben ser claras y explicar por qué, no solo dar una palabra.
-5. Prioriza conceptos importantes para examen.
-6. Conecta ideas entre sí para que no se estudien aisladas.
-7. Marca dificultad: básica, media o avanzada.
-8. Incluye tarjetas que obliguen a explicar con palabras propias.
-
-Material:
-${text.slice(0,7000)}`;
-    }
-
-    async function copyText(t){if(!t)return;await navigator.clipboard.writeText(t);const n=document.getElementById("copyNote");n.style.display="block";setTimeout(()=>n.style.display="none",2200)}
-    function copyDeck(){copyText(lastDeckText||"Todavía no has generado flashcards.")}
-    function copyPrompt(){copyText(lastPrompt||"Todavía no has generado un prompt.")}
-    function downloadCSV(){
-      if(!lastDeck.length)return;
-      const rows=[["Pregunta","Respuesta","Tipo","Dificultad","Conexion"]];
-      lastDeck.forEach(c=>rows.push([c.front,c.back,c.type,c.difficulty,c.link]));
-      const csv=rows.map(r=>r.map(x=>`"${String(x).replace(/"/g,'""')}"`).join(",")).join("\n");
-      const blob=new Blob([csv],{type:"text/csv;charset=utf-8"});
-      const url=URL.createObjectURL(blob),a=document.createElement("a");
-      a.href=url;a.download="flashcards-tecnia.csv";a.click();URL.revokeObjectURL(url);
-    }
-    function resetDeck(){document.getElementById("flashForm").reset();document.getElementById("fileList").innerHTML="";extractedFiles=[];lastDeck=[];lastDeckText="";lastPrompt="";document.getElementById("flashResult").innerHTML='<h2>Tus flashcards aparecerán aquí</h2><div class="result-empty">Sube apuntes o pega un resumen y pulsa “Crear flashcards inteligentes”. La herramienta generará tarjetas con pregunta, respuesta, explicación, dificultad y conexiones entre conceptos.</div>'}
-    function countWords(t){return(t||"").trim().split(/\s+/).filter(Boolean).length}
-    function bytes(b){if(!b)return"0 KB";const s=["Bytes","KB","MB","GB"],i=Math.floor(Math.log(b)/Math.log(1024));return`${(b/Math.pow(1024,i)).toFixed(1)} ${s[i]}`}
-    function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
-    function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
-    function reg(s){return s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}
-  </script>
-  <script src="tecnia-memory.js"></script>
-</body>
-</html>
+let lastOutput="";
+document.addEventListener("DOMContentLoaded",()=>{if(window.pdfjsLib)pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";document.getElementById("studyFiles").addEventListener("change",e=>handleFiles(e.target.files));});
+async function handleFiles(files){const list=document.getElementById("fileList"),notes=document.getElementById("notes");for(const file of files){const item=document.createElement("div");item.className="file-item";item.innerHTML=`<span>${esc(file.name)}</span><strong>Leyendo...</strong>`;list.appendChild(item);try{const text=cleanInputText(await extractText(file));notes.value=cleanInputText(notes.value+"\n\n"+text);item.querySelector("strong").textContent="Leído"}catch(e){item.querySelector("strong").textContent="No leído"}}}
+async function extractText(file){const n=file.name.toLowerCase();if(n.endsWith(".pdf")){const pdf=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;let out="";for(let i=1;i<=pdf.numPages;i++){const p=await pdf.getPage(i),c=await p.getTextContent();out+="\n"+c.items.map(x=>x.str).join(" ")}return out}if(n.endsWith(".docx"))return (await mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()})).value||"";return file.text()}
+function generateCards(){const subject=document.getElementById("subject").value||"la asignatura";const text=cleanInputText(document.getElementById("notes").value);const focus=document.getElementById("teacherFocus").value;const qty=parseInt(document.getElementById("quantity").value||"20");if(countWords(text)<40){openResult("<h2>Falta texto</h2><p>Añade apuntes o un resumen más completo.</p>");return}const concepts=getCandidateConcepts(text,focus);const cards=[];concepts.slice(0,qty).forEach((c,i)=>{cards.push(makeCard(c,concepts[(i+1)%concepts.length],subject,i));});lastOutput=cards.map((c,i)=>`FLASHCARD ${i+1}\nPregunta: ${c.q}\nRespuesta: ${c.a}\nExplicación: ${c.e}\nConexión: ${c.link}`).join("\n\n");openResult(`<h2>Flashcards claras de ${esc(subject)}</h2><div class="result-block"><h3>Cómo usarlas</h3><p>Lee la pregunta, responde sin mirar y después compara con la respuesta. Si fallas, revisa la explicación y la conexión.</p></div>${cards.map((c,i)=>`<div class="clean-card"><div class="clean-card-head">${i+1}. ${esc(c.type)}</div><div class="clean-card-body"><div class="clean-card-side"><span>Pregunta</span><p>${esc(c.q)}</p></div><div class="clean-card-side"><span>Respuesta directa</span><p>${esc(c.a)}</p></div></div><div class="clean-answer"><strong>Explicación clara:</strong> ${esc(c.e)}<br><br><strong>Conexión:</strong> ${esc(c.link)}</div></div>`).join("")}`)}
+function makeCard(c,next,subject,i){const term=c.term;let a="",e="";if(/funci[oó]n de producci[oó]n/i.test(term)){a="Es la relación entre los recursos usados y el resultado que se obtiene.";e="En estos apuntes sirve para entender cómo el tiempo o esfuerzo dedicado a trabajar/estudiar se transforma en un resultado. La idea importante es que los recursos son limitados y hay que elegir cómo usarlos."}else if(/restricci[oó]n presupuestaria/i.test(term)){a="Es el límite que indica qué combinaciones son posibles con los recursos disponibles.";e="Ayuda a ver qué puede elegir una persona según su salario, tiempo o renta. No es una preferencia: es una frontera de posibilidades."}else if(/trabajo y ocio/i.test(term)){a="Es la decisión entre dedicar tiempo a trabajar o a descansar/consumir ocio.";e="Es clave porque muestra que ganar más no siempre implica trabajar más: con mayor nivel de vida algunas personas eligen más ocio."}else{a=c.evidence?c.evidence.slice(0,180):"Es un concepto relevante del tema que debes saber definir y aplicar.";e=`Para dominar "${term}" no lo estudies como palabra aislada. Debes poder definirlo, explicar por qué aparece en ${subject} y ponerlo en relación con una idea cercana.`}return{type:i%3===0?"Definición + comprensión":i%3===1?"Relación entre conceptos":"Aplicación práctica",q:i%3===0?`¿Qué significa "${term}" y para qué sirve en ${subject}?`:i%3===1?`¿Cómo se relaciona "${term}" con "${next?.term||"otro concepto del tema"}"?`:`Pon un ejemplo sencillo donde aparezca "${term}".`,a,e,link:next?`Conéctalo con "${next.term}" para entender el tema como un sistema, no como conceptos sueltos.`:"Relaciona este concepto con una causa, consecuencia o ejemplo del tema."}}
+function copyOutput(){navigator.clipboard.writeText(lastOutput||"")}function resetTool(){document.getElementById("flashForm").reset();document.getElementById("fileList").innerHTML=""}
+</script><script src="tecnia-memory.js"></script></body></html>
