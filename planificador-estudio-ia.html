@@ -3,232 +3,190 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Planificador de Estudio con IA | TecnIA</title>
-  <meta name="description" content="Crea un plan de estudio personalizado con inteligencia artificial según tu examen, asignatura, tiempo disponible, nivel actual y dificultad.">
+  <title>Planificador de Estudio con IA y Archivos | TecnIA</title>
+  <meta name="description" content="Adjunta apuntes, temarios o documentos y crea un plan de estudio inteligente según tu examen, tiempo disponible, temas importantes, nivel y dificultad.">
+  <link rel="canonical" href="https://tecniaia.com/planificador-estudio-ia.html">
+  <meta property="og:title" content="Planificador de Estudio con IA y Archivos | TecnIA">
+  <meta property="og:description" content="Sube apuntes o pega tu temario y genera una planificación de estudio por prioridades, días, bloques y puntos clave.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tecniaia.com/planificador-estudio-ia.html">
+  <meta property="og:site_name" content="TecnIA">
   <link rel="stylesheet" href="style.css">
   <style>
-    .planner-hero{margin:44px auto 30px;padding:70px 42px;border-radius:38px;color:#fff;background:linear-gradient(rgba(7,17,31,.76),rgba(7,17,31,.86)),url("https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1400&q=80") center/cover;box-shadow:0 28px 70px rgba(15,23,42,.22)}
-    .planner-hero .article-tag{color:#5eead4;background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.20)}
-    .planner-hero h1{max-width:900px;font-size:clamp(2.4rem,5vw,4.4rem);line-height:1.05;letter-spacing:-1.8px;margin-bottom:22px;color:#fff}
-    .planner-hero p{max-width:760px;color:#dbeafe;font-size:1.16rem;line-height:1.85;margin-bottom:30px}
-    .planner-layout{display:grid;grid-template-columns:.95fr 1.05fr;gap:28px;align-items:start;margin-top:36px}
-    .planner-panel,.planner-result{background:#fff;border:1px solid #dbeafe;border-radius:28px;padding:30px;box-shadow:0 18px 45px rgba(15,23,42,.09)}
-    .planner-panel h2,.planner-result h2{margin-top:0;color:#0f172a}
-    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .form-field{display:grid;gap:7px}.form-field.full{grid-column:1/-1}
-    .form-field label{font-weight:800;color:#0f172a;font-size:.95rem}
-    .helper-text{color:#64748b;font-size:.9rem;line-height:1.5}
-    .planner-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
-    .result-empty{color:#64748b;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:20px;padding:22px;line-height:1.7}
-    .result-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0}
-    .summary-card{background:linear-gradient(135deg,#eff6ff,#f8fafc);border:1px solid #dbeafe;border-radius:18px;padding:18px}
-    .summary-card span{display:block;color:#64748b;font-size:.84rem;font-weight:800;text-transform:uppercase;margin-bottom:6px}
-    .summary-card strong{color:#0f172a;font-size:1.25rem}
-    .plan-list{display:grid;gap:16px;margin-top:22px}
-    .plan-day{background:#fff;border:1px solid #e2e8f0;border-left:6px solid #2563eb;border-radius:20px;padding:20px;box-shadow:0 10px 24px rgba(15,23,42,.06)}
-    .plan-day:nth-child(even){border-left-color:#14b8a6}
-    .plan-day h3{margin:0 0 10px;color:#0f172a}.plan-day p,.plan-day li{color:#334155}.plan-day ul{margin:12px 0 0 20px}
-    .prompt-output{margin-top:24px;background:#0f172a!important;color:#e0f2fe!important;border:1px solid rgba(255,255,255,.12)!important;border-radius:22px;padding:22px;line-height:1.75;white-space:pre-wrap}
-    .prompt-output strong{color:#5eead4}
-    .study-warning{margin-top:22px;padding:20px;border-radius:20px;background:#fff7ed;border:1px solid #fed7aa;color:#7c2d12;line-height:1.75}
-    .study-warning strong{color:#9a3412}
-    .mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
-    .mini-card{background:#fff;border:1px solid #dbeafe;border-radius:22px;padding:22px;box-shadow:0 12px 30px rgba(15,23,42,.07)}
-    .mini-card h3{color:#0f172a;margin-bottom:8px}.mini-card p{color:#334155;line-height:1.7}
-    @media(max-width:980px){.planner-layout,.result-summary,.mini-grid{grid-template-columns:1fr}}
-    @media(max-width:680px){.planner-hero{padding:48px 24px;border-radius:28px}.form-grid{grid-template-columns:1fr}.planner-panel,.planner-result{padding:22px}}
+    .planner-hero{position:relative;overflow:hidden;margin:42px auto 34px;padding:clamp(54px,8vw,96px) clamp(24px,5vw,58px);border-radius:42px;color:#fff;background:radial-gradient(circle at 16% 18%,rgba(20,184,166,.34),transparent 30%),radial-gradient(circle at 82% 16%,rgba(37,99,235,.36),transparent 28%),linear-gradient(135deg,#07111f 0%,#0f172a 48%,#111827 100%);box-shadow:0 34px 90px rgba(15,23,42,.28)}
+    .planner-hero:after{content:"";position:absolute;inset:auto -12% -42% 38%;height:300px;background:linear-gradient(90deg,rgba(20,184,166,.24),rgba(37,99,235,.3),rgba(139,92,246,.2));filter:blur(42px);transform:rotate(-8deg)}
+    .planner-hero>*{position:relative;z-index:1}.planner-hero .hero-kicker{color:#99f6e4;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18)}
+    .planner-hero h1{max-width:1080px;margin:18px 0 20px;color:#fff;font-size:clamp(2.6rem,6vw,5.3rem);line-height:.98;letter-spacing:-2.2px}.planner-hero p{max-width:820px;color:#dbeafe;font-size:1.14rem;line-height:1.85;margin-bottom:30px}
+    .planner-hero-grid,.planner-layout{display:grid;grid-template-columns:minmax(360px,.9fr) minmax(0,1.1fr);gap:28px;align-items:start;margin-top:32px}
+    .hero-panel{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:28px;padding:24px;backdrop-filter:blur(14px)}.hero-panel h2,.hero-panel h3{color:#fff;margin-top:0}.hero-panel p,.hero-panel li{color:#dbeafe;line-height:1.75}
+    .planner-panel,.planner-result,.info-card{background:#fff;border:1px solid #dbeafe;border-radius:30px;padding:30px;box-shadow:0 18px 45px rgba(15,23,42,.08)}.planner-panel h2,.planner-result h2,.info-card h2{margin-top:0;color:#0f172a}.helper{color:#64748b;line-height:1.65;margin-bottom:20px}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:grid;gap:8px}.field.full{grid-column:1/-1}.field label{font-weight:900;color:#0f172a;font-size:.94rem}.field input,.field select,.field textarea{width:100%;border:1px solid #cbd5e1;border-radius:16px;padding:13px 14px;font:inherit;color:#0f172a;background:#fff}.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 4px rgba(37,99,235,.1)}
+    .file-drop{position:relative;display:grid;place-items:center;min-height:172px;padding:24px;text-align:center;border:2px dashed #93c5fd;border-radius:24px;background:linear-gradient(135deg,#eff6ff,#f8fafc);cursor:pointer;transition:.2s}.file-drop:hover,.file-drop.dragover{border-color:#14b8a6;transform:translateY(-2px);background:linear-gradient(135deg,#ecfeff,#eff6ff)}.file-drop input{position:absolute;inset:0;opacity:0;cursor:pointer}.file-drop strong{display:block;color:#0f172a;font-size:1.1rem;margin-bottom:8px}.file-drop span{display:block;color:#475569;line-height:1.55}
+    .file-list{display:grid;gap:10px;margin-top:14px}.file-item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 14px;border-radius:16px;background:#f8fafc;border:1px solid #e2e8f0;color:#334155;font-size:.92rem}.file-status{font-weight:900;color:#1d4ed8;white-space:nowrap}
+    .planner-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.copy-note{margin-top:12px;color:#16a34a;font-weight:900;display:none}.result-empty{color:#64748b;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:20px;padding:22px;line-height:1.7}
+    .summary{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 0}.summary-card{background:linear-gradient(135deg,#eff6ff,#f8fafc);border:1px solid #dbeafe;border-radius:18px;padding:18px}.summary-card span{display:block;color:#64748b;font-size:.78rem;font-weight:900;text-transform:uppercase;margin-bottom:6px}.summary-card strong{color:#0f172a;font-size:1.18rem}
+    .priority-board{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0}.priority-col{padding:18px;border-radius:22px;border:1px solid #dbeafe;background:#fff}.priority-col h3{margin:0 0 12px;color:#0f172a;font-size:1rem}.priority-col li{color:#334155;margin-bottom:9px;line-height:1.45}
+    .plan-list{display:grid;gap:16px;margin-top:22px}.plan-day{background:#fff;border:1px solid #e2e8f0;border-left:6px solid #2563eb;border-radius:22px;padding:20px;box-shadow:0 10px 24px rgba(15,23,42,.06)}.plan-day:nth-child(even){border-left-color:#14b8a6}.plan-day h3{margin:0 0 8px;color:#0f172a}.plan-day p,.plan-day li{color:#334155;line-height:1.6}.plan-day ul{margin:12px 0 0 20px}
+    .emergency{margin:20px 0;padding:22px;border-radius:24px;border:1px solid #fed7aa;background:linear-gradient(135deg,#fff7ed,#fff);color:#7c2d12;line-height:1.75}.emergency strong{color:#9a3412}.prompt-output{margin-top:24px;background:#0f172a;color:#e0f2fe;border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:22px;line-height:1.75;white-space:pre-wrap;overflow-x:auto}
+    .mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}.mini-card{background:#fff;border:1px solid #dbeafe;border-radius:24px;padding:24px;box-shadow:0 14px 34px rgba(15,23,42,.07)}.mini-card h3{color:#0f172a;margin:0 0 8px}.mini-card p{color:#334155;line-height:1.7;margin:0}
+    .warning{margin-top:22px;padding:24px;border-radius:26px;border:1px solid #bfdbfe;background:linear-gradient(135deg,#eff6ff,#f8fafc);color:#334155;line-height:1.8}.warning strong{color:#0f172a}
+    @media(max-width:1080px){.planner-hero-grid,.planner-layout,.summary,.mini-grid,.priority-board{grid-template-columns:1fr}}@media(max-width:680px){.planner-hero{border-radius:30px}.form-grid{grid-template-columns:1fr}.planner-panel,.planner-result,.info-card{padding:22px}}
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Planificador de Estudio con IA","url":"https://tecniaia.com/planificador-estudio-ia.html","applicationCategory":"EducationalApplication","operatingSystem":"All","description":"Herramienta para adjuntar apuntes o temarios y generar un plan de estudio por prioridades según tiempo disponible, nivel, dificultad y tipo de examen.","inLanguage":"es","publisher":{"@type":"Organization","name":"TecnIA"}}
+  </script>
 </head>
 <body>
-<header>
-  <nav class="navbar">
-    <a href="index.html" class="logo">Tecn<span>IA</span></a>
-    <ul class="nav-links">
-      <li><a href="index.html">Inicio</a></li>
-      <li><a href="que-necesitas-hacer-con-ia.html">Resolver con IA</a></li>
-      <li><a href="metodo-tecnia.html">Método TecnIA</a></li>
-      <li><a href="centro-estudio-ia.html">Centro de Estudio</a></li>
-      <li><a href="empieza-aqui.html">Empieza aquí</a></li>
-      <li><a href="articulos.html">IA/Artículos</a></li>
-      <li><a href="herramientas.html">Herramientas</a></li>
-      <li><a href="herramientas-interactivas.html">Interactivas</a></li>
-      <li><a href="noticias.html">Noticias</a></li>
-    </ul>
-  </nav>
-</header>
-<main>
-  <section class="planner-hero">
-    <span class="article-tag">Herramienta interactiva</span>
-    <h1>Planificador de Estudio con IA</h1>
-    <p>Crea un plan de estudio personalizado según tu examen, asignatura, temas, nivel actual, tiempo disponible y dificultad. Después copia el prompt y úsalo en ChatGPT, Gemini, Claude o Copilot.</p>
-    <div class="route-actions">
-      <a href="#planificador" class="btn btn-primary">Crear mi plan</a>
-      <a href="ruta-tecnia-ia-estudiantes.html" class="btn btn-outline">Ver Ruta TecnIA</a>
-      <a href="modo-examen-ia.html" class="btn btn-outline">Modo Examen IA</a>
+  <header>
+    <div class="container navbar">
+      <a href="index.html" class="logo">Tecn<span>IA</span></a>
+      <nav aria-label="Navegación principal">
+        <ul class="nav-links">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="que-necesitas-hacer-con-ia.html">Resolver con IA</a></li>
+          <li><a href="herramientas-interactivas.html">Herramientas</a></li>
+          <li><a href="ia-para-estudiar.html">Estudiar con IA</a></li>
+          <li><a href="articulos.html">Guías</a></li>
+        </ul>
+      </nav>
     </div>
-  </section>
-  <article class="article-page">
-    <span class="article-tag">Organización + IA</span>
-    <h1>Organiza tu estudio con inteligencia artificial</h1>
-    <p class="article-intro">Muchas veces el problema no es que no quieras estudiar, sino que no sabes por dónde empezar. Esta herramienta te ayuda a convertir el caos en un plan concreto: qué estudiar, qué repasar, cuándo practicar y cómo usar IA sin depender de ella.</p>
+  </header>
 
-    <h2>Para qué sirve este planificador</h2>
-    <p>El Planificador de Estudio con IA está pensado para estudiantes que tienen un examen, varios temas y poco tiempo para organizarse. A partir de tus datos, genera una estrategia de estudio dividida por días.</p>
-
-    <div class="mini-grid">
-      <div class="mini-card"><h3>Organiza tu tiempo</h3><p>Transforma los días disponibles en una rutina clara de estudio, práctica y repaso.</p></div>
-      <div class="mini-card"><h3>Prioriza temas</h3><p>Te ayuda a decidir qué estudiar primero según dificultad, tiempo y nivel actual.</p></div>
-      <div class="mini-card"><h3>Usa IA con método</h3><p>Genera un prompt completo para que una IA te ayude a perfeccionar el plan.</p></div>
-    </div>
-
-    <section id="planificador" class="planner-layout">
-      <div class="planner-panel">
-        <h2>Genera tu plan de estudio</h2>
-        <p class="helper-text">Rellena los campos. No hace falta que sea perfecto: cuanto más concreto seas, mejor será el plan.</p>
-        <form id="studyPlannerForm" onsubmit="event.preventDefault(); generateStudyPlan();">
-          <div class="form-grid">
-            <div class="form-field"><label for="subject">Asignatura</label><input id="subject" type="text" placeholder="Ej: Historia Económica"></div>
-            <div class="form-field"><label for="examDate">Fecha del examen</label><input id="examDate" type="date"></div>
-            <div class="form-field"><label for="topics">Número de temas</label><input id="topics" type="number" min="1" max="60" placeholder="Ej: 8"></div>
-            <div class="form-field"><label for="hoursDay">Horas al día</label><input id="hoursDay" type="number" min="0.5" max="12" step="0.5" placeholder="Ej: 2"></div>
-            <div class="form-field"><label for="level">Nivel actual</label><select id="level"><option value="">Selecciona</option><option value="bajo">Bajo: voy perdido/a</option><option value="medio">Medio: entiendo algunas cosas</option><option value="alto">Alto: ya llevo base</option></select></div>
-            <div class="form-field"><label for="difficulty">Dificultad</label><select id="difficulty"><option value="">Selecciona</option><option value="baja">Baja</option><option value="media">Media</option><option value="alta">Alta</option></select></div>
-            <div class="form-field"><label for="examType">Tipo de examen</label><select id="examType"><option value="">Selecciona</option><option value="test">Tipo test</option><option value="desarrollo">Preguntas de desarrollo</option><option value="problemas">Problemas o ejercicios</option><option value="oral">Examen oral</option><option value="mixto">Mixto</option></select></div>
-            <div class="form-field"><label for="tool">IA que quieres usar</label><select id="tool"><option value="ChatGPT">ChatGPT</option><option value="Gemini">Gemini</option><option value="Claude">Claude</option><option value="Copilot">Copilot</option><option value="NotebookLM">NotebookLM</option></select></div>
-            <div class="form-field full"><label for="goal">Objetivo concreto</label><textarea id="goal" rows="3" placeholder="Ej: aprobar con buena nota, repasar rápido, practicar preguntas de desarrollo..."></textarea></div>
-            <div class="form-field full"><label for="extra">Información extra opcional</label><textarea id="extra" rows="3" placeholder="Ej: los temas 3 y 4 son los peores, quiero dejar el último día para repasar..."></textarea></div>
+  <main>
+    <section class="container">
+      <div class="planner-hero">
+        <div class="hero-kicker">Herramienta avanzada de organización</div>
+        <h1>Sube tus apuntes y crea un plan de estudio por prioridades</h1>
+        <p>Adjunta temarios, apuntes o documentos. TecnIA extrae los puntos principales, calcula tu tiempo real y organiza qué estudiar primero, qué repasar rápido y qué dejar fuera si vas justo.</p>
+        <div class="hero-actions">
+          <a href="#planificador" class="btn btn-primary">Crear mi plan</a>
+          <a href="centro-estudio-ia.html" class="btn btn-outline">Volver al Centro de Estudio</a>
+        </div>
+        <div class="planner-hero-grid">
+          <div class="hero-panel">
+            <h2>Qué hace esta herramienta</h2>
+            <p>No se limita a repartir temas. Lee el contenido disponible, detecta bloques importantes, estima carga de estudio y prioriza según el tiempo que tienes.</p>
           </div>
-          <div class="planner-actions">
-            <button type="submit" class="btn btn-primary">Crear plan de estudio</button>
-            <button type="button" class="btn btn-outline" onclick="copyPlannerPrompt()">Copiar prompt</button>
-            <button type="button" class="btn btn-outline" onclick="resetPlanner()">Limpiar</button>
+          <div class="hero-panel">
+            <h3>Modo emergencia</h3>
+            <p>Si no hay tiempo para todo, el plan no finge que sí. Se queda con lo esencial, reduce lo secundario y marca qué partes solo mirar por encima.</p>
           </div>
-        </form>
-      </div>
-      <div class="planner-result" id="plannerResult">
-        <h2>Tu plan aparecerá aquí</h2>
-        <div class="result-empty">Completa los campos y pulsa “Crear plan de estudio”. La herramienta generará una propuesta organizada por días y un prompt final para usar en tu IA favorita.</div>
+        </div>
       </div>
     </section>
 
-    <div class="study-warning"><strong>Importante:</strong> este planificador no sustituye tu criterio. Úsalo como guía para organizarte, pero adapta el plan según tu energía, tu calendario real y la dificultad de cada tema.</div>
+    <article class="container">
+      <section class="info-card">
+        <span class="article-tag">Organización + documentos + IA</span>
+        <h2>Una herramienta pensada para estudiantes con poco tiempo</h2>
+        <p class="helper">Puedes adjuntar archivos o pegar el temario manualmente. La herramienta funciona en esta misma página: extrae texto, detecta puntos principales y crea un plan realista según días, horas y dificultad.</p>
+        <div class="mini-grid">
+          <div class="mini-card"><h3>Lee tus materiales</h3><p>Admite texto pegado y archivos TXT, MD, HTML, CSV, PDF o DOCX si el navegador puede extraer texto.</p></div>
+          <div class="mini-card"><h3>Prioriza lo importante</h3><p>Clasifica temas en imprescindible, repaso rápido y baja prioridad cuando el tiempo no alcanza.</p></div>
+          <div class="mini-card"><h3>Planifica con criterio</h3><p>Reparte bloques de estudio, práctica, repaso y simulacro según tu situación real.</p></div>
+        </div>
+      </section>
 
-   <section class="related-articles">
-  <h2>Continúa con estas herramientas</h2>
-  <div class="related-links">
-    <a href="resumidor-apuntes-ia.html">Resumidor de Apuntes con IA</a>
-    <a href="generador-flashcards-ia.html">Generador de Flashcards con IA</a>
-    <a href="como-organizar-plan-estudio-ia.html">Cómo organizar un plan de estudio con inteligencia artificial</a>
-    <a href="ruta-tecnia-ia-estudiantes.html">Ruta TecnIA: aprende a usar la IA para estudiar en 7 días</a>
-    <a href="modo-examen-ia.html">Modo Examen IA</a>
-    <a href="corrector-respuestas-ia.html">Corrector de Respuestas con IA</a>
-    <a href="laboratorio-prompts-ia.html">Laboratorio de Prompts de Estudio</a>
-    <a href="test-herramienta-ia-estudiantes.html">Test: qué herramienta de IA necesitas</a>
-  </div>
-</section>
-  </article>
-</main>
-<footer>
-  <div class="container">
-    <p>&copy; 2026 TecnIA. Todos los derechos reservados.</p>
-    <p><a href="sobre-nosotros.html">Sobre nosotros</a> | <a href="contacto.html">Contacto</a> | <a href="politica-privacidad.html">Política de privacidad</a></p>
-  </div>
-</footer>
-<script>
-let lastPlannerPrompt="";
-function v(id){return document.getElementById(id).value.trim();}
-function daysUntil(dateValue){if(!dateValue)return null;const t=new Date();t.setHours(0,0,0,0);const d=new Date(dateValue);d.setHours(0,0,0,0);return Math.ceil((d-t)/(1000*60*60*24));}
-function getStrategy(level,difficulty,examType){
-  let s=[];
-  if(level==="bajo"){s.push("Empieza por comprensión básica: explicaciones sencillas, ejemplos y esquemas.");s.push("No intentes memorizar todo el primer día. Primero entiende la estructura general.");}
-  else if(level==="medio"){s.push("Combina repaso con práctica desde el principio.");s.push("Detecta qué temas sabes explicar y cuáles solo reconoces de memoria.");}
-  else{s.push("Prioriza práctica, simulacros y corrección de errores.");s.push("Usa la IA para pulir respuestas y encontrar puntos débiles.");}
-  if(difficulty==="alta")s.push("Reserva más tiempo para los temas difíciles y repásalos varias veces.");
-  if(examType==="test")s.push("Incluye preguntas tipo test cada día y revisa por qué cada respuesta es correcta o incorrecta.");
-  if(examType==="desarrollo")s.push("Practica respuestas completas, estructura de argumentos y corrección con rúbrica.");
-  if(examType==="problemas")s.push("Prioriza ejercicios, errores frecuentes y práctica paso a paso.");
-  if(examType==="oral")s.push("Practica explicaciones en voz alta y pide a la IA preguntas de seguimiento.");
-  if(examType==="mixto")s.push("Combina resumen, preguntas tipo test, respuestas cortas y simulacros.");
-  return s;
-}
-function buildDailyPlan(days,topics,hoursDay,difficulty){
-  const totalDays=Math.max(1,Math.min(days||7,14));
-  const totalTopics=Math.max(1,topics||1);
-  const topicsPerDay=Math.max(1,Math.ceil(totalTopics/Math.max(1,totalDays-2)));
-  let plan=[];
-  for(let day=1;day<=totalDays;day++){
-    let title="",tasks=[];
-    if(day===1){title="Diagnóstico y organización";tasks=["Haz una lista de todos los temas y marca cuáles llevas peor.","Pide a la IA un esquema general de la asignatura.","Ordena los temas por dificultad y urgencia.","Crea una lista de dudas iniciales."];}
-    else if(day===totalDays){title="Repaso final y simulacro";tasks=["Repasa solo esquemas, errores frecuentes y conceptos clave.","Haz un simulacro corto adaptado al tipo de examen.","Corrige tus respuestas y revisa los fallos más repetidos.","Evita estudiar contenido nuevo salvo que sea imprescindible."];}
-    else if(day===totalDays-1){title="Práctica intensiva y corrección";tasks=["Haz preguntas de examen de los temas más importantes.","Corrige tus respuestas con el Corrector de Respuestas con IA.","Repasa los temas con más errores.","Crea una lista final de puntos débiles."];}
-    else{const start=Math.min(totalTopics,(day-2)*topicsPerDay+1);const end=Math.min(totalTopics,start+topicsPerDay-1);title="Estudio activo de temas "+start+" - "+end;tasks=["Estudia los temas "+start+" a "+end+" con esquema y resumen.","Pide a la IA una explicación sencilla de los puntos que no entiendas.","Crea preguntas de práctica sobre esos temas.","Haz una mini revisión al final del día con 5 conceptos clave."];}
-    if(hoursDay&&hoursDay<=1.5)tasks.push("Como tienes poco tiempo diario, prioriza lo esencial y evita resúmenes demasiado largos.");
-    if(hoursDay&&hoursDay>=4)tasks.push("Divide el estudio en bloques de 50 minutos con descansos de 10 minutos.");
-    if(difficulty==="alta")tasks.push("Dedica al menos un bloque a los temas más difíciles aunque no toque avanzar temario.");
-    plan.push({day,title,tasks});
-  }
-  return plan;
-}
-function buildPrompt(subject,examDate,days,topics,level,hoursDay,difficulty,examType,goal,extra){
-return `Actúa como un planificador de estudio experto.
+      <section id="planificador" class="planner-layout">
+        <div class="planner-panel">
+          <h2>Genera tu plan inteligente</h2>
+          <p class="helper">Completa los datos y adjunta tus apuntes. Si no tienes archivo, pega el temario o lista de temas en el campo de texto.</p>
+          <form id="studyPlannerForm" onsubmit="event.preventDefault();generateStudyPlan();">
+            <div class="form-grid">
+              <div class="field"><label for="subject">Asignatura</label><input id="subject" type="text" placeholder="Ej: Historia Económica"></div>
+              <div class="field"><label for="examDate">Fecha del examen</label><input id="examDate" type="date"></div>
+              <div class="field"><label for="hoursDay">Horas reales al día</label><input id="hoursDay" type="number" min="0.5" max="14" step="0.5" placeholder="Ej: 2"></div>
+              <div class="field"><label for="intensity">Intensidad</label><select id="intensity"><option value="normal">Normal</option><option value="alta">Alta: puedo apretar</option><option value="emergencia">Emergencia: voy muy justo/a</option></select></div>
+              <div class="field"><label for="level">Nivel actual</label><select id="level"><option value="">Selecciona</option><option value="bajo">Bajo: voy perdido/a</option><option value="medio">Medio: entiendo algunas cosas</option><option value="alto">Alto: ya tengo base</option></select></div>
+              <div class="field"><label for="difficulty">Dificultad</label><select id="difficulty"><option value="">Selecciona</option><option value="baja">Baja</option><option value="media">Media</option><option value="alta">Alta</option></select></div>
+              <div class="field"><label for="examType">Tipo de examen</label><select id="examType"><option value="">Selecciona</option><option value="test">Tipo test</option><option value="desarrollo">Preguntas de desarrollo</option><option value="problemas">Problemas o ejercicios</option><option value="oral">Examen oral</option><option value="mixto">Mixto</option></select></div>
+              <div class="field"><label for="restPreference">Descanso</label><select id="restPreference"><option value="sin-descanso">Aprovechar todos los días</option><option value="ligero">Descansos ligeros</option><option value="ultimo-dia-repaso">Reservar último día para repaso</option></select></div>
+              <div class="field full">
+                <label>Adjuntar apuntes o temario</label>
+                <div class="file-drop" id="fileDrop">
+                  <input id="studyFiles" type="file" multiple accept=".txt,.md,.csv,.html,.htm,.pdf,.docx">
+                  <div><strong>Arrastra archivos aquí o pulsa para seleccionarlos</strong><span>TXT, MD, CSV, HTML, PDF o DOCX. Si el PDF es una imagen escaneada, puede que no se lea.</span></div>
+                </div>
+                <div id="fileList" class="file-list"></div>
+              </div>
+              <div class="field full"><label for="manualTopics">Pega aquí temario, apuntes o lista de temas</label><textarea id="manualTopics" rows="7" placeholder="Ej: Tema 1. Revolución Industrial. Tema 2. Taylorismo. Tema 3. Bretton Woods..."></textarea></div>
+              <div class="field full"><label for="extra">Información extra</label><textarea id="extra" rows="3" placeholder="Ej: el profesor insiste mucho en el tema 4, el tema 7 casi no entra, tengo solo dos tardes libres..."></textarea></div>
+            </div>
+            <div class="planner-actions">
+              <button type="submit" class="btn btn-primary">Crear plan inteligente</button>
+              <button type="button" class="btn btn-outline" onclick="copyStudyPlan()">Copiar plan</button>
+              <button type="button" class="btn btn-outline" onclick="copyPlannerPrompt()">Copiar prompt experto</button>
+              <button type="button" class="btn btn-outline" onclick="resetPlanner()">Limpiar</button>
+            </div>
+            <div id="copyNote" class="copy-note">Copiado al portapapeles.</div>
+          </form>
+        </div>
 
-Quiero que me ayudes a organizar un plan de estudio realista y eficaz.
+        <div class="planner-result" id="plannerResult">
+          <h2>Tu plan aparecerá aquí</h2>
+          <div class="result-empty">Sube archivos o pega tu temario. Después pulsa “Crear plan inteligente”. La herramienta detectará temas principales, priorizará según tiempo disponible y generará una planificación por días.</div>
+        </div>
+      </section>
 
-Datos:
-- Asignatura: ${subject}
-- Fecha del examen: ${examDate||"no indicada"}
-- Días disponibles: ${days!==null?days:"no indicado"}
-- Número de temas: ${topics}
-- Nivel actual: ${level}
-- Tiempo disponible al día: ${hoursDay} horas
-- Dificultad percibida: ${difficulty}
-- Tipo de examen: ${examType}
-- Objetivo: ${goal||"aprobar y estudiar con orden"}
-- Información extra: ${extra||"sin información adicional"}
+      <div class="warning"><strong>Privacidad y límite técnico:</strong> los archivos se leen en el navegador para generar el plan en esta página. Si el documento es un PDF escaneado como imagen, puede que no se pueda extraer texto.</div>
 
-Quiero que me prepares:
-1. Un plan día por día.
-2. Qué temas estudiar primero.
-3. Qué repasar cada día.
-4. Qué preguntas practicar.
-5. Cómo usar inteligencia artificial para estudiar sin copiar.
-6. Qué errores debo evitar.
-7. Un resumen final con prioridades.
+      <section class="info-card" style="margin-top:28px;">
+        <span class="article-tag">Después del plan</span>
+        <h2>Continúa estudiando con las herramientas adecuadas</h2>
+        <p class="helper">Cuando tengas el plan, el siguiente paso es convertir cada bloque en acciones: resumir, memorizar, practicar y corregir.</p>
+        <div class="home-grid">
+          <a href="resumidor-apuntes-ia.html" class="card tool-card"><span class="article-tag">Apuntes</span><h3>Resumidor de Apuntes con IA</h3><p>Convierte cada bloque del plan en resumen, esquema y preguntas clave.</p><span class="read-more">Resumir →</span></a>
+          <a href="generador-flashcards-ia.html" class="card tool-card"><span class="article-tag">Repaso</span><h3>Generador de Flashcards</h3><p>Crea tarjetas con los temas imprescindibles para repasar rápido.</p><span class="read-more">Crear flashcards →</span></a>
+          <a href="modo-examen-ia.html" class="card tool-card"><span class="article-tag">Práctica</span><h3>Modo Examen IA</h3><p>Entrena con preguntas y simulacros según el tipo de examen.</p><span class="read-more">Practicar →</span></a>
+          <a href="corrector-respuestas-ia.html" class="card tool-card"><span class="article-tag">Corrección</span><h3>Corrector de Respuestas</h3><p>Revisa respuestas, detecta fallos y mejora antes de examinarte.</p><span class="read-more">Corregir →</span></a>
+        </div>
+        <div class="home-mini-links">
+          <a href="centro-estudio-ia.html">Centro de Estudio</a>
+          <a href="ia-para-estudiar.html">Guía IA para estudiar</a>
+          <a href="herramientas-interactivas.html">Todas las herramientas</a>
+          <a href="como-organizar-plan-estudio-ia.html">Guía para organizar un plan</a>
+        </div>
+      </section>
+    </article>
+  </main>
 
-Hazlo con un tono claro, práctico y exigente.`;
-}
-function generateStudyPlan(){
-  const subject=v("subject")||"Asignatura sin especificar";
-  const examDate=v("examDate");
-  const topics=parseInt(v("topics"))||1;
-  const hoursDay=parseFloat(v("hoursDay"))||1;
-  const level=v("level")||"medio";
-  const difficulty=v("difficulty")||"media";
-  const examType=v("examType")||"mixto";
-  const goal=v("goal");
-  const extra=v("extra");
-  const tool=v("tool")||"ChatGPT";
-  const d=daysUntil(examDate);
-  const usableDays=d!==null&&d>0?d:7;
-  const strategy=getStrategy(level,difficulty,examType);
-  const plan=buildDailyPlan(usableDays,topics,hoursDay,difficulty);
-  lastPlannerPrompt=buildPrompt(subject,examDate,usableDays,topics,level,hoursDay,difficulty,examType,goal,extra);
-  let html=`<h2>Plan de estudio personalizado</h2>
-  <div class="result-summary"><div class="summary-card"><span>Asignatura</span><strong>${subject}</strong></div><div class="summary-card"><span>Días útiles</span><strong>${usableDays}</strong></div><div class="summary-card"><span>Temas</span><strong>${topics}</strong></div></div>
-  <h3>Estrategia recomendada</h3><ul>${strategy.map(x=>`<li>${x}</li>`).join("")}</ul>
-  <h3>Plan diario</h3><div class="plan-list">${plan.map(item=>`<div class="plan-day"><h3>Día ${item.day}: ${item.title}</h3><ul>${item.tasks.map(t=>`<li>${t}</li>`).join("")}</ul></div>`).join("")}</div>
-  <h3>Prompt para usar en ${tool}</h3><div class="prompt-output">${lastPlannerPrompt}</div>`;
-  if(d!==null&&d<=0){html+=`<div class="study-warning"><strong>Atención:</strong> la fecha del examen parece ser hoy o ya haber pasado. He generado un plan base de 7 días para que puedas adaptarlo.</div>`;}
-  document.getElementById("plannerResult").innerHTML=html;
-}
-function copyPlannerPrompt(){
-  if(!lastPlannerPrompt){alert("Primero genera un plan de estudio.");return;}
-  navigator.clipboard.writeText(lastPlannerPrompt).then(()=>alert("Prompt copiado. Ahora puedes pegarlo en tu herramienta de IA.")).catch(()=>alert("No se pudo copiar automáticamente. Selecciona el texto y cópialo manualmente."));
-}
-function resetPlanner(){
-  document.getElementById("studyPlannerForm").reset();lastPlannerPrompt="";
-  document.getElementById("plannerResult").innerHTML='<h2>Tu plan aparecerá aquí</h2><div class="result-empty">Completa los campos y pulsa “Crear plan de estudio”. La herramienta generará una propuesta organizada por días y un prompt final para usar en tu IA favorita.</div>';
-}
-</script>
+  <footer><div class="container"><p>&copy; 2026 TecnIA. Todos los derechos reservados.</p><p class="mt-2"><a href="sobre-nosotros.html">Sobre nosotros</a> | <a href="contacto.html">Contacto</a> | <a href="politica-privacidad.html">Política de privacidad</a> | <a href="noticias.html">Noticias</a></p></div></footer>
+
+  <script>
+    let extractedFiles=[], lastPlanText="", lastPlannerPrompt="";
+    const stopwords=new Set("para como pero porque sobre entre desde hasta donde cuando este esta estos estas tambien también tiene tienen puede pueden ser son con sin los las una uno unos unas del por que qué se su sus al el la de en y o u a un es no más mas muy tema unidad capitulo capítulo apartado parte pagina página clase apuntes estudio estudiar ejemplo ejemplos concepto conceptos definicion definición".split(" "));
+    document.addEventListener("DOMContentLoaded",()=>{const input=document.getElementById("studyFiles"),drop=document.getElementById("fileDrop");if(window.pdfjsLib){pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"}input.addEventListener("change",async e=>handleFiles(e.target.files));["dragenter","dragover"].forEach(n=>drop.addEventListener(n,e=>{e.preventDefault();drop.classList.add("dragover")}));["dragleave","drop"].forEach(n=>drop.addEventListener(n,e=>{e.preventDefault();drop.classList.remove("dragover")}));drop.addEventListener("drop",async e=>handleFiles(e.dataTransfer.files))});
+    function v(id){return document.getElementById(id).value.trim()}
+    function daysUntil(d){if(!d)return null;const t=new Date();t.setHours(0,0,0,0);const x=new Date(d);x.setHours(0,0,0,0);return Math.ceil((x-t)/(1000*60*60*24))}
+    async function handleFiles(files){const list=document.getElementById("fileList");for(const file of files){const item=document.createElement("div");item.className="file-item";item.innerHTML=`<span>${esc(file.name)} · ${bytes(file.size)}</span><span class="file-status">Leyendo...</span>`;list.appendChild(item);try{const text=norm(await extractText(file));extractedFiles.push({name:file.name,size:file.size,text});item.querySelector(".file-status").textContent=text.length>80?"Leído":"Poco texto"}catch(e){item.querySelector(".file-status").textContent="No leído";item.title=e.message}}}
+    async function extractText(file){const name=file.name.toLowerCase();if(name.endsWith(".pdf"))return pdfText(file);if(name.endsWith(".docx"))return docxText(file);return file.text()}
+    async function pdfText(file){if(!window.pdfjsLib)throw new Error("No se pudo cargar el lector PDF");const buffer=await file.arrayBuffer();const pdf=await pdfjsLib.getDocument({data:buffer}).promise;let out="";for(let i=1;i<=pdf.numPages;i++){const page=await pdf.getPage(i);const content=await page.getTextContent();out+="\n\nPágina "+i+"\n"+content.items.map(x=>x.str).join(" ")}return out}
+    async function docxText(file){if(!window.mammoth)throw new Error("No se pudo cargar el lector DOCX");const result=await mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()});return result.value||""}
+    function norm(t){return(t||"").replace(/\r/g,"\n").replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim()}
+    function extractTopics(text,extra){const lines=norm(text).split(/\n+/).map(x=>x.trim()).filter(Boolean),c=[],seen=new Set();lines.forEach((line,i)=>{const clean=line.replace(/\s+/g," ").trim(),words=clean.split(" ");const heading=/^(tema|unidad|cap[ií]tulo|apartado|bloque|m[oó]dulo|lecci[oó]n|parte)\s*[\dIVXLC]+/i.test(clean)||/^\d+[\.\)]\s+[A-ZÁÉÍÓÚÑ]/.test(clean)||/^[A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ\s:,-]{8,}$/.test(clean)||(words.length>=3&&words.length<=12&&clean.length<=95&&!clean.endsWith("."));if(heading){const key=clean.toLowerCase();if(!seen.has(key)){seen.add(key);c.push({title:clean.slice(0,100),source:"Encabezado detectado",score:score(clean,text,extra,i,lines.length),evidence:evidence(clean,text)})}}});if(c.length<5){keywords(text,extra).forEach(t=>{const k=t.title.toLowerCase();if(!seen.has(k)){seen.add(k);c.push(t)}})}return c.sort((a,b)=>b.score-a.score).slice(0,18)}
+    function keywords(text,extra){const words=text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9ñáéíóúü\s-]/gi," ").split(/\s+/).filter(w=>w.length>4&&!stopwords.has(w));const counts={};words.forEach(w=>counts[w]=(counts[w]||0)+1);return Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,14).map(([w,n],i)=>({title:cap(w.replace(/-/g," ")),source:"Concepto repetido",score:Math.min(95,48+n*8-i),evidence:`Aparece aproximadamente ${n} veces en el material.`}))}
+    function score(title,text,extra,i,total){const lower=title.toLowerCase(),all=text.toLowerCase(),e=(extra||"").toLowerCase();let s=45;"clave importante fundamental principal examen pregunta definición definicion causas consecuencias ventajas desventajas tipos fases modelo teoría teoria ley autor autores fecha fechas comparación comparacion fórmula formula problema ejercicio caso resumen conclusión conclusion".split(" ").forEach(x=>{if(lower.includes(x))s+=8});lower.split(/\s+/).filter(w=>w.length>4).forEach(w=>{const n=(all.match(new RegExp(reg(w),"g"))||[]).length;s+=Math.min(18,n*1.5);if(e.includes(w))s+=12});s+=total?Math.max(0,8-Math.round((i/total)*8)):0;return Math.round(Math.max(20,Math.min(100,s)))}
+    function evidence(title,text){const ws=title.toLowerCase().split(/\s+/).filter(w=>w.length>4),sent=text.split(/(?<=[.!?])\s+|\n+/).map(s=>s.trim()).filter(Boolean);for(const s of sent){const l=s.toLowerCase();if(ws.some(w=>l.includes(w)))return s.slice(0,180)}return"Detectado como bloque o punto relevante."}
+    function fallback(subject,extra){const extras=(extra||"").split(/[,;\n]/).map(x=>x.trim()).filter(x=>x.length>4).slice(0,5),base=["Visión general de la asignatura","Conceptos fundamentales","Temas de dificultad alta","Ejercicios o preguntas frecuentes","Repaso final y simulacro"];return[...extras,...base].slice(0,8).map((t,i)=>({title:t,source:"Tema base",score:90-i*7,evidence:`Bloque de planificación para ${subject}.`}))}
+    function required(n,level,diff,type){let h=1.15;if(level==="bajo")h+=.45;if(level==="alto")h-=.25;if(diff==="alta")h+=.45;if(diff==="baja")h-=.2;if(["desarrollo","problemas","mixto"].includes(type))h+=.25;return Math.max(1,n*h)}
+    function mode(total,req,intensity){const r=total/Math.max(req,1);if(intensity==="emergencia"||r<.55)return{name:"Emergencia",description:"No hay tiempo real para cubrirlo todo bien. El plan prioriza lo imprescindible y deja fuera lo menos rentable.",ratio:.52};if(r<.85)return{name:"Ajustado",description:"El tiempo es limitado. Hay que estudiar lo esencial, repasar lo secundario y practicar con intención.",ratio:.68};return{name:"Completo",description:"Hay margen para estudiar, practicar y repasar con una estructura razonable.",ratio:.82}}
+    function prioritize(topics,total,req,m){const sorted=[...topics].sort((a,b)=>b.score-a.score),ess=Math.max(2,Math.ceil(sorted.length*m.ratio)),quick=Math.max(0,Math.ceil(sorted.length*.25)),pressure=req>total?total/req:1;return sorted.map((t,i)=>{let p="baja";if(i<ess)p="imprescindible";else if(i<ess+quick)p="repaso rápido";let h=p==="imprescindible"?(m.name==="Emergencia"?.85:1.35):p==="repaso rápido"?.55:(m.name==="Completo"?.35:.15);return{...t,priority:p,estimatedHours:Number(Math.max(.15,h*pressure).toFixed(1))}})}
+    function buildSchedule(items,days,hours,type,rest,m){const ess=items.filter(t=>t.priority==="imprescindible"),quick=items.filter(t=>t.priority==="repaso rápido"),low=items.filter(t=>t.priority==="baja"),queue=[...ess,...quick],out=[];for(let d=1;d<=days;d++){const last=d===days,blocks=[];if(rest==="ultimo-dia-repaso"&&last&&days>1){blocks.push("Repaso global de temas imprescindibles.",practice(type),"Revisión de errores y lista final de dudas.");out.push({day:d,title:`Día ${d}: repaso final`,focus:"Consolidar, practicar y no saturarte.",blocks});continue}const n=Math.max(1,Math.min(4,Math.round(hours/.75)));for(let i=0;i<n;i++){const t=queue.shift();if(t)blocks.push(t.priority==="imprescindible"?`Estudia a fondo: ${t.title}. Objetivo: entender, resumir y sacar 3 posibles preguntas.`:`Repaso rápido: ${t.title}. Objetivo: idea central, definiciones y una pregunta probable.`);else blocks.push(practice(type))}if(d%2===0||last||m.name==="Emergencia")blocks.push(practice(type));if(rest==="ligero"&&d%3===0)blocks.push("Cierre ligero: 20 minutos de repaso activo y descanso.");out.push({day:d,title:`Día ${d}: ${m.name==="Emergencia"?"prioridad máxima":"avance estructurado"}`,focus:focus(d,days,m),blocks})}if(m.name!=="Completo"&&low.length)out.push({day:"Extra",title:"Si aparece tiempo extra",focus:"Solo después de dominar lo imprescindible.",blocks:low.slice(0,4).map(t=>`Mirar por encima: ${t.title}. No dedicar demasiado tiempo salvo que el profesor lo haya marcado.`)});return out}
+    function practice(t){if(t==="test")return"Práctica: 15-25 preguntas tipo test y revisión de fallos.";if(t==="desarrollo")return"Práctica: redacta una respuesta de desarrollo y corrígela.";if(t==="problemas")return"Práctica: resuelve ejercicios sin mirar y marca errores.";if(t==="oral")return"Práctica: explica en voz alta un tema durante 5 minutos.";return"Práctica mixta: preguntas cortas, una respuesta larga y revisión de errores."}
+    function focus(d,days,m){if(m.name==="Emergencia"){if(d===1)return"Detectar lo esencial y estudiar lo más rentable.";if(d===days)return"Practicar y repasar errores, no abrir temas nuevos salvo urgencia.";return"Avanzar solo en temas imprescindibles."}if(d===1)return"Ordenar el mapa general y empezar por temas clave.";if(d===days)return"Repaso final, simulacro y corrección.";if(d>days*.65)return"Practicar, repasar y corregir fallos.";return"Estudiar y consolidar bloques principales."}
+    function generateStudyPlan(){const subject=v("subject")||"la asignatura",examDate=v("examDate"),days=Math.max(1,daysUntil(examDate)||7),hours=parseFloat(v("hoursDay"))||2,total=Math.max(1,days*hours),level=v("level")||"medio",diff=v("difficulty")||"media",type=v("examType")||"mixto",intensity=v("intensity")||"normal",rest=v("restPreference")||"sin-descanso",extra=v("extra"),manual=v("manualTopics");const text=norm([manual,...extractedFiles.map(f=>`ARCHIVO: ${f.name}\n${f.text}`)].filter(Boolean).join("\n\n"));let topics=extractTopics(text,extra);if(!topics.length)topics=fallback(subject,extra);const req=required(topics.length,level,diff,type),m=mode(total,req,intensity),items=prioritize(topics,total,req,m),schedule=buildSchedule(items,days,hours,type,rest,m);render({subject,examDate,days,hours,total,level,diff,type,extra,text,req,m,items,schedule})}
+    function render(data){const{subject,examDate,days,hours,total,level,diff,type,extra,text,req,m,items,schedule}=data,ess=items.filter(t=>t.priority==="imprescindible"),quick=items.filter(t=>t.priority==="repaso rápido"),low=items.filter(t=>t.priority==="baja");const list=arr=>arr.slice(0,8).map(t=>`<li>${esc(t.title)}</li>`).join("")||"<li>No detectado.</li>";lastPlannerPrompt=promptText(data);lastPlanText=["PLAN DE ESTUDIO TECNIA",`Asignatura: ${subject}`,`Días: ${days}`,`Horas/día: ${hours}`,`Modo: ${m.name}`,"","PRIORIDADES",items.map((t,i)=>`${i+1}. ${t.title} — ${t.priority} — ${t.estimatedHours} h`).join("\n"),"","PLAN POR DÍAS",schedule.map(d=>`${d.title}\nObjetivo: ${d.focus}\n- ${d.blocks.join("\n- ")}`).join("\n\n"),"","PROMPT EXPERTO",lastPlannerPrompt].join("\n");document.getElementById("plannerResult").innerHTML=`<h2>Plan de estudio generado</h2><div class="summary"><div class="summary-card"><span>Días</span><strong>${days}</strong></div><div class="summary-card"><span>Horas</span><strong>${total.toFixed(1)} h</strong></div><div class="summary-card"><span>Modo</span><strong>${m.name}</strong></div><div class="summary-card"><span>Carga</span><strong>${req.toFixed(1)} h</strong></div></div><div class="${m.name==="Completo"?"warning":"emergency"}"><strong>Modo ${m.name}:</strong> ${m.description}</div><h2>Prioridades detectadas</h2><div class="priority-board"><div class="priority-col"><h3>Imprescindible</h3><ul>${list(ess)}</ul></div><div class="priority-col"><h3>Repaso rápido</h3><ul>${list(quick)}</ul></div><div class="priority-col"><h3>Baja prioridad</h3><ul>${list(low)}</ul></div></div><h2>Plan por días</h2><div class="plan-list">${schedule.map(d=>`<div class="plan-day"><h3>${esc(d.title)}</h3><p><strong>Objetivo:</strong> ${esc(d.focus)}</p><ul>${d.blocks.map(b=>`<li>${esc(b)}</li>`).join("")}</ul></div>`).join("")}</div><h2>Prompt experto para perfeccionarlo con IA</h2><div class="prompt-output">${esc(lastPlannerPrompt)}</div>`}
+    function promptText(data){const{subject,examDate,days,hours,total,level,diff,type,extra,text,items,m}=data;return`Actúa como un tutor experto en organización de estudio.\n\nQuiero que perfecciones este plan para: ${subject}.\n\nDatos:\n- Fecha del examen: ${examDate||"no indicada"}\n- Días disponibles: ${days}\n- Horas reales al día: ${hours}\n- Horas totales: ${total.toFixed(1)}\n- Nivel actual: ${level}\n- Dificultad: ${diff}\n- Tipo de examen: ${type}\n- Modo: ${m.name}\n- Información extra: ${extra||"sin información extra"}\n\nPrioridades detectadas:\n${items.map((t,i)=>`${i+1}. ${t.title} | ${t.priority} | ${t.estimatedHours} h | evidencia: ${t.evidence}`).join("\n")}\n\nMaterial extraído:\n${text?text.slice(0,5000):"No se ha aportado material completo."}\n\nNecesito que hagas lo siguiente:\n1. Revisa si las prioridades tienen sentido.\n2. Si el tiempo no alcanza, deja fuera lo menos rentable y dilo claramente.\n3. Organiza el plan por días y por bloques.\n4. Incluye práctica activa, repaso y corrección.\n5. Indica qué estudiar a fondo, qué mirar rápido y qué sacrificar.\n6. No hagas un plan ideal imposible.\n7. Termina con acciones para empezar hoy.`}
+    async function copyText(t){if(!t)return;await navigator.clipboard.writeText(t);const n=document.getElementById("copyNote");n.style.display="block";setTimeout(()=>n.style.display="none",2200)}
+    function copyStudyPlan(){copyText(lastPlanText||"Todavía no has generado un plan.")}
+    function copyPlannerPrompt(){copyText(lastPlannerPrompt||"Todavía no has generado un prompt.")}
+    function resetPlanner(){document.getElementById("studyPlannerForm").reset();extractedFiles=[];lastPlanText="";lastPlannerPrompt="";document.getElementById("fileList").innerHTML="";document.getElementById("plannerResult").innerHTML=`<h2>Tu plan aparecerá aquí</h2><div class="result-empty">Sube archivos o pega tu temario. Después pulsa “Crear plan inteligente”. La herramienta detectará temas principales, priorizará según tiempo disponible y generará una planificación por días.</div>`}
+    function bytes(b){if(!b)return"0 KB";const s=["Bytes","KB","MB","GB"],i=Math.floor(Math.log(b)/Math.log(1024));return`${(b/Math.pow(1024,i)).toFixed(1)} ${s[i]}`}
+    function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+    function reg(s){return s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}
+    function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+  </script>
 </body>
 </html>
