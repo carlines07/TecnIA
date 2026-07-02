@@ -1,180 +1,900 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resumidor de Apuntes con IA | Resúmenes claros para estudiar | TecnIA</title>
-<meta name="description" content="Pega o adjunta apuntes y genera un resumen claro, limpio y útil para estudiar, con conceptos bien interpretados y preguntas variadas.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Resumidor de Apuntes con IA | Resúmenes completos y claros | TecnIA</title>
+<meta name="description" content="Adjunta apuntes o documentos y genera un resumen claro, completo y organizado por apartados, conceptos clave, detalles importantes y preguntas de examen.">
+
 <link rel="canonical" href="https://tecniaia.com/resumidor-apuntes-ia.html">
+<meta property="og:title" content="Resumidor de Apuntes con IA | TecnIA">
+<meta property="og:description" content="Resume apuntes sin perder detalles importantes: ideas principales, apartados, conceptos clave, matices y preguntas.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tecniaia.com/resumidor-apuntes-ia.html">
+<meta property="og:site_name" content="TecnIA">
+
 <link rel="stylesheet" href="style.css">
+
 <style>
-.summary-hero{margin:42px auto 34px;padding:clamp(54px,8vw,96px) clamp(24px,5vw,58px);border-radius:42px;color:#fff;background:linear-gradient(135deg,#07111f,#0f172a 48%,#111827);box-shadow:0 34px 90px rgba(15,23,42,.28)}
-.summary-hero h1{color:#fff;font-size:clamp(2.6rem,6vw,5.1rem);line-height:1;letter-spacing:-2px}.summary-hero p{max-width:850px;color:#dbeafe;line-height:1.85;font-size:1.14rem}
-.layout{display:grid;grid-template-columns:minmax(360px,.9fr) minmax(0,1.1fr);gap:28px;align-items:start}.panel{background:#fff;border:1px solid #dbeafe;border-radius:30px;padding:30px;box-shadow:0 18px 45px rgba(15,23,42,.08)}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:grid;gap:8px}.full{grid-column:1/-1}label{font-weight:900;color:#0f172a}input,select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:16px;padding:13px 14px;font:inherit}.file-drop{position:relative;display:grid;place-items:center;min-height:150px;padding:22px;text-align:center;border:2px dashed #93c5fd;border-radius:24px;background:#eff6ff;cursor:pointer}.file-drop input{position:absolute;inset:0;opacity:0}.file-list{display:grid;gap:10px;margin-top:12px}.file-item{display:flex;justify-content:space-between;padding:12px;border:1px solid #e2e8f0;border-radius:16px;background:#f8fafc}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.empty{color:#64748b;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:20px;padding:22px;line-height:1.7}
+.summary-hero{
+  margin:42px auto 34px;
+  padding:clamp(54px,8vw,96px) clamp(24px,5vw,58px);
+  border-radius:42px;
+  color:#fff;
+  background:
+    radial-gradient(circle at 16% 18%,rgba(20,184,166,.34),transparent 30%),
+    radial-gradient(circle at 82% 16%,rgba(37,99,235,.36),transparent 28%),
+    linear-gradient(135deg,#07111f,#0f172a 48%,#111827);
+  box-shadow:0 34px 90px rgba(15,23,42,.28)
+}
+.summary-hero h1{
+  color:#fff;
+  font-size:clamp(2.6rem,6vw,5.1rem);
+  line-height:1;
+  letter-spacing:-2px;
+  margin:18px 0 20px
+}
+.summary-hero p{
+  max-width:880px;
+  color:#dbeafe;
+  line-height:1.85;
+  font-size:1.14rem
+}
+.summary-layout{
+  display:grid;
+  grid-template-columns:minmax(360px,.9fr) minmax(0,1.1fr);
+  gap:28px;
+  align-items:start
+}
+.panel,.info-card{
+  background:#fff;
+  border:1px solid #dbeafe;
+  border-radius:30px;
+  padding:30px;
+  box-shadow:0 18px 45px rgba(15,23,42,.08)
+}
+.panel h2,.info-card h2{margin-top:0;color:#0f172a}
+.helper{color:#64748b;line-height:1.65;margin-bottom:20px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{display:grid;gap:8px}
+.field.full{grid-column:1/-1}
+.field label{font-weight:900;color:#0f172a;font-size:.94rem}
+.field input,.field select,.field textarea{
+  width:100%;
+  border:1px solid #cbd5e1;
+  border-radius:16px;
+  padding:13px 14px;
+  font:inherit;
+  color:#0f172a;
+  background:#fff
+}
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:none;
+  border-color:#2563eb;
+  box-shadow:0 0 0 4px rgba(37,99,235,.1)
+}
+.file-drop{
+  position:relative;
+  display:grid;
+  place-items:center;
+  min-height:156px;
+  padding:24px;
+  text-align:center;
+  border:2px dashed #93c5fd;
+  border-radius:24px;
+  background:linear-gradient(135deg,#eff6ff,#f8fafc);
+  cursor:pointer;
+  transition:.2s
+}
+.file-drop:hover,.file-drop.dragover{
+  border-color:#14b8a6;
+  transform:translateY(-2px);
+  background:linear-gradient(135deg,#ecfeff,#eff6ff)
+}
+.file-drop input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.file-drop strong{display:block;color:#0f172a;font-size:1.1rem;margin-bottom:8px}
+.file-drop span{display:block;color:#475569;line-height:1.55}
+.file-list{display:grid;gap:10px;margin-top:14px}
+.file-item{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+  padding:12px 14px;
+  border-radius:16px;
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+  color:#334155;
+  font-size:.92rem
+}
+.file-status{font-weight:900;color:#1d4ed8;white-space:nowrap}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.copy-note{margin-top:12px;color:#16a34a;font-weight:900;display:none}
+.empty{color:#64748b;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:20px;padding:22px;line-height:1.7}
+.mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
+.mini-card{
+  background:#fff;
+  border:1px solid #dbeafe;
+  border-radius:24px;
+  padding:24px;
+  box-shadow:0 14px 34px rgba(15,23,42,.07)
+}
+.mini-card h3{color:#0f172a;margin:0 0 8px}
+.mini-card p{color:#334155;line-height:1.7;margin:0}
 
 #tecniaResultOverlay{display:none;position:fixed;inset:0;z-index:9999}
 #tecniaResultOverlay.active{display:block}
 .tecnia-result-backdrop{position:absolute;inset:0;background:rgba(15,23,42,.68);backdrop-filter:blur(5px)}
-.tecnia-result-window{position:relative;z-index:2;width:min(1120px,calc(100vw - 32px));max-height:calc(100vh - 36px);margin:18px auto;padding:28px;border-radius:30px;background:#fff;box-shadow:0 30px 90px rgba(15,23,42,.35);overflow:auto}
-.tecnia-result-close{position:sticky;top:0;float:right;z-index:3;border:0;border-radius:999px;background:#0f172a;color:#fff;padding:10px 15px;font-weight:900;cursor:pointer}
-.result-block{margin-top:22px;padding:22px;border-radius:24px;border:1px solid #dbeafe;background:#fff}
-.result-block h3{margin-top:0;color:#0f172a}
-.result-block p,.result-block li{color:#334155;line-height:1.72}
-.clean-card{border:1px solid #dbeafe;border-radius:24px;overflow:hidden;background:#fff;margin:16px 0;box-shadow:0 10px 30px rgba(15,23,42,.07)}
-.clean-card-head{background:#0f172a;color:#fff;padding:16px 18px;font-weight:900}
-.clean-card-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
-.clean-card-side{padding:18px}
-.clean-card-side:first-child{border-right:1px solid #e2e8f0}
-.clean-card-side span{display:block;text-transform:uppercase;font-size:.78rem;font-weight:950;color:#64748b;margin-bottom:8px}
-.clean-answer{background:#f8fafc;border-top:1px solid #e2e8f0;padding:18px;color:#334155;line-height:1.72}
-@media(max-width:760px){.clean-card-body{grid-template-columns:1fr}.clean-card-side:first-child{border-right:0;border-bottom:1px solid #e2e8f0}.tecnia-result-window{padding:20px}}
-
-@media(max-width:1080px){.layout{grid-template-columns:1fr}}@media(max-width:680px){.form-grid{grid-template-columns:1fr}.panel{padding:22px}}
+.tecnia-result-window{
+  position:relative;
+  z-index:2;
+  width:min(1160px,calc(100vw - 32px));
+  max-height:calc(100vh - 36px);
+  margin:18px auto;
+  padding:28px;
+  border-radius:32px;
+  background:#fff;
+  box-shadow:0 30px 90px rgba(15,23,42,.35);
+  overflow:auto
+}
+.tecnia-result-close{
+  position:sticky;
+  top:0;
+  float:right;
+  z-index:3;
+  border:0;
+  border-radius:999px;
+  background:#0f172a;
+  color:#fff;
+  padding:10px 15px;
+  font-weight:900;
+  cursor:pointer
+}
+.result-title{max-width:900px;margin-bottom:22px}
+.result-title h2{
+  margin:0 0 10px;
+  color:#0f172a;
+  font-size:clamp(1.9rem,4vw,3rem);
+  letter-spacing:-1px
+}
+.result-title p{color:#475569;line-height:1.7;margin:0}
+.result-dashboard{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin:24px 0
+}
+.dash-card{
+  padding:18px;
+  border-radius:20px;
+  background:linear-gradient(135deg,#eff6ff,#f8fafc);
+  border:1px solid #dbeafe
+}
+.dash-card span{
+  display:block;
+  color:#64748b;
+  font-size:.78rem;
+  font-weight:950;
+  text-transform:uppercase;
+  margin-bottom:6px
+}
+.dash-card strong{display:block;color:#0f172a;font-size:1.25rem}
+.result-block{
+  margin-top:22px;
+  padding:24px;
+  border-radius:28px;
+  border:1px solid #dbeafe;
+  background:#fff
+}
+.result-block h3{margin:0 0 14px;color:#0f172a;font-size:1.35rem}
+.result-block p,.result-block li{color:#334155;line-height:1.74}
+.result-block ul,.result-block ol{margin:0 0 0 20px}
+.summary-section{
+  padding:18px;
+  border:1px solid #e2e8f0;
+  border-radius:22px;
+  background:#f8fafc;
+  margin:14px 0
+}
+.summary-section h4{margin:0 0 10px;color:#0f172a}
+.summary-section p{margin:0;color:#334155;line-height:1.72}
+.concept-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.concept-card{
+  padding:16px;
+  border-radius:20px;
+  border:1px solid #e2e8f0;
+  background:#f8fafc
+}
+.concept-card h4{margin:0 0 8px;color:#0f172a}
+.concept-card p{margin:0;color:#334155;line-height:1.65}
+.warning-box{
+  margin-top:18px;
+  padding:18px;
+  border-radius:22px;
+  border:1px solid #fed7aa;
+  background:#fff7ed;
+  color:#7c2d12;
+  line-height:1.65
+}
+.prompt-output{
+  background:#0f172a;
+  color:#e0f2fe;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:24px;
+  padding:22px;
+  white-space:pre-wrap;
+  line-height:1.75;
+  margin-top:22px
+}
+@media(max-width:1080px){
+  .summary-layout,.mini-grid,.result-dashboard,.concept-grid{grid-template-columns:1fr}
+}
+@media(max-width:760px){
+  .summary-hero{border-radius:30px}
+  .form-grid{grid-template-columns:1fr}
+  .panel,.info-card{padding:22px}
+  .tecnia-result-window{padding:20px}
+}
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
-</head>
-<body>
-<header><div class="container navbar"><a href="index.html" class="logo">Tecn<span>IA</span></a><nav><ul class="nav-links"><li><a href="index.html">Inicio</a></li><li><a href="herramientas-interactivas.html">Herramientas</a></li><li><a href="ia-para-estudiar.html">Estudiar con IA</a></li><li><a href="articulos.html">Guías</a></li></ul></nav></div></header>
-<main class="container">
-<section class="summary-hero"><div class="hero-kicker">Resumen limpio y entendible</div><h1>Resume apuntes sin símbolos raros y sin perder conceptos</h1><p>Sube tus apuntes o pega texto. TecnIA limpia el material, interpreta los conceptos principales y genera un resumen claro, ordenado y útil para estudiar.</p><a href="#tool" class="btn btn-primary">Crear resumen</a></section>
-<section id="tool" class="layout">
-<div class="panel"><h2>Crear resumen</h2><p>Cuanto mejor esté el material, mejor saldrá el resumen. La herramienta limpiará restos de PDF y símbolos extraños.</p>
-<form id="summaryForm" onsubmit="event.preventDefault();generateSummary();"><div class="form-grid">
-<div class="field"><label for="subject">Asignatura</label><input id="subject" placeholder="Ej: Principios de Economía"></div>
-<div class="field"><label for="examType">Tipo de examen</label><select id="examType"><option value="mixto">Mixto</option><option value="test">Tipo test</option><option value="desarrollo">Desarrollo</option></select></div>
-<div class="field full"><label>Adjuntar apuntes</label><div class="file-drop"><input id="studyFiles" type="file" multiple accept=".txt,.md,.csv,.html,.htm,.pdf,.docx"><div><strong>Arrastra archivos aquí o pulsa</strong><br><span>TXT, MD, CSV, HTML, PDF o DOCX</span></div></div><div id="fileList" class="file-list"></div></div>
-<div class="field full"><label for="notes">Apuntes</label><textarea id="notes" rows="12" placeholder="Pega aquí tus apuntes..."></textarea></div>
-<div class="field full"><label for="teacherFocus">Qué ha destacado el profesor</label><textarea id="teacherFocus" rows="3" placeholder="Ej: restricciones, función de producción, trabajo y ocio..."></textarea></div>
-</div><div class="actions"><button class="btn btn-primary">Crear resumen claro</button><button type="button" class="btn btn-outline" onclick="copyOutput()">Copiar resultado</button><button type="button" class="btn btn-outline" onclick="resetTool()">Limpiar</button></div></form></div>
-<div class="panel" id="preview"><h2>Resultado</h2><div class="empty">El resumen se abrirá en una ventana grande para que se lea limpio y sin apelmazarse.</div></div>
-</section>
-</main><footer><div class="container"><p>&copy; 2026 TecnIA.</p></div></footer>
-<script>
 
-function cleanInputText(text){
-  return String(text||"")
-    .replace(/\r/g,"\n")
-    .replace(/[§¤•●▪◦]+/g," ")
-    .replace(/\bUC3M\b/gi,"")
-    .replace(/Principios de Economía\s*\d*/gi,"Principios de Economía")
-    .replace(/\s+:/g,":")
-    .replace(/([a-záéíóúñ])\s+([,.])/gi,"$1$2")
-    .replace(/\b([A-ZÁÉÍÓÚÑ])\s+([A-ZÁÉÍÓÚÑ])\s+([A-ZÁÉÍÓÚÑ])\b/g,"$1$2$3")
-    .replace(/[ \t]+/g," ")
-    .replace(/\n{3,}/g,"\n\n")
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Resumidor de Apuntes con IA","url":"https://tecniaia.com/resumidor-apuntes-ia.html","applicationCategory":"EducationalApplication","operatingSystem":"All","description":"Herramienta para adjuntar apuntes o documentos y generar resúmenes claros, completos y organizados por apartados.","inLanguage":"es","publisher":{"@type":"Organization","name":"TecnIA"}}
+</script>
+</head>
+
+<body>
+<header>
+  <div class="container navbar">
+    <a href="index.html" class="logo">Tecn<span>IA</span></a>
+    <nav aria-label="Navegación principal">
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="que-necesitas-hacer-con-ia.html">Resolver con IA</a></li>
+        <li><a href="herramientas-interactivas.html">Herramientas</a></li>
+        <li><a href="ia-para-estudiar.html">Estudiar con IA</a></li>
+        <li><a href="articulos.html">Guías</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="container">
+    <div class="summary-hero">
+      <div class="hero-kicker">Resumen completo y limpio</div>
+      <h1>Resume apuntes sin perder lo importante</h1>
+      <p>Sube un documento o pega tus apuntes. TecnIA genera un resumen organizado por apartados, con conceptos explicados, detalles importantes y preguntas de examen. No reduce 12 páginas a 6 líneas.</p>
+      <div class="hero-actions">
+        <a href="#resumidor" class="btn btn-primary">Crear resumen</a>
+        <a href="generador-flashcards-ia.html" class="btn btn-outline">Crear flashcards después</a>
+      </div>
+    </div>
+  </section>
+
+  <article class="container">
+    <section class="info-card">
+      <span class="article-tag">Completo + claro + estudiable</span>
+      <h2>Un buen resumen no debe borrar el temario</h2>
+      <p class="helper">La herramienta ahora intenta cubrir más partes del documento. Puedes elegir si quieres un resumen medio, completo o muy detallado.</p>
+      <div class="mini-grid">
+        <div class="mini-card"><h3>Habla de todo</h3><p>Resume por apartados para no dejar fuera bloques enteros.</p></div>
+        <div class="mini-card"><h3>Explica conceptos</h3><p>No solo enumera palabras: añade contexto y utilidad para examen.</p></div>
+        <div class="mini-card"><h3>Sirve para estudiar</h3><p>Incluye detalles importantes, matices y preguntas variadas.</p></div>
+      </div>
+    </section>
+
+    <section id="resumidor" class="summary-layout" style="margin-top:32px;">
+      <div class="panel">
+        <h2>Crear resumen</h2>
+        <p class="helper">Para documentos largos, usa “Completo” o “Muy detallado”. Así el resumen no se queda demasiado corto.</p>
+
+        <form id="summaryForm" onsubmit="event.preventDefault();generateSummary();">
+          <div class="form-grid">
+            <div class="field">
+              <label for="subject">Asignatura</label>
+              <input id="subject" type="text" placeholder="Ej: Derecho Civil Patrimonial">
+            </div>
+
+            <div class="field">
+              <label for="examType">Tipo de examen</label>
+              <select id="examType">
+                <option value="mixto">Mixto</option>
+                <option value="test">Tipo test</option>
+                <option value="desarrollo">Desarrollo</option>
+                <option value="oral">Oral</option>
+                <option value="casos">Casos prácticos</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="detailLevel">Nivel de detalle</label>
+              <select id="detailLevel">
+                <option value="medio">Medio</option>
+                <option value="completo" selected>Completo</option>
+                <option value="muy-detallado">Muy detallado</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="summaryStyle">Formato</label>
+              <select id="summaryStyle">
+                <option value="apartados">Por apartados</option>
+                <option value="esquema">Esquema de estudio</option>
+                <option value="examen">Orientado a examen</option>
+              </select>
+            </div>
+
+            <div class="field full">
+              <label>Adjuntar apuntes</label>
+              <div class="file-drop" id="fileDrop">
+                <input id="studyFiles" type="file" multiple accept=".txt,.md,.csv,.html,.htm,.pdf,.docx">
+                <div>
+                  <strong>Arrastra archivos aquí o pulsa para seleccionarlos</strong>
+                  <span>TXT, MD, CSV, HTML, PDF o DOCX. Si el PDF es una imagen escaneada, puede que no se lea.</span>
+                </div>
+              </div>
+              <div id="fileList" class="file-list"></div>
+            </div>
+
+            <div class="field full">
+              <label for="notes">Pega aquí apuntes o temario</label>
+              <textarea id="notes" rows="12" placeholder="Pega aquí tus apuntes, temario o resumen previo..."></textarea>
+            </div>
+
+            <div class="field full">
+              <label for="teacherFocus">Qué ha destacado el profesor</label>
+              <textarea id="teacherFocus" rows="3" placeholder="Ej: capacidad de obrar, representación, mandato, cesión de crédito, fianza solidaria..."></textarea>
+            </div>
+
+            <div class="field full">
+              <label for="mustKeep">Cosas que no quieres que desaparezcan del resumen</label>
+              <textarea id="mustKeep" rows="3" placeholder="Ej: artículos, definiciones, excepciones, autores, fechas, clasificaciones, ejemplos..."></textarea>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn btn-primary">Crear resumen completo</button>
+            <button type="button" class="btn btn-outline" onclick="copyOutput()">Copiar resumen</button>
+            <button type="button" class="btn btn-outline" onclick="copyPrompt()">Copiar prompt experto</button>
+            <button type="button" class="btn btn-outline" onclick="resetTool()">Limpiar</button>
+          </div>
+          <div id="copyNote" class="copy-note">Copiado al portapapeles.</div>
+        </form>
+      </div>
+
+      <div class="panel" id="preview">
+        <h2>Resultado</h2>
+        <div class="empty">El resumen se abrirá en una ventana grande. Para apuntes largos, elige “Completo” o “Muy detallado” para cubrir más contenido.</div>
+      </div>
+    </section>
+  </article>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 TecnIA. Todos los derechos reservados.</p>
+    <p class="mt-2"><a href="sobre-nosotros.html">Sobre nosotros</a> | <a href="contacto.html">Contacto</a> | <a href="politica-privacidad.html">Política de privacidad</a> | <a href="noticias.html">Noticias</a></p>
+  </div>
+</footer>
+
+<script>
+let extractedFiles = [];
+let lastOutput = "";
+let lastPrompt = "";
+
+const stopwords = new Set("para como pero porque sobre entre desde hasta donde cuando este esta estos estas tambien también tiene tienen puede pueden ser son con sin los las una uno unos unas del por que qué se su sus al el la de en y o u a un es no más mas muy tema unidad capitulo capítulo apartado parte pagina página clase apuntes estudio estudiar ejemplo ejemplos concepto conceptos definicion definición".split(" "));
+
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.getElementById("studyFiles");
+  const drop = document.getElementById("fileDrop");
+
+  if (window.pdfjsLib) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+  }
+
+  input.addEventListener("change", async e => handleFiles(e.target.files));
+
+  ["dragenter","dragover"].forEach(name => drop.addEventListener(name, e => {
+    e.preventDefault();
+    drop.classList.add("dragover");
+  }));
+
+  ["dragleave","drop"].forEach(name => drop.addEventListener(name, e => {
+    e.preventDefault();
+    drop.classList.remove("dragover");
+  }));
+
+  drop.addEventListener("drop", async e => handleFiles(e.dataTransfer.files));
+});
+
+function v(id) {
+  return document.getElementById(id).value.trim();
+}
+
+function cleanInputText(text) {
+  return String(text || "")
+    .replace(/\r/g, "\n")
+    .replace(/[§¤•●▪◦]+/g, " ")
+    .replace(/\s+:/g, ":")
+    .replace(/([a-záéíóúñ])\s+([,.])/gi, "$1$2")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
     .trim();
 }
-function cleanSentence(sentence){
+
+function cleanSentence(sentence) {
   return cleanInputText(sentence)
-    .replace(/^\W+/,"")
-    .replace(/\s+/g," ")
-    .replace(/\bPagina\b/gi,"Página")
+    .replace(/^\W+/, "")
+    .replace(/\s+/g, " ")
+    .replace(/\bPagina\b/gi, "Página")
     .trim();
 }
-function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
-function countWords(t){return(String(t||"").trim().match(/\S+/g)||[]).length}
-function splitSentences(text){
+
+async function handleFiles(files) {
+  const list = document.getElementById("fileList");
+  const notes = document.getElementById("notes");
+
+  for (const file of files) {
+    const item = document.createElement("div");
+    item.className = "file-item";
+    item.innerHTML = `<span>${esc(file.name)} · ${bytes(file.size)}</span><span class="file-status">Leyendo...</span>`;
+    list.appendChild(item);
+
+    try {
+      const text = cleanInputText(await extractText(file));
+      extractedFiles.push({ name: file.name, size: file.size, text });
+      notes.value = cleanInputText(notes.value + "\n\n" + text);
+      item.querySelector(".file-status").textContent = text.length > 80 ? "Leído" : "Poco texto";
+    } catch (error) {
+      item.querySelector(".file-status").textContent = "No leído";
+      item.title = error.message;
+    }
+  }
+}
+
+async function extractText(file) {
+  const name = file.name.toLowerCase();
+  if (name.endsWith(".pdf")) return pdfText(file);
+  if (name.endsWith(".docx")) return docxText(file);
+  return file.text();
+}
+
+async function pdfText(file) {
+  if (!window.pdfjsLib) throw new Error("No se pudo cargar PDF");
+  const pdf = await pdfjsLib.getDocument({ data: await file.arrayBuffer() }).promise;
+  let out = "";
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    out += "\n\nPágina " + i + "\n" + content.items.map(x => x.str).join(" ");
+  }
+  return out;
+}
+
+async function docxText(file) {
+  if (!window.mammoth) throw new Error("No se pudo cargar DOCX");
+  const result = await mammoth.extractRawText({ arrayBuffer: await file.arrayBuffer() });
+  return result.value || "";
+}
+
+function splitSentences(text) {
   return cleanInputText(text)
     .split(/(?<=[.!?])\s+|\n+/)
     .map(cleanSentence)
-    .filter(s=>s.length>55 && s.length<520 && !/^(introducci[oó]n|p[aá]gina|tema|unidad)$/i.test(s));
+    .filter(s => s.length > 45 && s.length < 620 && !/^(introducci[oó]n|p[aá]gina|tema|unidad)$/i.test(s));
 }
-function normalizeKey(t){
-  return String(t||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9ñ\s-]/g," ").replace(/\s+/g," ").trim();
-}
-function getCandidateConcepts(text, focus=""){
-  const clean=cleanInputText(text);
-  const sentences=splitSentences(clean);
-  const candidates=[];
-  const add=(term,evidence,score=1)=>{
-    term=cleanSentence(term).replace(/[:.;,]+$/,"").trim();
-    if(term.length<7 || term.length>90) return;
-    if(/^(que|para|como|porque|donde|cuando|pagina|tema|unidad|introduccion)$/i.test(term)) return;
-    const key=normalizeKey(term);
-    if(key.split(" ").length>7) return;
-    candidates.push({term, key, evidence:cleanSentence(evidence||""), score});
-  };
 
-  clean.split(/\n+/).forEach(line=>{
-    const l=cleanSentence(line);
-    const m=l.match(/^([A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚÑáéíóúñüÜ\s-]{5,70})\s*:\s*(.+)$/);
-    if(m) add(m[1], m[2], 10);
-  });
+function splitBlocks(text) {
+  const clean = cleanInputText(text);
+  const lines = clean.split(/\n+/).map(x => x.trim()).filter(Boolean);
+  const blocks = [];
+  let current = { title: "Ideas generales del documento", content: [] };
 
-  const phrasePatterns=[
-    /\b(funci[oó]n de producci[oó]n)\b/gi,
-    /\b(restricci[oó]n presupuestaria)\b/gi,
-    /\b(conjunto factible)\b/gi,
-    /\b(preferencias individuales)\b/gi,
-    /\b(mapa de indiferencia)\b/gi,
-    /\b(curvas? de indiferencia)\b/gi,
-    /\b(trabajo y ocio)\b/gi,
-    /\b(cost[e|e] de oportunidad)\b/gi,
-    /\b(equilibrio entre trabajo y ocio)\b/gi,
-    /\b(aumento del nivel de vida)\b/gi,
-    /\b(distribuci[oó]n de ganancias)\b/gi,
-    /\b(conflicto de intereses)\b/gi,
-    /\b(decisi[oó]n individual)\b/gi,
-    /\b(consumo y ocio)\b/gi
-  ];
-  phrasePatterns.forEach(re=>{
-    let m; while((m=re.exec(clean))!==null){
-      const ev=sentences.find(s=>normalizeKey(s).includes(normalizeKey(m[1]))) || "";
-      add(m[1],ev,9);
+  function isHeading(line) {
+    const short = line.length < 120 && line.split(/\s+/).length <= 16;
+    return /^(tema|unidad|cap[ií]tulo|apartado|bloque|lecci[oó]n|parte)\s*[\dIVXLC]+/i.test(line) ||
+           /^\d+[\.\)]\s+[A-ZÁÉÍÓÚÑ]/.test(line) ||
+           (/^[A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ\s:,-]{8,}$/.test(line) && short) ||
+           (/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚÑáéíóúñüÜ\s-]{5,80}:$/.test(line) && short);
+  }
+
+  lines.forEach(line => {
+    const cleaned = cleanSentence(line.replace(/:$/, ""));
+    if (isHeading(cleaned)) {
+      if (current.content.join(" ").length > 120) blocks.push(current);
+      current = { title: cleaned, content: [] };
+    } else {
+      current.content.push(cleaned);
     }
   });
 
-  sentences.forEach(s=>{
-    const beforeColon=s.match(/^(.{7,70}):/);
-    if(beforeColon) add(beforeColon[1],s,7);
-    const quoted=[...s.matchAll(/"([^"]{6,70})"/g)];
-    quoted.forEach(q=>add(q[1],s,5));
+  if (current.content.join(" ").length > 80) blocks.push(current);
+
+  if (blocks.length < 3) {
+    const sentences = splitSentences(clean);
+    const chunkSize = Math.max(4, Math.ceil(sentences.length / 8));
+    return chunk(sentences, chunkSize).map((group, i) => ({
+      title: "Bloque " + (i + 1),
+      content: group
+    }));
+  }
+
+  return blocks.slice(0, 14);
+}
+
+function summarizeBlock(block, detailLevel) {
+  const sentences = block.content.flatMap(x => splitSentences(x));
+  const selectedCount = detailLevel === "muy-detallado" ? 6 : detailLevel === "completo" ? 4 : 3;
+  const selected = rankSentences(sentences).slice(0, selectedCount);
+  const fallback = block.content.join(" ").slice(0, detailLevel === "muy-detallado" ? 900 : 620);
+
+  return selected.length ? selected : [fallback];
+}
+
+function rankSentences(sentences) {
+  return [...sentences]
+    .map(sentence => {
+      let score = 0;
+      if (/\b(es|son|consiste|comprende|supone|implica|permite|puede|debe|derecho|obligaci[oó]n|acreedor|deudor|mandato|representaci[oó]n|capacidad|cesi[oó]n|fianza|contrato|art[ií]culo)\b/i.test(sentence)) score += 8;
+      if (/\d{1,4}|art[ií]culo|ley|c[oó]digo|excepci[oó]n|requisito|efecto|consecuencia|diferencia/i.test(sentence)) score += 7;
+      if (sentence.length > 90 && sentence.length < 360) score += 4;
+      if (/por tanto|adem[aá]s|sin embargo|aunque|frente|respecto|en cambio|salvo/i.test(sentence)) score += 3;
+      return { sentence, score };
+    })
+    .sort((a,b) => b.score - a.score)
+    .map(x => x.sentence);
+}
+
+function getConcepts(text, focus, mustKeep) {
+  const clean = cleanInputText(text);
+  const sentences = splitSentences(clean);
+  const candidates = [];
+  const forced = (focus + "\n" + mustKeep).split(/[,;\n]/).map(x => x.trim()).filter(x => x.length > 4);
+
+  function add(term, evidence, score) {
+    term = cleanSentence(term).replace(/[:.;,]+$/,"").trim();
+    if (!term || term.length < 5 || term.length > 90) return;
+    const key = normalize(term);
+    if (key.split(" ").length > 8) return;
+    candidates.push({ term: smartCap(term), key, evidence: evidence || "", score });
+  }
+
+  forced.forEach(term => {
+    const evidence = sentences.find(s => normalize(s).includes(normalize(term))) || "";
+    add(term, evidence, 18);
   });
 
-  const counts={};
-  candidates.forEach(c=>{
-    if(!counts[c.key]) counts[c.key]={...c, score:0};
-    counts[c.key].score+=c.score;
-    if(c.evidence.length>counts[c.key].evidence.length) counts[c.key].evidence=c.evidence;
+  clean.split(/\n+/).forEach(line => {
+    const l = cleanSentence(line);
+    const m = l.match(/^([A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚÑáéíóúñüÜ\s-]{5,70})\s*:\s*(.+)$/);
+    if (m) add(m[1], m[2], 12);
   });
 
-  return Object.values(counts)
-    .sort((a,b)=>b.score-a.score)
-    .slice(0,22)
-    .map(c=>({term:smartCap(c.term), key:c.key, evidence:c.evidence || sentences.find(s=>normalizeKey(s).includes(c.key)) || ""}));
+  const patterns = [
+    "capacidad de obrar",
+    "capacidad jurídica",
+    "representación",
+    "mandato general",
+    "mandato especial",
+    "cesión de crédito",
+    "acreedor cedente",
+    "cesionario",
+    "deudor cedido",
+    "fianza solidaria",
+    "principio de integridad en el pago",
+    "menores emancipados",
+    "mayoría de edad",
+    "derecho civil patrimonial",
+    "personalidad jurídica",
+    "negocio jurídico",
+    "contrato",
+    "obligación",
+    "deudor",
+    "acreedor"
+  ];
+
+  patterns.forEach(pattern => {
+    const re = new RegExp("\\b" + reg(pattern) + "\\b", "i");
+    if (re.test(clean)) {
+      const evidence = sentences.find(s => re.test(s)) || "";
+      add(pattern, evidence, 14);
+    }
+  });
+
+  const words = normalize(clean).split(/\s+/).filter(w => w.length > 5 && !stopwords.has(w));
+  const counts = {};
+  words.forEach(w => counts[w] = (counts[w] || 0) + 1);
+
+  Object.entries(counts)
+    .sort((a,b) => b[1] - a[1])
+    .slice(0, 18)
+    .forEach(([word, count]) => {
+      const evidence = sentences.find(s => normalize(s).includes(word)) || "";
+      add(word, evidence, Math.min(10, count));
+    });
+
+  const grouped = {};
+  candidates.forEach(c => {
+    if (!grouped[c.key]) grouped[c.key] = { ...c, score: 0 };
+    grouped[c.key].score += c.score;
+    if (c.evidence.length > grouped[c.key].evidence.length) grouped[c.key].evidence = c.evidence;
+  });
+
+  return Object.values(grouped).sort((a,b) => b.score - a.score).slice(0, 18);
 }
-function smartCap(s){
-  s=String(s||"").trim();
-  if(!s) return s;
-  return s.charAt(0).toUpperCase()+s.slice(1);
+
+function explainConcept(concept) {
+  const term = concept.term.toLowerCase();
+  const ev = concept.evidence || "";
+
+  if (/capacidad de obrar/.test(term)) {
+    return "Es la aptitud para realizar actos o negocios jurídicos válidos por uno mismo. Es importante distinguirla de la personalidad o capacidad jurídica, porque no todas las personas pueden actuar jurídicamente con la misma autonomía.";
+  }
+  if (/capacidad jur[ií]dica|personalidad jur[ií]dica/.test(term)) {
+    return "Es la aptitud para ser titular de derechos y obligaciones. Sirve como punto de partida: una persona puede ser sujeto de derecho aunque no siempre pueda actuar por sí misma.";
+  }
+  if (/representaci[oó]n/.test(term)) {
+    return "Permite que una persona actúe jurídicamente por otra. Es clave para entender qué efectos produce el acto realizado por el representante en la esfera jurídica del representado.";
+  }
+  if (/mandato/.test(term)) {
+    return "Es una relación por la que una persona encarga a otra la realización de actos o negocios. Conviene distinguir mandato general y especial según la amplitud de los actos encomendados.";
+  }
+  if (/cesi[oó]n de cr[eé]dito/.test(term)) {
+    return "Es el negocio por el que el acreedor transmite a un tercero su derecho de crédito frente al deudor. Importa identificar cedente, cesionario y deudor cedido.";
+  }
+  if (/fianza/.test(term)) {
+    return "Es una garantía personal. Si es solidaria, el acreedor puede dirigirse contra el fiador sin tener que agotar antes necesariamente la vía contra el deudor principal.";
+  }
+  if (/principio de integridad/.test(term)) {
+    return "Implica que el acreedor no está obligado a aceptar un cumplimiento parcial si no se ha pactado o permitido otra cosa. Es una regla importante sobre cómo debe realizarse el pago.";
+  }
+
+  return ev
+    ? ev.slice(0, 360)
+    : "Concepto relevante del tema que conviene definir, contextualizar y relacionar con otros apartados del documento.";
 }
-function makeOverlay(){
-  let overlay=document.getElementById("tecniaResultOverlay");
-  if(overlay) return overlay;
-  overlay=document.createElement("div");
-  overlay.id="tecniaResultOverlay";
-  overlay.innerHTML=`<div class="tecnia-result-backdrop" onclick="closeTecnIAResult()"></div><div class="tecnia-result-window"><button class="tecnia-result-close" onclick="closeTecnIAResult()">Cerrar ×</button><div id="tecniaResultContent"></div></div>`;
-  document.body.appendChild(overlay);
-  return overlay;
+
+function extractImportantDetails(text, mustKeep) {
+  const sentences = splitSentences(text);
+  const must = normalize(mustKeep);
+  return rankSentences(sentences)
+    .filter(s => /\d{1,4}|art[ií]culo|ley|c[oó]digo|excepci[oó]n|requisito|efecto|consecuencia|diferencia|salvo|puede|debe|no est[aá] obligado/i.test(s) || (must && must.split(/\s+/).some(w => w.length > 4 && normalize(s).includes(w))))
+    .slice(0, 14);
 }
-function openResult(html){
-  const overlay=makeOverlay();
-  document.getElementById("tecniaResultContent").innerHTML=html;
+
+function buildQuestions(concepts, blocks, examType) {
+  const questions = [];
+  concepts.slice(0, 10).forEach((c, i) => {
+    if (i % 4 === 0) questions.push(`Define "${c.term}" y explica por qué es importante en este tema.`);
+    else if (i % 4 === 1) questions.push(`Diferencia "${c.term}" de otro concepto cercano del documento.`);
+    else if (i % 4 === 2) questions.push(`Pon un ejemplo sencillo donde aparezca "${c.term}".`);
+    else questions.push(`¿Qué error cometería un alumno si memorizara "${c.term}" sin entenderlo?`);
+  });
+
+  blocks.slice(0, 5).forEach(block => {
+    questions.push(`Pregunta de apartado: resume las ideas esenciales de "${block.title}" y señala un matiz que podría caer en examen.`);
+  });
+
+  if (examType === "test") {
+    questions.unshift("Tipo test: identifica definiciones, excepciones, sujetos, efectos y artículos que puedan confundirse.");
+  }
+
+  return questions.slice(0, 16);
+}
+
+function generateSummary() {
+  const subject = v("subject") || "la asignatura";
+  const examType = v("examType") || "mixto";
+  const detailLevel = v("detailLevel") || "completo";
+  const summaryStyle = v("summaryStyle") || "apartados";
+  const focus = v("teacherFocus");
+  const mustKeep = v("mustKeep");
+  const text = cleanInputText(v("notes"));
+
+  if (!text || countWords(text) < 60) {
+    openResult("<h2>Falta texto</h2><p>Añade apuntes más completos para poder hacer un resumen útil.</p>");
+    return;
+  }
+
+  const blocks = splitBlocks(text);
+  const concepts = getConcepts(text, focus, mustKeep);
+  const details = extractImportantDetails(text, mustKeep);
+  const questions = buildQuestions(concepts, blocks, examType);
+  const wordCount = countWords(text);
+
+  const maxBlocks = detailLevel === "muy-detallado" ? 14 : detailLevel === "completo" ? 10 : 7;
+  const visibleBlocks = blocks.slice(0, maxBlocks);
+
+  lastPrompt = buildPrompt({ subject, examType, detailLevel, focus, mustKeep, text });
+  lastOutput = buildPlainOutput({ subject, visibleBlocks, concepts, details, questions, detailLevel });
+
+  const html = `
+    <button class="tecnia-result-close" onclick="closeTecnIAResult()">Cerrar ×</button>
+
+    <div class="result-title">
+      <h2>Resumen ${detailLevel === "muy-detallado" ? "muy detallado" : detailLevel} de ${esc(subject)}</h2>
+      <p>Este resumen intenta cubrir el documento de forma amplia, sin reducirlo a unas pocas líneas. Úsalo como base de estudio y después conviértelo en flashcards o preguntas.</p>
+    </div>
+
+    <div class="result-dashboard">
+      <div class="dash-card"><span>Palabras leídas</span><strong>${wordCount}</strong></div>
+      <div class="dash-card"><span>Apartados</span><strong>${visibleBlocks.length}</strong></div>
+      <div class="dash-card"><span>Conceptos</span><strong>${concepts.length}</strong></div>
+      <div class="dash-card"><span>Detalle</span><strong>${esc(detailLevel)}</strong></div>
+    </div>
+
+    <div class="result-block">
+      <h3>1. Resumen por apartados</h3>
+      ${visibleBlocks.map(block => `
+        <div class="summary-section">
+          <h4>${esc(block.title)}</h4>
+          ${summarizeBlock(block, detailLevel).map(s => `<p>• ${esc(s)}</p>`).join("")}
+        </div>
+      `).join("")}
+    </div>
+
+    <div class="result-block">
+      <h3>2. Conceptos clave explicados</h3>
+      <div class="concept-grid">
+        ${concepts.slice(0, detailLevel === "muy-detallado" ? 16 : 12).map(c => `
+          <div class="concept-card">
+            <h4>${esc(c.term)}</h4>
+            <p>${esc(explainConcept(c))}</p>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+
+    <div class="result-block">
+      <h3>3. Detalles que no conviene perder</h3>
+      <ul>${details.length ? details.map(d => `<li>${esc(d)}</li>`).join("") : "<li>No se han detectado detalles concretos suficientes. Añade en el campo anterior qué datos no quieres perder.</li>"}</ul>
+    </div>
+
+    <div class="result-block">
+      <h3>4. Preguntas para comprobar si lo dominas</h3>
+      <ul>${questions.map(q => `<li>${esc(q)}</li>`).join("")}</ul>
+    </div>
+
+    <div class="warning-box"><strong>Consejo:</strong> si el documento es muy largo, el resumen debe seguir siendo largo. Para estudiar bien, no busques el resumen más corto, sino el que conserva estructura, conceptos y matices.</div>
+
+    <div class="prompt-output"><strong>Prompt experto para ampliar o afinar el resumen con IA:</strong>\n\n${esc(lastPrompt)}</div>
+  `;
+
+  openResult(html);
+
+  document.getElementById("preview").innerHTML = `<h2>Resumen generado</h2><div class="empty">El resumen se ha abierto en una ventana grande. Puedes copiarlo o volver a generarlo con más o menos detalle.</div>`;
+}
+
+function buildPlainOutput({ subject, visibleBlocks, concepts, details, questions, detailLevel }) {
+  return [
+    `RESUMEN ${detailLevel.toUpperCase()} - ${subject}`,
+    "",
+    "1. RESUMEN POR APARTADOS",
+    ...visibleBlocks.flatMap(block => [
+      "",
+      block.title,
+      ...summarizeBlock(block, detailLevel).map(s => "- " + s)
+    ]),
+    "",
+    "2. CONCEPTOS CLAVE",
+    ...concepts.map(c => `- ${c.term}: ${explainConcept(c)}`),
+    "",
+    "3. DETALLES IMPORTANTES",
+    ...details.map(d => "- " + d),
+    "",
+    "4. PREGUNTAS",
+    ...questions.map(q => "- " + q)
+  ].join("\n");
+}
+
+function buildPrompt({ subject, examType, detailLevel, focus, mustKeep, text }) {
+  return `Actúa como un profesor experto y resume estos apuntes de ${subject}.
+
+Tipo de examen: ${examType}
+Nivel de detalle deseado: ${detailLevel}
+Puntos destacados por el profesor: ${focus || "no indicado"}
+Cosas que no deben desaparecer: ${mustKeep || "no indicado"}
+
+Instrucciones:
+1. No hagas un resumen excesivamente breve.
+2. Cubre todos los apartados importantes del documento.
+3. Mantén definiciones, excepciones, sujetos, efectos, artículos y clasificaciones si aparecen.
+4. Explica los conceptos con claridad.
+5. No copies todo literalmente, pero tampoco elimines detalles importantes.
+6. Organiza el resultado en:
+   - resumen por apartados,
+   - conceptos clave explicados,
+   - detalles importantes,
+   - posibles preguntas de examen.
+7. Si el documento es largo, el resumen también debe ser suficientemente completo.
+
+Apuntes:
+${text.slice(0, 9000)}`;
+}
+
+function openResult(html) {
+  let overlay = document.getElementById("tecniaResultOverlay");
+  if (!overlay) {
+    overlay = document.createElement("div");
+    overlay.id = "tecniaResultOverlay";
+    overlay.innerHTML = `<div class="tecnia-result-backdrop" onclick="closeTecnIAResult()"></div><div class="tecnia-result-window" id="tecniaResultContent"></div>`;
+    document.body.appendChild(overlay);
+  }
+  document.getElementById("tecniaResultContent").innerHTML = html;
   overlay.classList.add("active");
-  document.body.style.overflow="hidden";
-}
-function closeTecnIAResult(){
-  const overlay=document.getElementById("tecniaResultOverlay");
-  if(overlay) overlay.classList.remove("active");
-  document.body.style.overflow="";
+  document.body.style.overflow = "hidden";
 }
 
-let lastOutput="";
-document.addEventListener("DOMContentLoaded",()=>{if(window.pdfjsLib)pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";document.getElementById("studyFiles").addEventListener("change",e=>handleFiles(e.target.files));});
-async function handleFiles(files){const list=document.getElementById("fileList"),notes=document.getElementById("notes");for(const file of files){const item=document.createElement("div");item.className="file-item";item.innerHTML=`<span>${esc(file.name)}</span><strong>Leyendo...</strong>`;list.appendChild(item);try{const text=cleanInputText(await extractText(file));notes.value=cleanInputText(notes.value+"\n\n"+text);item.querySelector("strong").textContent="Leído"}catch(e){item.querySelector("strong").textContent="No leído"}}}
-async function extractText(file){const n=file.name.toLowerCase();if(n.endsWith(".pdf")){const pdf=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;let out="";for(let i=1;i<=pdf.numPages;i++){const p=await pdf.getPage(i),c=await p.getTextContent();out+="\n"+c.items.map(x=>x.str).join(" ")}return out}if(n.endsWith(".docx"))return (await mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()})).value||"";return file.text()}
-function generateSummary(){const subject=document.getElementById("subject").value||"la asignatura";const text=cleanInputText(document.getElementById("notes").value);const focus=document.getElementById("teacherFocus").value;if(countWords(text)<40){openResult("<h2>Falta texto</h2><p>Añade apuntes más completos.</p>");return}const sentences=splitSentences(text);const concepts=getCandidateConcepts(text,focus);const important=sentences.filter(s=>/trabajo|ocio|producci[oó]n|restricci[oó]n|preferencias|equilibrio|empresa|ganancias|coste|consumo|salario|PIB|horas/i.test(s)).slice(0,12);const clearPoints=important.length?important:sentences.slice(0,10);const questions=buildQuestions(concepts,clearPoints,subject);lastOutput=["RESUMEN CLARO",...clearPoints.map(s=>"- "+s),"","CONCEPTOS CLAVE",...concepts.slice(0,10).map(c=>"- "+c.term+": "+explainConcept(c)),"","PREGUNTAS",...questions.map(q=>"- "+q)].join("\n");openResult(`<h2>Resumen claro de ${esc(subject)}</h2><div class="result-block"><h3>Ideas principales</h3><ul>${clearPoints.map(s=>`<li>${esc(s)}</li>`).join("")}</ul></div><div class="result-block"><h3>Conceptos clave explicados</h3><ul>${concepts.slice(0,10).map(c=>`<li><strong>${esc(c.term)}:</strong> ${esc(explainConcept(c))}</li>`).join("")}</ul></div><div class="result-block"><h3>Preguntas variadas para comprobar si lo dominas</h3><ul>${questions.map(q=>`<li>${esc(q)}</li>`).join("")}</ul></div>`)}
-function explainConcept(c){const ev=c.evidence||"";if(/funci[oó]n de producci[oó]n/i.test(c.term))return "Explica cómo se transforma un input, como el tiempo de estudio o trabajo, en un output. Sirve para analizar decisiones con recursos limitados.";if(/restricci[oó]n presupuestaria/i.test(c.term))return "Marca las combinaciones posibles dadas unas horas, un salario o una renta. Ayuda a ver qué opciones son factibles y cuáles no.";if(/trabajo y ocio/i.test(c.term))return "Relaciona la decisión de dedicar tiempo a trabajar o descansar. Es clave para entender cómo cambia el comportamiento cuando sube el nivel de vida.";return ev?ev.slice(0,260):"Concepto importante del tema que conviene definir, contextualizar y relacionar con otros conceptos."}
-function buildQuestions(concepts,points,subject){const qs=[];concepts.slice(0,8).forEach((c,i)=>{if(i%4===0)qs.push(`Explica con tus palabras qué significa "${c.term}" y para qué sirve dentro de ${subject}.`);else if(i%4===1)qs.push(`Compara "${c.term}" con otro concepto del tema y señala una diferencia importante.`);else if(i%4===2)qs.push(`Plantea un ejemplo sencillo donde aparezca "${c.term}".`);else qs.push(`¿Qué error cometería un estudiante si memorizara "${c.term}" sin entenderlo?`)});points.slice(0,4).forEach(p=>qs.push("Pregunta concreta: ¿qué idea examinable aparece en esta frase y cómo la explicarías? "+p.slice(0,160)));return qs.slice(0,12)}
-function copyOutput(){navigator.clipboard.writeText(lastOutput||"")}function resetTool(){document.getElementById("summaryForm").reset();document.getElementById("fileList").innerHTML=""}
-</script><script src="tecnia-memory.js"></script></body></html>
+function closeTecnIAResult() {
+  const overlay = document.getElementById("tecniaResultOverlay");
+  if (overlay) overlay.classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+async function copyText(text) {
+  if (!text) return;
+  await navigator.clipboard.writeText(text);
+  const note = document.getElementById("copyNote");
+  note.style.display = "block";
+  setTimeout(() => note.style.display = "none", 2200);
+}
+
+function copyOutput() {
+  copyText(lastOutput || "Todavía no has generado un resumen.");
+}
+
+function copyPrompt() {
+  copyText(lastPrompt || "Todavía no has generado un prompt.");
+}
+
+function resetTool() {
+  document.getElementById("summaryForm").reset();
+  document.getElementById("fileList").innerHTML = "";
+  extractedFiles = [];
+  lastOutput = "";
+  lastPrompt = "";
+  document.getElementById("preview").innerHTML = `<h2>Resultado</h2><div class="empty">El resumen se abrirá en una ventana grande. Para apuntes largos, elige “Completo” o “Muy detallado”.</div>`;
+}
+
+function chunk(array, size) {
+  const out = [];
+  for (let i = 0; i < array.length; i += size) out.push(array.slice(i, i + size));
+  return out;
+}
+
+function countWords(text) {
+  return (String(text || "").trim().match(/\S+/g) || []).length;
+}
+
+function normalize(text) {
+  return String(text || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9ñáéíóúü\s-]/gi, " ").replace(/\s+/g, " ").trim();
+}
+
+function smartCap(text) {
+  text = String(text || "").trim();
+  return text ? text.charAt(0).toUpperCase() + text.slice(1) : "";
+}
+
+function bytes(bytesValue) {
+  if (!bytesValue) return "0 KB";
+  const sizes = ["Bytes", "KB", "MB", "GB"];
+  const index = Math.floor(Math.log(bytesValue) / Math.log(1024));
+  return `${(bytesValue / Math.pow(1024, index)).toFixed(1)} ${sizes[index]}`;
+}
+
+function esc(text) {
+  return String(text || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
+
+function reg(text) {
+  return String(text || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+</script>
+
+<script src="tecnia-memory.js"></script>
+</body>
+</html>
