@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generador de Flashcards con IA | Tarjetas completas y explicadas | TecnIA</title>
-<meta name="description" content="Genera flashcards completas a partir de apuntes o resúmenes: pregunta, respuesta directa, explicación elaborada, ejemplo, error típico y conexión entre conceptos.">
+<title>Generador de Flashcards con IA | Tarjetas de precisión para sacar 10 | TecnIA</title>
+<meta name="description" content="Genera flashcards de precisión a partir de apuntes o resúmenes: respuesta directa, explicación elaborada, datos que no pueden faltar, ejemplo, error típico y conexión entre conceptos.">
 
 <link rel="canonical" href="https://tecniaia.com/generador-flashcards-ia.html">
 <meta property="og:title" content="Generador de Flashcards con IA | TecnIA">
@@ -250,6 +250,22 @@
   color:#0f172a;
   margin-bottom:6px
 }
+
+.critical-box{
+  margin-top:16px;
+  padding:18px;
+  border-radius:22px;
+  border:1px solid #bfdbfe;
+  background:#eff6ff;
+  color:#1e3a8a;
+  line-height:1.72
+}
+.critical-box strong{
+  display:block;
+  color:#0f172a;
+  margin-bottom:6px
+}
+
 .warning-box{
   margin-top:18px;
   padding:18px;
@@ -310,8 +326,8 @@
   <section class="container">
     <div class="hero">
       <div class="hero-kicker">Flashcards completas</div>
-      <h1>Tarjetas que explican la respuesta, no solo la nombran</h1>
-      <p>Sube apuntes o pega un resumen. TecnIA genera flashcards con respuesta directa, explicación elaborada, ejemplo, error típico y conexión entre conceptos para que el estudiante no tenga que adivinar el significado.</p>
+      <h1>Tarjetas de precisión, sin relleno y con lo que no puede faltar</h1>
+      <p>Sube apuntes o pega un resumen. TecnIA genera flashcards con respuesta directa, explicación elaborada, datos clave que no pueden faltar, ejemplo, error típico y conexión entre conceptos para estudiar con nivel de examen.</p>
       <div class="hero-actions">
         <a href="#tool" class="btn btn-primary">Crear flashcards</a>
         <a href="resumidor-apuntes-ia.html" class="btn btn-outline">Resumir antes</a>
@@ -323,18 +339,18 @@
     <section class="info-card">
       <span class="article-tag">Respuesta + explicación + ejemplo</span>
       <h2>Una flashcard útil debe dejar la idea clara</h2>
-      <p class="helper">La nueva versión evita repetir explicaciones genéricas. Cada tarjeta intenta usar el contexto del documento para explicar el concepto de forma más completa.</p>
+      <p class="helper">La nueva versión evita explicaciones genéricas y busca los matices que suelen dar puntos: límites, excepciones, prohibiciones, artículos, sujetos, efectos y errores frecuentes.</p>
       <div class="mini-grid">
         <div class="mini-card"><h3>Respuesta directa</h3><p>Primero dice qué es el concepto sin rodeos.</p></div>
         <div class="mini-card"><h3>Explicación elaborada</h3><p>Después aclara por qué importa y cómo se usa en el tema.</p></div>
-        <div class="mini-card"><h3>Error típico</h3><p>Incluye qué confusión debe evitar el alumno.</p></div>
+        <div class="mini-card"><h3>Dato que no puede faltar</h3><p>Incluye límites, excepciones, prohibiciones o artículos cuando aparecen en el material.</p></div>
       </div>
     </section>
 
     <section id="tool" class="layout" style="margin-top:32px;">
       <div class="panel">
         <h2>Crear flashcards completas</h2>
-        <p class="helper">Para mejores resultados, usa un resumen completo o apuntes con definiciones y ejemplos. La herramienta no consulta internet: trabaja con el material que adjuntas para evitar inventar datos.</p>
+        <p class="helper">Para mejores resultados, usa un resumen completo o apuntes con definiciones, artículos, excepciones y ejemplos. La herramienta prioriza precisión: menos relleno y más datos examinables.</p>
 
         <form id="flashForm" onsubmit="event.preventDefault();generateCards();">
           <div class="form-grid">
@@ -392,6 +408,11 @@
             <div class="field full">
               <label for="teacherFocus">Conceptos que entran seguro o que ha destacado el profesor</label>
               <textarea id="teacherFocus" rows="3" placeholder="Ej: capacidad de obrar, representación, mandato, cesión de crédito, fianza solidaria..."></textarea>
+            </div>
+
+            <div class="field full">
+              <label for="mustKeep">Datos que no pueden faltar para aspirar al 10</label>
+              <textarea id="mustKeep" rows="3" placeholder="Ej: artículos, prohibiciones, excepciones, límites, requisitos, sujetos, efectos, errores típicos, gravar o enajenar bienes inmuebles..."></textarea>
             </div>
           </div>
 
@@ -559,6 +580,12 @@ function getConcepts(text, focus) {
     "capacidad jurídica",
     "capacidad de obrar",
     "menores emancipados",
+    "artículo 247",
+    "gravar bienes inmuebles",
+    "enajenar bienes inmuebles",
+    "tomar dinero a préstamo",
+    "objetos de extraordinario valor",
+    "establecimientos mercantiles o industriales",
     "mayoría de edad",
     "representación",
     "representación voluntaria",
@@ -640,7 +667,7 @@ function buildContextMap(concepts) {
   });
 }
 
-function makeCard(concept, index, subject, mode) {
+function makeCard(concept, index, subject, mode, fullText, mustKeep) {
   const expert = expertKnowledge(concept);
   const evidence = cleanSentence(concept.evidence || "");
   const next = concept.next;
@@ -651,6 +678,7 @@ function makeCard(concept, index, subject, mode) {
   const example = expert.example || buildExample(concept.term, evidence, subject);
   const error = expert.error || buildError(concept.term, subject);
   const connection = expert.connection || buildConnection(concept.term, next?.term, subject, evidence);
+  const critical = expert.critical || buildCriticalDetails(concept.term, evidence, fullText, mustKeep);
 
   let question;
   if (type === "Relación") {
@@ -672,6 +700,7 @@ function makeCard(concept, index, subject, mode) {
     example,
     error,
     connection,
+    critical,
     source: evidence
   };
 }
@@ -708,6 +737,41 @@ function expertKnowledge(concept) {
       connection: "Se conecta con representación porque cuando una persona no puede actuar plenamente por sí misma, otra puede actuar jurídicamente en su lugar."
     };
   }
+
+
+  if (t.includes("menores emancipados")) {
+    return {
+      direct: "Los menores emancipados son menores, normalmente desde los 16 años, a quienes la ley permite actuar con una capacidad de obrar muy amplia, aunque no totalmente idéntica a la de un mayor de edad.",
+      explanation: "Lo esencial no es solo decir que el menor emancipado se parece al mayor de edad, sino recordar el matiz que lo hace examinable: la emancipación amplía su capacidad, pero mantiene límites para actos especialmente relevantes. Por eso este concepto sirve para ver que la capacidad de obrar no es un bloque absoluto, sino que puede tener grados y restricciones.",
+      critical: "Dato que no puede faltar: según el temario y el art. 247 del Código Civil, el menor emancipado no puede por sí solo tomar dinero a préstamo, ni gravar o enajenar bienes inmuebles, establecimientos mercantiles o industriales u objetos de extraordinario valor sin el consentimiento o complemento que corresponda. Este límite es precisamente lo que diferencia una respuesta buena de una respuesta incompleta.",
+      example: "Ejemplo: un menor emancipado puede realizar muchos actos de la vida jurídica ordinaria, pero no debería plantearse como si pudiera vender libremente un inmueble o hipotecarlo sin el consentimiento exigido.",
+      error: "El error típico es decir: “el menor emancipado se equipara al mayor de edad” y quedarse ahí. Esa frase es incompleta si no se añaden las limitaciones importantes.",
+      connection: "Se conecta con capacidad de obrar porque muestra una capacidad ampliada pero limitada; también se relaciona con representación o asistencia, porque en ciertos actos necesita complemento de capacidad."
+    };
+  }
+
+  if (t.includes("articulo 247") || t.includes("artículo 247")) {
+    return {
+      direct: "El artículo 247 es relevante porque recoge límites a la actuación del menor emancipado en actos patrimoniales de especial importancia.",
+      explanation: "Este artículo es examinable porque concreta que la emancipación no convierte al menor en plenamente libre para cualquier acto patrimonial. La norma funciona como límite de protección ante operaciones de alto riesgo económico o jurídico.",
+      critical: "Dato que no puede faltar: tomar dinero a préstamo, gravar o enajenar bienes inmuebles, establecimientos mercantiles o industriales u objetos de extraordinario valor son actos que no deben tratarse como si el menor emancipado pudiera realizarlos libremente por sí solo.",
+      example: "Ejemplo: si el caso práctico habla de vender un inmueble, hipotecarlo o pedir un préstamo, hay que activar la alerta del art. 247.",
+      error: "Olvidar el artículo o no mencionar los actos prohibidos/limitados deja la respuesta coja.",
+      connection: "Se conecta con menores emancipados, capacidad de obrar y actos de disposición patrimonial."
+    };
+  }
+
+  if (t.includes("gravar bienes inmuebles") || t.includes("enajenar bienes inmuebles")) {
+    return {
+      direct: "Gravar o enajenar bienes inmuebles son actos de gran trascendencia patrimonial que el menor emancipado no puede realizar libremente por sí solo.",
+      explanation: "Gravar significa imponer una carga sobre el bien, por ejemplo una hipoteca; enajenar significa transmitirlo, por ejemplo venderlo. Son actos especialmente importantes porque pueden comprometer gravemente el patrimonio del menor.",
+      critical: "Dato que no puede faltar: si aparece un menor emancipado y un inmueble, no basta con hablar de capacidad amplia; hay que mencionar la limitación para gravar o enajenar bienes inmuebles.",
+      example: "Ejemplo: vender una vivienda o hipotecarla no es comparable a realizar un acto cotidiano de escasa entidad.",
+      error: "Tratar estos actos como si fueran simples actos ordinarios.",
+      connection: "Se conecta con art. 247, capacidad de obrar y protección patrimonial del menor."
+    };
+  }
+
 
   if (t.includes("capacidad juridica")) {
     return {
@@ -803,6 +867,33 @@ function elaborateExplanation(term, evidence, subject) {
   return fragments.join(" ");
 }
 
+
+function buildCriticalDetails(term, evidence, fullText, mustKeep) {
+  const key = normalize(term);
+  const all = cleanInputText((fullText || "") + "\n" + (mustKeep || ""));
+  const sentences = splitSentences(all);
+  const highValue = /no puede|no pueden|no podrá|prohibid|salvo|excepto|sin consentimiento|consentimiento|autorizaci[oó]n|art[ií]culo|c[oó]digo|ley|requisito|l[ií]mite|limitaci[oó]n|gravar|enajenar|bienes inmuebles|inmuebles|pr[eé]stamo|extraordinario valor|establecimientos mercantiles|industriales/i;
+
+  const termWords = key.split(/\s+/).filter(w => w.length > 4);
+  const matches = sentences
+    .filter(s => {
+      const ns = normalize(s);
+      return highValue.test(s) && (termWords.some(w => ns.includes(w)) || normalize(mustKeep).split(/\s+/).some(w => w.length > 5 && ns.includes(w)));
+    })
+    .slice(0, 3);
+
+  if (matches.length) {
+    return matches.join(" ");
+  }
+
+  if (highValue.test(evidence || "")) {
+    return evidence;
+  }
+
+  return `Lo que no puede faltar: explica qué límite, excepción, sujeto, efecto o consecuencia hace especial a "${term}". Si el apunte contiene artículos, prohibiciones o requisitos, deben aparecer aquí para que la tarjeta no se quede en una definición superficial.`;
+}
+
+
 function buildExample(term, evidence, subject) {
   if (/acreedor|deudor|cr[eé]dito|cesi[oó]n/i.test(term + " " + evidence)) {
     return "Ejemplo: si una persona debe una cantidad a un acreedor y ese crédito se transmite a un tercero, cambia quién puede reclamar, pero la obligación no desaparece automáticamente.";
@@ -840,6 +931,7 @@ function generateCards() {
   const difficulty = v("difficulty") || "media";
   const mode = v("cardMode") || "comprension";
   const focus = v("teacherFocus");
+  const mustKeep = v("mustKeep");
   const text = cleanInputText(v("notes"));
 
   if (!text || countWords(text) < 60) {
@@ -847,10 +939,10 @@ function generateCards() {
     return;
   }
 
-  const concepts = buildContextMap(getConcepts(text, focus));
-  const cards = concepts.slice(0, quantity).map((concept, index) => makeCard(concept, index, subject, mode));
+  const concepts = buildContextMap(getConcepts(text, focus + "\n" + mustKeep));
+  const cards = concepts.slice(0, quantity).map((concept, index) => makeCard(concept, index, subject, mode, text, mustKeep));
 
-  lastPrompt = buildPrompt({ subject, quantity, difficulty, mode, focus, text, concepts });
+  lastPrompt = buildPrompt({ subject, quantity, difficulty, mode, focus, mustKeep, text, concepts });
   lastOutput = buildPlainOutput({ subject, cards });
 
   const html = `
@@ -891,6 +983,11 @@ function generateCards() {
             <h4>Explicación clara</h4>
             <p>${esc(card.explanation)}</p>
 
+            <div class="critical-box">
+              <strong>Lo que no puede faltar para aspirar al 10</strong>
+              ${esc(card.critical)}
+            </div>
+
             <div class="explanation-grid">
               <div class="explanation-box">
                 <strong>Ejemplo o matiz</strong>
@@ -911,7 +1008,7 @@ function generateCards() {
       `).join("")}
     </div>
 
-    <div class="warning-box"><strong>Importante:</strong> esta versión no busca en internet ni consulta una IA externa en tiempo real. Trabaja con tus apuntes para evitar inventar información. Para máxima calidad, usa un resumen completo o apuntes bien estructurados.</div>
+    <div class="warning-box"><strong>Importante:</strong> esta versión no busca en internet ni consulta una IA externa en tiempo real. Trabaja con tus apuntes para evitar inventar información, pero ahora prioriza límites, excepciones, artículos y datos examinables para reducir el relleno.</div>
 
     <div class="prompt-output"><strong>Prompt experto para perfeccionar estas flashcards con IA:</strong>\n\n${esc(lastPrompt)}</div>
   `;
@@ -931,6 +1028,7 @@ function buildPlainOutput({ subject, cards }) {
       `Pregunta: ${card.question}`,
       `Respuesta directa: ${card.direct}`,
       `Explicación: ${card.explanation}`,
+      `Lo que no puede faltar: ${card.critical}`,
       `Ejemplo o matiz: ${card.example}`,
       `Error típico: ${card.error}`,
       `Conexión: ${card.connection}`
@@ -938,7 +1036,7 @@ function buildPlainOutput({ subject, cards }) {
   ].join("\n\n");
 }
 
-function buildPrompt({ subject, quantity, difficulty, mode, focus, text, concepts }) {
+function buildPrompt({ subject, quantity, difficulty, mode, focus, mustKeep, text, concepts }) {
   return `Actúa como un profesor experto en ${subject} y crea flashcards de calidad alta.
 
 Objetivo:
@@ -949,18 +1047,21 @@ Datos:
 - Dificultad: ${difficulty}
 - Enfoque: ${mode}
 - Conceptos destacados por el profesor: ${focus || "no indicado"}
+- Datos que no pueden faltar: ${mustKeep || "no indicado"}
 
 Conceptos detectados:
 ${concepts.slice(0, 24).map((c, i) => `${i + 1}. ${c.term}: ${c.evidence || "sin evidencia directa"}`).join("\n")}
 
 Instrucciones:
-1. Cada flashcard debe tener pregunta, respuesta directa, explicación elaborada, ejemplo o matiz, error típico y conexión con otro concepto.
+1. Cada flashcard debe tener pregunta, respuesta directa, explicación elaborada, datos que no pueden faltar, ejemplo o matiz, error típico y conexión con otro concepto.
 2. No repitas una explicación genérica.
 3. Explica la respuesta como si el alumno no entendiera todavía el concepto.
 4. Usa solo el material aportado. Si falta contexto, indícalo.
 5. Prioriza comprensión, claridad y utilidad para examen.
 6. Evita frases como “debes poder explicarlo”; explica tú directamente.
-7. Relaciona conceptos cuando ayude a entender el tema.
+7. No rellenes: prioriza información jurídica sustantiva, límites, excepciones, prohibiciones, artículos y efectos.
+8. Si aparece un concepto como menores emancipados, incluye sus límites concretos, no solo una definición general.
+9. Relaciona conceptos cuando ayude a entender el tema.
 
 Material:
 ${text.slice(0, 9000)}`;
