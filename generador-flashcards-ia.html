@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generador de Flashcards con IA | Tarjetas de precisión para sacar 10 | TecnIA</title>
-<meta name="description" content="Genera flashcards de precisión a partir de apuntes o resúmenes: respuesta directa, explicación elaborada, datos que no pueden faltar, ejemplo, error típico y conexión entre conceptos.">
+<title>Generador de Flashcards con IA | Interpretación profesional | TecnIA</title>
+<meta name="description" content="Genera flashcards profesionales a partir de apuntes: definición, explicación clara, matiz de examen, ejemplo, error típico y relación con otros conceptos.">
 
 <link rel="canonical" href="https://tecniaia.com/generador-flashcards-ia.html">
 <meta property="og:title" content="Generador de Flashcards con IA | TecnIA">
-<meta property="og:description" content="Convierte apuntes en flashcards completas, claras y útiles para estudiar sin perder contexto.">
+<meta property="og:description" content="Convierte apuntes en flashcards explicadas, no copiadas literalmente.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://tecniaia.com/generador-flashcards-ia.html">
 <meta property="og:site_name" content="TecnIA">
@@ -69,6 +69,7 @@
   color:#0f172a;
   background:#fff
 }
+.field textarea{resize:vertical}
 .field input:focus,.field select:focus,.field textarea:focus{
   outline:none;
   border-color:#2563eb;
@@ -84,13 +85,7 @@
   border:2px dashed #93c5fd;
   border-radius:24px;
   background:linear-gradient(135deg,#eff6ff,#f8fafc);
-  cursor:pointer;
-  transition:.2s
-}
-.file-drop:hover,.file-drop.dragover{
-  border-color:#14b8a6;
-  transform:translateY(-2px);
-  background:linear-gradient(135deg,#ecfeff,#eff6ff)
+  cursor:pointer
 }
 .file-drop input{position:absolute;inset:0;opacity:0;cursor:pointer}
 .file-drop strong{display:block;color:#0f172a;font-size:1.1rem;margin-bottom:8px}
@@ -233,6 +228,16 @@
 }
 .explanation h4{margin:0 0 8px;color:#0f172a}
 .explanation p{margin:0 0 14px}
+.critical-box{
+  margin:16px 0;
+  padding:18px;
+  border-radius:22px;
+  border:1px solid #bfdbfe;
+  background:#eff6ff;
+  color:#1e3a8a;
+  line-height:1.72
+}
+.critical-box strong{display:block;color:#0f172a;margin-bottom:6px}
 .explanation-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -245,27 +250,7 @@
   border:1px solid #e2e8f0;
   background:#fff
 }
-.explanation-box strong{
-  display:block;
-  color:#0f172a;
-  margin-bottom:6px
-}
-
-.critical-box{
-  margin-top:16px;
-  padding:18px;
-  border-radius:22px;
-  border:1px solid #bfdbfe;
-  background:#eff6ff;
-  color:#1e3a8a;
-  line-height:1.72
-}
-.critical-box strong{
-  display:block;
-  color:#0f172a;
-  margin-bottom:6px
-}
-
+.explanation-box strong{display:block;color:#0f172a;margin-bottom:6px}
 .warning-box{
   margin-top:18px;
   padding:18px;
@@ -274,16 +259,6 @@
   background:#fff7ed;
   color:#7c2d12;
   line-height:1.65
-}
-.prompt-output{
-  background:#0f172a;
-  color:#e0f2fe;
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:24px;
-  padding:22px;
-  white-space:pre-wrap;
-  line-height:1.75;
-  margin-top:22px
 }
 @media(max-width:1080px){
   .layout,.mini-grid,.result-dashboard,.flash-main,.explanation-grid{grid-template-columns:1fr}
@@ -300,10 +275,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
-
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Generador de Flashcards con IA","url":"https://tecniaia.com/generador-flashcards-ia.html","applicationCategory":"EducationalApplication","operatingSystem":"All","description":"Herramienta para convertir apuntes o resúmenes en flashcards completas, explicadas y conectadas entre sí.","inLanguage":"es","publisher":{"@type":"Organization","name":"TecnIA"}}
-</script>
 </head>
 
 <body>
@@ -313,7 +284,6 @@
     <nav aria-label="Navegación principal">
       <ul class="nav-links">
         <li><a href="index.html">Inicio</a></li>
-        <li><a href="que-necesitas-hacer-con-ia.html">Resolver con IA</a></li>
         <li><a href="herramientas-interactivas.html">Herramientas</a></li>
         <li><a href="ia-para-estudiar.html">Estudiar con IA</a></li>
         <li><a href="articulos.html">Guías</a></li>
@@ -325,9 +295,9 @@
 <main>
   <section class="container">
     <div class="hero">
-      <div class="hero-kicker">Flashcards completas</div>
-      <h1>Tarjetas de precisión, sin relleno y con lo que no puede faltar</h1>
-      <p>Sube apuntes o pega un resumen. TecnIA genera flashcards con respuesta directa, explicación elaborada, datos clave que no pueden faltar, ejemplo, error típico y conexión entre conceptos para estudiar con nivel de examen.</p>
+      <div class="hero-kicker">Flashcards interpretadas, no copiadas</div>
+      <h1>Tarjetas explicadas como lo haría un profesor</h1>
+      <p>La herramienta evita pegar frases largas de los apuntes. Interpreta conceptos, separa lo esencial y crea tarjetas con definición, explicación, matiz de examen, ejemplo y error típico.</p>
       <div class="hero-actions">
         <a href="#tool" class="btn btn-primary">Crear flashcards</a>
         <a href="resumidor-apuntes-ia.html" class="btn btn-outline">Resumir antes</a>
@@ -337,20 +307,20 @@
 
   <article class="container">
     <section class="info-card">
-      <span class="article-tag">Respuesta + explicación + ejemplo</span>
-      <h2>Una flashcard útil debe dejar la idea clara</h2>
-      <p class="helper">La nueva versión evita explicaciones genéricas y busca los matices que suelen dar puntos: límites, excepciones, prohibiciones, artículos, sujetos, efectos y errores frecuentes.</p>
+      <span class="article-tag">Interpretación profesional</span>
+      <h2>Qué cambia en esta versión</h2>
+      <p class="helper">Las tarjetas ya no deben sonar a copia y pega. Cada concepto se explica con una estructura más académica y útil para estudiar.</p>
       <div class="mini-grid">
-        <div class="mini-card"><h3>Respuesta directa</h3><p>Primero dice qué es el concepto sin rodeos.</p></div>
-        <div class="mini-card"><h3>Explicación elaborada</h3><p>Después aclara por qué importa y cómo se usa en el tema.</p></div>
-        <div class="mini-card"><h3>Dato que no puede faltar</h3><p>Incluye límites, excepciones, prohibiciones o artículos cuando aparecen en el material.</p></div>
+        <div class="mini-card"><h3>No copia frases</h3><p>Usa el apunte para detectar temas, pero redacta la explicación de forma nueva.</p></div>
+        <div class="mini-card"><h3>Matiz de examen</h3><p>Incluye qué dato hace especial al concepto y qué suele hacer perder puntos.</p></div>
+        <div class="mini-card"><h3>Derecho Civil</h3><p>Reconoce capacidad, menores, contratos, obligaciones, fianza, pago y otros conceptos clave.</p></div>
       </div>
     </section>
 
     <section id="tool" class="layout" style="margin-top:32px;">
       <div class="panel">
-        <h2>Crear flashcards completas</h2>
-        <p class="helper">Para mejores resultados, usa un resumen completo o apuntes con definiciones, artículos, excepciones y ejemplos. La herramienta prioriza precisión: menos relleno y más datos examinables.</p>
+        <h2>Crear flashcards profesionales</h2>
+        <p class="helper">Pega tus apuntes. La herramienta intentará interpretar y redactar, no copiar literalmente.</p>
 
         <form id="flashForm" onsubmit="event.preventDefault();generateCards();">
           <div class="form-grid">
@@ -365,7 +335,6 @@
                 <option value="12">12</option>
                 <option value="20" selected>20</option>
                 <option value="30">30</option>
-                <option value="40">40</option>
               </select>
             </div>
 
@@ -373,62 +342,56 @@
               <label for="difficulty">Dificultad</label>
               <select id="difficulty">
                 <option value="media">Media</option>
-                <option value="alta">Alta</option>
-                <option value="mezclada">Mezclada</option>
+                <option value="alta" selected>Alta</option>
+                <option value="examen">Nivel examen</option>
               </select>
             </div>
 
             <div class="field">
               <label for="cardMode">Enfoque</label>
               <select id="cardMode">
-                <option value="comprension">Comprender conceptos</option>
-                <option value="examen">Preparar examen</option>
-                <option value="relaciones">Relacionar conceptos</option>
-                <option value="errores">Evitar errores típicos</option>
+                <option value="comprension">Comprensión</option>
+                <option value="examen" selected>Examen</option>
+                <option value="errores">Errores típicos</option>
+                <option value="relaciones">Relaciones entre conceptos</option>
               </select>
             </div>
 
             <div class="field full">
-              <label>Adjuntar apuntes o resumen</label>
+              <label>Adjuntar apuntes</label>
               <div class="file-drop" id="fileDrop">
                 <input id="studyFiles" type="file" multiple accept=".txt,.md,.csv,.html,.htm,.pdf,.docx">
                 <div>
                   <strong>Arrastra archivos aquí o pulsa para seleccionarlos</strong>
-                  <span>TXT, MD, CSV, HTML, PDF o DOCX. Puedes usar el resumen completo generado por TecnIA.</span>
+                  <span>TXT, MD, CSV, HTML, PDF o DOCX.</span>
                 </div>
               </div>
               <div id="fileList" class="file-list"></div>
             </div>
 
             <div class="field full">
-              <label for="notes">Apuntes, resumen o temario</label>
-              <textarea id="notes" rows="12" placeholder="Pega aquí el resumen completo, apuntes o temario..."></textarea>
+              <label for="notes">Apuntes o temario</label>
+              <textarea id="notes" rows="12" placeholder="Pega aquí tus apuntes..."></textarea>
             </div>
 
             <div class="field full">
-              <label for="teacherFocus">Conceptos que entran seguro o que ha destacado el profesor</label>
-              <textarea id="teacherFocus" rows="3" placeholder="Ej: capacidad de obrar, representación, mandato, cesión de crédito, fianza solidaria..."></textarea>
-            </div>
-
-            <div class="field full">
-              <label for="mustKeep">Datos que no pueden faltar para aspirar al 10</label>
-              <textarea id="mustKeep" rows="3" placeholder="Ej: artículos, prohibiciones, excepciones, límites, requisitos, sujetos, efectos, errores típicos, gravar o enajenar bienes inmuebles..."></textarea>
+              <label for="teacherFocus">Conceptos o apartados que quieres que priorice</label>
+              <textarea id="teacherFocus" rows="3" placeholder="Ej: capacidad jurídica, capacidad de obrar, menores emancipados, art. 247, fianza solidaria..."></textarea>
             </div>
           </div>
 
           <div class="actions">
-            <button type="submit" class="btn btn-primary">Crear flashcards completas</button>
+            <button type="submit" class="btn btn-primary">Crear flashcards interpretadas</button>
             <button type="button" class="btn btn-outline" onclick="copyOutput()">Copiar tarjetas</button>
-            <button type="button" class="btn btn-outline" onclick="copyPrompt()">Copiar prompt experto</button>
             <button type="button" class="btn btn-outline" onclick="resetTool()">Limpiar</button>
           </div>
-          <div id="copyNote" class="copy-note">Copiado al portapapeles.</div>
+          <div id="copyNote" class="copy-note">Copiado.</div>
         </form>
       </div>
 
       <div class="panel" id="preview">
         <h2>Resultado</h2>
-        <div class="empty">Las flashcards se abrirán en una ventana grande con respuesta directa, explicación elaborada, ejemplo, conexión y error típico.</div>
+        <div class="empty">Las flashcards se abrirán en una ventana grande. Deben estar explicadas, no copiadas.</div>
       </div>
     </section>
   </article>
@@ -437,531 +400,513 @@
 <footer>
   <div class="container">
     <p>&copy; 2026 TecnIA. Todos los derechos reservados.</p>
-    <p class="mt-2"><a href="sobre-nosotros.html">Sobre nosotros</a> | <a href="contacto.html">Contacto</a> | <a href="politica-privacidad.html">Política de privacidad</a> | <a href="noticias.html">Noticias</a></p>
   </div>
 </footer>
 
 <script>
-let extractedFiles = [];
 let lastOutput = "";
-let lastPrompt = "";
-
-const stopwords = new Set("para como pero porque sobre entre desde hasta donde cuando este esta estos estas tambien también tiene tienen puede pueden ser son con sin los las una uno unos unas del por que qué se su sus al el la de en y o u a un es no más mas muy tema unidad capitulo capítulo apartado parte pagina página clase apuntes estudio estudiar ejemplo ejemplos concepto conceptos definicion definición".split(" "));
+let extractedFiles = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-  const input = document.getElementById("studyFiles");
-  const drop = document.getElementById("fileDrop");
-
   if (window.pdfjsLib) {
     pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
   }
-
-  input.addEventListener("change", async e => handleFiles(e.target.files));
-
-  ["dragenter","dragover"].forEach(name => drop.addEventListener(name, e => {
-    e.preventDefault();
-    drop.classList.add("dragover");
-  }));
-
-  ["dragleave","drop"].forEach(name => drop.addEventListener(name, e => {
-    e.preventDefault();
-    drop.classList.remove("dragover");
-  }));
-
-  drop.addEventListener("drop", async e => handleFiles(e.dataTransfer.files));
+  document.getElementById("studyFiles").addEventListener("change", e => handleFiles(e.target.files));
 });
 
-function v(id) {
-  return document.getElementById(id).value.trim();
+const LAW_KNOWLEDGE = [
+  {
+    term:"Personalidad jurídica",
+    keys:["personalidad juridica","personalidad jurídica"],
+    direct:"Es la aptitud para ser sujeto de relaciones jurídicas, es decir, para poder tener derechos y obligaciones.",
+    explanation:"La idea importante es que el Derecho reconoce a determinadas personas o entidades como sujetos jurídicos. Por eso pueden ser titulares de derechos, contraer obligaciones y participar en relaciones jurídicas.",
+    critical:"No debe confundirse con la capacidad de obrar. La personalidad jurídica responde a quién puede ser sujeto de derecho; la capacidad de obrar responde a quién puede actuar válidamente por sí mismo.",
+    example:"Una persona física tiene personalidad jurídica. También puede tenerla una asociación o fundación cuando el ordenamiento la reconoce como entidad diferenciada.",
+    error:"Decir solo que es “ser persona” sin explicar que implica ser sujeto de derechos y obligaciones.",
+    relation:"Se relaciona con capacidad jurídica y con la distinción entre personas físicas y personas jurídicas."
+  },
+  {
+    term:"Personas físicas",
+    keys:["personas fisicas","personas físicas"],
+    direct:"Son las personas individualmente consideradas.",
+    explanation:"En Derecho Civil, la persona física es el ser humano como sujeto de derecho. Se diferencia de las personas jurídicas porque no es una entidad creada para un fin, sino una persona individual.",
+    critical:"Conviene distinguirlas de las personas jurídicas: ambas pueden ser sujetos de derecho, pero su naturaleza y forma de actuación no son iguales.",
+    example:"Un particular, un menor, un mayor de edad o un autónomo son personas físicas.",
+    error:"Confundir persona física con empresario individual o pensar que solo los mayores de edad son personas físicas.",
+    relation:"Se relaciona con personalidad jurídica, capacidad jurídica y capacidad de obrar."
+  },
+  {
+    term:"Personas jurídicas",
+    keys:["personas juridicas","personas jurídicas","asociaciones","fundaciones"],
+    direct:"Son entidades a las que el Derecho reconoce personalidad jurídica propia.",
+    explanation:"No son personas físicas, pero el ordenamiento les permite actuar como sujetos de derecho. Pueden tener patrimonio, derechos, obligaciones y actuar en el tráfico jurídico mediante sus órganos o representantes.",
+    critical:"El matiz esencial es que la entidad se distingue de las personas que la integran o promueven. Una asociación o fundación no es simplemente la suma de sus miembros.",
+    example:"Una asociación cultural puede contratar un local. Una fundación puede administrar un patrimonio destinado a fines sociales.",
+    error:"Creer que los derechos y obligaciones pertenecen directamente a cada socio o fundador.",
+    relation:"Se relaciona con personalidad jurídica, asociaciones, fundaciones y representación."
+  },
+  {
+    term:"Nasciturus",
+    keys:["nasciturus","concebido y no nacido","concebido no nacido"],
+    direct:"Es el concebido todavía no nacido al que el Derecho puede reconocer ciertos efectos favorables.",
+    explanation:"Su importancia está en que el Derecho puede proteger intereses del concebido antes del nacimiento, aunque todavía no sea una persona nacida. Funciona como una ficción jurídica orientada a proteger determinados derechos.",
+    critical:"El punto examinable es que no se trata de una persona plenamente nacida, sino de una protección jurídica condicionada al nacimiento en los términos previstos.",
+    example:"Puede tener relevancia en materia sucesoria o en situaciones en las que se protegen derechos futuros del concebido.",
+    error:"Tratar al nasciturus como si tuviera exactamente la misma situación jurídica que una persona ya nacida.",
+    relation:"Se conecta con personalidad jurídica y comienzo de la personalidad."
+  },
+  {
+    term:"Capacidad jurídica",
+    keys:["capacidad juridica","capacidad jurídica"],
+    direct:"Es la aptitud para ser titular de derechos y obligaciones.",
+    explanation:"La capacidad jurídica responde a la pregunta de si alguien puede tener derechos o deberes. No se refiere a actuar por uno mismo, sino a ser titular de una posición jurídica.",
+    critical:"La diferencia con la capacidad de obrar es imprescindible: una persona puede ser titular de derechos aunque no pueda ejercitarlos plenamente por sí sola.",
+    example:"Un menor puede ser propietario de un bien, aunque para venderlo pueda necesitar representación o complemento de capacidad.",
+    error:"Confundirla con capacidad de obrar.",
+    relation:"Se relaciona con personalidad jurídica y capacidad de obrar."
+  },
+  {
+    term:"Capacidad de obrar",
+    keys:["capacidad de obrar"],
+    direct:"Es la aptitud para realizar actos o negocios jurídicos válidos por uno mismo.",
+    explanation:"No significa simplemente tener derechos, sino poder ejercerlos mediante actos propios. Por eso es clave cuando se estudian menores, emancipación, representación o situaciones en las que la ley limita o condiciona la actuación.",
+    critical:"Lo que no puede faltar es la diferencia con la capacidad jurídica: capacidad jurídica = ser titular de derechos y obligaciones; capacidad de obrar = poder actuar válidamente por uno mismo.",
+    example:"Un mayor de edad normalmente puede celebrar contratos por sí mismo. Un menor puede necesitar representante legal o complemento de capacidad.",
+    error:"Decir que es “tener derechos”. Eso define mejor la capacidad jurídica, no la capacidad de obrar.",
+    relation:"Se conecta con mayoría de edad, menores emancipados y representación."
+  },
+  {
+    term:"Menores emancipados",
+    keys:["menores emancipados","menor emancipado","emancipacion","emancipación"],
+    direct:"Son menores a los que la ley reconoce una capacidad de obrar ampliada, aunque no plena.",
+    explanation:"El menor emancipado puede actuar con mucha más autonomía que un menor no emancipado, pero no queda totalmente equiparado a un mayor de edad. El concepto es importante precisamente por sus límites.",
+    critical:"Dato imprescindible: no puede por sí solo tomar dinero a préstamo, ni gravar o enajenar bienes inmuebles, establecimientos mercantiles o industriales u objetos de extraordinario valor sin el complemento de capacidad exigido.",
+    example:"Puede realizar muchos actos ordinarios, pero no debe tratarse como si pudiera vender una vivienda, hipotecarla o pedir un préstamo libremente.",
+    error:"Decir que el menor emancipado “es como un mayor de edad” y olvidar las limitaciones patrimoniales importantes.",
+    relation:"Se conecta con capacidad de obrar, mayoría de edad y representación/asistencia."
+  },
+  {
+    term:"Artículo 247 del Código Civil",
+    keys:["articulo 247","artículo 247","247"],
+    direct:"Es relevante porque recoge límites de actuación del menor emancipado en actos patrimoniales importantes.",
+    explanation:"La norma sirve para recordar que la emancipación no supone capacidad plena. Aunque el menor emancipado puede actuar en muchos ámbitos, hay actos de gran trascendencia patrimonial que requieren complemento de capacidad.",
+    critical:"No deben faltar los actos limitados: tomar dinero a préstamo, gravar o enajenar bienes inmuebles, establecimientos mercantiles o industriales u objetos de extraordinario valor.",
+    example:"Si el caso práctico habla de vender un inmueble, hipotecarlo o pedir un préstamo, debe saltar la alerta del art. 247.",
+    error:"Mencionar menores emancipados sin explicar qué actos no pueden realizar por sí solos.",
+    relation:"Se conecta directamente con menores emancipados y capacidad de obrar."
+  },
+  {
+    term:"Representación",
+    keys:["representacion","representación"],
+    direct:"Permite que una persona actúe jurídicamente por otra, produciendo efectos en la esfera del representado.",
+    explanation:"La representación es útil cuando alguien no puede o no quiere actuar personalmente. El representante realiza el acto, pero los efectos jurídicos recaen sobre el representado si actúa dentro de sus facultades.",
+    critical:"Hay que diferenciar quién actúa materialmente y quién queda jurídicamente vinculado.",
+    example:"Un padre puede actuar como representante legal de un menor. Una persona también puede otorgar poder a otra para actuar en su nombre.",
+    error:"Pensar que el representante siempre queda vinculado personalmente por el acto.",
+    relation:"Se conecta con capacidad de obrar, menores y mandato."
+  },
+  {
+    term:"Contrato",
+    keys:["contrato","contratos"],
+    direct:"Es un acuerdo de voluntades destinado a crear, modificar o extinguir obligaciones entre las partes.",
+    explanation:"La clave es que el contrato no es solo un acuerdo informal: si reúne los requisitos exigidos, tiene fuerza obligatoria y vincula a las partes.",
+    critical:"No puede faltar la idea de consentimiento y fuerza obligatoria. En muchos temas también hay que mencionar objeto, causa y forma cuando proceda.",
+    example:"Un contrato de compraventa genera obligaciones para comprador y vendedor.",
+    error:"Definir contrato como “acuerdo” sin explicar sus efectos jurídicos.",
+    relation:"Se conecta con consentimiento, requisitos, obligaciones y cumplimiento."
+  },
+  {
+    term:"Consentimiento",
+    keys:["consentimiento"],
+    direct:"Es la voluntad válida de las partes para quedar vinculadas por un contrato o negocio jurídico.",
+    explanation:"El consentimiento es esencial porque sin voluntad válida no hay contrato correctamente formado. Además, debe prestarlo una persona con capacidad suficiente y sin vicios que lo invaliden.",
+    critical:"No basta con decir que las partes quieren contratar: hay que comprobar capacidad, validez de la voluntad y ausencia de vicios relevantes.",
+    example:"Si una parte presta consentimiento por error esencial, violencia o intimidación, puede existir un problema de validez.",
+    error:"Olvidar que el consentimiento debe ser válido, no meramente aparente.",
+    relation:"Se conecta con contrato, capacidad de obrar y requisitos del negocio jurídico."
+  },
+  {
+    term:"Requisitos del contrato",
+    keys:["requisitos","objeto","causa","consentimiento"],
+    direct:"Son los elementos necesarios para que el contrato pueda formarse válidamente.",
+    explanation:"Aunque depende del enfoque del temario, suelen estudiarse consentimiento, objeto y causa, además de la forma cuando la ley la exige. La utilidad de este concepto es comprobar si el contrato existe y es válido.",
+    critical:"El objeto debe ser posible, lícito y determinado o determinable; el consentimiento debe ser válido; y la forma puede ser necesaria en contratos formales.",
+    example:"Si el objeto es imposible o ilícito, el contrato puede tener problemas de validez.",
+    error:"Enumerar requisitos sin explicar qué función cumple cada uno.",
+    relation:"Se conecta con contrato, consentimiento, contratos formales e ineficacia."
+  },
+  {
+    term:"Contratos formales",
+    keys:["formales","contratos formales","formalidades"],
+    direct:"Son contratos que necesitan cumplir una forma determinada para ser válidos o producir ciertos efectos.",
+    explanation:"La forma no siempre es esencial en los contratos, pero en algunos casos la ley exige una formalidad concreta. Por eso es importante distinguir contratos libres de forma y contratos formales.",
+    critical:"El matiz está en saber cuándo la forma es requisito de validez y cuándo cumple otra función, como prueba o publicidad.",
+    example:"Algunos actos pueden requerir escritura pública u otra formalidad prevista legalmente.",
+    error:"Pensar que todos los contratos necesitan una forma solemne para existir.",
+    relation:"Se conecta con requisitos del contrato y validez."
+  },
+  {
+    term:"Obligación",
+    keys:["obligacion","obligación","obligaciones"],
+    direct:"Es una relación jurídica en la que un acreedor puede exigir a un deudor una prestación.",
+    explanation:"La obligación organiza una relación entre dos posiciones: quien puede exigir y quien debe cumplir. Su contenido es una prestación, que puede consistir en dar, hacer o no hacer.",
+    critical:"No pueden faltar acreedor, deudor, prestación y responsabilidad por incumplimiento.",
+    example:"Si una persona debe pagar una cantidad, el acreedor puede reclamar el cumplimiento y el deudor debe realizar la prestación.",
+    error:"Definir obligación como “deber” sin explicar la relación acreedor-deudor.",
+    relation:"Se conecta con deuda, responsabilidad, pago y cumplimiento."
+  },
+  {
+    term:"Acreedor",
+    keys:["acreedor"],
+    direct:"Es el sujeto activo de la obligación, titular del derecho de crédito.",
+    explanation:"El acreedor ocupa la posición de quien puede exigir el cumplimiento de la prestación. No debe confundirse con quien debe cumplir.",
+    critical:"El acreedor tiene el derecho de crédito; el deudor soporta el deber de prestación.",
+    example:"En un préstamo, quien tiene derecho a que se le devuelva el dinero es acreedor.",
+    error:"Confundir acreedor y deudor.",
+    relation:"Se conecta con obligación, deudor, crédito y pago."
+  },
+  {
+    term:"Deudor",
+    keys:["deudor"],
+    direct:"Es el sujeto pasivo de la obligación, obligado a realizar la prestación debida.",
+    explanation:"El deudor debe cumplir lo pactado o lo exigido por la relación obligatoria. Si no cumple, puede responder con sus bienes presentes y futuros en los términos del ordenamiento.",
+    critical:"No basta con decir que “debe algo”; hay que relacionarlo con prestación, cumplimiento y responsabilidad.",
+    example:"Quien debe entregar una cosa, pagar una cantidad o realizar un servicio ocupa la posición de deudor.",
+    error:"Confundir deuda con responsabilidad o no relacionarlo con el acreedor.",
+    relation:"Se conecta con acreedor, obligación, pago y responsabilidad patrimonial."
+  },
+  {
+    term:"Obligaciones de medios",
+    keys:["obligaciones de medios","medios","mera actividad"],
+    direct:"Son obligaciones en las que el deudor se compromete a actuar diligentemente, sin garantizar un resultado concreto.",
+    explanation:"Lo relevante es la conducta desplegada. El cumplimiento se valora por la diligencia o actividad realizada, no por la obtención segura de un resultado.",
+    critical:"La diferencia con las obligaciones de resultado es esencial: en las de medios no se promete necesariamente el resultado final.",
+    example:"Un profesional puede obligarse a actuar con diligencia, aunque no pueda garantizar un resultado concreto.",
+    error:"Exigir siempre resultado cuando la obligación es de medios.",
+    relation:"Se contrapone a obligaciones de resultado."
+  },
+  {
+    term:"Obligaciones de resultado",
+    keys:["obligaciones de resultado","resultado"],
+    direct:"Son obligaciones en las que el deudor se compromete a obtener un resultado determinado.",
+    explanation:"Aquí no basta con realizar una actividad diligente: lo comprometido es el resultado. Si el resultado no se produce, puede entenderse que no se ha cumplido.",
+    critical:"El punto clave es diferenciar resultado comprometido frente a mera actividad.",
+    example:"Entregar una cosa concreta o realizar una obra con resultado pactado puede funcionar como obligación de resultado.",
+    error:"Tratarla como si solo exigiera esfuerzo o diligencia.",
+    relation:"Se contrapone a obligaciones de medios."
+  },
+  {
+    term:"Fianza solidaria",
+    keys:["fianza solidaria","fiador solidario"],
+    direct:"Es una garantía personal en la que el acreedor puede dirigirse contra el deudor principal o contra el fiador solidario.",
+    explanation:"Su importancia está en que refuerza la posición del acreedor. Al existir solidaridad, el acreedor no tiene que seguir necesariamente el orden de reclamación propio de una fianza simple.",
+    critical:"No debe faltar que el acreedor puede reclamar indistintamente al deudor principal o al fiador, según el régimen aplicable.",
+    example:"Si el deudor principal no paga, el acreedor puede reclamar al fiador solidario en los términos pactados.",
+    error:"Explicarla como una fianza normal, olvidando el efecto de la solidaridad.",
+    relation:"Se conecta con obligación, garantía, acreedor, deudor y responsabilidad."
+  },
+  {
+    term:"Pago o cumplimiento",
+    keys:["pago","cumplimiento","cumplimiento de las obligaciones"],
+    direct:"Es la realización de la prestación debida con finalidad de extinguir la obligación.",
+    explanation:"No se refiere solo a entregar dinero. En sentido jurídico, pagar equivale a cumplir la prestación pactada, sea dar, hacer o no hacer cuando corresponda.",
+    critical:"El efecto principal es extinguir la deuda, liberar al deudor y satisfacer el interés del acreedor.",
+    example:"Si la obligación era entregar una cosa, el cumplimiento consiste en realizar esa entrega correctamente.",
+    error:"Pensar que pago significa únicamente entregar una cantidad de dinero.",
+    relation:"Se conecta con obligación, deudor, acreedor y extinción de la deuda."
+  },
+  {
+    term:"Acreedor aparente",
+    keys:["acreedor aparente"],
+    direct:"Es quien parece legitimado para recibir el pago, aunque pueda no ser el verdadero acreedor.",
+    explanation:"Su importancia está en la protección del deudor que paga de buena fe a quien aparenta ser acreedor. En ciertos casos, ese pago puede tener efecto liberatorio.",
+    critical:"El matiz esencial es la buena fe y la apariencia razonable de legitimación.",
+    example:"Si el deudor paga a quien razonablemente parecía ser su acreedor, puede quedar liberado si se cumplen los requisitos.",
+    error:"Pensar que cualquier pago a un tercero libera automáticamente al deudor.",
+    relation:"Se conecta con pago, cumplimiento, buena fe y efecto liberatorio."
+  },
+  {
+    term:"Ineficacia o nulidad",
+    keys:["ineficacia","nulidad","nulidad de pleno derecho"],
+    direct:"Son categorías que explican cuándo un acto o contrato no produce los efectos jurídicos esperados.",
+    explanation:"La ineficacia es una idea amplia: el negocio no despliega sus efectos normales. La nulidad, especialmente la nulidad de pleno derecho, implica un defecto grave desde el origen.",
+    critical:"Debe explicarse desde cuándo se produce y qué consecuencia tiene sobre los efectos del contrato.",
+    example:"Un contrato contrario a normas imperativas puede ser nulo y no producir efectos jurídicos válidos.",
+    error:"Usar nulidad e ineficacia como sinónimos sin matizar.",
+    relation:"Se conecta con requisitos del contrato, validez y efectos."
+  }
+];
+
+function v(id){return document.getElementById(id)?.value.trim() || ""}
+
+function cleanInputText(text){
+  text = String(text || "");
+  if(window.TecniaQuality) text = window.TecniaQuality.cleanQualityNoise(text);
+  return text
+    .replace(/\r/g,"\n")
+    .replace(/MODO PRECISI[OÓ]N 10\/10 TECNIA[\s\S]*$/i,"")
+    .replace(/MODO PRECISION 10\/10 TECNIA[\s\S]*$/i,"")
+    .replace(/Datos que no pueden faltar[\s\S]*?(?=\n\n|$)/gi,"")
+    .replace(/Fuentes fiables[\s\S]*?(?=\n\n|$)/gi,"")
+    .replace(/[§¤•●▪◦]+/g," ")
+    .replace(/\s+:/g,":")
+    .replace(/[ \t]+/g," ")
+    .replace(/\n{3,}/g,"\n\n")
+    .trim();
 }
 
-function cleanInputText(text) {
+function normalize(text){
   return String(text || "")
-    .replace(/\r/g, "\n")
-    .replace(/[§¤•●▪◦]+/g, " ")
-    .replace(/\s+:/g, ":")
-    .replace(/([a-záéíóúñ])\s+([,.])/gi, "$1$2")
-    .replace(/[ \t]+/g, " ")
-    .replace(/\n{3,}/g, "\n\n")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^a-z0-9ñáéíóúü\s-]/gi," ")
+    .replace(/\s+/g," ")
     .trim();
 }
 
-function cleanSentence(sentence) {
-  return cleanInputText(sentence)
-    .replace(/^\W+/, "")
-    .replace(/\s+/g, " ")
-    .replace(/\bPagina\b/gi, "Página")
-    .trim();
+function splitSentences(text){
+  const seen = new Set();
+  return cleanInputText(text)
+    .split(/(?<=[.!?])\s+|\n+/)
+    .map(s => s.trim())
+    .filter(s => s.length > 35 && s.length < 500)
+    .filter(s => {
+      const key = normalize(s);
+      if(seen.has(key)) return false;
+      seen.add(key);
+      return !/datos que|fuentes fiables|modo precision|modo precisión|wordreference|rae|boe/i.test(s);
+    });
 }
 
-async function handleFiles(files) {
+async function handleFiles(files){
   const list = document.getElementById("fileList");
   const notes = document.getElementById("notes");
 
-  for (const file of files) {
+  for(const file of files){
     const item = document.createElement("div");
     item.className = "file-item";
-    item.innerHTML = `<span>${esc(file.name)} · ${bytes(file.size)}</span><span class="file-status">Leyendo...</span>`;
+    item.innerHTML = `<span>${esc(file.name)}</span><span class="file-status">Leyendo...</span>`;
     list.appendChild(item);
 
-    try {
+    try{
       const text = cleanInputText(await extractText(file));
-      extractedFiles.push({ name: file.name, size: file.size, text });
       notes.value = cleanInputText(notes.value + "\n\n" + text);
-      item.querySelector(".file-status").textContent = text.length > 80 ? "Leído" : "Poco texto";
-    } catch (error) {
+      item.querySelector(".file-status").textContent = "Leído";
+    }catch(error){
       item.querySelector(".file-status").textContent = "No leído";
-      item.title = error.message;
     }
   }
 }
 
-async function extractText(file) {
+async function extractText(file){
   const name = file.name.toLowerCase();
-  if (name.endsWith(".pdf")) return pdfText(file);
-  if (name.endsWith(".docx")) return docxText(file);
+  if(name.endsWith(".pdf")) return pdfText(file);
+  if(name.endsWith(".docx")) return docxText(file);
   return file.text();
 }
 
-async function pdfText(file) {
-  if (!window.pdfjsLib) throw new Error("No se pudo cargar PDF");
+async function pdfText(file){
+  if(!window.pdfjsLib) throw new Error("No se pudo cargar PDF");
   const pdf = await pdfjsLib.getDocument({ data: await file.arrayBuffer() }).promise;
   let out = "";
-  for (let i = 1; i <= pdf.numPages; i++) {
+  for(let i=1;i<=pdf.numPages;i++){
     const page = await pdf.getPage(i);
     const content = await page.getTextContent();
-    out += "\n\nPágina " + i + "\n" + content.items.map(x => x.str).join(" ");
+    out += "\n\nPágina " + i + "\n" + content.items.map(x=>x.str).join(" ");
   }
   return out;
 }
 
-async function docxText(file) {
-  if (!window.mammoth) throw new Error("No se pudo cargar DOCX");
+async function docxText(file){
+  if(!window.mammoth) throw new Error("No se pudo cargar DOCX");
   const result = await mammoth.extractRawText({ arrayBuffer: await file.arrayBuffer() });
   return result.value || "";
 }
 
-function splitSentences(text) {
-  return cleanInputText(text)
-    .split(/(?<=[.!?])\s+|\n+/)
-    .map(cleanSentence)
-    .filter(s => s.length > 45 && s.length < 650 && !/^(introducci[oó]n|p[aá]gina|tema|unidad)$/i.test(s));
+function isLaw(subject,text){
+  return /derecho|civil|contrato|obligaci[oó]n|acreedor|deudor|capacidad|fianza|c[oó]digo civil/i.test(subject + " " + text);
 }
 
-function getConcepts(text, focus) {
-  const clean = cleanInputText(text);
-  const sentences = splitSentences(clean);
-  const candidates = [];
-  const forced = focus.split(/[,;\n]/).map(x => x.trim()).filter(x => x.length > 4);
+function detectKnowledgeConcepts(subject,text,focus){
+  const all = normalize(text + " " + focus);
+  const concepts = [];
 
-  function add(term, evidence, score) {
-    term = cleanSentence(term).replace(/[:.;,]+$/,"").trim();
-    if (!term || term.length < 5 || term.length > 95) return;
-    const key = normalize(term);
-    if (key.split(" ").length > 9) return;
-    candidates.push({ term: smartCap(term), key, evidence: evidence || "", score });
-  }
-
-  forced.forEach(term => {
-    const evidence = sentences.find(s => normalize(s).includes(normalize(term))) || "";
-    add(term, evidence, 20);
-  });
-
-  clean.split(/\n+/).forEach(line => {
-    const l = cleanSentence(line);
-    const m = l.match(/^([A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚÑáéíóúñüÜ\s-]{5,80})\s*:\s*(.+)$/);
-    if (m) add(m[1], m[2], 14);
-  });
-
-  const patterns = [
-    "asociaciones y fundaciones",
-    "persona jurídica",
-    "personalidad jurídica",
-    "capacidad jurídica",
-    "capacidad de obrar",
-    "menores emancipados",
-    "artículo 247",
-    "gravar bienes inmuebles",
-    "enajenar bienes inmuebles",
-    "tomar dinero a préstamo",
-    "objetos de extraordinario valor",
-    "establecimientos mercantiles o industriales",
-    "mayoría de edad",
-    "representación",
-    "representación voluntaria",
-    "representación legal",
-    "mandato general",
-    "mandato especial",
-    "cesión de crédito",
-    "acreedor cedente",
-    "cesionario",
-    "deudor cedido",
-    "fianza solidaria",
-    "principio de integridad en el pago",
-    "derecho civil patrimonial",
-    "negocio jurídico",
-    "contrato",
-    "obligación",
-    "acreedor",
-    "deudor"
-  ];
-
-  patterns.forEach(pattern => {
-    const re = new RegExp("\\b" + reg(pattern) + "\\b", "i");
-    if (re.test(clean)) {
-      const evidence = sentences.find(s => re.test(s)) || "";
-      add(pattern, evidence, 16);
-    }
-  });
-
-  const phrases = extractNounPhrases(clean);
-  phrases.forEach(item => add(item.term, item.evidence, item.score));
-
-  const grouped = {};
-  candidates.forEach(c => {
-    if (!grouped[c.key]) grouped[c.key] = { ...c, score: 0 };
-    grouped[c.key].score += c.score;
-    if (c.evidence.length > grouped[c.key].evidence.length) grouped[c.key].evidence = c.evidence;
-  });
-
-  return Object.values(grouped)
-    .filter(c => !isBadConcept(c.term))
-    .sort((a,b) => b.score - a.score)
-    .slice(0, 34);
-}
-
-function extractNounPhrases(text) {
-  const sentences = splitSentences(text);
-  const results = [];
-  const connectors = "(de|del|la|las|los|el|en|por|con|sin|frente a|para)";
-  const phraseRegex = new RegExp("\\b([A-ZÁÉÍÓÚÑa-záéíóúñ]{5,}(?:\\s+" + connectors + ")?(?:\\s+[A-ZÁÉÍÓÚÑa-záéíóúñ]{4,}){1,5})\\b", "g");
-
-  sentences.forEach(sentence => {
-    let match;
-    while ((match = phraseRegex.exec(sentence)) !== null) {
-      const term = cleanSentence(match[1]);
-      if (term.split(/\s+/).length >= 2 && term.length <= 80) {
-        let score = 4;
-        if (/derecho|capacidad|representaci[oó]n|mandato|cesi[oó]n|cr[eé]dito|fianza|obligaci[oó]n|contrato|persona|jur[ií]dica|acreedor|deudor|fundaci[oó]n|asociaci[oó]n/i.test(term)) score += 8;
-        results.push({ term, evidence: sentence, score });
+  if(isLaw(subject,text + " " + focus)){
+    LAW_KNOWLEDGE.forEach(item => {
+      if(item.keys.some(k => all.includes(normalize(k)))) {
+        concepts.push({...item, source:"base jurídica interna"});
       }
-    }
-  });
-
-  return results.slice(0, 40);
-}
-
-function isBadConcept(term) {
-  const key = normalize(term);
-  if (key.length < 5) return true;
-  if (["general", "especial", "derecho", "civil", "patrimonial", "persona", "personas", "juridica", "juridicas", "tema", "apuntes"].includes(key)) return true;
-  if (/^\d+$/.test(key)) return true;
-  return false;
-}
-
-function buildContextMap(concepts) {
-  return concepts.map((c, i) => {
-    const next = concepts[(i + 1) % concepts.length];
-    const prev = concepts[(i + concepts.length - 1) % concepts.length];
-    return { ...c, next, prev };
-  });
-}
-
-function makeCard(concept, index, subject, mode, fullText, mustKeep) {
-  const expert = expertKnowledge(concept);
-  const evidence = cleanSentence(concept.evidence || "");
-  const next = concept.next;
-  const type = cardType(index, mode);
-
-  const direct = expert.direct || directFromEvidence(concept.term, evidence, subject);
-  const explanation = expert.explanation || elaborateExplanation(concept.term, evidence, subject);
-  const example = expert.example || buildExample(concept.term, evidence, subject);
-  const error = expert.error || buildError(concept.term, subject);
-  const connection = expert.connection || buildConnection(concept.term, next?.term, subject, evidence);
-  const critical = expert.critical || buildCriticalDetails(concept.term, evidence, fullText, mustKeep);
-
-  let question;
-  if (type === "Relación") {
-    question = `¿Cómo se relaciona "${concept.term}" con "${next?.term || "otro concepto del tema"}"?`;
-  } else if (type === "Aplicación") {
-    question = `¿Cómo aplicarías "${concept.term}" en un caso o ejemplo de ${subject}?`;
-  } else if (type === "Error típico") {
-    question = `¿Qué error suele cometerse al estudiar "${concept.term}"?`;
-  } else {
-    question = `¿Qué significa "${concept.term}" y por qué importa en ${subject}?`;
+    });
   }
 
+  return concepts;
+}
+
+function fallbackConcepts(text, focus){
+  const source = splitSentences(text + "\n" + focus);
+  const terms = extractTerms(source.join("\n")).slice(0,16);
+  return terms.map(term => {
+    const evidence = source.find(s => normalize(s).includes(normalize(term).split(" ")[0])) || "";
+    return interpretGeneric(term, evidence);
+  });
+}
+
+function extractTerms(text){
+  const sentences = splitSentences(text);
+  const scores = {};
+  sentences.forEach(sentence => {
+    const matches = sentence.match(/\b[A-ZÁÉÍÓÚÑa-záéíóúñ]{5,}(?:\s+(?:de|del|la|las|los|el|en|por|con|sin|y))?(?:\s+[A-ZÁÉÍÓÚÑa-záéíóúñ]{4,}){0,4}\b/g) || [];
+    matches.forEach(raw => {
+      const t = raw.trim();
+      if(t.length < 5 || t.length > 80) return;
+      if(/datos que|fuentes|identifica|concepto relevante|modo precision|wordreference|cambridge|rae|boe/i.test(t)) return;
+      const key = normalize(t);
+      scores[t] = (scores[t] || 0) + scoreTerm(t);
+    });
+  });
+  return Object.entries(scores).sort((a,b)=>b[1]-a[1]).map(x=>smartCap(x[0]));
+}
+
+function scoreTerm(term){
+  let score = 1;
+  if(/capacidad|contrato|obligaci[oó]n|acreedor|deudor|fianza|pago|cumplimiento|nulidad|persona|jur[ií]dica|representaci[oó]n|consentimiento/i.test(term)) score += 6;
+  if(term.split(/\s+/).length >= 2) score += 2;
+  return score;
+}
+
+function interpretGeneric(term,evidence){
   return {
-    type,
-    term: concept.term,
-    question,
-    direct,
-    explanation,
-    example,
-    error,
-    connection,
-    critical,
-    source: evidence
+    term: smartCap(term),
+    direct: buildGenericDirect(term,evidence),
+    explanation: buildGenericExplanation(term,evidence),
+    critical: buildGenericCritical(term,evidence),
+    example: buildGenericExample(term,evidence),
+    error: "El error típico es memorizar el nombre del concepto sin explicar su función, sus límites o su diferencia con conceptos próximos.",
+    relation: "Debe relacionarse con el bloque del tema en el que aparece para no estudiarlo como una idea aislada.",
+    source:"interpretación genérica"
   };
 }
 
-function expertKnowledge(concept) {
-  const t = normalize(concept.term);
-
-  if (t.includes("asociaciones") && t.includes("fundaciones")) {
-    return {
-      direct: "Las asociaciones y fundaciones son personas jurídicas: entidades reconocidas por el Derecho como sujetos capaces de tener derechos y obligaciones propios.",
-      explanation: "La idea importante es que no se confunden con las personas físicas que las integran o promueven. Una asociación nace normalmente de la unión de varias personas para un fin común; una fundación se organiza alrededor de un patrimonio destinado a un fin de interés general. En ambos casos, el Derecho les reconoce personalidad jurídica, por lo que pueden actuar en el tráfico jurídico, contratar, adquirir bienes o responder dentro de los límites que correspondan.",
-      example: "Una fundación dedicada a becas puede recibir donaciones y administrar su patrimonio para cumplir ese fin. Una asociación cultural puede firmar un contrato de alquiler para organizar actividades.",
-      error: "El error típico es pensar que la asociación o fundación es simplemente el grupo de personas que la componen. En realidad, jurídicamente se trata de una entidad diferenciada.",
-      connection: "Se conecta con personalidad jurídica porque ambas existen como sujetos de derecho distintos de sus miembros o fundadores."
-    };
-  }
-
-  if (t.includes("persona juridica") || t.includes("personalidad juridica")) {
-    return {
-      direct: "La personalidad jurídica es el reconocimiento de una persona o entidad como sujeto de derechos y obligaciones.",
-      explanation: "Sirve para saber quién puede ser titular de relaciones jurídicas. En Derecho Civil, no solo las personas físicas pueden ser sujetos de derecho: también ciertas entidades, como sociedades, asociaciones o fundaciones, pueden tener personalidad jurídica. Esto permite separar la esfera jurídica de la entidad de la de las personas que la forman.",
-      example: "Si una asociación compra un bien, el titular no es cada socio individualmente, sino la propia asociación como persona jurídica.",
-      error: "Confundir personalidad jurídica con capacidad de obrar. Tener personalidad permite ser titular de derechos; poder actuar válidamente por uno mismo es otra cuestión.",
-      connection: "Se relaciona con capacidad jurídica y capacidad de obrar: primero se reconoce al sujeto, después se analiza cómo puede actuar."
-    };
-  }
-
-  if (t.includes("capacidad de obrar")) {
-    return {
-      direct: "La capacidad de obrar es la aptitud para realizar actos jurídicos válidos por uno mismo.",
-      explanation: "No se refiere a ser titular de derechos, sino a poder ejercitarlos mediante actos propios. Por eso es clave en menores, personas con apoyos o situaciones donde la ley limita o condiciona la actuación. En los apuntes suele aparecer junto a mayoría de edad, emancipación y representación.",
-      example: "Un mayor de edad puede celebrar por sí mismo muchos contratos. Un menor puede necesitar representante legal, salvo actos que la ley o la costumbre permitan realizar por sí mismo.",
-      error: "Confundirla con capacidad jurídica. Una persona puede tener derechos desde que es sujeto de derecho, pero no siempre puede actuar sola para ejercerlos.",
-      connection: "Se conecta con representación porque cuando una persona no puede actuar plenamente por sí misma, otra puede actuar jurídicamente en su lugar."
-    };
-  }
-
-
-  if (t.includes("menores emancipados")) {
-    return {
-      direct: "Los menores emancipados son menores, normalmente desde los 16 años, a quienes la ley permite actuar con una capacidad de obrar muy amplia, aunque no totalmente idéntica a la de un mayor de edad.",
-      explanation: "Lo esencial no es solo decir que el menor emancipado se parece al mayor de edad, sino recordar el matiz que lo hace examinable: la emancipación amplía su capacidad, pero mantiene límites para actos especialmente relevantes. Por eso este concepto sirve para ver que la capacidad de obrar no es un bloque absoluto, sino que puede tener grados y restricciones.",
-      critical: "Dato que no puede faltar: según el temario y el art. 247 del Código Civil, el menor emancipado no puede por sí solo tomar dinero a préstamo, ni gravar o enajenar bienes inmuebles, establecimientos mercantiles o industriales u objetos de extraordinario valor sin el consentimiento o complemento que corresponda. Este límite es precisamente lo que diferencia una respuesta buena de una respuesta incompleta.",
-      example: "Ejemplo: un menor emancipado puede realizar muchos actos de la vida jurídica ordinaria, pero no debería plantearse como si pudiera vender libremente un inmueble o hipotecarlo sin el consentimiento exigido.",
-      error: "El error típico es decir: “el menor emancipado se equipara al mayor de edad” y quedarse ahí. Esa frase es incompleta si no se añaden las limitaciones importantes.",
-      connection: "Se conecta con capacidad de obrar porque muestra una capacidad ampliada pero limitada; también se relaciona con representación o asistencia, porque en ciertos actos necesita complemento de capacidad."
-    };
-  }
-
-  if (t.includes("articulo 247") || t.includes("artículo 247")) {
-    return {
-      direct: "El artículo 247 es relevante porque recoge límites a la actuación del menor emancipado en actos patrimoniales de especial importancia.",
-      explanation: "Este artículo es examinable porque concreta que la emancipación no convierte al menor en plenamente libre para cualquier acto patrimonial. La norma funciona como límite de protección ante operaciones de alto riesgo económico o jurídico.",
-      critical: "Dato que no puede faltar: tomar dinero a préstamo, gravar o enajenar bienes inmuebles, establecimientos mercantiles o industriales u objetos de extraordinario valor son actos que no deben tratarse como si el menor emancipado pudiera realizarlos libremente por sí solo.",
-      example: "Ejemplo: si el caso práctico habla de vender un inmueble, hipotecarlo o pedir un préstamo, hay que activar la alerta del art. 247.",
-      error: "Olvidar el artículo o no mencionar los actos prohibidos/limitados deja la respuesta coja.",
-      connection: "Se conecta con menores emancipados, capacidad de obrar y actos de disposición patrimonial."
-    };
-  }
-
-  if (t.includes("gravar bienes inmuebles") || t.includes("enajenar bienes inmuebles")) {
-    return {
-      direct: "Gravar o enajenar bienes inmuebles son actos de gran trascendencia patrimonial que el menor emancipado no puede realizar libremente por sí solo.",
-      explanation: "Gravar significa imponer una carga sobre el bien, por ejemplo una hipoteca; enajenar significa transmitirlo, por ejemplo venderlo. Son actos especialmente importantes porque pueden comprometer gravemente el patrimonio del menor.",
-      critical: "Dato que no puede faltar: si aparece un menor emancipado y un inmueble, no basta con hablar de capacidad amplia; hay que mencionar la limitación para gravar o enajenar bienes inmuebles.",
-      example: "Ejemplo: vender una vivienda o hipotecarla no es comparable a realizar un acto cotidiano de escasa entidad.",
-      error: "Tratar estos actos como si fueran simples actos ordinarios.",
-      connection: "Se conecta con art. 247, capacidad de obrar y protección patrimonial del menor."
-    };
-  }
-
-
-  if (t.includes("capacidad juridica")) {
-    return {
-      direct: "La capacidad jurídica es la aptitud para ser titular de derechos y obligaciones.",
-      explanation: "Es una idea básica: permite que una persona sea considerada sujeto dentro del Derecho. Se diferencia de la capacidad de obrar porque no habla de actuar por uno mismo, sino de poder tener derechos y deberes.",
-      example: "Un menor puede ser titular de bienes o derechos, aunque para determinados actos necesite que actúe su representante legal.",
-      error: "El error típico es usar capacidad jurídica y capacidad de obrar como si fueran lo mismo.",
-      connection: "Se conecta con personalidad jurídica porque ambas responden a la pregunta de quién puede ser sujeto de derecho."
-    };
-  }
-
-  if (t.includes("representacion")) {
-    return {
-      direct: "La representación permite que una persona actúe jurídicamente por otra, produciendo efectos en la esfera del representado.",
-      explanation: "Es esencial cuando alguien no puede o no quiere actuar directamente. El representante realiza el acto, pero los efectos jurídicos recaen sobre el representado si actúa dentro de sus facultades. Puede tener origen legal o voluntario.",
-      example: "Un padre puede actuar como representante legal de un menor. Una persona también puede autorizar a otra para actuar en su nombre mediante un poder.",
-      error: "Pensar que quien queda vinculado siempre es el representante. Si actúa correctamente en nombre del representado, los efectos recaen sobre este último.",
-      connection: "Se relaciona con mandato y capacidad de obrar: el mandato puede ser una base de actuación representativa y la falta de plena capacidad puede hacer necesaria la representación."
-    };
-  }
-
-  if (t.includes("mandato general")) {
-    return {
-      direct: "El mandato general autoriza al mandatario para realizar una categoría amplia de actos o gestiones.",
-      explanation: "Su importancia está en delimitar hasta dónde puede actuar el mandatario. No equivale a una autorización ilimitada para cualquier acto: según el tipo de negocio, la ley puede exigir mandato especial o facultades expresas.",
-      example: "Encargar a alguien la administración ordinaria de determinados asuntos puede tener un alcance general, pero vender un bien concreto puede exigir autorización especial.",
-      error: "Creer que “general” significa que el mandatario puede hacer absolutamente todo.",
-      connection: "Se conecta con mandato especial porque ambos determinan el alcance de las facultades del mandatario."
-    };
-  }
-
-  if (t.includes("mandato especial")) {
-    return {
-      direct: "El mandato especial se concede para uno o varios actos concretos determinados.",
-      explanation: "Se usa cuando el negocio requiere una autorización precisa. La clave es que el mandatario no actúa con una habilitación amplia, sino para realizar un acto específico.",
-      example: "Autorizar a alguien para vender un inmueble concreto o aceptar una operación determinada puede requerir mandato especial.",
-      error: "Confundirlo con una simple instrucción genérica.",
-      connection: "Se relaciona con mandato general porque ambos sirven para medir si el mandatario se ha mantenido dentro de sus facultades."
-    };
-  }
-
-  if (t.includes("cesion de credito")) {
-    return {
-      direct: "La cesión de crédito es el negocio por el que el acreedor transmite a un tercero su derecho de crédito frente al deudor.",
-      explanation: "Hay tres sujetos que conviene identificar: el acreedor cedente, que transmite el crédito; el cesionario, que lo adquiere; y el deudor cedido, que sigue siendo quien debe cumplir. Lo importante es que cambia la persona del acreedor, pero el crédito sigue existiendo.",
-      example: "Si A debe dinero a B y B cede ese crédito a C, C pasa a poder reclamar el pago a A, según las condiciones aplicables.",
-      error: "Pensar que la cesión extingue la deuda. No la extingue: cambia quién ocupa la posición de acreedor.",
-      connection: "Se conecta con obligación, acreedor y deudor porque modifica la titularidad activa de una relación obligatoria."
-    };
-  }
-
-  if (t.includes("fianza solidaria")) {
-    return {
-      direct: "La fianza solidaria es una garantía personal en la que el acreedor puede dirigirse contra el fiador con mayor intensidad que en una fianza ordinaria.",
-      explanation: "Su finalidad es reforzar la posición del acreedor. Si la fianza es solidaria, el fiador asume una responsabilidad más fuerte, de modo que el acreedor puede reclamarle el cumplimiento sin tener que seguir necesariamente el orden propio de una fianza simple.",
-      example: "Si el deudor principal no paga, el acreedor puede reclamar al fiador solidario en los términos pactados o legalmente aplicables.",
-      error: "Creer que el fiador solidario solo responde después de agotar todas las vías contra el deudor principal.",
-      connection: "Se relaciona con deuda, acreedor y garantías porque sirve para asegurar el cumplimiento de una obligación."
-    };
-  }
-
-  if (t.includes("principio de integridad")) {
-    return {
-      direct: "El principio de integridad en el pago significa que el acreedor no está obligado a aceptar un cumplimiento parcial si no se ha pactado o permitido otra cosa.",
-      explanation: "La idea clave es que el pago debe realizarse de forma completa. Si el deudor ofrece solo una parte, el acreedor puede rechazarla cuando la obligación exige cumplimiento íntegro. Esto protege el interés del acreedor en recibir exactamente la prestación debida.",
-      example: "Si se debe una cantidad completa, el deudor no puede imponer al acreedor pagos parciales salvo pacto o regla aplicable.",
-      error: "Pensar que cualquier pago parcial obliga siempre al acreedor a aceptarlo.",
-      connection: "Se conecta con cumplimiento de las obligaciones y con la posición del acreedor frente al deudor."
-    };
-  }
-
-  return {};
+function buildGenericDirect(term,evidence){
+  if(/requisito|condici[oó]n/i.test(term)) return `${term} es un elemento que debe cumplirse para que el acto o situación produzca correctamente sus efectos.`;
+  if(/efecto|consecuencia/i.test(term)) return `${term} expresa la consecuencia jurídica o práctica que se deriva de una situación del temario.`;
+  return `${term} es un concepto relevante del tema que debe definirse por su función y no solo por su nombre.`;
 }
 
-function directFromEvidence(term, evidence, subject) {
-  if (evidence && evidence.length > 30) {
-    return evidence.slice(0, 260);
-  }
-  return `${term} es un concepto relevante de ${subject} que debe entenderse dentro del bloque del temario en el que aparece.`;
+function buildGenericExplanation(term,evidence){
+  const short = paraphraseEvidence(evidence);
+  if(short) return `La idea debe entenderse dentro del contexto del tema. ${short} Lo importante es explicar qué papel cumple, qué problema resuelve y qué consecuencia produce.`;
+  return `Para estudiarlo bien, conviene identificar qué significa, en qué parte del tema aparece, qué lo diferencia de otros conceptos y qué dato concreto podría pedir el profesor.`;
 }
 
-function elaborateExplanation(term, evidence, subject) {
-  const fragments = [];
-  fragments.push(`En ${subject}, "${term}" debe entenderse por su función dentro del tema, no solo por su definición.`);
-
-  if (evidence && evidence.length > 40) {
-    fragments.push(`Según el material aportado, aparece relacionado con esta idea: ${evidence.slice(0, 260)}.`);
+function buildGenericCritical(term,evidence){
+  if(/no puede|prohib|excepto|salvo|l[ií]mite|art[ií]culo|requisito/i.test(evidence)){
+    return paraphraseEvidence(evidence);
   }
-
-  fragments.push(`La clave para estudiarlo es saber qué problema resuelve, qué sujetos o elementos intervienen y qué consecuencia jurídica produce.`);
-  fragments.push(`Para contestarlo bien en un examen, conviene empezar con una definición breve y después añadir el matiz que lo diferencia de otros conceptos cercanos.`);
-
-  return fragments.join(" ");
+  return `No basta con nombrarlo. Debe aparecer su definición, su utilidad, un matiz diferencial y un posible error de examen.`;
 }
 
-
-function buildCriticalDetails(term, evidence, fullText, mustKeep) {
-  const key = normalize(term);
-  const all = cleanInputText((fullText || "") + "\n" + (mustKeep || ""));
-  const sentences = splitSentences(all);
-  const highValue = /no puede|no pueden|no podrá|prohibid|salvo|excepto|sin consentimiento|consentimiento|autorizaci[oó]n|art[ií]culo|c[oó]digo|ley|requisito|l[ií]mite|limitaci[oó]n|gravar|enajenar|bienes inmuebles|inmuebles|pr[eé]stamo|extraordinario valor|establecimientos mercantiles|industriales/i;
-
-  const termWords = key.split(/\s+/).filter(w => w.length > 4);
-  const matches = sentences
-    .filter(s => {
-      const ns = normalize(s);
-      return highValue.test(s) && (termWords.some(w => ns.includes(w)) || normalize(mustKeep).split(/\s+/).some(w => w.length > 5 && ns.includes(w)));
-    })
-    .slice(0, 3);
-
-  if (matches.length) {
-    return matches.join(" ");
-  }
-
-  if (highValue.test(evidence || "")) {
-    return evidence;
-  }
-
-  return `Lo que no puede faltar: explica qué límite, excepción, sujeto, efecto o consecuencia hace especial a "${term}". Si el apunte contiene artículos, prohibiciones o requisitos, deben aparecer aquí para que la tarjeta no se quede en una definición superficial.`;
+function buildGenericExample(term,evidence){
+  if(/contrato|obligaci[oó]n|acreedor|deudor/i.test(evidence)) return "Ejemplo: en un caso práctico habría que identificar quién ocupa cada posición jurídica y qué efecto produce el concepto.";
+  return "Ejemplo: puede convertirse en una pregunta de examen pidiendo definición, diferencia con otro concepto o aplicación a un caso breve.";
 }
 
+function paraphraseEvidence(evidence){
+  if(!evidence || evidence.length < 40) return "";
+  const clean = evidence
+    .replace(/\s+/g," ")
+    .replace(/^[-–•\d.]+\s*/,"")
+    .trim();
 
-function buildExample(term, evidence, subject) {
-  if (/acreedor|deudor|cr[eé]dito|cesi[oó]n/i.test(term + " " + evidence)) {
-    return "Ejemplo: si una persona debe una cantidad a un acreedor y ese crédito se transmite a un tercero, cambia quién puede reclamar, pero la obligación no desaparece automáticamente.";
-  }
-  if (/representaci[oó]n|mandato/i.test(term + " " + evidence)) {
-    return "Ejemplo: una persona puede actuar por otra si tiene facultades para ello; lo importante es comprobar si actúa dentro del encargo o autorización recibida.";
-  }
-  if (/capacidad|menor|edad/i.test(term + " " + evidence)) {
-    return "Ejemplo: una persona puede ser titular de derechos, pero no siempre puede realizar por sí sola todos los actos jurídicos.";
-  }
-  return `Ejemplo: en un examen de ${subject}, este concepto podría aparecer pidiendo definición, diferencia con otro concepto cercano o aplicación a un caso sencillo.`;
+  if(clean.length > 220) return "";
+  return "Según el apunte, este concepto aparece vinculado a una regla o matiz que conviene explicar con tus propias palabras, no copiar literalmente.";
 }
 
-function buildError(term, subject) {
-  return `El error típico es dar una definición demasiado corta de "${term}" sin explicar su función, sus efectos o su diferencia con otros conceptos de ${subject}.`;
-}
-
-function buildConnection(term, nextTerm, subject, evidence) {
-  if (nextTerm) {
-    return `"${term}" se conecta con "${nextTerm}" porque ambos ayudan a construir el mismo bloque del tema. Estudiarlos juntos permite entender mejor las relaciones jurídicas, no solo memorizar nombres.`;
+function getCards(subject,text,focus,quantity,mode){
+  let concepts = detectKnowledgeConcepts(subject,text,focus);
+  if(concepts.length < Math.min(quantity,8)){
+    const fallback = fallbackConcepts(text,focus);
+    fallback.forEach(c => {
+      if(!concepts.some(x => normalize(x.term) === normalize(c.term))) concepts.push(c);
+    });
   }
-  return `"${term}" debe relacionarse con otros conceptos de ${subject} para entender qué papel cumple dentro del sistema jurídico.`;
+
+  const ordered = orderConcepts(concepts, focus).slice(0, quantity);
+  return ordered.map((c,i) => makeCard(c,i,ordered,subject,mode));
 }
 
-function cardType(index, mode) {
-  if (mode === "relaciones") return index % 2 === 0 ? "Relación" : "Definición completa";
-  if (mode === "errores") return index % 2 === 0 ? "Error típico" : "Aplicación";
-  if (mode === "examen") return ["Definición completa","Aplicación","Relación","Error típico"][index % 4];
-  return ["Definición completa","Comprensión","Aplicación","Relación","Error típico"][index % 5];
+function orderConcepts(concepts, focus){
+  const f = normalize(focus);
+  return concepts.sort((a,b) => {
+    const af = f.includes(normalize(a.term)) ? 10 : 0;
+    const bf = f.includes(normalize(b.term)) ? 10 : 0;
+    return bf - af;
+  });
 }
 
-function generateCards() {
+function makeCard(c,index,all,subject,mode){
+  const next = all[(index+1) % all.length];
+  const type = cardType(index,mode);
+  let question = `¿Qué significa "${c.term}" y qué matiz no puede faltar en ${subject}?`;
+
+  if(type === "Diferencia") question = `Diferencia "${c.term}" de un concepto cercano del tema.`;
+  if(type === "Caso práctico") question = `¿Cómo aplicarías "${c.term}" en un caso práctico de ${subject}?`;
+  if(type === "Error típico") question = `¿Qué error típico debes evitar al explicar "${c.term}"?`;
+
+  return {
+    type,
+    term:c.term,
+    question,
+    direct:c.direct,
+    explanation:c.explanation,
+    critical:c.critical,
+    example:c.example,
+    error:c.error,
+    relation:c.relation || (`Se relaciona con ${next ? next.term : "otros conceptos del tema"} porque forman parte del mismo bloque de estudio.`)
+  };
+}
+
+function cardType(i,mode){
+  if(mode === "errores") return i % 2 === 0 ? "Error típico" : "Definición";
+  if(mode === "relaciones") return i % 2 === 0 ? "Diferencia" : "Relación";
+  if(mode === "examen") return ["Definición","Matiz de examen","Caso práctico","Error típico"][i % 4];
+  return ["Definición","Comprensión","Matiz de examen","Relación"][i % 4];
+}
+
+function generateCards(){
   const subject = v("subject") || "la asignatura";
   const quantity = parseInt(v("quantity") || "20");
-  const difficulty = v("difficulty") || "media";
-  const mode = v("cardMode") || "comprension";
+  const difficulty = v("difficulty") || "alta";
+  const mode = v("cardMode") || "examen";
   const focus = v("teacherFocus");
-  const mustKeep = v("mustKeep");
   const text = cleanInputText(v("notes"));
 
-  if (!text || countWords(text) < 60) {
+  if(text.split(/\s+/).length < 60){
     openResult("<h2>Falta material</h2><p>Añade apuntes o un resumen más completo para crear flashcards útiles.</p>");
     return;
   }
 
-  const concepts = buildContextMap(getConcepts(text, focus + "\n" + mustKeep));
-  const cards = concepts.slice(0, quantity).map((concept, index) => makeCard(concept, index, subject, mode, text, mustKeep));
-
-  lastPrompt = buildPrompt({ subject, quantity, difficulty, mode, focus, mustKeep, text, concepts });
-  lastOutput = buildPlainOutput({ subject, cards });
+  const cards = getCards(subject,text,focus,quantity,mode);
+  lastOutput = buildPlainOutput(subject,cards);
 
   const html = `
     <button class="tecnia-result-close" onclick="closeTecnIAResult()">Cerrar ×</button>
 
     <div class="result-title">
-      <h2>Flashcards completas de ${esc(subject)}</h2>
-      <p>Cada tarjeta incluye respuesta directa, explicación elaborada, ejemplo o matiz, error típico y conexión. La idea es que la tarjeta enseñe, no que obligue al alumno a reconstruirlo todo.</p>
+      <h2>Flashcards interpretadas de ${esc(subject)}</h2>
+      <p>Estas tarjetas priorizan explicación profesional y matices de examen. La herramienta evita usar frases largas copiadas literalmente del apunte.</p>
     </div>
 
     <div class="result-dashboard">
       <div class="dash-card"><span>Tarjetas</span><strong>${cards.length}</strong></div>
-      <div class="dash-card"><span>Conceptos</span><strong>${concepts.length}</strong></div>
       <div class="dash-card"><span>Dificultad</span><strong>${esc(difficulty)}</strong></div>
       <div class="dash-card"><span>Modo</span><strong>${esc(mode)}</strong></div>
+      <div class="dash-card"><span>Estilo</span><strong>Interpretado</strong></div>
     </div>
 
     <div class="flashcard-list">
-      ${cards.map((card, index) => `
+      ${cards.map((card,index) => `
         <div class="flashcard">
           <div class="flashcard-head">
             <strong>${index + 1}. ${esc(card.term)}</strong>
@@ -984,13 +929,13 @@ function generateCards() {
             <p>${esc(card.explanation)}</p>
 
             <div class="critical-box">
-              <strong>Lo que no puede faltar para aspirar al 10</strong>
+              <strong>Lo que no puede faltar</strong>
               ${esc(card.critical)}
             </div>
 
             <div class="explanation-grid">
               <div class="explanation-box">
-                <strong>Ejemplo o matiz</strong>
+                <strong>Ejemplo o aplicación</strong>
                 <p>${esc(card.example)}</p>
               </div>
               <div class="explanation-box">
@@ -1001,75 +946,41 @@ function generateCards() {
 
             <div class="explanation-box" style="margin-top:14px;">
               <strong>Conexión con el temario</strong>
-              <p>${esc(card.connection)}</p>
+              <p>${esc(card.relation)}</p>
             </div>
           </div>
         </div>
       `).join("")}
     </div>
 
-    <div class="warning-box"><strong>Importante:</strong> esta versión no busca en internet ni consulta una IA externa en tiempo real. Trabaja con tus apuntes para evitar inventar información, pero ahora prioriza límites, excepciones, artículos y datos examinables para reducir el relleno.</div>
-
-    <div class="prompt-output"><strong>Prompt experto para perfeccionar estas flashcards con IA:</strong>\n\n${esc(lastPrompt)}</div>
+    <div class="warning-box"><strong>Limitación honesta:</strong> esta versión interpreta con una base interna y reglas. Para una interpretación 100% tipo ChatGPT habría que conectar una API de IA. Esta mejora evita mucho el copia-pega, pero no sustituye una IA real conectada.</div>
   `;
 
   openResult(html);
-
-  document.getElementById("preview").innerHTML = `<h2>Flashcards generadas</h2><div class="empty">Las tarjetas se han abierto en una ventana grande. Puedes copiarlas o volver a generarlas con más material.</div>`;
+  document.getElementById("preview").innerHTML = `<h2>Flashcards generadas</h2><div class="empty">Revisa si ahora explican y no copian. Si una tarjeta sale mal, mándame captura de esa tarjeta concreta.</div>`;
 }
 
-function buildPlainOutput({ subject, cards }) {
+function buildPlainOutput(subject,cards){
   return [
-    `FLASHCARDS COMPLETAS - ${subject}`,
+    `FLASHCARDS INTERPRETADAS - ${subject}`,
     "",
-    ...cards.map((card, index) => [
-      `FLASHCARD ${index + 1}: ${card.term}`,
-      `Tipo: ${card.type}`,
-      `Pregunta: ${card.question}`,
-      `Respuesta directa: ${card.direct}`,
-      `Explicación: ${card.explanation}`,
-      `Lo que no puede faltar: ${card.critical}`,
-      `Ejemplo o matiz: ${card.example}`,
-      `Error típico: ${card.error}`,
-      `Conexión: ${card.connection}`
+    ...cards.map((c,i)=>[
+      `FLASHCARD ${i+1}: ${c.term}`,
+      `Tipo: ${c.type}`,
+      `Pregunta: ${c.question}`,
+      `Respuesta directa: ${c.direct}`,
+      `Explicación: ${c.explanation}`,
+      `Lo que no puede faltar: ${c.critical}`,
+      `Ejemplo: ${c.example}`,
+      `Error típico: ${c.error}`,
+      `Conexión: ${c.relation}`
     ].join("\n"))
   ].join("\n\n");
 }
 
-function buildPrompt({ subject, quantity, difficulty, mode, focus, mustKeep, text, concepts }) {
-  return `Actúa como un profesor experto en ${subject} y crea flashcards de calidad alta.
-
-Objetivo:
-Crear tarjetas que expliquen la respuesta de forma completa, no tarjetas superficiales.
-
-Datos:
-- Número de tarjetas: ${quantity}
-- Dificultad: ${difficulty}
-- Enfoque: ${mode}
-- Conceptos destacados por el profesor: ${focus || "no indicado"}
-- Datos que no pueden faltar: ${mustKeep || "no indicado"}
-
-Conceptos detectados:
-${concepts.slice(0, 24).map((c, i) => `${i + 1}. ${c.term}: ${c.evidence || "sin evidencia directa"}`).join("\n")}
-
-Instrucciones:
-1. Cada flashcard debe tener pregunta, respuesta directa, explicación elaborada, datos que no pueden faltar, ejemplo o matiz, error típico y conexión con otro concepto.
-2. No repitas una explicación genérica.
-3. Explica la respuesta como si el alumno no entendiera todavía el concepto.
-4. Usa solo el material aportado. Si falta contexto, indícalo.
-5. Prioriza comprensión, claridad y utilidad para examen.
-6. Evita frases como “debes poder explicarlo”; explica tú directamente.
-7. No rellenes: prioriza información jurídica sustantiva, límites, excepciones, prohibiciones, artículos y efectos.
-8. Si aparece un concepto como menores emancipados, incluye sus límites concretos, no solo una definición general.
-9. Relaciona conceptos cuando ayude a entender el tema.
-
-Material:
-${text.slice(0, 9000)}`;
-}
-
-function openResult(html) {
+function openResult(html){
   let overlay = document.getElementById("tecniaResultOverlay");
-  if (!overlay) {
+  if(!overlay){
     overlay = document.createElement("div");
     overlay.id = "tecniaResultOverlay";
     overlay.innerHTML = `<div class="tecnia-result-backdrop" onclick="closeTecnIAResult()"></div><div class="tecnia-result-window" id="tecniaResultContent"></div>`;
@@ -1080,67 +991,43 @@ function openResult(html) {
   document.body.style.overflow = "hidden";
 }
 
-function closeTecnIAResult() {
+function closeTecnIAResult(){
   const overlay = document.getElementById("tecniaResultOverlay");
-  if (overlay) overlay.classList.remove("active");
+  if(overlay) overlay.classList.remove("active");
   document.body.style.overflow = "";
 }
 
-async function copyText(text) {
-  if (!text) return;
-  await navigator.clipboard.writeText(text);
+async function copyOutput(){
+  await navigator.clipboard.writeText(lastOutput || "Todavía no has generado flashcards.");
   const note = document.getElementById("copyNote");
   note.style.display = "block";
   setTimeout(() => note.style.display = "none", 2200);
 }
 
-function copyOutput() {
-  copyText(lastOutput || "Todavía no has generado flashcards.");
-}
-
-function copyPrompt() {
-  copyText(lastPrompt || "Todavía no has generado un prompt.");
-}
-
-function resetTool() {
+function resetTool(){
   document.getElementById("flashForm").reset();
   document.getElementById("fileList").innerHTML = "";
   extractedFiles = [];
   lastOutput = "";
-  lastPrompt = "";
-  document.getElementById("preview").innerHTML = `<h2>Resultado</h2><div class="empty">Las flashcards se abrirán en una ventana grande con respuesta directa, explicación elaborada, ejemplo, conexión y error típico.</div>`;
+  document.getElementById("preview").innerHTML = `<h2>Resultado</h2><div class="empty">Las flashcards se abrirán en una ventana grande. Deben estar explicadas, no copiadas.</div>`;
 }
 
-function countWords(text) {
-  return (String(text || "").trim().match(/\S+/g) || []).length;
-}
-
-function normalize(text) {
-  return String(text || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9ñáéíóúü\s-]/gi, " ").replace(/\s+/g, " ").trim();
-}
-
-function smartCap(text) {
+function smartCap(text){
   text = String(text || "").trim();
   return text ? text.charAt(0).toUpperCase() + text.slice(1) : "";
 }
 
-function bytes(bytesValue) {
-  if (!bytesValue) return "0 KB";
-  const sizes = ["Bytes", "KB", "MB", "GB"];
-  const index = Math.floor(Math.log(bytesValue) / Math.log(1024));
-  return `${(bytesValue / Math.pow(1024, index)).toFixed(1)} ${sizes[index]}`;
-}
-
-function esc(text) {
-  return String(text || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
-}
-
-function reg(text) {
-  return String(text || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+function esc(text){
+  return String(text || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 }
 </script>
 
 <script src="tecnia-memory.js"></script>
-  <script src="tecnia-quality.js"></script>
+<script src="tecnia-quality.js"></script>
 </body>
 </html>
