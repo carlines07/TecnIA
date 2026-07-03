@@ -3,111 +3,1263 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resumidor de apuntes con IA | Resúmenes claros, sin relleno | TecnIA</title>
-<meta name="description" content="Resume apuntes de forma clara y útil: apartados ordenados, conceptos explicados, matices examinables, detalles que no conviene perder y preguntas de examen.">
+
+<title>Resumidor de apuntes con IA | Resúmenes premium 11/10 | TecnIA</title>
+<meta name="description" content="Convierte apuntes densos en resúmenes premium: estructura clara, conceptos explicados, matices de examen, errores típicos, casos prácticos y checklist para aspirar al 10.">
+
 <link rel="canonical" href="https://tecniaia.com/resumidor-apuntes-ia.html">
 <meta property="og:title" content="Resumidor de apuntes con IA | TecnIA">
-<meta property="og:description" content="Crea resúmenes claros, estructurados y útiles para estudiar sin perder matices importantes.">
+<meta property="og:description" content="Resúmenes claros, estructurados y útiles para estudiar mejor. Sin texto apelmazado ni relleno.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://tecniaia.com/resumidor-apuntes-ia.html">
+
 <link rel="stylesheet" href="style.css">
+
 <style>
-.hero{margin:42px auto 34px;padding:clamp(52px,8vw,90px) clamp(24px,5vw,58px);border-radius:42px;color:#fff;background:radial-gradient(circle at 16% 18%,rgba(20,184,166,.34),transparent 30%),radial-gradient(circle at 82% 16%,rgba(37,99,235,.36),transparent 28%),linear-gradient(135deg,#07111f,#0f172a 48%,#111827);box-shadow:0 34px 90px rgba(15,23,42,.28)}
-.hero h1{color:#fff;font-size:clamp(2.4rem,6vw,5rem);line-height:1;letter-spacing:-2px;margin:18px 0 20px}.hero p{max-width:880px;color:#dbeafe;line-height:1.85;font-size:1.14rem}
-.layout{display:grid;grid-template-columns:minmax(360px,.9fr) minmax(0,1.1fr);gap:28px;align-items:start}
-.panel,.info-card{background:#fff;border:1px solid #dbeafe;border-radius:30px;padding:30px;box-shadow:0 18px 45px rgba(15,23,42,.08)}.panel h2,.info-card h2{margin-top:0;color:#0f172a}.helper{color:#64748b;line-height:1.65;margin-bottom:20px}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:grid;gap:8px}.field.full{grid-column:1/-1}.field label{font-weight:900;color:#0f172a;font-size:.94rem}.field input,.field select,.field textarea{width:100%;border:1px solid #cbd5e1;border-radius:16px;padding:13px 14px;font:inherit;color:#0f172a;background:#fff}.field textarea{resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 4px rgba(37,99,235,.1)}
-.file-drop{position:relative;display:grid;place-items:center;min-height:150px;padding:22px;text-align:center;border:2px dashed #93c5fd;border-radius:24px;background:linear-gradient(135deg,#eff6ff,#f8fafc);cursor:pointer}.file-drop input{position:absolute;inset:0;opacity:0;cursor:pointer}.file-drop strong{display:block;color:#0f172a;font-size:1.1rem;margin-bottom:8px}.file-drop span{display:block;color:#475569;line-height:1.55}.file-list{display:grid;gap:10px;margin-top:14px}.file-item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 14px;border-radius:16px;background:#f8fafc;border:1px solid #e2e8f0;color:#334155;font-size:.92rem}.file-status{font-weight:900;color:#1d4ed8;white-space:nowrap}
-.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.copy-note{margin-top:12px;color:#16a34a;font-weight:900;display:none}.empty{color:#64748b;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:20px;padding:22px;line-height:1.7}
-.mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}.mini-card{background:#fff;border:1px solid #dbeafe;border-radius:24px;padding:24px;box-shadow:0 14px 34px rgba(15,23,42,.07)}.mini-card h3{color:#0f172a;margin:0 0 8px}.mini-card p{color:#334155;line-height:1.7;margin:0}
-#tecniaResultOverlay{display:none;position:fixed;inset:0;z-index:9999}#tecniaResultOverlay.active{display:block}.tecnia-result-backdrop{position:absolute;inset:0;background:rgba(15,23,42,.68);backdrop-filter:blur(5px)}.tecnia-result-window{position:relative;z-index:2;width:min(1180px,calc(100vw - 32px));max-height:calc(100vh - 36px);margin:18px auto;padding:28px;border-radius:32px;background:#fff;box-shadow:0 30px 90px rgba(15,23,42,.35);overflow:auto}.tecnia-result-close{position:sticky;top:0;float:right;z-index:3;border:0;border-radius:999px;background:#0f172a;color:#fff;padding:10px 15px;font-weight:900;cursor:pointer}
-.result-title h2{margin:0 0 10px;color:#0f172a;font-size:clamp(1.9rem,4vw,3rem);letter-spacing:-1px}.result-title p{color:#475569;line-height:1.7;margin:0}.summary-grid{display:grid;gap:18px;margin-top:24px}.summary-card{border:1px solid #dbeafe;border-radius:26px;background:#fff;overflow:hidden;box-shadow:0 12px 32px rgba(15,23,42,.07)}.summary-head{padding:18px 20px;background:#0f172a;color:#fff}.summary-head h3{margin:0;color:#fff}.summary-body{padding:20px;background:#f8fafc}.summary-body h4{margin:0 0 8px;color:#0f172a}.summary-body p,.summary-body li{color:#334155;line-height:1.72}.summary-body ul{margin:8px 0 0 20px}.summary-body li{margin-bottom:7px}.concept-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.concept-card{border:1px solid #dbeafe;border-radius:22px;background:#f8fafc;padding:18px}.concept-card h4{margin:0 0 10px;color:#0f172a}.concept-card p{margin:0 0 10px;color:#334155;line-height:1.72}.tag{display:inline-flex;padding:6px 10px;border-radius:999px;background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8;font-size:.78rem;font-weight:950;margin-bottom:10px}.warning-box{margin-top:20px;padding:18px;border-radius:22px;background:#fff7ed;border:1px solid #fed7aa;color:#7c2d12;line-height:1.65}.detail-list{display:grid;gap:10px}.detail-list li{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:12px 14px;list-style:none;margin:0}
-@media(max-width:1080px){.layout,.mini-grid,.concept-grid{grid-template-columns:1fr}}@media(max-width:760px){.hero{border-radius:30px}.form-grid{grid-template-columns:1fr}.panel,.info-card,.tecnia-result-window{padding:20px}}
+.hero{
+  margin:42px auto 34px;
+  padding:clamp(54px,8vw,96px) clamp(24px,5vw,58px);
+  border-radius:42px;
+  color:#fff;
+  background:
+    radial-gradient(circle at 16% 18%,rgba(20,184,166,.34),transparent 30%),
+    radial-gradient(circle at 82% 16%,rgba(37,99,235,.36),transparent 28%),
+    linear-gradient(135deg,#07111f,#0f172a 48%,#111827);
+  box-shadow:0 34px 90px rgba(15,23,42,.28)
+}
+.hero h1{
+  color:#fff;
+  font-size:clamp(2.55rem,6vw,5.1rem);
+  line-height:1;
+  letter-spacing:-2px;
+  margin:18px 0 20px
+}
+.hero p{
+  max-width:920px;
+  color:#dbeafe;
+  line-height:1.85;
+  font-size:1.14rem
+}
+.layout{
+  display:grid;
+  grid-template-columns:minmax(360px,.9fr) minmax(0,1.1fr);
+  gap:28px;
+  align-items:start
+}
+.panel,.info-card{
+  background:#fff;
+  border:1px solid #dbeafe;
+  border-radius:30px;
+  padding:30px;
+  box-shadow:0 18px 45px rgba(15,23,42,.08)
+}
+.panel h2,.info-card h2{margin-top:0;color:#0f172a}
+.helper{color:#64748b;line-height:1.65;margin-bottom:20px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{display:grid;gap:8px}
+.field.full{grid-column:1/-1}
+.field label{font-weight:900;color:#0f172a;font-size:.94rem}
+.field input,.field select,.field textarea{
+  width:100%;
+  border:1px solid #cbd5e1;
+  border-radius:16px;
+  padding:13px 14px;
+  font:inherit;
+  color:#0f172a;
+  background:#fff
+}
+.field textarea{resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:none;
+  border-color:#2563eb;
+  box-shadow:0 0 0 4px rgba(37,99,235,.1)
+}
+.file-drop{
+  position:relative;
+  display:grid;
+  place-items:center;
+  min-height:156px;
+  padding:24px;
+  text-align:center;
+  border:2px dashed #93c5fd;
+  border-radius:24px;
+  background:linear-gradient(135deg,#eff6ff,#f8fafc);
+  cursor:pointer
+}
+.file-drop input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.file-drop strong{display:block;color:#0f172a;font-size:1.1rem;margin-bottom:8px}
+.file-drop span{display:block;color:#475569;line-height:1.55}
+.file-list{display:grid;gap:10px;margin-top:14px}
+.file-item{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+  padding:12px 14px;
+  border-radius:16px;
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+  color:#334155;
+  font-size:.92rem
+}
+.file-status{font-weight:900;color:#1d4ed8;white-space:nowrap}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.copy-note{margin-top:12px;color:#16a34a;font-weight:900;display:none}
+.empty{color:#64748b;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:20px;padding:22px;line-height:1.7}
+.mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
+.mini-card{
+  background:#fff;
+  border:1px solid #dbeafe;
+  border-radius:24px;
+  padding:24px;
+  box-shadow:0 14px 34px rgba(15,23,42,.07)
+}
+.mini-card h3{color:#0f172a;margin:0 0 8px}
+.mini-card p{color:#334155;line-height:1.7;margin:0}
+
+#tecniaResultOverlay{display:none;position:fixed;inset:0;z-index:9999}
+#tecniaResultOverlay.active{display:block}
+.tecnia-result-backdrop{position:absolute;inset:0;background:rgba(15,23,42,.68);backdrop-filter:blur(5px)}
+.tecnia-result-window{
+  position:relative;
+  z-index:2;
+  width:min(1220px,calc(100vw - 32px));
+  max-height:calc(100vh - 36px);
+  margin:18px auto;
+  padding:30px;
+  border-radius:32px;
+  background:#fff;
+  box-shadow:0 30px 90px rgba(15,23,42,.35);
+  overflow:auto
+}
+.tecnia-result-close{
+  position:sticky;
+  top:0;
+  float:right;
+  z-index:3;
+  border:0;
+  border-radius:999px;
+  background:#0f172a;
+  color:#fff;
+  padding:10px 15px;
+  font-weight:900;
+  cursor:pointer
+}
+.result-title{max-width:920px;margin-bottom:22px}
+.result-title h2{
+  margin:0 0 10px;
+  color:#0f172a;
+  font-size:clamp(1.9rem,4vw,3rem);
+  letter-spacing:-1px
+}
+.result-title p{color:#475569;line-height:1.7;margin:0}
+.dashboard{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin:24px 0
+}
+.dash-card{
+  padding:18px;
+  border-radius:20px;
+  background:linear-gradient(135deg,#eff6ff,#f8fafc);
+  border:1px solid #dbeafe
+}
+.dash-card span{
+  display:block;
+  color:#64748b;
+  font-size:.78rem;
+  font-weight:950;
+  text-transform:uppercase;
+  margin-bottom:6px
+}
+.dash-card strong{display:block;color:#0f172a;font-size:1.12rem}
+.summary-nav{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:20px 0 24px
+}
+.summary-nav a{
+  text-decoration:none;
+  padding:9px 12px;
+  border-radius:999px;
+  background:#f8fafc;
+  border:1px solid #dbeafe;
+  color:#1d4ed8;
+  font-weight:900;
+  font-size:.9rem
+}
+.section-block{
+  margin-top:24px;
+  border:1px solid #dbeafe;
+  border-radius:28px;
+  background:#fff;
+  overflow:hidden;
+  box-shadow:0 12px 32px rgba(15,23,42,.07)
+}
+.section-head{
+  background:#0f172a;
+  color:#fff;
+  padding:18px 20px;
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  align-items:center
+}
+.section-head h3{margin:0;color:#fff;font-size:1.18rem}
+.section-head span{
+  background:rgba(20,184,166,.16);
+  border:1px solid rgba(20,184,166,.3);
+  color:#99f6e4;
+  border-radius:999px;
+  padding:6px 10px;
+  font-weight:900;
+  font-size:.78rem;
+  white-space:nowrap
+}
+.section-body{
+  padding:22px;
+  background:#f8fafc
+}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.study-card{
+  border:1px solid #e2e8f0;
+  border-radius:22px;
+  padding:18px;
+  background:#fff;
+  color:#334155;
+  line-height:1.72
+}
+.study-card h4{margin:0 0 8px;color:#0f172a}
+.study-card p{margin:0 0 12px}
+.study-card ul{margin:8px 0 0 20px;padding:0}
+.study-card li{margin-bottom:8px}
+.big-idea{
+  padding:18px;
+  border-radius:22px;
+  background:#eff6ff;
+  border:1px solid #bfdbfe;
+  color:#1e3a8a;
+  line-height:1.72;
+  margin-bottom:16px
+}
+.big-idea strong{display:block;color:#0f172a;margin-bottom:6px}
+.block-summary{
+  display:grid;
+  gap:14px
+}
+.topic-card{
+  border:1px solid #dbeafe;
+  border-radius:24px;
+  background:#fff;
+  overflow:hidden
+}
+.topic-title{
+  padding:16px 18px;
+  background:#f1f5f9;
+  border-bottom:1px solid #e2e8f0;
+  color:#0f172a;
+  font-weight:950
+}
+.topic-content{padding:18px}
+.topic-content p,.topic-content li{color:#334155;line-height:1.72}
+.topic-content ul{margin:8px 0 0 20px}
+.concept-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.concept-card{
+  border:1px solid #dbeafe;
+  border-radius:22px;
+  background:#fff;
+  padding:18px;
+  line-height:1.72
+}
+.concept-card h4{margin:0 0 8px;color:#0f172a}
+.tag{
+  display:inline-flex;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#eff6ff;
+  border:1px solid #bfdbfe;
+  color:#1d4ed8;
+  font-size:.78rem;
+  font-weight:950;
+  margin-bottom:10px
+}
+.pill-list{display:flex;flex-wrap:wrap;gap:8px}
+.pill{
+  display:inline-flex;
+  padding:9px 11px;
+  border-radius:999px;
+  background:#fff;
+  border:1px solid #dbeafe;
+  color:#334155;
+  font-weight:800
+}
+.case-box{
+  border:1px solid #c7d2fe;
+  background:#eef2ff;
+  color:#312e81;
+  border-radius:22px;
+  padding:18px;
+  line-height:1.72
+}
+.case-box strong{display:block;color:#0f172a;margin-bottom:6px}
+.warning-box{
+  margin-top:18px;
+  padding:18px;
+  border-radius:22px;
+  border:1px solid #fed7aa;
+  background:#fff7ed;
+  color:#7c2d12;
+  line-height:1.65
+}
+.check-list label{
+  display:block;
+  padding:12px 14px;
+  border-radius:16px;
+  background:#fff;
+  border:1px solid #e2e8f0;
+  color:#334155;
+  margin-bottom:10px;
+  line-height:1.5
+}
+@media(max-width:1080px){
+  .layout,.mini-grid,.dashboard,.grid-2,.grid-3,.concept-grid{grid-template-columns:1fr}
+}
+@media(max-width:760px){
+  .hero{border-radius:30px}
+  .form-grid{grid-template-columns:1fr}
+  .panel,.info-card{padding:22px}
+  .tecnia-result-window{padding:20px}
+  .section-head{flex-direction:column;align-items:flex-start}
+}
 </style>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 </head>
+
 <body>
-<header><div class="container navbar"><a href="index.html" class="logo">Tecn<span>IA</span></a><nav><ul class="nav-links"><li><a href="index.html">Inicio</a></li><li><a href="herramientas-interactivas.html">Herramientas</a></li><li><a href="ia-para-estudiar.html">Estudiar con IA</a></li><li><a href="articulos.html">Guías</a></li></ul></nav></div></header>
+<header>
+  <div class="container navbar">
+    <a href="index.html" class="logo">Tecn<span>IA</span></a>
+    <nav aria-label="Navegación principal">
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="herramientas-interactivas.html">Herramientas</a></li>
+        <li><a href="ia-para-estudiar.html">Estudiar con IA</a></li>
+        <li><a href="articulos.html">Guías</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
 <main>
-<section class="container"><div class="hero"><div class="hero-kicker">Resumen útil, no texto apelmazado</div><h1>Convierte apuntes en un resumen claro para estudiar de verdad</h1><p>El resumen no debe ser un bloque enorme ni una lista repetida. Debe separar temas, explicar conceptos, destacar matices examinables y eliminar relleno.</p><div class="hero-actions"><a href="#tool" class="btn btn-primary">Crear resumen claro</a><a href="generador-flashcards-ia.html" class="btn btn-outline">Pasar a flashcards</a></div></div></section>
+<section class="container">
+  <div class="hero">
+    <div class="hero-kicker">Resumen premium 11/10</div>
+    <h1>Transforma apuntes densos en material de estudio excelente</h1>
+    <p>No es un resumidor para acortar texto. Es una herramienta para ordenar, interpretar, explicar, eliminar repeticiones y convertir apuntes difíciles en una guía de estudio clara, completa y orientada a sacar nota.</p>
+    <div class="hero-actions">
+      <a href="#tool" class="btn btn-primary">Crear resumen premium</a>
+      <a href="generador-flashcards-ia.html" class="btn btn-outline">Crear flashcards después</a>
+    </div>
+  </div>
+</section>
+
 <article class="container">
-<section class="info-card"><span class="article-tag">Sin relleno · Con matices · Para examen</span><h2>Qué debe hacer un buen resumen</h2><p class="helper">Debe ayudarte a aprobar: ordenar, explicar, diferenciar y dejar claro qué no puedes olvidar.</p><div class="mini-grid"><div class="mini-card"><h3>Orden</h3><p>Divide el temario en bloques manejables, no en párrafos infinitos.</p></div><div class="mini-card"><h3>Explicación</h3><p>No solo detecta conceptos: los define y explica su importancia.</p></div><div class="mini-card"><h3>Matices</h3><p>Separa límites, excepciones, artículos, requisitos y errores típicos.</p></div></div></section>
+<section class="info-card">
+  <span class="article-tag">Claro · Completo · Sin apelmazar · Con matices</span>
+  <h2>Qué debe hacer un resumen excelente</h2>
+  <p class="helper">Debe dejarte con una sensación de control: qué entra, qué significa, qué no debes olvidar, dónde te pueden pillar y cómo responder en examen.</p>
+  <div class="mini-grid">
+    <div class="mini-card"><h3>Interpreta</h3><p>No copia párrafos: transforma la información en ideas entendibles.</p></div>
+    <div class="mini-card"><h3>Estructura</h3><p>Separa bloques, conceptos, matices, casos, errores y checklist.</p></div>
+    <div class="mini-card"><h3>No pierde puntos</h3><p>Guarda límites, excepciones, causas, mecanismos, requisitos y diferencias.</p></div>
+  </div>
+</section>
+
 <section id="tool" class="layout" style="margin-top:32px;">
-<div class="panel"><h2>Crear resumen claro</h2><p class="helper">Pega el temario o sube un archivo. Usa el modo 10/10 para indicar artículos o matices que no pueden desaparecer.</p>
-<form id="summaryForm" onsubmit="event.preventDefault();generateSummary();">
-<div class="form-grid">
-<div class="field"><label for="subject">Asignatura</label><input id="subject" type="text" placeholder="Ej: Derecho Civil Patrimonial"></div>
-<div class="field"><label for="detailLevel">Nivel de detalle</label><select id="detailLevel"><option value="completo" selected>Completo</option><option value="muy-detallado">Muy detallado</option><option value="repaso">Repaso rápido</option></select></div>
-<div class="field full"><label>Adjuntar apuntes</label><div class="file-drop" id="fileDrop"><input id="studyFiles" type="file" multiple accept=".txt,.md,.csv,.html,.htm,.pdf,.docx"><div><strong>Arrastra archivos aquí o pulsa para seleccionarlos</strong><span>TXT, MD, PDF o DOCX.</span></div></div><div id="fileList" class="file-list"></div></div>
-<div class="field full"><label for="notes">Temario o apuntes</label><textarea id="notes" rows="13" placeholder="Pega aquí el temario..."></textarea></div>
-<div class="field full"><label for="teacherFocus">Enfoque del profesor</label><textarea id="teacherFocus" rows="3" placeholder="Ej: artículos, casos prácticos, diferencias entre conceptos..."></textarea></div>
-<div class="field full"><label for="mustKeep">Datos que no quieres perder</label><textarea id="mustKeep" rows="3" placeholder="Ej: art. 247, menores emancipados, fianza solidaria, acreedor aparente..."></textarea></div>
-</div>
-<div class="actions"><button type="submit" class="btn btn-primary">Crear resumen claro</button><button type="button" class="btn btn-outline" onclick="copyOutput()">Copiar resumen</button><button type="button" class="btn btn-outline" onclick="resetTool()">Limpiar</button></div><div id="copyNote" class="copy-note">Copiado.</div>
-</form></div>
-<div class="panel" id="preview"><h2>Resultado</h2><div class="empty">El resumen se abrirá en grande, separado por bloques, conceptos y matices.</div></div>
+  <div class="panel">
+    <h2>Crear resumen premium</h2>
+    <p class="helper">Pega apuntes completos o sube un archivo. Si quieres máxima calidad, elige el área de conocimiento y señala los conceptos importantes.</p>
+
+    <form id="summaryForm" onsubmit="event.preventDefault();generateSummary();">
+      <div class="form-grid">
+        <div class="field">
+          <label for="subject">Asignatura</label>
+          <input id="subject" type="text" placeholder="Ej: Derecho Civil, Economía, Biología...">
+        </div>
+
+        <div class="field">
+          <label for="domain">Área de conocimiento</label>
+          <select id="domain">
+            <option value="auto" selected>Detectar automáticamente</option>
+            <option value="derecho">Derecho</option>
+            <option value="economia">Economía</option>
+            <option value="historia">Historia</option>
+            <option value="lengua">Lengua / Literatura</option>
+            <option value="anatomia">Anatomía</option>
+            <option value="biologia">Biología</option>
+            <option value="medicina">Medicina</option>
+            <option value="fisiologia">Fisiología</option>
+            <option value="psicologia">Psicología</option>
+            <option value="sociologia">Sociología</option>
+            <option value="contabilidad">Contabilidad</option>
+            <option value="general">General</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="detailLevel">Profundidad</label>
+          <select id="detailLevel">
+            <option value="premium" selected>Premium: claro y completo</option>
+            <option value="ultra">Ultra detallado</option>
+            <option value="repaso">Repaso rápido</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="examType">Objetivo</label>
+          <select id="examType">
+            <option value="mixto" selected>Examen mixto</option>
+            <option value="test">Tipo test</option>
+            <option value="desarrollo">Desarrollo</option>
+            <option value="caso">Caso práctico</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label>Adjuntar apuntes</label>
+          <div class="file-drop" id="fileDrop">
+            <input id="studyFiles" type="file" multiple accept=".txt,.md,.csv,.html,.htm,.pdf,.docx">
+            <div>
+              <strong>Arrastra archivos aquí o pulsa para seleccionarlos</strong>
+              <span>TXT, MD, CSV, HTML, PDF o DOCX.</span>
+            </div>
+          </div>
+          <div id="fileList" class="file-list"></div>
+        </div>
+
+        <div class="field full">
+          <label for="notes">Apuntes o temario</label>
+          <textarea id="notes" rows="13" placeholder="Pega aquí tus apuntes..."></textarea>
+        </div>
+
+        <div class="field full">
+          <label for="teacherFocus">Conceptos que no pueden fallar</label>
+          <textarea id="teacherFocus" rows="3" placeholder="Ej: menores emancipados, art. 247, fianza solidaria, elasticidad, mitosis, sujeto, activo/pasivo..."></textarea>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="btn btn-primary">Crear resumen 11/10</button>
+        <button type="button" class="btn btn-outline" onclick="copyOutput()">Copiar resumen</button>
+        <button type="button" class="btn btn-outline" onclick="resetTool()">Limpiar</button>
+      </div>
+      <div id="copyNote" class="copy-note">Copiado.</div>
+    </form>
+  </div>
+
+  <div class="panel" id="preview">
+    <h2>Resultado</h2>
+    <div class="empty">El resumen se abrirá en grande, con índice, bloques, conceptos explicados, matices, casos, errores y checklist.</div>
+  </div>
 </section>
 </article>
 </main>
+
 <footer><div class="container"><p>&copy; 2026 TecnIA. Todos los derechos reservados.</p></div></footer>
 
 <script>
-let lastOutput="";
-document.addEventListener("DOMContentLoaded",()=>{if(window.pdfjsLib)pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";document.getElementById("studyFiles").addEventListener("change",e=>handleFiles(e.target.files));});
-function v(id){return document.getElementById(id)?.value.trim()||""}
-function quality(){return window.TecniaQuality?window.TecniaQuality.getProfile():{mustKeep:"",sources:"",enabled:false,subjectType:"general"}}
-function cleanText(t){t=String(t||"");if(window.TecniaQuality)t=window.TecniaQuality.cleanQualityNoise(t);return t.replace(/\r/g,"\n").replace(/[§¤●▪◦]+/g," ").replace(/\s+:/g,":").replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim()}
-function normalize(t){return String(t||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9ñáéíóúü\s-]/gi," ").replace(/\s+/g," ").trim()}
-function sentences(text){const seen=new Set();return cleanText(text).split(/(?<=[.!?])\s+|\n+/).map(s=>s.trim()).filter(s=>s.length>35&&s.length<520).filter(s=>{const k=normalize(s);if(seen.has(k))return false;seen.add(k);return !/^(datos que no pueden faltar|fuentes fiables|modo precision|modo precisión)$/i.test(k)})}
-async function handleFiles(files){const list=document.getElementById("fileList"),notes=document.getElementById("notes");for(const file of files){const item=document.createElement("div");item.className="file-item";item.innerHTML=`<span>${esc(file.name)}</span><span class="file-status">Leyendo...</span>`;list.appendChild(item);try{const text=cleanText(await extractText(file));notes.value=cleanText(notes.value+"\n\n"+text);item.querySelector(".file-status").textContent="Leído"}catch(e){item.querySelector(".file-status").textContent="No leído"}}}
-async function extractText(file){const n=file.name.toLowerCase();if(n.endsWith(".pdf")){const pdf=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;let out="";for(let i=1;i<=pdf.numPages;i++){const p=await pdf.getPage(i),c=await p.getTextContent();out+="\n\nPágina "+i+"\n"+c.items.map(x=>x.str).join(" ")}return out}if(n.endsWith(".docx"))return(await mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()})).value||"";return file.text()}
-function isLaw(subject,text){return /derecho|civil|contrato|obligaci[oó]n|acreedor|deudor|c[oó]digo civil|fianza|capacidad/i.test(subject+" "+text)}
-const LAW_CONCEPTS=[
-["Personalidad jurídica","Aptitud para ser sujeto de relaciones jurídicas. Es la base para poder tener derechos y obligaciones.","No confundir con capacidad de obrar: una cosa es ser sujeto de derecho y otra actuar válidamente.","Puede aparecer con personas físicas, personas jurídicas y nasciturus."],
-["Personas físicas","Personas individualmente consideradas.","Se diferencian de las personas jurídicas porque no son entidades creadas por una organización o fin social.","Ejemplo: una persona autónoma sigue siendo persona física."],
-["Personas jurídicas","Entidades con personalidad jurídica propia.","Lo importante es que actúan como sujeto distinto de las personas que las integran.","Ejemplos típicos: asociaciones y fundaciones."],
-["Nasciturus","Concebido no nacido al que se reconocen ciertos efectos favorables como ficción jurídica.","Matiz: no es una persona nacida, pero el Derecho puede proteger sus intereses en determinados casos.","Suele aparecer ligado a los arts. 29 y 30 del Código Civil."],
-["Capacidad jurídica","Aptitud para ser titular de derechos y obligaciones.","Toda persona la tiene por el hecho de existir como sujeto de derecho.","No confundir con capacidad de obrar."],
-["Capacidad de obrar","Aptitud para realizar actos o negocios jurídicos válidos por uno mismo.","El matiz clave es que puede ser plena o limitada.","Se conecta con mayoría de edad, menores y emancipación."],
-["Menores emancipados","Menores, normalmente desde los 16 años, a los que la ley reconoce una capacidad de obrar amplia pero no plena.","Dato imprescindible: no pueden por sí solos tomar dinero a préstamo ni gravar o enajenar bienes inmuebles, establecimientos mercantiles o industriales u objetos de extraordinario valor sin el complemento exigido.","Este límite es lo que hace especial el concepto y suele ser examinable."],
-["Contrato","Acuerdo de voluntades con fuerza obligatoria entre las partes.","No basta decir 'acuerdo': debe entenderse como fuente de obligaciones y regla vinculante.","Se conecta con consentimiento, requisitos y cumplimiento."],
-["Contratos formales","Contratos que necesitan cumplir una forma determinada para ser válidos.","Matiz: no todos los contratos son formales; algunos requieren formalidades por ley.","Sirve para diferenciar contratos libres de forma y contratos sometidos a forma."],
-["Consentimiento","Elemento esencial del contrato que debe prestarse válidamente.","Debe venir de persona con capacidad suficiente y no estar viciado.","Se conecta con requisitos del contrato."],
-["Fianza solidaria","Garantía personal en la que el acreedor puede dirigirse contra deudor principal o fiador sin seguir un orden estricto.","Matiz clave: refuerza la posición del acreedor porque puede reclamar indistintamente.","No confundir con una fianza simple."],
-["Obligación","Relación jurídica en la que el acreedor puede exigir al deudor una prestación.","Elementos: acreedor, deudor, deuda/prestación y responsabilidad.","Puede ser de dar, hacer o no hacer."],
-["Obligaciones de medios","El deudor se obliga a desplegar una actividad diligente, sin garantizar resultado.","Matiz: se mide el comportamiento, no necesariamente el resultado.","Diferenciar de obligaciones de resultado."],
-["Obligaciones de resultado","El deudor se obliga a conseguir un resultado determinado.","Matiz: aquí el resultado sí está comprometido.","Diferenciar de obligaciones de medios."],
-["Pago o cumplimiento","Realización de la prestación debida con finalidad de extinguir la deuda.","Matiz: no es solo pagar dinero; puede ser cumplir cualquier prestación pactada.","Efecto: libera al deudor y satisface el interés del acreedor."],
-["Acreedor aparente","Persona que parece acreedora y recibe un pago de buena fe.","Matiz: puede tener efecto liberatorio para el deudor si concurren los requisitos.","Sirve para explicar seguridad jurídica en el pago."],
-["Acreedor","Sujeto activo de la obligación; puede exigir el cumplimiento.","Se diferencia del deudor porque ostenta el derecho de crédito.","Elemento básico de toda obligación."],
-["Deudor","Sujeto pasivo de la obligación; debe cumplir la prestación.","Debe responder con sus bienes presentes y futuros si no cumple.","Se conecta con responsabilidad patrimonial."]
-];
-function conceptAppears(name,text,extra){return normalize(text+" "+extra).includes(normalize(name).split(" ")[0])||normalize(text+" "+extra).includes(normalize(name))}
-function getConcepts(subject,text,focus,must){let out=[];if(isLaw(subject,text)){LAW_CONCEPTS.forEach(c=>{if(conceptAppears(c[0],text,focus+" "+must))out.push({term:c[0],def:c[1],key:c[2],exam:c[3]})})}if(out.length<6){const terms=extractTerms(text+" "+focus+" "+must).slice(0,12);terms.forEach(t=>{if(!out.some(c=>normalize(c.term)===normalize(t)))out.push({term:t,def:"Concepto relevante del temario que debe definirse con precisión.",key:"Indica qué lo diferencia de otros conceptos y qué efecto produce.",exam:"Añade un ejemplo, límite o error típico si aparece en el material."})})}return out.slice(0,16)}
-function extractTerms(text){const s=sentences(text),scores={};s.forEach(x=>{(x.match(/\b[A-ZÁÉÍÓÚÑa-záéíóúñ]{5,}(?:\s+(?:de|del|la|las|los|el|en|por|con|sin|y))?(?:\s+[A-ZÁÉÍÓÚÑa-záéíóúñ]{4,}){0,4}\b/g)||[]).forEach(t=>{t=t.trim();if(t.length>4&&t.length<80&&!/datos que|fuentes|identifica|concepto relevante/i.test(t))scores[t]=(scores[t]||0)+1})});return Object.entries(scores).sort((a,b)=>b[1]-a[1]).map(x=>x[0])}
-function getSections(subject,text,concepts,level){if(isLaw(subject,text)){const groups=[
-["Personalidad jurídica y clases de personas",["personalidad juridica","personas juridicas","personas fisicas","nasciturus"]],
-["Capacidad jurídica, capacidad de obrar y menores emancipados",["capacidad juridica","capacidad de obrar","menores emancipados","articulo 247","prestamo","gravar","enajenar"]],
-["Contratos: consentimiento, requisitos y formalidades",["contrato","consentimiento","requisitos","formal","ley entre las partes"]],
-["Obligaciones: sujetos, tipos y responsabilidad",["obligacion","acreedor","deudor","dar","hacer","no hacer","medios","resultado"]],
-["Garantías y cumplimiento: fianza, pago y acreedor aparente",["fianza solidaria","pago","cumplimiento","acreedor aparente","liberatorio"]]
-];const s=sentences(text);return groups.map(g=>{const picks=s.filter(x=>g[1].some(k=>normalize(x).includes(k))).slice(0,level==="repaso"?3:6);return{title:g[0],items:picks}}).filter(g=>g.items.length)}
-const s=sentences(text);let size=level==="repaso"?4:level==="muy-detallado"?7:5;let arr=[];for(let i=0;i<s.length;i+=size)arr.push({title:"Bloque "+(arr.length+1),items:s.slice(i,i+size)});return arr.slice(0,8)}
-function criticalFor(title,items,concepts){const txt=items.join(" ");const low=normalize(title+" "+txt);if(low.includes("menores emancipados")||low.includes("articulo 247"))return["El menor emancipado tiene capacidad ampliada, pero no plena.","No puede por sí solo tomar dinero a préstamo.","No puede gravar o enajenar bienes inmuebles, establecimientos mercantiles o industriales u objetos de extraordinario valor sin el complemento exigido."];if(low.includes("capacidad"))return["Distinguir capacidad jurídica de capacidad de obrar.","Capacidad jurídica: ser titular de derechos y obligaciones.","Capacidad de obrar: realizar actos jurídicos válidos."];if(low.includes("contrato"))return["Contrato = acuerdo de voluntades con fuerza obligatoria.","Requisitos: consentimiento, objeto real o posible y causa cuando proceda.","Los contratos formales requieren forma legal para ser válidos."];if(low.includes("obligacion"))return["Elementos: acreedor, deudor, prestación/deuda y responsabilidad.","Distinguir obligaciones de dar, hacer y no hacer.","Distinguir obligaciones de medios y de resultado."];if(low.includes("fianza")||low.includes("pago"))return["Fianza solidaria: el acreedor puede dirigirse contra deudor o fiador sin seguir orden.","Pago/cumplimiento extingue la deuda y libera al deudor.","Acreedor aparente: puede producir efecto liberatorio si el pago fue de buena fe."];return items.slice(0,3)}
-function details(text){const re=/art[ií]culo|no puede|sin consentimiento|excepci[oó]n|prohib|l[ií]mite|requisito|fianza|solidaria|acreedor aparente|liberatorio|gravar|enajenar|pr[eé]stamo|capacidad de obrar|capacidad jur[ií]dica|consentimiento|formal/i;return sentences(text).filter(s=>re.test(s)).slice(0,14)}
-function questions(concepts){return concepts.slice(0,10).map(c=>"Explica "+c.term+" y señala el matiz o error típico que no debería faltar en una respuesta de examen.")}
-function generateSummary(){const subject=v("subject")||"la asignatura";const level=v("detailLevel")||"completo";const q=quality();const text=cleanText(v("notes"));const focus=v("teacherFocus");const must=[v("mustKeep"),q.mustKeep].filter(Boolean).join(", ");if(text.split(/\s+/).length<60){openResult("<h2>Falta material</h2><p>Pega más temario para que el resumen sea útil.</p>");return}const concepts=getConcepts(subject,text,focus,must);const sections=getSections(subject,text,concepts,level);const det=details(text);const qs=questions(concepts);lastOutput=plain(subject,sections,concepts,det,qs);openResult(render(subject,sections,concepts,det,qs,q));document.getElementById("preview").innerHTML='<h2>Resumen generado</h2><div class="empty">Revisa si separa bien conceptos, matices y detalles examinables.</div>'}
-function render(subject,sections,concepts,det,qs,q){return `<button class="tecnia-result-close" onclick="closeTecnIAResult()">Cerrar ×</button><div class="result-title"><h2>Resumen claro de ${esc(subject)}</h2><p>Organizado por bloques, con conceptos explicados y matices que no conviene perder. Se ha eliminado la instrucción del modo 10/10 del contenido para que no contamine el resumen.</p></div><div class="summary-grid"><div class="summary-card"><div class="summary-head"><h3>1. Resumen por apartados</h3></div><div class="summary-body">${sections.map(sec=>`<h4>${esc(sec.title)}</h4><p><strong>Idea central:</strong> ${esc(smartIdea(sec.title,sec.items))}</p><p><strong>Lo que no puede faltar:</strong></p><ul>${criticalFor(sec.title,sec.items,concepts).map(x=>`<li>${esc(x)}</li>`).join("")}</ul><p><strong>Error típico:</strong> ${esc(errorFor(sec.title))}</p>`).join("<hr>")}</div></div><div class="summary-card"><div class="summary-head"><h3>2. Conceptos clave explicados</h3></div><div class="summary-body"><div class="concept-grid">${concepts.map(c=>`<div class="concept-card"><span class="tag">${esc(c.term)}</span><p><strong>Qué es:</strong> ${esc(c.def)}</p><p><strong>Matiz:</strong> ${esc(c.key)}</p><p><strong>Para examen:</strong> ${esc(c.exam)}</p></div>`).join("")}</div></div></div><div class="summary-card"><div class="summary-head"><h3>3. Detalles que no conviene perder</h3></div><div class="summary-body"><ul class="detail-list">${det.map(d=>`<li>${esc(d)}</li>`).join("")}</ul></div></div><div class="summary-card"><div class="summary-head"><h3>4. Posibles preguntas de examen</h3></div><div class="summary-body"><ul>${qs.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></div></div><div class="warning-box"><strong>Importante:</strong> esta herramienta no sustituye a una IA conectada a fuentes externas. Para consultar BOE, RAE o WordReference automáticamente habría que conectar una API. Esta versión prioriza claridad, deduplicación y matices con el material que aportas.</div>`}
-function smartIdea(title,items){const t=normalize(title);if(t.includes("personalidad"))return"La personalidad jurídica permite identificar quién puede ser sujeto de derechos y obligaciones.";if(t.includes("capacidad"))return"El tema distingue entre ser titular de derechos y poder actuar válidamente por uno mismo.";if(t.includes("contrato"))return"El contrato obliga porque recoge un acuerdo válido de voluntades sometido a requisitos.";if(t.includes("obligaciones"))return"La obligación organiza la relación acreedor-deudor y la prestación debida.";if(t.includes("garant"))return"Las garantías y el pago explican cómo se asegura o extingue una obligación.";return items[0]||"Bloque relevante del temario."}
-function errorFor(title){const t=normalize(title);if(t.includes("capacidad"))return"Confundir capacidad jurídica con capacidad de obrar o olvidar los límites de los menores emancipados.";if(t.includes("contrato"))return"Definir contrato sin mencionar requisitos, consentimiento o formalidades cuando proceda.";if(t.includes("obligaciones"))return"Nombrar acreedor y deudor sin explicar prestación, responsabilidad o tipo de obligación.";if(t.includes("garant"))return"Confundir fianza solidaria con fianza simple u olvidar el efecto liberatorio del pago.";return"Quedarse en una definición vaga sin matiz examinable."}
-function plain(subject,sections,concepts,det,qs){return[`RESUMEN CLARO - ${subject}`,"","1. RESUMEN POR APARTADOS",...sections.flatMap(s=>["",s.title,"Idea central: "+smartIdea(s.title,s.items),"No puede faltar:",...criticalFor(s.title,s.items,concepts).map(x=>"- "+x),"Error típico: "+errorFor(s.title)]),"","2. CONCEPTOS CLAVE",...concepts.flatMap(c=>["",c.term,"Qué es: "+c.def,"Matiz: "+c.key,"Para examen: "+c.exam]),"","3. DETALLES",...det.map(x=>"- "+x),"","4. PREGUNTAS",...qs.map(x=>"- "+x)].join("\n")}
-function openResult(html){let o=document.getElementById("tecniaResultOverlay");if(!o){o=document.createElement("div");o.id="tecniaResultOverlay";o.innerHTML='<div class="tecnia-result-backdrop" onclick="closeTecnIAResult()"></div><div class="tecnia-result-window" id="tecniaResultContent"></div>';document.body.appendChild(o)}document.getElementById("tecniaResultContent").innerHTML=html;o.classList.add("active");document.body.style.overflow="hidden"}
-function closeTecnIAResult(){document.getElementById("tecniaResultOverlay")?.classList.remove("active");document.body.style.overflow=""}
-async function copyOutput(){await navigator.clipboard.writeText(lastOutput||"Todavía no has generado resumen.");const n=document.getElementById("copyNote");n.style.display="block";setTimeout(()=>n.style.display="none",2200)}
-function resetTool(){document.getElementById("summaryForm").reset();document.getElementById("fileList").innerHTML="";lastOutput="";document.getElementById("preview").innerHTML='<h2>Resultado</h2><div class="empty">El resumen se abrirá en grande, separado por bloques, conceptos y matices.</div>'}
-function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+let lastOutput = "";
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (window.pdfjsLib) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+  }
+  document.getElementById("studyFiles").addEventListener("change", e => handleFiles(e.target.files));
+});
+
+const DOMAIN_PROFILES = {
+  derecho:{
+    label:"Derecho",
+    detect:["derecho","civil","penal","mercantil","constitucional","administrativo","contrato","obligación","obligacion","acreedor","deudor","fianza","capacidad","artículo","codigo civil","código civil"],
+    lens:"sujetos, requisitos, efectos, límites, excepciones, responsabilidad y consecuencias jurídicas",
+    essential:"norma, sujeto, efecto, requisito o límite",
+    caseLabel:"Caso práctico jurídico",
+    trapLabel:"Trampa de examen"
+  },
+  economia:{
+    label:"Economía",
+    detect:["economía","economia","oferta","demanda","elasticidad","pib","inflación","inflacion","mercado","coste","renta","precio"],
+    lens:"variables, incentivos, costes, causalidad, equilibrio, efectos y supuestos",
+    essential:"variable, relación causal o supuesto",
+    caseLabel:"Aplicación económica",
+    trapLabel:"Error de interpretación"
+  },
+  historia:{
+    label:"Historia",
+    detect:["historia","siglo","revolución","revolucion","guerra","estado","imperio","crisis","industrialización","reforma"],
+    lens:"cronología, contexto, causas, actores, consecuencias, cambio y continuidad",
+    essential:"causa, consecuencia, actor o contexto",
+    caseLabel:"Análisis histórico",
+    trapLabel:"Error histórico"
+  },
+  lengua:{
+    label:"Lengua / Literatura",
+    detect:["lengua","gramática","gramatica","sintaxis","texto","sujeto","predicado","literatura","poema","narrador"],
+    lens:"categoría, función, rasgo, ejemplo, análisis y diferencia con conceptos cercanos",
+    essential:"función, categoría o rasgo",
+    caseLabel:"Aplicación en análisis",
+    trapLabel:"Confusión lingüística"
+  },
+  anatomia:{
+    label:"Anatomía",
+    detect:["anatomía","anatomia","músculo","musculo","hueso","articulación","nervio","arteria","vena","órgano"],
+    lens:"localización, estructura, función, relaciones anatómicas, irrigación e inervación",
+    essential:"localización, función o relación anatómica",
+    caseLabel:"Aplicación anatómica",
+    trapLabel:"Confusión anatómica"
+  },
+  biologia:{
+    label:"Biología",
+    detect:["biología","biologia","célula","celula","adn","gen","mitosis","meiosis","enzima","membrana","metabolismo"],
+    lens:"estructura, función, mecanismo, proceso, regulación y consecuencia biológica",
+    essential:"mecanismo, función o consecuencia",
+    caseLabel:"Aplicación biológica",
+    trapLabel:"Confusión biológica"
+  },
+  medicina:{
+    label:"Medicina",
+    detect:["medicina","síntoma","sintoma","signo","diagnóstico","diagnostico","tratamiento","enfermedad","patología","clinica","clínica"],
+    lens:"signos, síntomas, fisiopatología, diagnóstico, tratamiento, prevención y pronóstico",
+    essential:"dato clínico, mecanismo o decisión",
+    caseLabel:"Caso clínico",
+    trapLabel:"Trampa clínica"
+  },
+  fisiologia:{
+    label:"Fisiología",
+    detect:["fisiología","fisiologia","homeostasis","potencial de acción","feedback","hormona","sinapsis","receptor"],
+    lens:"mecanismo, estímulo, respuesta, regulación, homeostasis y retroalimentación",
+    essential:"mecanismo regulador",
+    caseLabel:"Supuesto fisiológico",
+    trapLabel:"Error de mecanismo"
+  },
+  psicologia:{
+    label:"Psicología",
+    detect:["psicología","psicologia","conducta","memoria","aprendizaje","cognición","emocion","emoción","personalidad"],
+    lens:"conducta, cognición, emoción, variables, teoría, evidencia y aplicación",
+    essential:"proceso, variable o teoría",
+    caseLabel:"Aplicación psicológica",
+    trapLabel:"Confusión psicológica"
+  },
+  sociologia:{
+    label:"Sociología",
+    detect:["sociología","sociologia","institución","rol","estatus","desigualdad","socialización","clase social","norma social"],
+    lens:"estructura social, acción, instituciones, normas, roles, desigualdad y poder",
+    essential:"estructura, norma, actor o desigualdad",
+    caseLabel:"Análisis social",
+    trapLabel:"Reduccionismo típico"
+  },
+  contabilidad:{
+    label:"Contabilidad",
+    detect:["contabilidad","activo","pasivo","patrimonio neto","debe","haber","asiento","balance","amortización","amortizacion"],
+    lens:"cuentas, reconocimiento, valoración, debe, haber, balance, resultado y efecto patrimonial",
+    essential:"cuenta, asiento o efecto contable",
+    caseLabel:"Supuesto contable",
+    trapLabel:"Error contable"
+  },
+  general:{
+    label:"General",
+    detect:[],
+    lens:"definición, función, relación, ejemplo, diferencia y error típico",
+    essential:"idea esencial",
+    caseLabel:"Aplicación",
+    trapLabel:"Error típico"
+  }
+};
+
+const KNOWLEDGE = {
+  derecho:[
+    {
+      term:"Personalidad jurídica",
+      keys:["personalidad juridica","personalidad jurídica"],
+      definition:"Aptitud para ser sujeto de relaciones jurídicas y poder ser titular de derechos y obligaciones.",
+      explain:"Permite identificar quién puede participar en relaciones jurídicas. No se refiere todavía a actuar válidamente, sino a ser reconocido como sujeto de derecho.",
+      must:"No confundir con capacidad de obrar. Personalidad/capacidad jurídica miran a la titularidad; capacidad de obrar mira a la actuación válida.",
+      trap:"Decir que equivale simplemente a 'ser persona' sin hablar de derechos y obligaciones.",
+      caseText:"Una asociación contrata un local para sus actividades. La cuestión es que no actúan individualmente todos los socios, sino la entidad con personalidad jurídica propia."
+    },
+    {
+      term:"Personas físicas y personas jurídicas",
+      keys:["personas físicas","personas fisicas","personas jurídicas","personas juridicas","asociaciones","fundaciones"],
+      definition:"Las personas físicas son individuos; las personas jurídicas son entidades reconocidas por el Derecho como sujetos con personalidad propia.",
+      explain:"La clave es que las personas jurídicas no son la simple suma de quienes las integran: pueden tener patrimonio, derechos y obligaciones propios.",
+      must:"Asociaciones y fundaciones son ejemplos típicos de personas jurídicas; su personalidad permite actuar separadamente de sus miembros o fundadores.",
+      trap:"Atribuir automáticamente a cada socio o fundador las obligaciones de la entidad.",
+      caseText:"Una fundación adquiere un inmueble para cumplir sus fines. El titular no es cada fundador, sino la propia fundación si tiene personalidad jurídica."
+    },
+    {
+      term:"Capacidad jurídica",
+      keys:["capacidad jurídica","capacidad juridica"],
+      definition:"Aptitud para ser titular de derechos y obligaciones.",
+      explain:"Responde a la pregunta: ¿puede esta persona tener derechos o deberes? No responde a si puede ejercitarlos por sí misma.",
+      must:"Diferenciar de capacidad de obrar: titularidad frente a actuación válida.",
+      trap:"Confundir capacidad jurídica con capacidad de obrar.",
+      caseText:"Un menor puede ser propietario por herencia. Tiene capacidad jurídica para ser titular, aunque quizá no pueda vender válidamente el bien por sí solo."
+    },
+    {
+      term:"Capacidad de obrar",
+      keys:["capacidad de obrar"],
+      definition:"Aptitud para realizar actos o negocios jurídicos válidos por uno mismo.",
+      explain:"Importa para saber si una persona puede ejercitar derechos mediante actos propios. Puede estar limitada por edad, necesidad de apoyo, representación o complemento de capacidad.",
+      must:"No es titularidad de derechos; es posibilidad de actuar jurídicamente de forma válida.",
+      trap:"Decir que capacidad de obrar significa simplemente 'tener derechos'.",
+      caseText:"Un menor emancipado quiere vender un local heredado. La cuestión no es si es titular, sino si puede realizar ese acto concreto sin complemento de capacidad."
+    },
+    {
+      term:"Menores emancipados",
+      keys:["menores emancipados","menor emancipado","emancipación","emancipacion","artículo 247","articulo 247"],
+      definition:"Menores con capacidad de obrar ampliada, pero no plena.",
+      explain:"La emancipación da autonomía, pero mantiene límites en actos de especial trascendencia patrimonial.",
+      must:"No pueden por sí solos tomar dinero a préstamo ni gravar o enajenar bienes inmuebles, establecimientos mercantiles o industriales u objetos de extraordinario valor sin el complemento exigido.",
+      trap:"Decir que el menor emancipado queda totalmente equiparado a un mayor de edad.",
+      caseText:"Una menor emancipada quiere hipotecar una vivienda heredada para avalar un préstamo. Debe analizarse el límite del art. 247 y el complemento de capacidad."
+    },
+    {
+      term:"Obligaciones recíprocas",
+      keys:["deudoras y acreedoras","deudoras y acreedoras las unas","obligaciones recíprocas","obligaciones reciprocas","contratos bilaterales","sinalagma"],
+      definition:"Obligaciones en las que ambas partes son simultáneamente acreedoras y deudoras entre sí.",
+      explain:"La prestación de una parte se corresponde con la prestación de la otra. Por eso el cumplimiento de una parte no se entiende aisladamente, sino conectado con el cumplimiento de la contraparte.",
+      must:"Debe aparecer la interdependencia de prestaciones o sinalagma.",
+      trap:"Tratarlo como si hubiera una deuda aislada de una sola parte.",
+      caseText:"A vende a B un ordenador por 900 €. B no paga porque A aún no lo ha entregado. El análisis exige ver si una parte puede exigir cumplimiento cuando ella no ha cumplido u ofrecido cumplir."
+    },
+    {
+      term:"Fianza solidaria",
+      keys:["fianza solidaria","fiador solidario"],
+      definition:"Garantía personal en la que el acreedor puede dirigirse contra el deudor principal o contra el fiador solidario.",
+      explain:"Refuerza al acreedor porque el fiador no queda como garante meramente subsidiario en los términos de una fianza simple.",
+      must:"Debe indicarse que el acreedor puede reclamar indistintamente al deudor principal o al fiador solidario.",
+      trap:"Explicarla como una fianza simple.",
+      caseText:"Una sociedad no paga un préstamo y el banco reclama directamente a la fiadora solidaria. El caso obliga a distinguir solidaridad y beneficios propios de la fianza simple."
+    },
+    {
+      term:"Pago o cumplimiento",
+      keys:["pago","cumplimiento","cumplimiento de las obligaciones"],
+      definition:"Realización exacta de la prestación debida con finalidad de extinguir la obligación.",
+      explain:"Pago no significa solo dinero. Jurídicamente es cumplir la prestación pactada: dar, hacer o no hacer según el caso.",
+      must:"Efecto: extinguir la deuda, liberar al deudor y satisfacer el interés del acreedor si el cumplimiento es correcto.",
+      trap:"Pensar que cualquier prestación parecida libera al deudor.",
+      caseText:"El deudor debía entregar una botella concreta de colección, pero entrega otra de valor parecido. La duda está en identidad e integridad del pago."
+    },
+    {
+      term:"Acreedor aparente",
+      keys:["acreedor aparente"],
+      definition:"Persona que parece legitimada para recibir el pago aunque no sea el verdadero acreedor.",
+      explain:"Protege al deudor que paga de buena fe ante una apariencia razonable de legitimación.",
+      must:"No cualquier pago a tercero libera; importan apariencia suficiente y buena fe.",
+      trap:"Creer que pagar a cualquier tercero extingue la deuda.",
+      caseText:"Un inquilino paga al antiguo propietario porque sigue emitiendo recibos y el nuevo titular no notificó bien el cambio. Hay que valorar buena fe y efecto liberatorio."
+    }
+  ],
+  economia:[
+    {
+      term:"Elasticidad precio de la demanda",
+      keys:["elasticidad","elasticidad precio","demanda elástica","demanda elastica"],
+      definition:"Mide la sensibilidad de la cantidad demandada ante cambios en el precio.",
+      explain:"No basta saber si la demanda sube o baja: importa la proporción de respuesta.",
+      must:"Relación porcentual entre variación de cantidad y variación de precio.",
+      trap:"Confundir elasticidad con pendiente o con cambio absoluto.",
+      caseText:"Una empresa sube precios un 10 % y vende un 25 % menos. Hay que valorar si la subida aumenta o reduce ingresos."
+    },
+    {
+      term:"Coste de oportunidad",
+      keys:["coste de oportunidad","costo de oportunidad"],
+      definition:"Valor de la mejor alternativa sacrificada al tomar una decisión.",
+      explain:"Sirve para analizar elecciones con recursos escasos. No es solo coste monetario.",
+      must:"Debe aparecer la alternativa renunciada.",
+      trap:"Confundir coste de oportunidad con gasto contable.",
+      caseText:"Estudiar un fin de semana en vez de trabajar por 120 € tiene un coste de oportunidad aunque no haya pago directo."
+    }
+  ],
+  biologia:[
+    {
+      term:"Mitosis",
+      keys:["mitosis"],
+      definition:"División celular que genera células hijas genéticamente iguales.",
+      explain:"Permite crecimiento, reparación y renovación celular manteniendo la dotación cromosómica.",
+      must:"Diferenciar de meiosis: mitosis conserva dotación; meiosis reduce y genera variabilidad.",
+      trap:"Confundir mitosis con meiosis.",
+      caseText:"Un tejido epitelial se regenera tras una herida: el proceso clave para producir células equivalentes es la mitosis."
+    }
+  ],
+  lengua:[
+    {
+      term:"Sujeto",
+      keys:["sujeto"],
+      definition:"Función sintáctica que concuerda con el verbo en número y persona.",
+      explain:"No siempre es quien realiza la acción. Puede estar pospuesto, omitido o ser paciente.",
+      must:"La prueba de concordancia con el verbo es esencial.",
+      trap:"Buscar siempre el sujeto preguntando 'quién realiza la acción'.",
+      caseText:"En 'Me gustan las películas antiguas', el sujeto es 'las películas antiguas', no 'me', porque concuerda con 'gustan'."
+    }
+  ],
+  contabilidad:[
+    {
+      term:"Debe y haber",
+      keys:["debe","haber","debe y haber"],
+      definition:"Lados del asiento contable donde se registran cargos y abonos.",
+      explain:"No significan bueno/malo ni entrada/salida de dinero automáticamente; dependen de la naturaleza de la cuenta.",
+      must:"La partida doble exige igualdad entre debe y haber.",
+      trap:"Pensar que debe siempre es ingreso o haber siempre gasto.",
+      caseText:"Una compra a crédito exige registrar la entrada de mercaderías o gasto y la deuda con proveedores, sin tratarla como pago inmediato."
+    }
+  ]
+};
+
+function v(id){return document.getElementById(id)?.value.trim() || ""}
+
+function cleanInputText(text){
+  text = String(text || "");
+  if(window.TecniaQuality) text = window.TecniaQuality.cleanQualityNoise(text);
+  return text
+    .replace(/\r/g,"\n")
+    .replace(/MODO PRECISI[OÓ]N 10\/10 TECNIA[\s\S]*$/i,"")
+    .replace(/MODO PRECISION 10\/10 TECNIA[\s\S]*$/i,"")
+    .replace(/Datos que no pueden faltar[\s\S]*?(?=\n\n|$)/gi,"")
+    .replace(/Fuentes fiables[\s\S]*?(?=\n\n|$)/gi,"")
+    .replace(/[§¤•●▪◦]+/g," ")
+    .replace(/\s+:/g,":")
+    .replace(/[ \t]+/g," ")
+    .replace(/\n{3,}/g,"\n\n")
+    .trim();
+}
+
+function normalize(text){
+  return String(text || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^a-z0-9ñáéíóúü\s-]/gi," ")
+    .replace(/\s+/g," ")
+    .trim();
+}
+
+function splitSentences(text){
+  const seen = new Set();
+  return cleanInputText(text)
+    .split(/(?<=[.!?])\s+|\n+/)
+    .map(s=>s.trim())
+    .filter(s=>s.length>35 && s.length<520)
+    .filter(s=>{
+      const key=normalize(s);
+      if(seen.has(key)) return false;
+      seen.add(key);
+      return !/datos que|fuentes fiables|modo precision|wordreference|rae|boe/i.test(s);
+    });
+}
+
+async function handleFiles(files){
+  const list=document.getElementById("fileList");
+  const notes=document.getElementById("notes");
+
+  for(const file of files){
+    const item=document.createElement("div");
+    item.className="file-item";
+    item.innerHTML=`<span>${esc(file.name)}</span><span class="file-status">Leyendo...</span>`;
+    list.appendChild(item);
+    try{
+      const text=cleanInputText(await extractText(file));
+      notes.value=cleanInputText(notes.value+"\n\n"+text);
+      item.querySelector(".file-status").textContent="Leído";
+    }catch(e){
+      item.querySelector(".file-status").textContent="No leído";
+    }
+  }
+}
+
+async function extractText(file){
+  const name=file.name.toLowerCase();
+  if(name.endsWith(".pdf")) return pdfText(file);
+  if(name.endsWith(".docx")) return docxText(file);
+  return file.text();
+}
+
+async function pdfText(file){
+  if(!window.pdfjsLib) throw new Error("No se pudo cargar PDF");
+  const pdf=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;
+  let out="";
+  for(let i=1;i<=pdf.numPages;i++){
+    const page=await pdf.getPage(i);
+    const content=await page.getTextContent();
+    out+="\n\nPágina "+i+"\n"+content.items.map(x=>x.str).join(" ");
+  }
+  return out;
+}
+
+async function docxText(file){
+  if(!window.mammoth) throw new Error("No se pudo cargar DOCX");
+  const result=await mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()});
+  return result.value || "";
+}
+
+function detectDomain(subject,text,selected){
+  if(selected && selected !== "auto") return selected;
+  const all=normalize(subject+" "+text);
+  let best="general", bestScore=0;
+  Object.entries(DOMAIN_PROFILES).forEach(([key,profile])=>{
+    if(key==="general") return;
+    let score=0;
+    profile.detect.forEach(w=>{if(all.includes(normalize(w))) score+=2});
+    if(score>bestScore){bestScore=score;best=key}
+  });
+  return best;
+}
+
+function findKnowledge(domain,text,focus){
+  const rows = KNOWLEDGE[domain] || [];
+  const all = normalize(text + " " + focus);
+  const out = [];
+  rows.forEach(item=>{
+    if(item.keys.some(k=>all.includes(normalize(k)))) out.push(item);
+  });
+  return out;
+}
+
+function extractTerms(domain,text,focus,limit){
+  const sentences=splitSentences(text+"\n"+focus);
+  const profile=DOMAIN_PROFILES[domain] || DOMAIN_PROFILES.general;
+  const scores={};
+  sentences.forEach(sentence=>{
+    const matches=sentence.match(/\b[A-ZÁÉÍÓÚÑa-záéíóúñ]{5,}(?:\s+(?:de|del|la|las|los|el|en|por|con|sin|y|e|a))?(?:\s+[A-ZÁÉÍÓÚÑa-záéíóúñ]{4,}){0,4}\b/g)||[];
+    matches.forEach(raw=>{
+      const term=cleanCandidate(raw);
+      if(!term || isBadCandidate(term)) return;
+      let score=1;
+      if(normalize(focus).includes(normalize(term))) score+=10;
+      if(isAcademicTerm(domain,term)) score+=6;
+      if(term.split(/\s+/).length>=2) score+=2;
+      scores[smartCap(term)]=(scores[smartCap(term)]||0)+score;
+    });
+  });
+  return Object.entries(scores).sort((a,b)=>b[1]-a[1]).map(x=>x[0]).slice(0,limit);
+}
+
+function cleanCandidate(term){
+  term=String(term||"").trim().replace(/^[-–•\d.)]+/,"").replace(/[.,;:]+$/,"").trim();
+  if(term.length<5 || term.length>70) return "";
+  return term;
+}
+
+function isBadCandidate(term){
+  const n=normalize(term);
+  if(/^(de|del|la|las|los|el|en|por|con|sin|y|que|para|como|cuando|donde)\b/.test(n)) return true;
+  if(/\b(las unas|los unos|la cual|el cual|que debe|que tienen|que pueden|se refiere|es decir|del tema|los apuntes)\b/.test(n)) return true;
+  if(/datos que|fuentes|identifica|concepto relevante|modo precision|wordreference|cambridge|rae|boe|profesor|apuntes|pagina|página|tema|ejemplo|importante|general/i.test(term)) return true;
+  if(term.split(/\s+/).length>6) return true;
+  return false;
+}
+
+function isAcademicTerm(domain,term){
+  const n=normalize(term);
+  const map={
+    derecho:["capacidad","contrato","obligacion","acreedor","deudor","fianza","pago","nulidad","representacion","consentimiento","responsabilidad","persona","patrimonio","propiedad","credito"],
+    economia:["oferta","demanda","elasticidad","coste","precio","mercado","inflacion","pib","renta","productividad","beneficio","equilibrio"],
+    historia:["revolucion","estado","guerra","imperio","crisis","causa","consecuencia","industrializacion","reforma"],
+    lengua:["sujeto","predicado","sintagma","morfema","texto","oracion","metafora","cohesion","coherencia"],
+    anatomia:["musculo","hueso","articulacion","nervio","arteria","vena","organo","tejido"],
+    biologia:["celula","adn","gen","mitosis","meiosis","enzima","proteina","membrana","metabolismo"],
+    medicina:["sintoma","signo","diagnostico","tratamiento","enfermedad","fisiopatologia","etiologia"],
+    fisiologia:["homeostasis","potencial","sinapsis","hormona","receptor","feedback"],
+    psicologia:["conducta","memoria","aprendizaje","cognicion","emocion","refuerzo"],
+    sociologia:["institucion","rol","estatus","desigualdad","socializacion","clase"],
+    contabilidad:["activo","pasivo","patrimonio","debe","haber","asiento","balance","amortizacion","ingreso","gasto"]
+  };
+  return (map[domain]||[]).some(x=>n.includes(x));
+}
+
+function buildGenericConcept(domain,term){
+  const profile=DOMAIN_PROFILES[domain] || DOMAIN_PROFILES.general;
+  return {
+    term,
+    definition:`Concepto relevante que debe explicarse desde ${profile.lens}.`,
+    explain:`Debe estudiarse por su función dentro del tema, no como una palabra aislada. Lo importante es identificar qué problema resuelve, qué efecto produce y con qué conceptos se puede confundir.`,
+    must:`Debe aparecer al menos un ${profile.essential}, un ejemplo y una diferencia con un concepto cercano.`,
+    trap:`Memorizar el nombre sin saber aplicarlo.`,
+    caseText:`Plantea un supuesto donde ${term} pueda confundirse con otro concepto del tema y resuelve qué criterio permite distinguirlo.`
+  };
+}
+
+function groupIntoBlocks(domain,text,knowledge,terms,level){
+  const sentences=splitSentences(text);
+  if(domain==="derecho"){
+    const blocks=[
+      ["Personas, personalidad y capacidad",["personalidad","persona","capacidad","nasciturus","emancip"]],
+      ["Contratos y consentimiento",["contrato","consentimiento","objeto","causa","formal"]],
+      ["Obligaciones y sujetos",["obligacion","acreedor","deudor","prestacion","dar","hacer","no hacer"]],
+      ["Garantías, pago y cumplimiento",["fianza","pago","cumplimiento","acreedor aparente","liberatorio"]],
+      ["Ineficacia, nulidad y límites",["nulidad","ineficacia","limite","prohib","excepcion"]]
+    ];
+    return blocks.map(b=>{
+      const items=sentences.filter(s=>b[1].some(k=>normalize(s).includes(k))).slice(0,level==="ultra"?8:5);
+      return {title:b[0],items};
+    }).filter(b=>b.items.length);
+  }
+
+  const chunkSize = level==="repaso" ? 4 : level==="ultra" ? 8 : 6;
+  const arr=[];
+  for(let i=0;i<sentences.length;i+=chunkSize){
+    const items=sentences.slice(i,i+chunkSize);
+    if(items.length) arr.push({title:`Bloque ${arr.length+1}`,items});
+  }
+  return arr.slice(0, level==="ultra" ? 10 : 7);
+}
+
+function blockIdea(domain,title,items){
+  const joined=items.join(" ");
+  const n=normalize(title+" "+joined);
+  if(domain==="derecho"){
+    if(n.includes("personalidad")||n.includes("capacidad")) return "Este bloque sirve para distinguir quién puede ser sujeto de derecho, quién puede actuar válidamente y qué límites existen.";
+    if(n.includes("contrato")) return "Este bloque explica cómo nace una relación obligatoria válida a partir de la voluntad de las partes y sus requisitos.";
+    if(n.includes("obligacion")) return "Este bloque organiza la relación acreedor-deudor, la prestación debida y las consecuencias del cumplimiento o incumplimiento.";
+    if(n.includes("fianza")||n.includes("pago")) return "Este bloque explica cómo se garantiza, cumple o extingue una obligación y cuándo el deudor queda liberado.";
+  }
+  const first=items[0] || "";
+  return transformSentence(first,domain);
+}
+
+function transformSentence(sentence,domain){
+  sentence=String(sentence||"").trim();
+  if(!sentence) return "Idea relevante del bloque que debe estudiarse por su función y sus consecuencias.";
+  if(sentence.length>260) sentence=sentence.slice(0,250).replace(/\s+\S*$/,"")+"...";
+  return sentence.replace(/^[-–•\d.)]+\s*/,"");
+}
+
+function essentialsForBlock(domain,title,items,knowledge){
+  const txt=normalize(title+" "+items.join(" "));
+  const matched=knowledge.filter(k=>txt.includes(normalize(k.term).split(" ")[0]));
+  if(matched.length) return matched.slice(0,4).map(k=>k.must);
+
+  if(domain==="derecho") return ["Identifica sujetos, efectos y límites.", "Distingue conceptos parecidos.", "Añade requisito o consecuencia jurídica si aparece."];
+  if(domain==="economia") return ["Identifica variables y sentido de la relación.", "Aclara el supuesto económico.", "Explica efecto sobre agentes o mercado."];
+  if(domain==="historia") return ["Ubica cronología y contexto.", "Distingue causas y consecuencias.", "Menciona actores relevantes."];
+  if(domain==="biologia") return ["Explica mecanismo y función.", "Indica dónde ocurre.", "Señala consecuencia biológica."];
+  if(domain==="contabilidad") return ["Indica cuenta afectada.", "Explica debe/haber si procede.", "Aclara efecto en balance o resultado."];
+  return ["Define el concepto.", "Explica su función.", "Añade ejemplo y error típico."];
+}
+
+function buildExecutiveIdeas(domain,knowledge,blocks,terms){
+  const ideas=[];
+  knowledge.slice(0,6).forEach(k=>ideas.push(`${k.term}: ${k.explain}`));
+  blocks.slice(0,4).forEach(b=>{
+    const idea=blockIdea(domain,b.title,b.items);
+    if(idea && !ideas.some(x=>normalize(x).includes(normalize(b.title)))) ideas.push(`${b.title}: ${idea}`);
+  });
+  terms.slice(0,5).forEach(t=>{
+    if(!ideas.some(x=>normalize(x).includes(normalize(t)))) ideas.push(`${t}: concepto que conviene estudiar con definición, función, ejemplo y posible confusión.`);
+  });
+  return uniqueByNormalize(ideas).slice(0,8);
+}
+
+function buildConcepts(domain,knowledge,terms,limit){
+  const out=[...knowledge];
+  terms.forEach(t=>{
+    if(out.length>=limit) return;
+    if(out.some(k=>normalize(k.term)===normalize(t))) return;
+    out.push(buildGenericConcept(domain,t));
+  });
+  return out.slice(0,limit);
+}
+
+function buildTraps(domain,concepts){
+  return concepts.slice(0,10).map(c=>({
+    term:c.term,
+    trap:c.trap,
+    fix:`Para evitarlo, explica ${c.term} con definición, dato clave, ejemplo y diferencia con un concepto cercano.`
+  }));
+}
+
+function buildCases(domain,concepts,examType){
+  return concepts.filter(c=>c.caseText).slice(0,6).map(c=>({
+    term:c.term,
+    caseText:c.caseText,
+    answer:`La respuesta debe mencionar: ${c.must}`
+  }));
+}
+
+function buildQuestions(domain,concepts,examType){
+  return concepts.slice(0,10).map(c=>{
+    if(examType==="test") return `Pregunta tipo test: ¿cuál de las siguientes afirmaciones sobre ${c.term} es correcta y por qué las demás son incorrectas?`;
+    if(examType==="caso") return `Caso práctico: aplica ${c.term} a un supuesto ambiguo y justifica la solución.`;
+    return `Desarrollo: define ${c.term}, explica su importancia, añade un ejemplo y señala un error típico.`;
+  });
+}
+
+function uniqueByNormalize(arr){
+  const seen=new Set();
+  return arr.filter(x=>{
+    const k=normalize(typeof x==="string"?x:JSON.stringify(x));
+    if(seen.has(k)) return false;
+    seen.add(k);
+    return true;
+  });
+}
+
+function generateSummary(){
+  const subject=v("subject") || "la asignatura";
+  const selected=v("domain") || "auto";
+  const level=v("detailLevel") || "premium";
+  const examType=v("examType") || "mixto";
+  const focus=v("teacherFocus");
+  const text=cleanInputText(v("notes"));
+
+  if(text.split(/\s+/).length<60){
+    openResult("<h2>Falta material</h2><p>Pega más apuntes para generar un resumen realmente útil.</p>");
+    return;
+  }
+
+  const domain=detectDomain(subject,text+" "+focus,selected);
+  const profile=DOMAIN_PROFILES[domain] || DOMAIN_PROFILES.general;
+  const knowledge=findKnowledge(domain,text,focus);
+  const terms=extractTerms(domain,text,focus,level==="ultra"?22:16);
+  const blocks=groupIntoBlocks(domain,text,knowledge,terms,level);
+  const concepts=buildConcepts(domain,knowledge,terms,level==="ultra"?22:16);
+  const executive=buildExecutiveIdeas(domain,knowledge,blocks,terms);
+  const traps=buildTraps(domain,concepts);
+  const cases=buildCases(domain,concepts,examType);
+  const questions=buildQuestions(domain,concepts,examType);
+
+  lastOutput=buildPlainOutput(subject,profile,executive,blocks,concepts,traps,cases,questions);
+  openResult(renderSummary(subject,profile,executive,blocks,concepts,traps,cases,questions,level,examType));
+  document.getElementById("preview").innerHTML=`<h2>Resumen generado</h2><div class="empty">Resumen premium creado. Revisa estructura, conceptos, matices y casos.</div>`;
+}
+
+function renderSummary(subject,profile,executive,blocks,concepts,traps,cases,questions,level,examType){
+  return `
+  <button class="tecnia-result-close" onclick="closeTecnIAResult()">Cerrar ×</button>
+
+  <div class="result-title">
+    <h2>Resumen premium de ${esc(subject)}</h2>
+    <p>Área aplicada: <strong>${esc(profile.label)}</strong>. El objetivo no es reducir por reducir, sino transformar el temario en una guía clara, estudiable y orientada a examen.</p>
+  </div>
+
+  <div class="dashboard">
+    <div class="dash-card"><span>Área</span><strong>${esc(profile.label)}</strong></div>
+    <div class="dash-card"><span>Bloques</span><strong>${blocks.length}</strong></div>
+    <div class="dash-card"><span>Conceptos</span><strong>${concepts.length}</strong></div>
+    <div class="dash-card"><span>Modo</span><strong>${esc(level)}</strong></div>
+  </div>
+
+  <div class="summary-nav">
+    <a href="#resumen-ejecutivo">Resumen ejecutivo</a>
+    <a href="#bloques">Bloques</a>
+    <a href="#conceptos">Conceptos</a>
+    <a href="#trampas">Trampas</a>
+    <a href="#casos">Casos</a>
+    <a href="#preguntas">Preguntas</a>
+    <a href="#checklist">Checklist 10</a>
+  </div>
+
+  <section class="section-block" id="resumen-ejecutivo">
+    <div class="section-head"><h3>1. Resumen ejecutivo: lo que debes dominar</h3><span>visión global</span></div>
+    <div class="section-body">
+      <div class="big-idea"><strong>Lectura inteligente</strong> Estudia este tema con esta lente: ${esc(profile.lens)}.</div>
+      <div class="grid-2">
+        ${executive.map((idea,i)=>`<div class="study-card"><h4>${i+1}. Idea clave</h4><p>${esc(idea)}</p></div>`).join("")}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block" id="bloques">
+    <div class="section-head"><h3>2. Temario reestructurado por bloques</h3><span>sin apelmazar</span></div>
+    <div class="section-body block-summary">
+      ${blocks.map((b,i)=>`
+        <div class="topic-card">
+          <div class="topic-title">${i+1}. ${esc(b.title)}</div>
+          <div class="topic-content">
+            <div class="big-idea"><strong>Idea central</strong>${esc(blockIdea(profile.label.toLowerCase(),b.title,b.items))}</div>
+            <div class="grid-2">
+              <div class="study-card">
+                <h4>Explicación transformada</h4>
+                <ul>${b.items.slice(0, level==="ultra"?6:4).map(s=>`<li>${esc(transformSentence(s,profile.label))}</li>`).join("")}</ul>
+              </div>
+              <div class="study-card">
+                <h4>No puede faltar</h4>
+                <ul>${essentialsForBlock(profile.label.toLowerCase(),b.title,b.items,concepts).slice(0,4).map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join("")}
+    </div>
+  </section>
+
+  <section class="section-block" id="conceptos">
+    <div class="section-head"><h3>3. Conceptos clave explicados</h3><span>definición + matiz</span></div>
+    <div class="section-body">
+      <div class="concept-grid">
+        ${concepts.map(c=>`
+          <div class="concept-card">
+            <span class="tag">${esc(c.term)}</span>
+            <h4>Qué significa</h4>
+            <p>${esc(c.definition)}</p>
+            <h4>Cómo entenderlo</h4>
+            <p>${esc(c.explain)}</p>
+            <h4>Dato que no puede faltar</h4>
+            <p>${esc(c.must)}</p>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block" id="trampas">
+    <div class="section-head"><h3>4. Trampas y errores que hacen perder puntos</h3><span>${esc(profile.trapLabel)}</span></div>
+    <div class="section-body">
+      <div class="grid-2">
+        ${traps.map(t=>`
+          <div class="study-card">
+            <h4>${esc(t.term)}</h4>
+            <p><strong>Error:</strong> ${esc(t.trap)}</p>
+            <p><strong>Cómo salvarlo:</strong> ${esc(t.fix)}</p>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block" id="casos">
+    <div class="section-head"><h3>5. Casos o aplicaciones para entender de verdad</h3><span>${esc(profile.caseLabel)}</span></div>
+    <div class="section-body">
+      <div class="grid-2">
+        ${cases.length ? cases.map(c=>`
+          <div class="case-box">
+            <strong>${esc(c.term)}</strong>
+            <p>${esc(c.caseText)}</p>
+            <p><strong>Qué debe aparecer en la respuesta:</strong> ${esc(c.answer)}</p>
+          </div>
+        `).join("") : `<div class="study-card"><p>No se han detectado casos específicos. Añade conceptos concretos para que la herramienta genere aplicaciones más útiles.</p></div>`}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block" id="preguntas">
+    <div class="section-head"><h3>6. Preguntas probables de examen</h3><span>${esc(examType)}</span></div>
+    <div class="section-body">
+      <div class="study-card">
+        <ul>${questions.map(q=>`<li>${esc(q)}</li>`).join("")}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block" id="checklist">
+    <div class="section-head"><h3>7. Checklist para aspirar al 10</h3><span>control final</span></div>
+    <div class="section-body">
+      <div class="check-list">
+        <label><input type="checkbox"> Sé explicar cada concepto sin copiar literalmente los apuntes.</label>
+        <label><input type="checkbox"> Sé decir el dato que no puede faltar en cada bloque.</label>
+        <label><input type="checkbox"> Sé diferenciar conceptos parecidos.</label>
+        <label><input type="checkbox"> Sé aplicar al menos un caso práctico o ejemplo por bloque.</label>
+        <label><input type="checkbox"> He detectado las trampas que podrían hacerme perder puntos.</label>
+        <label><input type="checkbox"> Puedo convertir este resumen en flashcards y preguntas de examen.</label>
+      </div>
+    </div>
+  </section>
+
+  <div class="warning-box">
+    <strong>Limitación honesta:</strong> esta versión mejora estructura, claridad y matices dentro de una web estática. Para una interpretación perfecta como una IA experta conectada a fuentes o modelos externos, más adelante habría que integrar una API real. Esta versión está pensada para que el resultado sea mucho más estudiable que un resumen apelmazado.
+  </div>
+  `;
+}
+
+function buildPlainOutput(subject,profile,executive,blocks,concepts,traps,cases,questions){
+  return [
+    `RESUMEN PREMIUM - ${subject}`,
+    `Área: ${profile.label}`,
+    "",
+    "1. RESUMEN EJECUTIVO",
+    ...executive.map((x,i)=>`${i+1}. ${x}`),
+    "",
+    "2. BLOQUES",
+    ...blocks.flatMap((b,i)=>[
+      "",
+      `${i+1}. ${b.title}`,
+      `Idea central: ${blockIdea(profile.label.toLowerCase(),b.title,b.items)}`,
+      "No puede faltar:",
+      ...essentialsForBlock(profile.label.toLowerCase(),b.title,b.items,concepts).map(x=>"- "+x)
+    ]),
+    "",
+    "3. CONCEPTOS CLAVE",
+    ...concepts.flatMap(c=>[
+      "",
+      c.term,
+      "Qué significa: "+c.definition,
+      "Cómo entenderlo: "+c.explain,
+      "No puede faltar: "+c.must
+    ]),
+    "",
+    "4. TRAMPAS",
+    ...traps.map(t=>`- ${t.term}: ${t.trap}`),
+    "",
+    "5. CASOS",
+    ...cases.map(c=>`- ${c.term}: ${c.caseText} Respuesta: ${c.answer}`),
+    "",
+    "6. PREGUNTAS",
+    ...questions.map(q=>"- "+q)
+  ].join("\n");
+}
+
+function openResult(html){
+  let overlay=document.getElementById("tecniaResultOverlay");
+  if(!overlay){
+    overlay=document.createElement("div");
+    overlay.id="tecniaResultOverlay";
+    overlay.innerHTML=`<div class="tecnia-result-backdrop" onclick="closeTecnIAResult()"></div><div class="tecnia-result-window" id="tecniaResultContent"></div>`;
+    document.body.appendChild(overlay);
+  }
+  document.getElementById("tecniaResultContent").innerHTML=html;
+  overlay.classList.add("active");
+  document.body.style.overflow="hidden";
+}
+
+function closeTecnIAResult(){
+  const overlay=document.getElementById("tecniaResultOverlay");
+  if(overlay) overlay.classList.remove("active");
+  document.body.style.overflow="";
+}
+
+async function copyOutput(){
+  await navigator.clipboard.writeText(lastOutput || "Todavía no has generado resumen.");
+  const note=document.getElementById("copyNote");
+  note.style.display="block";
+  setTimeout(()=>note.style.display="none",2200);
+}
+
+function resetTool(){
+  document.getElementById("summaryForm").reset();
+  document.getElementById("fileList").innerHTML="";
+  lastOutput="";
+  document.getElementById("preview").innerHTML=`<h2>Resultado</h2><div class="empty">El resumen se abrirá en grande, con índice, bloques, conceptos explicados, matices, casos, errores y checklist.</div>`;
+}
+
+function smartCap(text){
+  text=String(text||"").trim();
+  return text ? text.charAt(0).toUpperCase()+text.slice(1) : "";
+}
+
+function esc(text){
+  return String(text||"")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
 </script>
+
 <script src="tecnia-memory.js"></script>
 <script src="tecnia-quality.js"></script>
 </body>
