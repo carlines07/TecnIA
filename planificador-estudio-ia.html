@@ -3,89 +3,341 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Planificador de estudio con IA | Plan claro y realista | TecnIA</title>
-<meta name="description" content="Organiza tu estudio por temas reales, prioridades, matices y tareas concretas. Planificador para estudiar sin agobio y sin perder lo importante.">
+
+<title>Planificador de estudio con IA | Plan por temas reales | TecnIA</title>
+<meta name="description" content="Planifica tu estudio por temas reales: prioridades, tareas concretas, repaso activo y preguntas de examen. Sin fuentes fiables ni instrucciones mezcladas con el temario.">
 <link rel="canonical" href="https://tecniaia.com/planificador-estudio-ia.html">
 <meta property="og:title" content="Planificador de estudio con IA | TecnIA">
-<meta property="og:description" content="Crea un plan de estudio claro, por prioridades y sin relleno.">
+<meta property="og:description" content="Organiza tu estudio por temas reales y tareas útiles.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://tecniaia.com/planificador-estudio-ia.html">
+
 <link rel="stylesheet" href="style.css">
+
 <style>
 .hero{margin:42px auto 34px;padding:clamp(52px,8vw,90px) clamp(24px,5vw,58px);border-radius:42px;color:#fff;background:radial-gradient(circle at 16% 18%,rgba(20,184,166,.34),transparent 30%),radial-gradient(circle at 82% 16%,rgba(37,99,235,.36),transparent 28%),linear-gradient(135deg,#07111f,#0f172a 48%,#111827);box-shadow:0 34px 90px rgba(15,23,42,.28)}
 .hero h1{color:#fff;font-size:clamp(2.4rem,6vw,5rem);line-height:1;letter-spacing:-2px;margin:18px 0 20px}.hero p{max-width:880px;color:#dbeafe;line-height:1.85;font-size:1.14rem}
 .layout{display:grid;grid-template-columns:minmax(360px,.9fr) minmax(0,1.1fr);gap:28px;align-items:start}.panel,.info-card{background:#fff;border:1px solid #dbeafe;border-radius:30px;padding:30px;box-shadow:0 18px 45px rgba(15,23,42,.08)}.panel h2,.info-card h2{margin-top:0;color:#0f172a}.helper{color:#64748b;line-height:1.65;margin-bottom:20px}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:grid;gap:8px}.field.full{grid-column:1/-1}.field label{font-weight:900;color:#0f172a;font-size:.94rem}.field input,.field select,.field textarea{width:100%;border:1px solid #cbd5e1;border-radius:16px;padding:13px 14px;font:inherit;color:#0f172a;background:#fff}.field textarea{resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 4px rgba(37,99,235,.1)}
 .file-drop{position:relative;display:grid;place-items:center;min-height:150px;padding:22px;text-align:center;border:2px dashed #93c5fd;border-radius:24px;background:linear-gradient(135deg,#eff6ff,#f8fafc);cursor:pointer}.file-drop input{position:absolute;inset:0;opacity:0;cursor:pointer}.file-drop strong{display:block;color:#0f172a;font-size:1.1rem;margin-bottom:8px}.file-drop span{display:block;color:#475569;line-height:1.55}.file-list{display:grid;gap:10px;margin-top:14px}.file-item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 14px;border-radius:16px;background:#f8fafc;border:1px solid #e2e8f0;color:#334155;font-size:.92rem}.file-status{font-weight:900;color:#1d4ed8;white-space:nowrap}
-.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.copy-note{margin-top:12px;color:#16a34a;font-weight:900;display:none}.empty{color:#64748b;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:20px;padding:22px;line-height:1.7}.mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}.mini-card{background:#fff;border:1px solid #dbeafe;border-radius:24px;padding:24px;box-shadow:0 14px 34px rgba(15,23,42,.07)}.mini-card h3{color:#0f172a;margin:0 0 8px}.mini-card p{color:#334155;line-height:1.7;margin:0}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.copy-note{margin-top:12px;color:#16a34a;font-weight:900;display:none}.empty{color:#64748b;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:20px;padding:22px;line-height:1.7}
+.mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}.mini-card{background:#fff;border:1px solid #dbeafe;border-radius:24px;padding:24px;box-shadow:0 14px 34px rgba(15,23,42,.07)}.mini-card h3{color:#0f172a;margin:0 0 8px}.mini-card p{color:#334155;line-height:1.7;margin:0}
 #tecniaResultOverlay{display:none;position:fixed;inset:0;z-index:9999}#tecniaResultOverlay.active{display:block}.tecnia-result-backdrop{position:absolute;inset:0;background:rgba(15,23,42,.68);backdrop-filter:blur(5px)}.tecnia-result-window{position:relative;z-index:2;width:min(1180px,calc(100vw - 32px));max-height:calc(100vh - 36px);margin:18px auto;padding:28px;border-radius:32px;background:#fff;box-shadow:0 30px 90px rgba(15,23,42,.35);overflow:auto}.tecnia-result-close{position:sticky;top:0;float:right;z-index:3;border:0;border-radius:999px;background:#0f172a;color:#fff;padding:10px 15px;font-weight:900;cursor:pointer}
-.result-title h2{margin:0 0 10px;color:#0f172a;font-size:clamp(1.9rem,4vw,3rem);letter-spacing:-1px}.result-title p{color:#475569;line-height:1.7;margin:0}.dash{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:24px 0}.dash-card{padding:18px;border-radius:20px;background:linear-gradient(135deg,#eff6ff,#f8fafc);border:1px solid #dbeafe}.dash-card span{display:block;color:#64748b;font-size:.78rem;font-weight:950;text-transform:uppercase;margin-bottom:6px}.dash-card strong{color:#0f172a}
-.priority-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.priority-card{border:1px solid #dbeafe;border-radius:22px;background:#f8fafc;padding:18px}.priority-card h3{margin:0 0 10px;color:#0f172a}.priority-card li{color:#334155;line-height:1.65;margin-bottom:7px}
-.day-list{display:grid;gap:18px;margin-top:24px}.day-card{border:1px solid #dbeafe;border-radius:28px;background:#fff;overflow:hidden;box-shadow:0 12px 32px rgba(15,23,42,.07)}.day-head{padding:18px 20px;background:#0f172a;color:#fff;display:flex;justify-content:space-between;gap:14px;align-items:center}.day-head h3{margin:0;color:#fff}.day-head span{background:rgba(20,184,166,.18);border:1px solid rgba(20,184,166,.3);color:#99f6e4;border-radius:999px;padding:6px 10px;font-weight:900}.day-body{padding:20px;background:#f8fafc}.block{display:grid;grid-template-columns:125px 1fr;gap:14px;align-items:start;background:#fff;border:1px solid #e2e8f0;border-radius:20px;padding:16px;margin-bottom:12px}.time{display:inline-flex;justify-content:center;padding:10px 12px;border-radius:16px;background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8;font-weight:950}.block h4{margin:0 0 6px;color:#0f172a}.block p{margin:0;color:#334155;line-height:1.65}.checklist{margin-top:16px;border-top:1px solid #e2e8f0;padding-top:14px}.checklist label{display:block;margin:9px 0;color:#334155;line-height:1.5}.warning-box{margin-top:20px;padding:18px;border-radius:22px;background:#fff7ed;border:1px solid #fed7aa;color:#7c2d12;line-height:1.65}
-@media(max-width:1080px){.layout,.mini-grid,.dash,.priority-grid{grid-template-columns:1fr}.block{grid-template-columns:1fr}}@media(max-width:760px){.hero{border-radius:30px}.form-grid{grid-template-columns:1fr}.panel,.info-card,.tecnia-result-window{padding:20px}}
+.result-title h2{margin:0 0 10px;color:#0f172a;font-size:clamp(1.9rem,4vw,3rem);letter-spacing:-1px}.result-title p{color:#475569;line-height:1.7;margin:0}
+.priority-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}.priority-card{border:1px solid #dbeafe;border-radius:22px;background:#f8fafc;padding:18px}.priority-card h3{margin:0 0 10px;color:#0f172a}.priority-card li{color:#334155;line-height:1.65;margin-bottom:8px}
+.day-list{display:grid;gap:18px;margin-top:24px}.day-card{border:1px solid #dbeafe;border-radius:28px;background:#fff;overflow:hidden;box-shadow:0 12px 32px rgba(15,23,42,.07)}.day-head{padding:18px 20px;background:#0f172a;color:#fff;display:flex;justify-content:space-between;gap:14px;align-items:center}.day-head h3{margin:0;color:#fff}.day-head span{background:rgba(20,184,166,.18);border:1px solid rgba(20,184,166,.3);color:#99f6e4;border-radius:999px;padding:6px 10px;font-weight:900}.day-body{padding:20px;background:#f8fafc}
+.block{display:grid;grid-template-columns:125px 1fr;gap:14px;align-items:start;background:#fff;border:1px solid #e2e8f0;border-radius:20px;padding:16px;margin-bottom:12px}.time{display:inline-flex;justify-content:center;padding:10px 12px;border-radius:16px;background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8;font-weight:950}.block h4{margin:0 0 6px;color:#0f172a}.block p{margin:0;color:#334155;line-height:1.65}.checklist{margin-top:16px;border-top:1px solid #e2e8f0;padding-top:14px}.checklist label{display:block;margin:9px 0;color:#334155;line-height:1.5}.warning-box{margin-top:20px;padding:18px;border-radius:22px;background:#fff7ed;border:1px solid #fed7aa;color:#7c2d12;line-height:1.65}
+@media(max-width:1080px){.layout,.mini-grid,.priority-grid{grid-template-columns:1fr}.block{grid-template-columns:1fr}}@media(max-width:760px){.hero{border-radius:30px}.form-grid{grid-template-columns:1fr}.panel,.info-card,.tecnia-result-window{padding:20px}}
 </style>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 </head>
+
 <body>
-<header><div class="container navbar"><a href="index.html" class="logo">Tecn<span>IA</span></a><nav><ul class="nav-links"><li><a href="index.html">Inicio</a></li><li><a href="herramientas-interactivas.html">Herramientas</a></li><li><a href="ia-para-estudiar.html">Estudiar con IA</a></li><li><a href="articulos.html">Guías</a></li></ul></nav></div></header>
+<header>
+  <div class="container navbar">
+    <a href="index.html" class="logo">Tecn<span>IA</span></a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="herramientas-interactivas.html">Herramientas</a></li>
+        <li><a href="ia-para-estudiar.html">Estudiar con IA</a></li>
+        <li><a href="articulos.html">Guías</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
 <main>
-<section class="container"><div class="hero"><div class="hero-kicker">Plan realista, no bloques absurdos</div><h1>Organiza tu estudio por temas reales y matices de examen</h1><p>Un buen plan no estudia “fuentes fiables” como si fueran tema. Detecta los bloques del temario y reparte tareas útiles: resumen, diferencias, casos prácticos, test y repaso activo.</p><div class="hero-actions"><a href="#tool" class="btn btn-primary">Crear plan</a><a href="resumidor-apuntes-ia.html" class="btn btn-outline">Resumir temario</a></div></div></section>
+<section class="container">
+  <div class="hero">
+    <div class="hero-kicker">Plan por temas reales</div>
+    <h1>Organiza el estudio sin meter ruido ni fuentes externas</h1>
+    <p>El planificador solo trabaja con el temario que pegues. Nada de “fuentes fiables”, nada de instrucciones mezcladas como temas. El objetivo es estudiar lo que entra.</p>
+    <div class="hero-actions">
+      <a href="#tool" class="btn btn-primary">Crear plan</a>
+      <a href="resumidor-apuntes-ia.html" class="btn btn-outline">Resumir después</a>
+    </div>
+  </div>
+</section>
+
 <article class="container">
-<section class="info-card"><span class="article-tag">Prioridad · Matices · Acción</span><h2>Qué debe hacer el planificador</h2><p class="helper">Debe decirte qué estudiar, cómo estudiarlo y qué comprobar al final. Nada de organizar instrucciones como si fueran temas.</p><div class="mini-grid"><div class="mini-card"><h3>Temas reales</h3><p>Personalidad jurídica, capacidad, contratos, obligaciones, fianza, pago...</p></div><div class="mini-card"><h3>Tareas concretas</h3><p>Tabla de diferencias, caso práctico, preguntas tipo test, repaso activo.</p></div><div class="mini-card"><h3>Prioridad</h3><p>Primero lo más preguntable y lo que más puntos puede dar.</p></div></div></section>
+<section class="info-card">
+  <span class="article-tag">Temas · Tareas · Repaso</span>
+  <h2>Qué debe darte el plan</h2>
+  <p class="helper">Un buen plan no te satura: te dice qué bloque estudiar, qué tarea hacer y cómo comprobar que lo sabes.</p>
+  <div class="mini-grid">
+    <div class="mini-card"><h3>Temas reales</h3><p>Personalidad jurídica, capacidad, contratos, obligaciones, fianza, pago...</p></div>
+    <div class="mini-card"><h3>Tareas concretas</h3><p>Tabla de diferencias, caso práctico, preguntas test, repaso activo.</p></div>
+    <div class="mini-card"><h3>Checklist útil</h3><p>Compruebas si sabes definición, matiz, ejemplo y error típico.</p></div>
+  </div>
+</section>
+
 <section id="tool" class="layout" style="margin-top:32px;">
-<div class="panel"><h2>Crear plan de estudio</h2><p class="helper">Pega el temario. El plan ignorará la instrucción del modo 10/10 como contenido y solo usará sus datos para priorizar.</p>
-<form id="studyPlannerForm" onsubmit="event.preventDefault();generatePlan();">
-<div class="form-grid">
-<div class="field"><label for="subject">Asignatura</label><input id="subject" type="text" placeholder="Ej: Derecho Civil Patrimonial"></div>
-<div class="field"><label for="days">Días disponibles</label><select id="days"><option value="1">1 día</option><option value="2">2 días</option><option value="3" selected>3 días</option><option value="5">5 días</option><option value="7">7 días</option></select></div>
-<div class="field"><label for="hours">Horas al día</label><select id="hours"><option value="1.5">1,5 h</option><option value="2" selected>2 h</option><option value="3">3 h</option><option value="4">4 h</option></select></div>
-<div class="field"><label for="examType">Tipo de examen</label><select id="examType"><option value="test">Test</option><option value="desarrollo">Desarrollo</option><option value="mixto" selected>Mixto</option><option value="caso práctico">Caso práctico</option></select></div>
-<div class="field full"><label>Adjuntar temario</label><div class="file-drop" id="fileDrop"><input id="studyFiles" type="file" multiple accept=".txt,.md,.csv,.html,.htm,.pdf,.docx"><div><strong>Arrastra archivos aquí o pulsa para seleccionarlos</strong><span>TXT, MD, PDF o DOCX.</span></div></div><div id="fileList" class="file-list"></div></div>
-<div class="field full"><label for="manualTopics">Pega aquí temario, apuntes o lista de temas</label><textarea id="manualTopics" rows="13" placeholder="Pega aquí el temario..."></textarea></div>
-<div class="field full"><label for="extra">Información extra</label><textarea id="extra" rows="4" placeholder="Ej: el profesor insiste en casos prácticos, tengo poco tiempo, quiero priorizar test..."></textarea></div>
-</div>
-<div class="actions"><button type="submit" class="btn btn-primary">Crear plan claro</button><button type="button" class="btn btn-outline" onclick="copyPlan()">Copiar plan</button><button type="button" class="btn btn-outline" onclick="resetPlanner()">Limpiar</button></div><div id="copyNote" class="copy-note">Copiado.</div>
-</form></div>
-<div class="panel" id="plannerResult"><h2>Tu plan aparecerá aquí</h2><div class="empty">El resultado se abrirá en grande con prioridades, agenda y checklist.</div></div>
+  <div class="panel">
+    <h2>Crear plan de estudio</h2>
+    <p class="helper">Pega solo el temario o apuntes. No pegues fuentes ni instrucciones externas.</p>
+
+    <form id="studyPlannerForm" onsubmit="event.preventDefault();generatePlan();">
+      <div class="form-grid">
+        <div class="field"><label for="subject">Asignatura</label><input id="subject" type="text" placeholder="Ej: Derecho Civil Patrimonial"></div>
+        <div class="field"><label for="days">Días disponibles</label><select id="days"><option value="1">1 día</option><option value="2">2 días</option><option value="3" selected>3 días</option><option value="5">5 días</option><option value="7">7 días</option></select></div>
+        <div class="field"><label for="hours">Horas al día</label><select id="hours"><option value="1.5">1,5 h</option><option value="2" selected>2 h</option><option value="3">3 h</option><option value="4">4 h</option></select></div>
+        <div class="field"><label for="examType">Tipo de examen</label><select id="examType"><option value="test">Test</option><option value="desarrollo">Desarrollo</option><option value="mixto" selected>Mixto</option><option value="caso práctico">Caso práctico</option></select></div>
+        <div class="field full"><label>Adjuntar temario</label><div class="file-drop" id="fileDrop"><input id="studyFiles" type="file" multiple accept=".txt,.md,.csv,.html,.htm,.pdf,.docx"><div><strong>Arrastra archivos aquí o pulsa para seleccionarlos</strong><span>TXT, MD, PDF o DOCX.</span></div></div><div id="fileList" class="file-list"></div></div>
+        <div class="field full"><label for="manualTopics">Pega aquí temario, apuntes o lista de temas</label><textarea id="manualTopics" rows="13" placeholder="Pega aquí el temario..."></textarea></div>
+        <div class="field full"><label for="extra">Información extra</label><textarea id="extra" rows="4" placeholder="Ej: el profesor insiste en casos prácticos, tengo poco tiempo, quiero priorizar test..."></textarea></div>
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="btn btn-primary">Crear plan claro</button>
+        <button type="button" class="btn btn-outline" onclick="copyPlan()">Copiar plan</button>
+        <button type="button" class="btn btn-outline" onclick="resetPlanner()">Limpiar</button>
+      </div>
+      <div id="copyNote" class="copy-note">Copiado.</div>
+    </form>
+  </div>
+
+  <div class="panel" id="plannerResult">
+    <h2>Tu plan aparecerá aquí</h2>
+    <div class="empty">El resultado se abrirá en grande con prioridades, agenda y checklist.</div>
+  </div>
 </section>
 </article>
 </main>
+
 <footer><div class="container"><p>&copy; 2026 TecnIA. Todos los derechos reservados.</p></div></footer>
+
 <script>
-let lastPlanText="";
-document.addEventListener("DOMContentLoaded",()=>{if(window.pdfjsLib)pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";document.getElementById("studyFiles").addEventListener("change",e=>handleFiles(e.target.files));});
-function v(id){return document.getElementById(id)?.value.trim()||""}
-function quality(){return window.TecniaQuality?window.TecniaQuality.getProfile():{mustKeep:"",sources:"",enabled:false,subjectType:"general"}}
-function cleanText(t){t=String(t||"");if(window.TecniaQuality)t=window.TecniaQuality.cleanQualityNoise(t);return t.replace(/\r/g,"\n").replace(/[§¤●▪◦]+/g," ").replace(/\s+:/g,":").replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim()}
+let lastPlanText = "";
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+  document.getElementById("studyFiles").addEventListener("change", e => handleFiles(e.target.files));
+});
+
+function v(id){return document.getElementById(id)?.value.trim() || ""}
+
+function cleanText(t){
+  return String(t || "")
+    .replace(/\r/g,"\n")
+    .replace(/MODO PRECISI[OÓ]N 10\/10 TECNIA[\s\S]*$/i,"")
+    .replace(/MODO PRECISION 10\/10 TECNIA[\s\S]*$/i,"")
+    .replace(/Datos que no pueden faltar[\s\S]*?(?=\n\n|$)/gi,"")
+    .replace(/Fuentes fiables[\s\S]*?(?=\n\n|$)/gi,"")
+    .replace(/Si la asignatura es[\s\S]*?(?=\n|$)/gi,"")
+    .replace(/No usar frases gen[eé]ricas[\s\S]*?(?=\n|$)/gi,"")
+    .replace(/Explicar qu[eé] hace especial[\s\S]*?(?=\n|$)/gi,"")
+    .replace(/Incluir l[ií]mites[\s\S]*?(?=\n|$)/gi,"")
+    .replace(/[§¤●▪◦]+/g," ")
+    .replace(/[ \t]+/g," ")
+    .replace(/\n{3,}/g,"\n\n")
+    .trim();
+}
+
 function normalize(t){return String(t||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9ñáéíóúü\s-]/gi," ").replace(/\s+/g," ").trim()}
-async function handleFiles(files){const list=document.getElementById("fileList"),notes=document.getElementById("manualTopics");for(const file of files){const item=document.createElement("div");item.className="file-item";item.innerHTML=`<span>${esc(file.name)}</span><span class="file-status">Leyendo...</span>`;list.appendChild(item);try{const text=cleanText(await extractText(file));notes.value=cleanText(notes.value+"\n\n"+text);item.querySelector(".file-status").textContent="Leído"}catch(e){item.querySelector(".file-status").textContent="No leído"}}}
-async function extractText(file){const n=file.name.toLowerCase();if(n.endsWith(".pdf")){const pdf=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;let out="";for(let i=1;i<=pdf.numPages;i++){const p=await pdf.getPage(i),c=await p.getTextContent();out+="\n"+c.items.map(x=>x.str).join(" ")}return out}if(n.endsWith(".docx"))return(await mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()})).value||"";return file.text()}
-function isLaw(subject,text){return /derecho|civil|contrato|obligaci[oó]n|acreedor|deudor|c[oó]digo civil|fianza|capacidad/i.test(subject+" "+text)}
-function detectTopics(subject,text,extra){const all=normalize(text+" "+extra);let topics=[];const law=[
-["Personalidad jurídica y clases de personas",["personalidad juridica","personas juridicas","personas fisicas","nasciturus"],"Distinguir persona física, jurídica y nasciturus."],
-["Capacidad jurídica vs capacidad de obrar",["capacidad juridica","capacidad de obrar"],"Tabla comparativa: titularidad de derechos frente a actuación válida."],
-["Menores emancipados y art. 247",["menores emancipados","articulo 247","prestamo","gravar","enajenar"],"Imprescindible: límites para préstamo, gravar o enajenar bienes."],
-["Contratos: consentimiento, requisitos y formalidades",["contrato","consentimiento","requisitos","formal"],"Estudiar requisitos y cuándo la forma afecta a la validez."],
-["Obligaciones: acreedor, deudor y tipos",["obligacion","acreedor","deudor","dar","hacer","no hacer","medios","resultado"],"Diferenciar sujetos, prestación, responsabilidad y tipos."],
-["Fianza solidaria",["fianza solidaria","fiador"],"Entender por qué el acreedor puede reclamar indistintamente."],
-["Pago, cumplimiento y acreedor aparente",["pago","cumplimiento","acreedor aparente","liberatorio"],"Efecto: extinguir deuda, liberar deudor y satisfacer interés del acreedor."]
-];if(isLaw(subject,text)){law.forEach(t=>{if(t[1].some(k=>all.includes(k)))topics.push({name:t[0],task:t[2]})})}
-if(topics.length<4){const candidates=extractTerms(text).slice(0,8);candidates.forEach(x=>topics.push({name:x,task:"Definir, explicar el matiz y hacer una pregunta posible de examen."}))}
-return topics.filter((t,i,a)=>a.findIndex(x=>normalize(x.name)===normalize(t.name))===i).slice(0,10)}
-function extractTerms(text){const s=cleanText(text).split(/(?<=[.!?])\s+|\n+/).filter(x=>x.length>35&&x.length<500);const scores={};s.forEach(x=>(x.match(/\b[A-ZÁÉÍÓÚÑa-záéíóúñ]{5,}(?:\s+(?:de|del|la|las|los|el|en|por|con|sin|y))?(?:\s+[A-ZÁÉÍÓÚÑa-záéíóúñ]{4,}){0,4}\b/g)||[]).forEach(t=>{if(!/datos que|fuentes|identifica|concepto relevante|modo precision/i.test(t))scores[t]=(scores[t]||0)+1}));return Object.entries(scores).sort((a,b)=>b[1]-a[1]).map(x=>x[0])}
-function priority(topics){return{max:topics.slice(0,3),medium:topics.slice(3,6),low:topics.slice(6,9)}}
-function generatePlan(){const subject=v("subject")||"la asignatura";const days=parseInt(v("days")||"3");const hours=parseFloat(v("hours")||"2");const examType=v("examType")||"mixto";const text=cleanText(v("manualTopics"));const extra=v("extra");const q=quality();if(text.split(/\s+/).length<40){openResult("<h2>Falta temario</h2><p>Pega una lista de temas o apuntes para crear un plan real.</p>");return}const topics=detectTopics(subject,text,extra+" "+q.mustKeep);const p=priority(topics);const plan=buildDays(topics,days,hours,examType);lastPlanText=plain(subject,days,hours,examType,p,plan);openResult(render(subject,days,hours,examType,p,plan,q));document.getElementById("plannerResult").innerHTML='<h2>Plan generado</h2><div class="empty">Revisa si los bloques corresponden a temas reales del temario.</div>'}
-function buildDays(topics,days,hours,examType){let arr=[];for(let d=0;d<days;d++){const main=topics[d%topics.length];const second=topics[(d+1)%topics.length];const third=topics[(d+2)%topics.length];arr.push({day:d+1,focus:main.name,blocks:[{time:"35-45 min",title:"Resumen activo: "+main.name,desc:main.task+" Termina con 5 líneas limpias, no con un párrafo copiado."},{time:"25-35 min",title:"Matices y diferencias",desc:"Haz una tabla: concepto | definición | límite/excepción | ejemplo | error típico. Incluye "+second.name+"."},{time:"25-40 min",title:examType.includes("test")?"Preguntas tipo test y corrección":"Pregunta de desarrollo o caso práctico",desc:"Formula 8-12 preguntas sobre "+main.name+" y "+second.name+". Corrige por qué cada fallo resta puntos."},{time:"10-15 min",title:"Repaso activo",desc:"Cierra sin mirar: explica "+main.name+" y conecta con "+third.name+"."}],checklist:["He distinguido conceptos parecidos.","He marcado artículos, límites o prohibiciones si aparecen.","He hecho al menos una pregunta posible de examen.","He convertido errores en flashcards.","No he estudiado relleno ni párrafos copiados."]})}return arr}
-function render(subject,days,hours,examType,p,plan,q){return `<button class="tecnia-result-close" onclick="closeTecnIAResult()">Cerrar ×</button><div class="result-title"><h2>Plan claro de ${esc(subject)}</h2><p>Plan basado en temas reales del temario. Se ha evitado que las instrucciones del modo 10/10 se conviertan en bloques de estudio.</p></div><div class="dash"><div class="dash-card"><span>Días</span><strong>${days}</strong></div><div class="dash-card"><span>Horas/día</span><strong>${hours}</strong></div><div class="dash-card"><span>Tipo</span><strong>${esc(examType)}</strong></div><div class="dash-card"><span>Modo</span><strong>Precisión</strong></div></div><div class="priority-grid"><div class="priority-card"><h3>Prioridad máxima</h3><ul>${p.max.map(t=>`<li><strong>${esc(t.name)}:</strong> ${esc(t.task)}</li>`).join("")}</ul></div><div class="priority-card"><h3>Segunda vuelta</h3><ul>${p.medium.map(t=>`<li><strong>${esc(t.name)}:</strong> ${esc(t.task)}</li>`).join("")||"<li>Repasa lo anterior con preguntas.</li>"}</ul></div><div class="priority-card"><h3>Solo si sobra tiempo</h3><ul>${p.low.map(t=>`<li><strong>${esc(t.name)}:</strong> ${esc(t.task)}</li>`).join("")||"<li>Detalles secundarios y relectura final.</li>"}</ul></div></div><div class="day-list">${plan.map(day=>`<div class="day-card"><div class="day-head"><h3>Día ${day.day} · ${esc(day.focus)}</h3><span>${day.blocks.length} bloques</span></div><div class="day-body">${day.blocks.map(b=>`<div class="block"><span class="time">${esc(b.time)}</span><div><h4>${esc(b.title)}</h4><p>${esc(b.desc)}</p></div></div>`).join("")}<div class="checklist">${day.checklist.map(x=>`<label><input type="checkbox"> ${esc(x)}</label>`).join("")}</div></div></div>`).join("")}</div><div class="warning-box"><strong>Regla de hoy:</strong> no estudies un bloque hasta poder decir su definición, su matiz diferencial, un ejemplo y un error típico. Si no, parece estudiado pero no está dominado.</div>`}
-function plain(subject,days,hours,examType,p,plan){return[`PLAN DE ESTUDIO - ${subject}`,`Días: ${days}`,`Horas/día: ${hours}`,`Tipo: ${examType}`,"","PRIORIDAD MÁXIMA",...p.max.map(t=>"- "+t.name+": "+t.task),"","PLAN",...plan.flatMap(d=>["","Día "+d.day+" - "+d.focus,...d.blocks.map(b=>"- "+b.time+" | "+b.title+": "+b.desc)])].join("\n")}
-function openResult(html){let o=document.getElementById("tecniaResultOverlay");if(!o){o=document.createElement("div");o.id="tecniaResultOverlay";o.innerHTML='<div class="tecnia-result-backdrop" onclick="closeTecnIAResult()"></div><div class="tecnia-result-window" id="tecniaResultContent"></div>';document.body.appendChild(o)}document.getElementById("tecniaResultContent").innerHTML=html;o.classList.add("active");document.body.style.overflow="hidden"}
-function closeTecnIAResult(){document.getElementById("tecniaResultOverlay")?.classList.remove("active");document.body.style.overflow=""}
-async function copyPlan(){await navigator.clipboard.writeText(lastPlanText||"Todavía no has generado plan.");const n=document.getElementById("copyNote");n.style.display="block";setTimeout(()=>n.style.display="none",2200)}
-function resetPlanner(){document.getElementById("studyPlannerForm").reset();document.getElementById("fileList").innerHTML="";lastPlanText="";document.getElementById("plannerResult").innerHTML='<h2>Tu plan aparecerá aquí</h2><div class="empty">El resultado se abrirá en grande con prioridades, agenda y checklist.</div>'}
-function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+
+async function handleFiles(files){
+  const list = document.getElementById("fileList");
+  const notes = document.getElementById("manualTopics");
+  for(const file of files){
+    const item = document.createElement("div");
+    item.className = "file-item";
+    item.innerHTML = `<span>${esc(file.name)}</span><span class="file-status">Leyendo...</span>`;
+    list.appendChild(item);
+    try{
+      const text = cleanText(await extractText(file));
+      notes.value = cleanText(notes.value + "\n\n" + text);
+      item.querySelector(".file-status").textContent = "Leído";
+    }catch(e){
+      item.querySelector(".file-status").textContent = "No leído";
+    }
+  }
+}
+
+async function extractText(file){
+  const n = file.name.toLowerCase();
+  if(n.endsWith(".pdf")){
+    const pdf = await pdfjsLib.getDocument({data: await file.arrayBuffer()}).promise;
+    let out = "";
+    for(let i=1;i<=pdf.numPages;i++){
+      const p = await pdf.getPage(i);
+      const c = await p.getTextContent();
+      out += "\n" + c.items.map(x=>x.str).join(" ");
+    }
+    return out;
+  }
+  if(n.endsWith(".docx")) return (await mammoth.extractRawText({arrayBuffer: await file.arrayBuffer()})).value || "";
+  return file.text();
+}
+
+function isLaw(subject,text){
+  return /derecho|civil|contrato|obligaci[oó]n|acreedor|deudor|c[oó]digo civil|fianza|capacidad/i.test(subject + " " + text);
+}
+
+function detectTopics(subject,text,extra){
+  const all = normalize(text + " " + extra);
+  let topics = [];
+
+  const lawTopics = [
+    ["Personalidad jurídica y clases de personas", ["personalidad juridica","personas juridicas","personas fisicas","asociaciones","fundaciones","nasciturus"], "Diferenciar persona física, persona jurídica y nasciturus."],
+    ["Capacidad jurídica y capacidad de obrar", ["capacidad juridica","capacidad de obrar"], "Hacer tabla comparativa: titularidad de derechos frente a actuación válida."],
+    ["Menores emancipados y límites del art. 247", ["menores emancipados","articulo 247","prestamo","gravar","enajenar"], "Aprender qué pueden hacer y qué no pueden hacer por sí solos."],
+    ["Contratos: consentimiento, requisitos y formalidades", ["contrato","consentimiento","requisitos","formal","ley entre las partes"], "Estudiar requisitos, consentimiento y cuándo la forma afecta a la validez."],
+    ["Obligaciones: acreedor, deudor y tipos", ["obligacion","acreedor","deudor","dar","hacer","no hacer","medios","resultado"], "Diferenciar sujetos, prestación, responsabilidad y tipos de obligación."],
+    ["Fianza solidaria", ["fianza solidaria","fiador"], "Entender por qué el acreedor puede reclamar al deudor o al fiador."],
+    ["Pago, cumplimiento y acreedor aparente", ["pago","cumplimiento","acreedor aparente","liberatorio"], "Dominar efecto liberatorio, extinción de la deuda y pago de buena fe."]
+  ];
+
+  if(isLaw(subject,text)){
+    lawTopics.forEach(t => {
+      if(t[1].some(k => all.includes(k))) topics.push({name:t[0], task:t[2]});
+    });
+  }
+
+  if(topics.length < 4){
+    const fallback = extractTerms(text).slice(0,8);
+    fallback.forEach(x => topics.push({name:x, task:"Definir, resumir y formular una pregunta posible de examen."}));
+  }
+
+  return topics.filter((t,i,a)=>a.findIndex(x=>normalize(x.name)===normalize(t.name))===i).slice(0,10);
+}
+
+function extractTerms(text){
+  const clean = cleanText(text);
+  const lines = clean.split(/(?<=[.!?])\s+|\n+/).filter(x=>x.length>35 && x.length<500);
+  const scores = {};
+  lines.forEach(x => {
+    (x.match(/\b[A-ZÁÉÍÓÚÑa-záéíóúñ]{5,}(?:\s+(?:de|del|la|las|los|el|en|por|con|sin|y))?(?:\s+[A-ZÁÉÍÓÚÑa-záéíóúñ]{4,}){0,4}\b/g) || [])
+      .forEach(t => {
+        if(!/datos que|fuentes|identifica|concepto relevante|modo precision|modo precisión/i.test(t)) scores[t] = (scores[t] || 0) + 1;
+      });
+  });
+  return Object.entries(scores).sort((a,b)=>b[1]-a[1]).map(x=>x[0]);
+}
+
+function priority(topics){
+  return {max:topics.slice(0,3), medium:topics.slice(3,6), low:topics.slice(6,9)};
+}
+
+function generatePlan(){
+  const subject = v("subject") || "la asignatura";
+  const days = parseInt(v("days") || "3");
+  const hours = parseFloat(v("hours") || "2");
+  const examType = v("examType") || "mixto";
+  const text = cleanText(v("manualTopics"));
+  const extra = cleanText(v("extra"));
+
+  if(text.split(/\s+/).length < 40){
+    openResult("<h2>Falta temario</h2><p>Pega una lista de temas o apuntes para crear un plan real.</p>");
+    return;
+  }
+
+  const topics = detectTopics(subject,text,extra);
+  const p = priority(topics);
+  const plan = buildDays(topics,days,examType);
+
+  lastPlanText = plain(subject,days,hours,examType,p,plan);
+  openResult(render(subject,days,hours,examType,p,plan));
+  document.getElementById("plannerResult").innerHTML = '<h2>Plan generado</h2><div class="empty">Revisa si los bloques corresponden a temas reales del temario.</div>';
+}
+
+function buildDays(topics,days,examType){
+  let arr = [];
+  for(let d=0; d<days; d++){
+    const main = topics[d % topics.length];
+    const second = topics[(d+1) % topics.length];
+    const third = topics[(d+2) % topics.length];
+
+    arr.push({
+      day:d+1,
+      focus:main.name,
+      blocks:[
+        {time:"35-45 min", title:"Comprender: " + main.name, desc:main.task + " Haz un resumen de 6-8 líneas con definición, matiz y ejemplo."},
+        {time:"25-35 min", title:"Diferenciar conceptos", desc:"Haz una tabla: concepto | definición | límite | ejemplo | error típico. Incluye " + second.name + "."},
+        {time:"25-40 min", title:examType.includes("test") ? "Test y revisión de fallos" : "Pregunta de examen", desc:"Formula preguntas sobre " + main.name + " y " + second.name + ". Corrige qué dato faltaría para sacar más nota."},
+        {time:"10-15 min", title:"Repaso activo", desc:"Explica sin mirar " + main.name + " y conéctalo con " + third.name + "."}
+      ],
+      checklist:[
+        "Sé definir el concepto principal sin mirar.",
+        "Sé decir qué matiz lo hace diferente.",
+        "He hecho una pregunta posible de examen.",
+        "He detectado un error típico.",
+        "No he estudiado párrafos copiados sin entenderlos."
+      ]
+    });
+  }
+  return arr;
+}
+
+function render(subject,days,hours,examType,p,plan){
+  return `<button class="tecnia-result-close" onclick="closeTecnIAResult()">Cerrar ×</button>
+  <div class="result-title">
+    <h2>Plan claro de ${esc(subject)}</h2>
+    <p>Organizado solo con temas reales detectados en tu temario. Sin fuentes fiables, sin instrucciones externas y sin ruido.</p>
+  </div>
+
+  <div class="priority-grid">
+    <div class="priority-card"><h3>Prioridad máxima</h3><ul>${p.max.map(t=>`<li><strong>${esc(t.name)}:</strong> ${esc(t.task)}</li>`).join("")}</ul></div>
+    <div class="priority-card"><h3>Segunda vuelta</h3><ul>${p.medium.map(t=>`<li><strong>${esc(t.name)}:</strong> ${esc(t.task)}</li>`).join("") || "<li>Repasa lo anterior con preguntas.</li>"}</ul></div>
+    <div class="priority-card"><h3>Solo si sobra tiempo</h3><ul>${p.low.map(t=>`<li><strong>${esc(t.name)}:</strong> ${esc(t.task)}</li>`).join("") || "<li>Detalles secundarios y relectura final.</li>"}</ul></div>
+  </div>
+
+  <div class="day-list">
+    ${plan.map(day=>`<div class="day-card">
+      <div class="day-head"><h3>Día ${day.day} · ${esc(day.focus)}</h3><span>${day.blocks.length} bloques</span></div>
+      <div class="day-body">
+        ${day.blocks.map(b=>`<div class="block"><span class="time">${esc(b.time)}</span><div><h4>${esc(b.title)}</h4><p>${esc(b.desc)}</p></div></div>`).join("")}
+        <div class="checklist">${day.checklist.map(x=>`<label><input type="checkbox"> ${esc(x)}</label>`).join("")}</div>
+      </div>
+    </div>`).join("")}
+  </div>
+
+  <div class="warning-box"><strong>Regla:</strong> si un bloque no te ayuda a definir, diferenciar, aplicar y detectar errores, no sirve. El plan debe simplificar, no saturar.</div>`;
+}
+
+function plain(subject,days,hours,examType,p,plan){
+  return [`PLAN DE ESTUDIO - ${subject}`,`Días: ${days}`,`Horas/día: ${hours}`,`Tipo: ${examType}`,"","PRIORIDAD MÁXIMA",...p.max.map(t=>"- "+t.name+": "+t.task),"","PLAN",...plan.flatMap(d=>["","Día "+d.day+" - "+d.focus,...d.blocks.map(b=>"- "+b.time+" | "+b.title+": "+b.desc)])].join("\n");
+}
+
+function openResult(html){
+  let o = document.getElementById("tecniaResultOverlay");
+  if(!o){
+    o = document.createElement("div");
+    o.id = "tecniaResultOverlay";
+    o.innerHTML = '<div class="tecnia-result-backdrop" onclick="closeTecnIAResult()"></div><div class="tecnia-result-window" id="tecniaResultContent"></div>';
+    document.body.appendChild(o);
+  }
+  document.getElementById("tecniaResultContent").innerHTML = html;
+  o.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closeTecnIAResult(){
+  document.getElementById("tecniaResultOverlay")?.classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+async function copyPlan(){
+  await navigator.clipboard.writeText(lastPlanText || "Todavía no has generado plan.");
+  const n = document.getElementById("copyNote");
+  n.style.display = "block";
+  setTimeout(()=>n.style.display="none",2200);
+}
+
+function resetPlanner(){
+  document.getElementById("studyPlannerForm").reset();
+  document.getElementById("fileList").innerHTML = "";
+  lastPlanText = "";
+  document.getElementById("plannerResult").innerHTML = '<h2>Tu plan aparecerá aquí</h2><div class="empty">El resultado se abrirá en grande con prioridades, agenda y checklist.</div>';
+}
+
+function esc(s){
+  return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
 </script>
+
 <script src="tecnia-memory.js"></script>
-<script src="tecnia-quality.js"></script>
 </body>
 </html>
