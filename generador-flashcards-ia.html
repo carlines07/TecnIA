@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generador de Flashcards con IA | Interpretación profesional | TecnIA</title>
-<meta name="description" content="Genera flashcards profesionales a partir de apuntes: definición, explicación clara, matiz de examen, ejemplo, error típico y relación con otros conceptos.">
+<title>Generador de Flashcards con IA | Profesional por asignatura | TecnIA</title>
+<meta name="description" content="Genera flashcards profesionales adaptadas a Derecho, Economía, Historia, Lengua, Anatomía, Biología, Medicina, Fisiología, Psicología, Sociología y Contabilidad.">
 
 <link rel="canonical" href="https://tecniaia.com/generador-flashcards-ia.html">
 <meta property="og:title" content="Generador de Flashcards con IA | TecnIA">
-<meta property="og:description" content="Convierte apuntes en flashcards explicadas, no copiadas literalmente.">
+<meta property="og:description" content="Convierte apuntes en flashcards interpretadas según la asignatura, no copiadas literalmente.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://tecniaia.com/generador-flashcards-ia.html">
 <meta property="og:site_name" content="TecnIA">
@@ -30,13 +30,13 @@
 }
 .hero h1{
   color:#fff;
-  font-size:clamp(2.6rem,6vw,5.1rem);
+  font-size:clamp(2.55rem,6vw,5.1rem);
   line-height:1;
   letter-spacing:-2px;
   margin:18px 0 20px
 }
 .hero p{
-  max-width:880px;
+  max-width:900px;
   color:#dbeafe;
   line-height:1.85;
   font-size:1.14rem
@@ -146,7 +146,7 @@
   font-weight:900;
   cursor:pointer
 }
-.result-title{max-width:900px;margin-bottom:22px}
+.result-title{max-width:920px;margin-bottom:22px}
 .result-title h2{
   margin:0 0 10px;
   color:#0f172a;
@@ -174,7 +174,7 @@
   text-transform:uppercase;
   margin-bottom:6px
 }
-.dash-card strong{display:block;color:#0f172a;font-size:1.25rem}
+.dash-card strong{display:block;color:#0f172a;font-size:1.15rem}
 .flashcard-list{display:grid;gap:20px;margin-top:22px}
 .flashcard{
   border:1px solid #dbeafe;
@@ -295,9 +295,9 @@
 <main>
   <section class="container">
     <div class="hero">
-      <div class="hero-kicker">Flashcards interpretadas, no copiadas</div>
-      <h1>Tarjetas explicadas como lo haría un profesor</h1>
-      <p>La herramienta evita pegar frases largas de los apuntes. Interpreta conceptos, separa lo esencial y crea tarjetas con definición, explicación, matiz de examen, ejemplo y error típico.</p>
+      <div class="hero-kicker">Flashcards profesionales por asignatura</div>
+      <h1>Tarjetas adaptadas al lenguaje de cada materia</h1>
+      <p>Derecho no se estudia igual que Economía, Biología, Medicina, Historia, Lengua, Psicología o Contabilidad. Esta versión adapta la estructura de la tarjeta al área de conocimiento para evitar respuestas genéricas.</p>
       <div class="hero-actions">
         <a href="#tool" class="btn btn-primary">Crear flashcards</a>
         <a href="resumidor-apuntes-ia.html" class="btn btn-outline">Resumir antes</a>
@@ -307,26 +307,45 @@
 
   <article class="container">
     <section class="info-card">
-      <span class="article-tag">Interpretación profesional</span>
-      <h2>Qué cambia en esta versión</h2>
-      <p class="helper">Las tarjetas ya no deben sonar a copia y pega. Cada concepto se explica con una estructura más académica y útil para estudiar.</p>
+      <span class="article-tag">Multidisciplinar · Sin copia-pega · Vocabulario adecuado</span>
+      <h2>Qué mejora esta versión</h2>
+      <p class="helper">La herramienta selecciona un perfil académico según la asignatura: mecanismos en biología, causas en historia, asientos en contabilidad, síntomas y fisiopatología en medicina, y así sucesivamente.</p>
       <div class="mini-grid">
-        <div class="mini-card"><h3>No copia frases</h3><p>Usa el apunte para detectar temas, pero redacta la explicación de forma nueva.</p></div>
-        <div class="mini-card"><h3>Matiz de examen</h3><p>Incluye qué dato hace especial al concepto y qué suele hacer perder puntos.</p></div>
-        <div class="mini-card"><h3>Derecho Civil</h3><p>Reconoce capacidad, menores, contratos, obligaciones, fianza, pago y otros conceptos clave.</p></div>
+        <div class="mini-card"><h3>Detecta el área</h3><p>Puede trabajar con Derecho, Economía, Historia, Lengua, Anatomía, Biología, Medicina, Fisiología, Psicología, Sociología y Contabilidad.</p></div>
+        <div class="mini-card"><h3>Usa estructura propia</h3><p>No todo se explica igual: cada materia tiene preguntas, matices y errores típicos diferentes.</p></div>
+        <div class="mini-card"><h3>Evita relleno</h3><p>No convierte frases sueltas en tarjetas sin sentido; intenta explicar función, proceso, causa, efecto o aplicación.</p></div>
       </div>
     </section>
 
     <section id="tool" class="layout" style="margin-top:32px;">
       <div class="panel">
         <h2>Crear flashcards profesionales</h2>
-        <p class="helper">Pega tus apuntes. La herramienta intentará interpretar y redactar, no copiar literalmente.</p>
+        <p class="helper">Elige el área o deja “detectar automáticamente”. Para máxima calidad, indica conceptos concretos que quieras priorizar.</p>
 
         <form id="flashForm" onsubmit="event.preventDefault();generateCards();">
           <div class="form-grid">
             <div class="field">
               <label for="subject">Asignatura</label>
-              <input id="subject" type="text" placeholder="Ej: Derecho Civil Patrimonial">
+              <input id="subject" type="text" placeholder="Ej: Economía, Anatomía, Derecho Civil, Historia...">
+            </div>
+
+            <div class="field">
+              <label for="domain">Área de conocimiento</label>
+              <select id="domain">
+                <option value="auto" selected>Detectar automáticamente</option>
+                <option value="derecho">Derecho</option>
+                <option value="economia">Economía</option>
+                <option value="historia">Historia</option>
+                <option value="lengua">Lengua / Literatura</option>
+                <option value="anatomia">Anatomía</option>
+                <option value="biologia">Biología</option>
+                <option value="medicina">Medicina</option>
+                <option value="fisiologia">Fisiología</option>
+                <option value="psicologia">Psicología</option>
+                <option value="sociologia">Sociología</option>
+                <option value="contabilidad">Contabilidad</option>
+                <option value="general">General</option>
+              </select>
             </div>
 
             <div class="field">
@@ -335,15 +354,6 @@
                 <option value="12">12</option>
                 <option value="20" selected>20</option>
                 <option value="30">30</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="difficulty">Dificultad</label>
-              <select id="difficulty">
-                <option value="media">Media</option>
-                <option value="alta" selected>Alta</option>
-                <option value="examen">Nivel examen</option>
               </select>
             </div>
 
@@ -376,12 +386,12 @@
 
             <div class="field full">
               <label for="teacherFocus">Conceptos o apartados que quieres que priorice</label>
-              <textarea id="teacherFocus" rows="3" placeholder="Ej: capacidad jurídica, capacidad de obrar, menores emancipados, art. 247, fianza solidaria..."></textarea>
+              <textarea id="teacherFocus" rows="3" placeholder="Ej: elasticidad, inflación, potencial de acción, mitosis, balance, sintagma nominal, memoria operativa..."></textarea>
             </div>
           </div>
 
           <div class="actions">
-            <button type="submit" class="btn btn-primary">Crear flashcards interpretadas</button>
+            <button type="submit" class="btn btn-primary">Crear flashcards profesionales</button>
             <button type="button" class="btn btn-outline" onclick="copyOutput()">Copiar tarjetas</button>
             <button type="button" class="btn btn-outline" onclick="resetTool()">Limpiar</button>
           </div>
@@ -391,7 +401,7 @@
 
       <div class="panel" id="preview">
         <h2>Resultado</h2>
-        <div class="empty">Las flashcards se abrirán en una ventana grande. Deben estar explicadas, no copiadas.</div>
+        <div class="empty">Las flashcards se abrirán en una ventana grande y se adaptarán al área de conocimiento seleccionada.</div>
       </div>
     </section>
   </article>
@@ -414,228 +424,238 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("studyFiles").addEventListener("change", e => handleFiles(e.target.files));
 });
 
-const LAW_KNOWLEDGE = [
-  {
-    term:"Personalidad jurídica",
-    keys:["personalidad juridica","personalidad jurídica"],
-    direct:"Es la aptitud para ser sujeto de relaciones jurídicas, es decir, para poder tener derechos y obligaciones.",
-    explanation:"La idea importante es que el Derecho reconoce a determinadas personas o entidades como sujetos jurídicos. Por eso pueden ser titulares de derechos, contraer obligaciones y participar en relaciones jurídicas.",
-    critical:"No debe confundirse con la capacidad de obrar. La personalidad jurídica responde a quién puede ser sujeto de derecho; la capacidad de obrar responde a quién puede actuar válidamente por sí mismo.",
-    example:"Una persona física tiene personalidad jurídica. También puede tenerla una asociación o fundación cuando el ordenamiento la reconoce como entidad diferenciada.",
-    error:"Decir solo que es “ser persona” sin explicar que implica ser sujeto de derechos y obligaciones.",
-    relation:"Se relaciona con capacidad jurídica y con la distinción entre personas físicas y personas jurídicas."
+const DOMAIN_PROFILES = {
+  derecho:{
+    label:"Derecho",
+    detect:["derecho","civil","penal","mercantil","constitucional","administrativo","contrato","obligación","obligacion","acreedor","deudor","código civil","codigo civil","artículo","articulo"],
+    priority:["capacidad","personalidad","contrato","obligación","acreedor","deudor","fianza","representación","nulidad","pago","responsabilidad","consentimiento","artículo"],
+    direct:"definición jurídica",
+    explanation:"función jurídica",
+    critical:"matiz normativo o límite",
+    example:"caso práctico",
+    error:"confusión jurídica habitual",
+    relation:"relación con institución jurídica cercana",
+    prompt:"Debe explicarse con precisión jurídica: sujetos, efectos, límites, requisitos, norma aplicable y diferencia con conceptos próximos."
   },
-  {
-    term:"Personas físicas",
-    keys:["personas fisicas","personas físicas"],
-    direct:"Son las personas individualmente consideradas.",
-    explanation:"En Derecho Civil, la persona física es el ser humano como sujeto de derecho. Se diferencia de las personas jurídicas porque no es una entidad creada para un fin, sino una persona individual.",
-    critical:"Conviene distinguirlas de las personas jurídicas: ambas pueden ser sujetos de derecho, pero su naturaleza y forma de actuación no son iguales.",
-    example:"Un particular, un menor, un mayor de edad o un autónomo son personas físicas.",
-    error:"Confundir persona física con empresario individual o pensar que solo los mayores de edad son personas físicas.",
-    relation:"Se relaciona con personalidad jurídica, capacidad jurídica y capacidad de obrar."
+  economia:{
+    label:"Economía",
+    detect:["economía","economia","microeconomía","macroeconomía","pib","inflación","demanda","oferta","mercado","precio","coste","elasticidad","productividad","renta"],
+    priority:["oferta","demanda","elasticidad","inflación","pib","coste","beneficio","mercado","competencia","monopolio","productividad","equilibrio","renta","tipo de interés"],
+    direct:"definición económica",
+    explanation:"intuición económica",
+    critical:"variable clave o relación causal",
+    example:"ejemplo económico",
+    error:"confusión frecuente de interpretación",
+    relation:"relación con modelo o indicador",
+    prompt:"Debe explicarse con vocabulario económico: variables, incentivos, costes, equilibrio, causalidad, supuestos y efectos."
   },
-  {
-    term:"Personas jurídicas",
-    keys:["personas juridicas","personas jurídicas","asociaciones","fundaciones"],
-    direct:"Son entidades a las que el Derecho reconoce personalidad jurídica propia.",
-    explanation:"No son personas físicas, pero el ordenamiento les permite actuar como sujetos de derecho. Pueden tener patrimonio, derechos, obligaciones y actuar en el tráfico jurídico mediante sus órganos o representantes.",
-    critical:"El matiz esencial es que la entidad se distingue de las personas que la integran o promueven. Una asociación o fundación no es simplemente la suma de sus miembros.",
-    example:"Una asociación cultural puede contratar un local. Una fundación puede administrar un patrimonio destinado a fines sociales.",
-    error:"Creer que los derechos y obligaciones pertenecen directamente a cada socio o fundador.",
-    relation:"Se relaciona con personalidad jurídica, asociaciones, fundaciones y representación."
+  historia:{
+    label:"Historia",
+    detect:["historia","siglo","revolución","revolucion","guerra","imperio","crisis","estado","monarquía","república","industrialización","colonialismo"],
+    priority:["causa","consecuencia","proceso","revolución","crisis","estado","imperio","guerra","cambio","continuidad","reforma","industrialización"],
+    direct:"definición histórica",
+    explanation:"contexto histórico",
+    critical:"causa, consecuencia o continuidad",
+    example:"ejemplo histórico",
+    error:"anacronismo o simplificación",
+    relation:"relación con proceso histórico",
+    prompt:"Debe explicarse con vocabulario histórico: cronología, causas, consecuencias, actores, contexto, continuidad, cambio y procesos."
   },
-  {
-    term:"Nasciturus",
-    keys:["nasciturus","concebido y no nacido","concebido no nacido"],
-    direct:"Es el concebido todavía no nacido al que el Derecho puede reconocer ciertos efectos favorables.",
-    explanation:"Su importancia está en que el Derecho puede proteger intereses del concebido antes del nacimiento, aunque todavía no sea una persona nacida. Funciona como una ficción jurídica orientada a proteger determinados derechos.",
-    critical:"El punto examinable es que no se trata de una persona plenamente nacida, sino de una protección jurídica condicionada al nacimiento en los términos previstos.",
-    example:"Puede tener relevancia en materia sucesoria o en situaciones en las que se protegen derechos futuros del concebido.",
-    error:"Tratar al nasciturus como si tuviera exactamente la misma situación jurídica que una persona ya nacida.",
-    relation:"Se conecta con personalidad jurídica y comienzo de la personalidad."
+  lengua:{
+    label:"Lengua / Literatura",
+    detect:["lengua","literatura","gramática","gramatica","sintaxis","morfología","morfologia","semántica","semantica","texto","narrador","poema","sujeto","predicado"],
+    priority:["sujeto","predicado","sintagma","morfema","lexema","semántica","texto","cohesión","coherencia","narrador","metáfora","argumentación"],
+    direct:"definición lingüística",
+    explanation:"función en la lengua o el texto",
+    critical:"rasgo gramatical, textual o literario",
+    example:"ejemplo de uso o análisis",
+    error:"confusión gramatical o interpretativa",
+    relation:"relación con categoría lingüística cercana",
+    prompt:"Debe explicarse con vocabulario lingüístico: categoría, función, rasgo, ejemplo, análisis sintáctico/textual y diferencia con categorías próximas."
   },
-  {
-    term:"Capacidad jurídica",
-    keys:["capacidad juridica","capacidad jurídica"],
-    direct:"Es la aptitud para ser titular de derechos y obligaciones.",
-    explanation:"La capacidad jurídica responde a la pregunta de si alguien puede tener derechos o deberes. No se refiere a actuar por uno mismo, sino a ser titular de una posición jurídica.",
-    critical:"La diferencia con la capacidad de obrar es imprescindible: una persona puede ser titular de derechos aunque no pueda ejercitarlos plenamente por sí sola.",
-    example:"Un menor puede ser propietario de un bien, aunque para venderlo pueda necesitar representación o complemento de capacidad.",
-    error:"Confundirla con capacidad de obrar.",
-    relation:"Se relaciona con personalidad jurídica y capacidad de obrar."
+  anatomia:{
+    label:"Anatomía",
+    detect:["anatomía","anatomia","hueso","músculo","musculo","articulación","articulacion","órgano","organo","nervio","arteria","vena","tejido"],
+    priority:["hueso","músculo","articulación","órgano","nervio","arteria","vena","tejido","inserción","origen","función","irrigación","inervación"],
+    direct:"definición anatómica",
+    explanation:"localización y función",
+    critical:"relación anatómica importante",
+    example:"aplicación anatómica",
+    error:"confusión de localización o función",
+    relation:"relación con estructura vecina",
+    prompt:"Debe explicarse con vocabulario anatómico: localización, estructura, función, origen, inserción, irrigación, inervación y relaciones anatómicas."
   },
-  {
-    term:"Capacidad de obrar",
-    keys:["capacidad de obrar"],
-    direct:"Es la aptitud para realizar actos o negocios jurídicos válidos por uno mismo.",
-    explanation:"No significa simplemente tener derechos, sino poder ejercerlos mediante actos propios. Por eso es clave cuando se estudian menores, emancipación, representación o situaciones en las que la ley limita o condiciona la actuación.",
-    critical:"Lo que no puede faltar es la diferencia con la capacidad jurídica: capacidad jurídica = ser titular de derechos y obligaciones; capacidad de obrar = poder actuar válidamente por uno mismo.",
-    example:"Un mayor de edad normalmente puede celebrar contratos por sí mismo. Un menor puede necesitar representante legal o complemento de capacidad.",
-    error:"Decir que es “tener derechos”. Eso define mejor la capacidad jurídica, no la capacidad de obrar.",
-    relation:"Se conecta con mayoría de edad, menores emancipados y representación."
+  biologia:{
+    label:"Biología",
+    detect:["biología","biologia","célula","celula","adn","gen","enzima","proteína","proteina","mitosis","meiosis","membrana","metabolismo","evolución"],
+    priority:["célula","adn","gen","proteína","enzima","mitosis","meiosis","membrana","metabolismo","evolución","homeostasis","orgánulo","tejido"],
+    direct:"definición biológica",
+    explanation:"mecanismo biológico",
+    critical:"proceso, función o consecuencia",
+    example:"ejemplo biológico",
+    error:"confusión de proceso o nivel biológico",
+    relation:"relación con otro proceso biológico",
+    prompt:"Debe explicarse con vocabulario biológico: estructura, función, mecanismo, proceso, regulación, consecuencia y nivel de organización."
   },
-  {
-    term:"Menores emancipados",
-    keys:["menores emancipados","menor emancipado","emancipacion","emancipación"],
-    direct:"Son menores a los que la ley reconoce una capacidad de obrar ampliada, aunque no plena.",
-    explanation:"El menor emancipado puede actuar con mucha más autonomía que un menor no emancipado, pero no queda totalmente equiparado a un mayor de edad. El concepto es importante precisamente por sus límites.",
-    critical:"Dato imprescindible: no puede por sí solo tomar dinero a préstamo, ni gravar o enajenar bienes inmuebles, establecimientos mercantiles o industriales u objetos de extraordinario valor sin el complemento de capacidad exigido.",
-    example:"Puede realizar muchos actos ordinarios, pero no debe tratarse como si pudiera vender una vivienda, hipotecarla o pedir un préstamo libremente.",
-    error:"Decir que el menor emancipado “es como un mayor de edad” y olvidar las limitaciones patrimoniales importantes.",
-    relation:"Se conecta con capacidad de obrar, mayoría de edad y representación/asistencia."
+  medicina:{
+    label:"Medicina",
+    detect:["medicina","clínica","clinica","paciente","síntoma","sintoma","signo","diagnóstico","diagnostico","tratamiento","enfermedad","patología","patologia"],
+    priority:["síntoma","signo","diagnóstico","tratamiento","enfermedad","etiología","fisiopatología","pronóstico","prevención","factor de riesgo","complicación"],
+    direct:"definición clínica",
+    explanation:"relevancia clínica o fisiopatológica",
+    critical:"dato diagnóstico, signo de alarma o mecanismo",
+    example:"ejemplo clínico",
+    error:"confusión clínica frecuente",
+    relation:"relación con diagnóstico, tratamiento o fisiopatología",
+    prompt:"Debe explicarse con vocabulario médico: signos, síntomas, etiología, fisiopatología, diagnóstico, tratamiento, prevención, pronóstico y complicaciones."
   },
-  {
-    term:"Artículo 247 del Código Civil",
-    keys:["articulo 247","artículo 247","247"],
-    direct:"Es relevante porque recoge límites de actuación del menor emancipado en actos patrimoniales importantes.",
-    explanation:"La norma sirve para recordar que la emancipación no supone capacidad plena. Aunque el menor emancipado puede actuar en muchos ámbitos, hay actos de gran trascendencia patrimonial que requieren complemento de capacidad.",
-    critical:"No deben faltar los actos limitados: tomar dinero a préstamo, gravar o enajenar bienes inmuebles, establecimientos mercantiles o industriales u objetos de extraordinario valor.",
-    example:"Si el caso práctico habla de vender un inmueble, hipotecarlo o pedir un préstamo, debe saltar la alerta del art. 247.",
-    error:"Mencionar menores emancipados sin explicar qué actos no pueden realizar por sí solos.",
-    relation:"Se conecta directamente con menores emancipados y capacidad de obrar."
+  fisiologia:{
+    label:"Fisiología",
+    detect:["fisiología","fisiologia","homeostasis","potencial de acción","potencial","membrana","hormona","receptor","feedback","retroalimentación","sistema nervioso"],
+    priority:["homeostasis","feedback","potencial de acción","membrana","receptor","hormona","sinapsis","contracción","regulación","transporte","gradiente"],
+    direct:"definición fisiológica",
+    explanation:"mecanismo funcional",
+    critical:"regulación, estímulo-respuesta o equilibrio",
+    example:"ejemplo fisiológico",
+    error:"confusión de mecanismo",
+    relation:"relación con sistema corporal o mecanismo de regulación",
+    prompt:"Debe explicarse con vocabulario fisiológico: mecanismo, regulación, estímulo, respuesta, homeostasis, retroalimentación, gradientes y función."
   },
-  {
-    term:"Representación",
-    keys:["representacion","representación"],
-    direct:"Permite que una persona actúe jurídicamente por otra, produciendo efectos en la esfera del representado.",
-    explanation:"La representación es útil cuando alguien no puede o no quiere actuar personalmente. El representante realiza el acto, pero los efectos jurídicos recaen sobre el representado si actúa dentro de sus facultades.",
-    critical:"Hay que diferenciar quién actúa materialmente y quién queda jurídicamente vinculado.",
-    example:"Un padre puede actuar como representante legal de un menor. Una persona también puede otorgar poder a otra para actuar en su nombre.",
-    error:"Pensar que el representante siempre queda vinculado personalmente por el acto.",
-    relation:"Se conecta con capacidad de obrar, menores y mandato."
+  psicologia:{
+    label:"Psicología",
+    detect:["psicología","psicologia","conducta","cognición","cognicion","emoción","emocion","aprendizaje","memoria","atención","personalidad","motivación"],
+    priority:["conducta","cognición","emoción","aprendizaje","memoria","atención","motivación","personalidad","refuerzo","condicionamiento","sesgo"],
+    direct:"definición psicológica",
+    explanation:"proceso mental o conductual",
+    critical:"mecanismo psicológico o variable",
+    example:"ejemplo psicológico",
+    error:"confusión conceptual o reduccionismo",
+    relation:"relación con teoría o proceso psicológico",
+    prompt:"Debe explicarse con vocabulario psicológico: conducta, cognición, emoción, proceso, variable, teoría, evidencia y aplicación."
   },
-  {
-    term:"Contrato",
-    keys:["contrato","contratos"],
-    direct:"Es un acuerdo de voluntades destinado a crear, modificar o extinguir obligaciones entre las partes.",
-    explanation:"La clave es que el contrato no es solo un acuerdo informal: si reúne los requisitos exigidos, tiene fuerza obligatoria y vincula a las partes.",
-    critical:"No puede faltar la idea de consentimiento y fuerza obligatoria. En muchos temas también hay que mencionar objeto, causa y forma cuando proceda.",
-    example:"Un contrato de compraventa genera obligaciones para comprador y vendedor.",
-    error:"Definir contrato como “acuerdo” sin explicar sus efectos jurídicos.",
-    relation:"Se conecta con consentimiento, requisitos, obligaciones y cumplimiento."
+  sociologia:{
+    label:"Sociología",
+    detect:["sociología","sociologia","sociedad","clase social","institución","institucion","norma social","rol","estatus","desigualdad","socialización","cultura"],
+    priority:["estructura social","institución","rol","estatus","norma","cultura","socialización","desigualdad","clase social","poder","grupo","conflicto"],
+    direct:"definición sociológica",
+    explanation:"función social o relación estructural",
+    critical:"actor, estructura, norma o desigualdad",
+    example:"ejemplo social",
+    error:"individualizar un fenómeno social sin analizar estructura",
+    relation:"relación con teoría sociológica o institución",
+    prompt:"Debe explicarse con vocabulario sociológico: estructura, acción social, institución, norma, rol, estatus, desigualdad, poder, cultura y socialización."
   },
-  {
-    term:"Consentimiento",
-    keys:["consentimiento"],
-    direct:"Es la voluntad válida de las partes para quedar vinculadas por un contrato o negocio jurídico.",
-    explanation:"El consentimiento es esencial porque sin voluntad válida no hay contrato correctamente formado. Además, debe prestarlo una persona con capacidad suficiente y sin vicios que lo invaliden.",
-    critical:"No basta con decir que las partes quieren contratar: hay que comprobar capacidad, validez de la voluntad y ausencia de vicios relevantes.",
-    example:"Si una parte presta consentimiento por error esencial, violencia o intimidación, puede existir un problema de validez.",
-    error:"Olvidar que el consentimiento debe ser válido, no meramente aparente.",
-    relation:"Se conecta con contrato, capacidad de obrar y requisitos del negocio jurídico."
+  contabilidad:{
+    label:"Contabilidad",
+    detect:["contabilidad","balance","activo","pasivo","patrimonio neto","cuenta","debe","haber","asiento","amortización","amortizacion","pérdidas y ganancias","perdidas y ganancias"],
+    priority:["activo","pasivo","patrimonio neto","ingreso","gasto","debe","haber","asiento","balance","amortización","provisión","resultado","cuenta"],
+    direct:"definición contable",
+    explanation:"tratamiento contable",
+    critical:"efecto en cuentas y estados financieros",
+    example:"ejemplo de asiento o impacto",
+    error:"error contable habitual",
+    relation:"relación con balance, resultado o principio contable",
+    prompt:"Debe explicarse con vocabulario contable: reconocimiento, valoración, cuenta, debe, haber, activo, pasivo, patrimonio neto, ingreso, gasto y efecto en estados financieros."
   },
-  {
-    term:"Requisitos del contrato",
-    keys:["requisitos","objeto","causa","consentimiento"],
-    direct:"Son los elementos necesarios para que el contrato pueda formarse válidamente.",
-    explanation:"Aunque depende del enfoque del temario, suelen estudiarse consentimiento, objeto y causa, además de la forma cuando la ley la exige. La utilidad de este concepto es comprobar si el contrato existe y es válido.",
-    critical:"El objeto debe ser posible, lícito y determinado o determinable; el consentimiento debe ser válido; y la forma puede ser necesaria en contratos formales.",
-    example:"Si el objeto es imposible o ilícito, el contrato puede tener problemas de validez.",
-    error:"Enumerar requisitos sin explicar qué función cumple cada uno.",
-    relation:"Se conecta con contrato, consentimiento, contratos formales e ineficacia."
-  },
-  {
-    term:"Contratos formales",
-    keys:["formales","contratos formales","formalidades"],
-    direct:"Son contratos que necesitan cumplir una forma determinada para ser válidos o producir ciertos efectos.",
-    explanation:"La forma no siempre es esencial en los contratos, pero en algunos casos la ley exige una formalidad concreta. Por eso es importante distinguir contratos libres de forma y contratos formales.",
-    critical:"El matiz está en saber cuándo la forma es requisito de validez y cuándo cumple otra función, como prueba o publicidad.",
-    example:"Algunos actos pueden requerir escritura pública u otra formalidad prevista legalmente.",
-    error:"Pensar que todos los contratos necesitan una forma solemne para existir.",
-    relation:"Se conecta con requisitos del contrato y validez."
-  },
-  {
-    term:"Obligación",
-    keys:["obligacion","obligación","obligaciones"],
-    direct:"Es una relación jurídica en la que un acreedor puede exigir a un deudor una prestación.",
-    explanation:"La obligación organiza una relación entre dos posiciones: quien puede exigir y quien debe cumplir. Su contenido es una prestación, que puede consistir en dar, hacer o no hacer.",
-    critical:"No pueden faltar acreedor, deudor, prestación y responsabilidad por incumplimiento.",
-    example:"Si una persona debe pagar una cantidad, el acreedor puede reclamar el cumplimiento y el deudor debe realizar la prestación.",
-    error:"Definir obligación como “deber” sin explicar la relación acreedor-deudor.",
-    relation:"Se conecta con deuda, responsabilidad, pago y cumplimiento."
-  },
-  {
-    term:"Acreedor",
-    keys:["acreedor"],
-    direct:"Es el sujeto activo de la obligación, titular del derecho de crédito.",
-    explanation:"El acreedor ocupa la posición de quien puede exigir el cumplimiento de la prestación. No debe confundirse con quien debe cumplir.",
-    critical:"El acreedor tiene el derecho de crédito; el deudor soporta el deber de prestación.",
-    example:"En un préstamo, quien tiene derecho a que se le devuelva el dinero es acreedor.",
-    error:"Confundir acreedor y deudor.",
-    relation:"Se conecta con obligación, deudor, crédito y pago."
-  },
-  {
-    term:"Deudor",
-    keys:["deudor"],
-    direct:"Es el sujeto pasivo de la obligación, obligado a realizar la prestación debida.",
-    explanation:"El deudor debe cumplir lo pactado o lo exigido por la relación obligatoria. Si no cumple, puede responder con sus bienes presentes y futuros en los términos del ordenamiento.",
-    critical:"No basta con decir que “debe algo”; hay que relacionarlo con prestación, cumplimiento y responsabilidad.",
-    example:"Quien debe entregar una cosa, pagar una cantidad o realizar un servicio ocupa la posición de deudor.",
-    error:"Confundir deuda con responsabilidad o no relacionarlo con el acreedor.",
-    relation:"Se conecta con acreedor, obligación, pago y responsabilidad patrimonial."
-  },
-  {
-    term:"Obligaciones de medios",
-    keys:["obligaciones de medios","medios","mera actividad"],
-    direct:"Son obligaciones en las que el deudor se compromete a actuar diligentemente, sin garantizar un resultado concreto.",
-    explanation:"Lo relevante es la conducta desplegada. El cumplimiento se valora por la diligencia o actividad realizada, no por la obtención segura de un resultado.",
-    critical:"La diferencia con las obligaciones de resultado es esencial: en las de medios no se promete necesariamente el resultado final.",
-    example:"Un profesional puede obligarse a actuar con diligencia, aunque no pueda garantizar un resultado concreto.",
-    error:"Exigir siempre resultado cuando la obligación es de medios.",
-    relation:"Se contrapone a obligaciones de resultado."
-  },
-  {
-    term:"Obligaciones de resultado",
-    keys:["obligaciones de resultado","resultado"],
-    direct:"Son obligaciones en las que el deudor se compromete a obtener un resultado determinado.",
-    explanation:"Aquí no basta con realizar una actividad diligente: lo comprometido es el resultado. Si el resultado no se produce, puede entenderse que no se ha cumplido.",
-    critical:"El punto clave es diferenciar resultado comprometido frente a mera actividad.",
-    example:"Entregar una cosa concreta o realizar una obra con resultado pactado puede funcionar como obligación de resultado.",
-    error:"Tratarla como si solo exigiera esfuerzo o diligencia.",
-    relation:"Se contrapone a obligaciones de medios."
-  },
-  {
-    term:"Fianza solidaria",
-    keys:["fianza solidaria","fiador solidario"],
-    direct:"Es una garantía personal en la que el acreedor puede dirigirse contra el deudor principal o contra el fiador solidario.",
-    explanation:"Su importancia está en que refuerza la posición del acreedor. Al existir solidaridad, el acreedor no tiene que seguir necesariamente el orden de reclamación propio de una fianza simple.",
-    critical:"No debe faltar que el acreedor puede reclamar indistintamente al deudor principal o al fiador, según el régimen aplicable.",
-    example:"Si el deudor principal no paga, el acreedor puede reclamar al fiador solidario en los términos pactados.",
-    error:"Explicarla como una fianza normal, olvidando el efecto de la solidaridad.",
-    relation:"Se conecta con obligación, garantía, acreedor, deudor y responsabilidad."
-  },
-  {
-    term:"Pago o cumplimiento",
-    keys:["pago","cumplimiento","cumplimiento de las obligaciones"],
-    direct:"Es la realización de la prestación debida con finalidad de extinguir la obligación.",
-    explanation:"No se refiere solo a entregar dinero. En sentido jurídico, pagar equivale a cumplir la prestación pactada, sea dar, hacer o no hacer cuando corresponda.",
-    critical:"El efecto principal es extinguir la deuda, liberar al deudor y satisfacer el interés del acreedor.",
-    example:"Si la obligación era entregar una cosa, el cumplimiento consiste en realizar esa entrega correctamente.",
-    error:"Pensar que pago significa únicamente entregar una cantidad de dinero.",
-    relation:"Se conecta con obligación, deudor, acreedor y extinción de la deuda."
-  },
-  {
-    term:"Acreedor aparente",
-    keys:["acreedor aparente"],
-    direct:"Es quien parece legitimado para recibir el pago, aunque pueda no ser el verdadero acreedor.",
-    explanation:"Su importancia está en la protección del deudor que paga de buena fe a quien aparenta ser acreedor. En ciertos casos, ese pago puede tener efecto liberatorio.",
-    critical:"El matiz esencial es la buena fe y la apariencia razonable de legitimación.",
-    example:"Si el deudor paga a quien razonablemente parecía ser su acreedor, puede quedar liberado si se cumplen los requisitos.",
-    error:"Pensar que cualquier pago a un tercero libera automáticamente al deudor.",
-    relation:"Se conecta con pago, cumplimiento, buena fe y efecto liberatorio."
-  },
-  {
-    term:"Ineficacia o nulidad",
-    keys:["ineficacia","nulidad","nulidad de pleno derecho"],
-    direct:"Son categorías que explican cuándo un acto o contrato no produce los efectos jurídicos esperados.",
-    explanation:"La ineficacia es una idea amplia: el negocio no despliega sus efectos normales. La nulidad, especialmente la nulidad de pleno derecho, implica un defecto grave desde el origen.",
-    critical:"Debe explicarse desde cuándo se produce y qué consecuencia tiene sobre los efectos del contrato.",
-    example:"Un contrato contrario a normas imperativas puede ser nulo y no producir efectos jurídicos válidos.",
-    error:"Usar nulidad e ineficacia como sinónimos sin matizar.",
-    relation:"Se conecta con requisitos del contrato, validez y efectos."
+  general:{
+    label:"General",
+    detect:[],
+    priority:["concepto","causa","efecto","función","proceso","requisito","ejemplo","diferencia","característica"],
+    direct:"definición",
+    explanation:"explicación",
+    critical:"dato esencial",
+    example:"ejemplo",
+    error:"error típico",
+    relation:"relación con otro concepto",
+    prompt:"Debe explicarse con claridad: definición, función, ejemplo, diferencia y error típico."
   }
-];
+};
+
+const DOMAIN_KNOWLEDGE = {
+  derecho:[
+    ["Capacidad jurídica","Aptitud para ser titular de derechos y obligaciones.","No es lo mismo que capacidad de obrar: se refiere a titularidad, no a actuación válida.","Un menor puede tener derechos aunque no pueda ejercitarlos siempre por sí solo.","Confundirla con capacidad de obrar.","capacidad juridica, capacidad jurídica"],
+    ["Capacidad de obrar","Aptitud para realizar actos o negocios jurídicos válidos por uno mismo.","La clave es poder actuar válidamente; puede estar limitada en menores o situaciones especiales.","Un mayor de edad suele poder contratar por sí mismo; un menor puede necesitar representante.","Definirla como simple titularidad de derechos.","capacidad de obrar"],
+    ["Menores emancipados","Menores con capacidad de obrar ampliada, pero no plena.","No pueden por sí solos tomar dinero a préstamo ni gravar o enajenar bienes inmuebles, establecimientos mercantiles o industriales u objetos de extraordinario valor sin el complemento exigido.","Pueden realizar actos ordinarios, pero no vender libremente una vivienda o hipotecarla.","Decir que son exactamente iguales a un mayor de edad.","menores emancipados, menor emancipado, emancipacion, emancipación"],
+    ["Contrato","Acuerdo de voluntades que crea, modifica o extingue obligaciones.","Debe reunir requisitos y produce efectos obligatorios entre las partes.","Una compraventa genera obligaciones para comprador y vendedor.","Definirlo solo como acuerdo sin mencionar efectos jurídicos.","contrato, contratos"],
+    ["Obligación","Relación jurídica en la que un acreedor puede exigir a un deudor una prestación.","No faltan acreedor, deudor, prestación y responsabilidad.","Quien debe pagar una cantidad es deudor; quien puede exigirla es acreedor.","Confundir obligación con deber moral o genérico.","obligacion, obligación, obligaciones"],
+    ["Fianza solidaria","Garantía personal que permite al acreedor reclamar al deudor principal o al fiador solidario.","Refuerza la posición del acreedor porque no actúa como una fianza simple.","Si el deudor no paga, el acreedor puede reclamar al fiador solidario.","Explicarla como una fianza normal.","fianza solidaria, fiador solidario"],
+    ["Pago o cumplimiento","Realización de la prestación debida para extinguir la obligación.","No es solo dinero: pagar es cumplir la prestación pactada.","Entregar la cosa debida también puede ser cumplimiento.","Pensar que pago solo significa entregar dinero.","pago, cumplimiento"],
+    ["Acreedor aparente","Persona que parece legitimada para recibir el pago.","Puede tener efecto liberatorio si el deudor paga de buena fe y concurren los requisitos.","El deudor paga a quien razonablemente aparenta ser acreedor.","Pensar que cualquier pago a un tercero libera automáticamente.","acreedor aparente"]
+  ],
+  economia:[
+    ["Oferta","Cantidad que los productores están dispuestos a vender a distintos precios.","Depende de costes, tecnología, expectativas y precio. Normalmente aumenta cuando sube el precio, manteniendo lo demás constante.","Si sube el precio del trigo, puede aumentar la cantidad ofrecida.","Confundir oferta con cantidad vendida efectiva.","oferta"],
+    ["Demanda","Cantidad que los consumidores están dispuestos a comprar a distintos precios.","Depende de renta, preferencias, precios relacionados y expectativas. Normalmente baja cuando sube el precio.","Si sube mucho el precio de un bien normal, la cantidad demandada tiende a caer.","Confundir demanda con deseo sin capacidad de compra.","demanda"],
+    ["Elasticidad","Mide la sensibilidad de una variable ante cambios en otra, especialmente cantidad demandada frente a precio.","Es clave para saber si una variación de precio provoca un cambio grande o pequeño en cantidades.","Si un bien tiene demanda elástica, una subida de precio reduce mucho la cantidad demandada.","Decir solo que algo cambia sin medir sensibilidad.","elasticidad"],
+    ["Inflación","Aumento generalizado y sostenido del nivel de precios.","Reduce poder adquisitivo y afecta a tipos de interés, salarios reales y decisiones de consumo e inversión.","Si los precios suben y el salario nominal no cambia, el salario real cae.","Confundir inflación con que suba el precio de un solo producto.","inflacion, inflación"],
+    ["PIB","Valor monetario de los bienes y servicios finales producidos en una economía durante un periodo.","Sirve para medir actividad económica, aunque no capta por sí solo bienestar, desigualdad o economía informal.","El PIB anual recoge producción final, no ventas de segunda mano ni bienes intermedios duplicados.","Usarlo como sinónimo perfecto de bienestar.","pib, producto interior bruto"],
+    ["Coste de oportunidad","Valor de la mejor alternativa a la que se renuncia al tomar una decisión.","Es esencial porque los recursos son escasos y elegir implica sacrificar otra opción.","Si estudias una tarde, renuncias al tiempo que podrías dedicar a trabajar u ocio.","Confundirlo con coste monetario únicamente.","coste de oportunidad"]
+  ],
+  historia:[
+    ["Causa histórica","Factor que contribuye a que ocurra un proceso o acontecimiento.","Puede ser política, económica, social, cultural o internacional. Las causas suelen combinarse, no actuar aisladas.","La crisis económica puede ser una causa de conflictividad social.","Reducir un proceso complejo a una sola causa.","causa, causas"],
+    ["Consecuencia histórica","Efecto producido por un acontecimiento o proceso.","Puede ser inmediata o de largo plazo, y afectar a política, sociedad, economía o cultura.","Una guerra puede provocar cambios territoriales, crisis económica y transformaciones sociales.","Confundir consecuencia con causa.","consecuencia, consecuencias"],
+    ["Revolución","Cambio profundo y relativamente rápido en estructuras políticas, sociales, económicas o culturales.","No es cualquier cambio: implica ruptura significativa con el orden anterior.","Una revolución política puede sustituir un régimen por otro.","Llamar revolución a cualquier reforma menor.","revolucion, revolución"],
+    ["Estado","Forma de organización política con instituciones, territorio, población y poder soberano.","Es clave para analizar poder, administración, leyes, fiscalidad y orden social.","El fortalecimiento del Estado moderno implicó mayor centralización administrativa.","Confundir Estado con gobierno concreto.","estado"],
+    ["Industrialización","Proceso de transformación económica y social ligado a la mecanización y producción industrial.","Implica cambios en trabajo, urbanización, productividad, clases sociales y mercados.","La fábrica sustituyó progresivamente formas artesanales de producción.","Verla solo como aparición de máquinas, sin efectos sociales.","industrializacion, industrialización"]
+  ],
+  lengua:[
+    ["Sujeto","Función sintáctica que concuerda con el verbo en número y persona.","No siempre es quien realiza la acción; puede ser paciente o estar omitido.","En 'Me gustan los libros', el sujeto es 'los libros'.","Identificar el sujeto preguntando siempre 'quién realiza la acción'.","sujeto"],
+    ["Predicado","Parte de la oración que contiene el verbo y expresa lo que se dice del sujeto.","Puede ser verbal o nominal según el tipo de núcleo y construcción.","En 'La casa es grande', 'es grande' funciona como predicado nominal.","Confundir predicado con todos los complementos sin atender al verbo.","predicado"],
+    ["Sintagma","Grupo de palabras organizado alrededor de un núcleo que cumple una función en la oración.","Puede ser nominal, verbal, adjetival, adverbial o preposicional.","'La casa azul' es un sintagma nominal con núcleo 'casa'.","Analizar palabras sueltas sin reconocer el grupo funcional.","sintagma"],
+    ["Morfema","Unidad mínima con significado gramatical o léxico dentro de una palabra.","Permite analizar género, número, tiempo, persona o derivación.","En 'niñas', '-a' marca género y '-s' número.","Confundir morfema con sílaba.","morfema"],
+    ["Texto argumentativo","Texto que defiende una tesis mediante razones o argumentos.","Debe distinguirse tesis, argumentos, conectores y conclusión.","Un artículo de opinión suele usar estructura argumentativa.","Resumir el tema sin identificar la tesis defendida.","texto argumentativo, argumentacion, argumentación"]
+  ],
+  anatomia:[
+    ["Músculo","Órgano o estructura contráctil que permite movimiento, postura o función visceral.","Debe estudiarse con origen, inserción, acción, inervación e irrigación cuando proceda.","El bíceps braquial flexiona el codo y participa en la supinación.","Aprender solo el nombre sin función ni localización.","musculo, músculo, músculos"],
+    ["Hueso","Estructura rígida del sistema esquelético que da soporte, protección y participa en movimiento.","Se estudia por localización, accidentes óseos, articulaciones y función.","El fémur soporta peso y participa en cadera y rodilla.","Confundir nombre con función anatómica.","hueso, huesos"],
+    ["Articulación","Unión entre dos o más estructuras óseas que permite estabilidad y/o movimiento.","Se clasifica según estructura y movilidad: fibrosa, cartilaginosa o sinovial, entre otras.","La rodilla es una articulación sinovial con gran relevancia funcional.","No distinguir movilidad de estabilidad.","articulacion, articulación"],
+    ["Inervación","Distribución de nervios que permite sensibilidad o control motor de una estructura.","Es clave para entender lesiones y función.","Una lesión nerviosa puede alterar movimiento o sensibilidad de una región.","Estudiar músculos sin su inervación cuando es relevante.","inervacion, inervación"],
+    ["Irrigación","Aporte sanguíneo de una estructura mediante arterias y vasos.","Importa para nutrición, oxigenación y consecuencias de lesiones vasculares.","Una obstrucción arterial puede comprometer el tejido irrigado.","Confundir irrigación con inervación.","irrigacion, irrigación"]
+  ],
+  biologia:[
+    ["Célula","Unidad básica estructural y funcional de los seres vivos.","Es el nivel mínimo que realiza funciones vitales; puede ser procariota o eucariota.","Una neurona es una célula especializada en transmisión de señales.","Memorizar orgánulos sin entender su función.","celula, célula, celular"],
+    ["ADN","Molécula que almacena información genética.","Su secuencia contiene instrucciones para la síntesis de ARN y proteínas, y se transmite en la herencia.","Una mutación en el ADN puede alterar una proteína.","Confundir ADN con proteína.","adn, dna"],
+    ["Gen","Segmento de ADN con información funcional, normalmente relacionado con un producto génico.","No todos los genes actúan igual ni se expresan siempre; dependen de regulación.","Un gen puede codificar una proteína o un ARN funcional.","Pensar que un gen determina por sí solo un rasgo complejo.","gen, genes"],
+    ["Mitosis","Proceso de división celular que genera células hijas genéticamente iguales.","Sirve para crecimiento, reparación y renovación celular.","Las células somáticas se dividen por mitosis.","Confundir mitosis con meiosis.","mitosis"],
+    ["Meiosis","División celular que reduce el número cromosómico y genera variabilidad genética.","Es esencial en la formación de gametos y reproducción sexual.","Produce células haploides a partir de una célula diploide.","Confundirla con mitosis o olvidar recombinación.","meiosis"],
+    ["Enzima","Proteína o molécula catalizadora que acelera reacciones químicas.","Reduce la energía de activación y suele ser específica de sustrato.","La amilasa cataliza la degradación del almidón.","Pensar que se consume en la reacción.","enzima, enzimas"]
+  ],
+  medicina:[
+    ["Síntoma","Manifestación subjetiva referida por el paciente.","No se observa directamente; depende de lo que el paciente comunica.","Dolor, mareo o náuseas son síntomas.","Confundir síntoma con signo clínico.","sintoma, síntoma, sintomas, síntomas"],
+    ["Signo clínico","Manifestación objetiva que puede observarse o medirse.","Ayuda al diagnóstico porque puede ser valorado por el profesional.","Fiebre medida, presión arterial elevada o ictericia son signos.","Confundirlo con lo que el paciente solo refiere.","signo, signo clinico, signo clínico"],
+    ["Diagnóstico","Proceso de identificación de una enfermedad o condición clínica.","Integra síntomas, signos, pruebas y razonamiento clínico.","El diagnóstico diferencial compara varias posibilidades.","Pensar que un dato aislado confirma siempre una enfermedad.","diagnostico, diagnóstico"],
+    ["Tratamiento","Intervención dirigida a curar, controlar o aliviar una enfermedad.","Puede ser farmacológico, quirúrgico, rehabilitador, preventivo o de soporte.","Un antibiótico trata infecciones bacterianas sensibles.","Confundir tratamiento sintomático con curativo.","tratamiento"],
+    ["Fisiopatología","Mecanismo por el que una alteración produce signos, síntomas o enfermedad.","Es clave para entender por qué aparece el cuadro clínico.","La inflamación puede explicar dolor, calor y edema.","Memorizar síntomas sin mecanismo.","fisiopatologia, fisiopatología"]
+  ],
+  fisiologia:[
+    ["Homeostasis","Mantenimiento de condiciones internas relativamente estables.","Depende de mecanismos de regulación que detectan cambios y activan respuestas compensadoras.","La regulación de glucosa mantiene niveles dentro de un rango.","Confundir equilibrio dinámico con ausencia de cambio.","homeostasis"],
+    ["Retroalimentación negativa","Mecanismo regulador que reduce la desviación respecto a un valor de referencia.","Es fundamental para mantener homeostasis.","Si sube la glucemia, la insulina contribuye a reducirla.","Confundirla con retroalimentación positiva.","feedback negativo, retroalimentacion negativa, retroalimentación negativa"],
+    ["Potencial de acción","Cambio rápido del potencial de membrana que permite transmitir señales excitables.","Depende de canales iónicos y cambios en permeabilidad de membrana.","En neuronas permite la propagación del impulso nervioso.","Pensar que es una corriente continua sin fases.","potencial de accion, potencial de acción"],
+    ["Sinapsis","Zona de comunicación entre neuronas o entre neurona y célula efectora.","Puede ser química o eléctrica; permite transmisión de información.","La liberación de neurotransmisores ocurre en muchas sinapsis químicas.","Confundir sinapsis con impulso nervioso completo.","sinapsis"],
+    ["Hormona","Mensajero químico producido por glándulas o tejidos que actúa sobre células diana.","Permite regulación a distancia de funciones corporales.","La insulina facilita la captación de glucosa en ciertos tejidos.","Pensar que toda señal química actúa igual o en el mismo tiempo.","hormona, hormonas"]
+  ],
+  psicologia:[
+    ["Conducta","Acción observable de un organismo en interacción con su entorno.","Puede analizarse por antecedentes, consecuencias y contexto.","Evitar una situación por ansiedad es una conducta de evitación.","Reducir la conducta a intención interna sin observar el contexto.","conducta"],
+    ["Cognición","Conjunto de procesos mentales relacionados con percepción, memoria, atención, pensamiento y lenguaje.","Explica cómo se procesa la información y cómo influye en la conducta.","Un sesgo cognitivo altera la interpretación de una situación.","Usar cognición como sinónimo genérico de inteligencia.","cognicion, cognición"],
+    ["Memoria","Proceso psicológico de codificación, almacenamiento y recuperación de información.","No es un almacén único; incluye sistemas y fases diferentes.","La memoria de trabajo permite manipular información temporalmente.","Pensar que recordar es reproducir exactamente lo vivido.","memoria"],
+    ["Aprendizaje","Cambio relativamente estable en conducta o conocimiento por experiencia.","Puede explicarse mediante condicionamiento, observación o procesos cognitivos.","Aprender una respuesta por refuerzo es una forma de aprendizaje.","Confundir aprendizaje con mera repetición sin cambio.","aprendizaje"],
+    ["Refuerzo","Consecuencia que aumenta la probabilidad de una conducta.","Puede ser positivo o negativo según si añade o retira un estímulo.","Dar una recompensa tras una conducta puede aumentar su frecuencia.","Confundir refuerzo negativo con castigo.","refuerzo"]
+  ],
+  sociologia:[
+    ["Institución social","Conjunto estable de normas, roles y prácticas que organiza la vida social.","Regula comportamientos y da continuidad a la sociedad.","La familia, la escuela o el Estado son instituciones sociales.","Verla solo como edificio u organización formal.","institucion social, institución social, instituciones"],
+    ["Rol social","Conjunto de expectativas asociadas a una posición social.","Orienta cómo se espera que actúe una persona en un contexto.","El rol de profesor implica expectativas distintas al rol de estudiante.","Confundir rol con personalidad individual.","rol, rol social"],
+    ["Estatus","Posición que una persona ocupa en una estructura social.","Puede ser adscrito o adquirido y se relaciona con prestigio, poder o reconocimiento.","Ser estudiante es un estatus adquirido en un contexto educativo.","Confundir estatus con riqueza únicamente.","estatus"],
+    ["Socialización","Proceso por el que las personas interiorizan normas, valores y pautas culturales.","Permite integrarse en la vida social y aprender roles.","La familia y la escuela son agentes de socialización.","Pensar que solo ocurre en la infancia.","socializacion, socialización"],
+    ["Desigualdad social","Distribución desigual de recursos, oportunidades o poder entre grupos.","Debe analizarse estructuralmente, no solo como diferencia individual.","La desigualdad educativa puede reproducir desigualdad económica.","Explicarla solo por esfuerzo individual.","desigualdad social, desigualdad"]
+  ],
+  contabilidad:[
+    ["Activo","Recurso controlado por la empresa del que se esperan beneficios económicos futuros.","Aparece en el balance y puede ser corriente o no corriente.","Maquinaria, existencias o tesorería pueden ser activos.","Confundir activo con ingreso.","activo"],
+    ["Pasivo","Obligación actual de la empresa derivada de hechos pasados.","Representa deudas o compromisos frente a terceros.","Un préstamo bancario pendiente es un pasivo.","Confundir pasivo con gasto.","pasivo"],
+    ["Patrimonio neto","Parte residual de los activos una vez deducidos los pasivos.","Representa financiación propia y resultados acumulados.","Capital social y reservas forman parte del patrimonio neto.","Confundir patrimonio neto con tesorería disponible.","patrimonio neto"],
+    ["Debe y haber","Lados del asiento contable usados para registrar aumentos y disminuciones según la naturaleza de la cuenta.","No significan bueno/malo ni entrada/salida de dinero necesariamente.","Una compra puede implicar cargar una cuenta de gasto o activo y abonar bancos o proveedores.","Pensar que debe siempre es ingreso o que haber siempre es gasto.","debe, haber"],
+    ["Asiento contable","Registro de una operación económica en cuentas mediante debe y haber.","Debe respetar partida doble: la suma del debe coincide con la del haber.","Comprar mercaderías al contado genera un asiento con gasto o existencias y salida de banco/caja.","Registrar solo una parte de la operación.","asiento, asiento contable"],
+    ["Amortización","Distribución sistemática del valor depreciable de un activo durante su vida útil.","Refleja consumo económico del activo, no necesariamente salida de dinero en ese momento.","Una máquina se amortiza durante los años en que se usa.","Confundir amortización con pago de deuda en todos los contextos.","amortizacion, amortización"]
+  ]
+};
 
 function v(id){return document.getElementById(id)?.value.trim() || ""}
 
@@ -724,134 +744,269 @@ async function docxText(file){
   return result.value || "";
 }
 
-function isLaw(subject,text){
-  return /derecho|civil|contrato|obligaci[oó]n|acreedor|deudor|capacidad|fianza|c[oó]digo civil/i.test(subject + " " + text);
-}
+function detectDomain(subject,text,selected){
+  if(selected && selected !== "auto") return selected;
 
-function detectKnowledgeConcepts(subject,text,focus){
-  const all = normalize(text + " " + focus);
-  const concepts = [];
+  const all = normalize(subject + " " + text);
+  let best = "general";
+  let bestScore = 0;
 
-  if(isLaw(subject,text + " " + focus)){
-    LAW_KNOWLEDGE.forEach(item => {
-      if(item.keys.some(k => all.includes(normalize(k)))) {
-        concepts.push({...item, source:"base jurídica interna"});
-      }
+  Object.entries(DOMAIN_PROFILES).forEach(([key,profile]) => {
+    if(key === "general") return;
+    let score = 0;
+    profile.detect.forEach(word => {
+      const re = new RegExp("\\b" + escapeReg(normalize(word)) + "\\b","i");
+      if(re.test(all)) score += 3;
+      else if(all.includes(normalize(word))) score += 1;
     });
-  }
-
-  return concepts;
-}
-
-function fallbackConcepts(text, focus){
-  const source = splitSentences(text + "\n" + focus);
-  const terms = extractTerms(source.join("\n")).slice(0,16);
-  return terms.map(term => {
-    const evidence = source.find(s => normalize(s).includes(normalize(term).split(" ")[0])) || "";
-    return interpretGeneric(term, evidence);
+    profile.priority.forEach(word => {
+      if(all.includes(normalize(word))) score += 1;
+    });
+    if(score > bestScore){
+      bestScore = score;
+      best = key;
+    }
   });
+
+  return best;
 }
 
-function extractTerms(text){
+function knowledgeCards(domain,text,focus){
+  const all = normalize(text + " " + focus);
+  const rows = DOMAIN_KNOWLEDGE[domain] || [];
+  const out = [];
+
+  rows.forEach(row => {
+    const [term,direct,critical,example,error,keys] = row;
+    const keyList = String(keys || term).split(",").map(x=>normalize(x.trim())).filter(Boolean);
+    if(keyList.some(k => all.includes(k))) {
+      out.push({
+        term,
+        direct,
+        explanation: domainExplanation(domain,term,direct),
+        critical,
+        example,
+        error,
+        relation: domainRelation(domain,term),
+        source:"base interna " + domain
+      });
+    }
+  });
+
+  return out;
+}
+
+function domainExplanation(domain,term,direct){
+  const profile = DOMAIN_PROFILES[domain] || DOMAIN_PROFILES.general;
+  const explainers = {
+    derecho:`En términos jurídicos, lo importante no es solo nombrarlo, sino saber qué sujetos intervienen, qué efectos produce y qué límite o requisito lo diferencia de otros conceptos. ${direct}`,
+    economia:`En economía, este concepto debe entenderse por la relación entre variables y por el efecto que tiene sobre decisiones, incentivos o equilibrio. ${direct}`,
+    historia:`Históricamente, este concepto se entiende dentro de un proceso: importa su contexto, sus causas, sus actores y sus consecuencias. ${direct}`,
+    lengua:`En lengua o literatura, hay que identificar su función dentro de la oración, el texto o el análisis literario. ${direct}`,
+    anatomia:`En anatomía, debe estudiarse por localización, estructura, función y relación con elementos próximos. ${direct}`,
+    biologia:`En biología, lo esencial es comprender la estructura o proceso y explicar qué función cumple dentro del sistema vivo. ${direct}`,
+    medicina:`En medicina, debe relacionarse con manifestaciones clínicas, fisiopatología, diagnóstico, tratamiento o relevancia para el paciente. ${direct}`,
+    fisiologia:`En fisiología, importa el mecanismo: estímulo, respuesta, regulación y papel en el mantenimiento de la función corporal. ${direct}`,
+    psicologia:`En psicología, debe explicarse como proceso mental, emocional o conductual, indicando variables y aplicación. ${direct}`,
+    sociologia:`En sociología, debe analizarse como fenómeno social, no solo individual, atendiendo a estructuras, normas, roles o desigualdades. ${direct}`,
+    contabilidad:`En contabilidad, debe explicarse por su reconocimiento, valoración y efecto en cuentas, balance o resultado. ${direct}`,
+    general:`La clave es explicar qué significa, para qué sirve y qué diferencia este concepto de otros parecidos. ${direct}`
+  };
+  return explainers[domain] || explainers.general;
+}
+
+function domainRelation(domain,term){
+  const relations = {
+    derecho:`Se relaciona con otras instituciones jurídicas porque ayuda a determinar sujetos, efectos, límites o validez.`,
+    economia:`Se relaciona con modelos económicos, variables e incentivos que explican decisiones y resultados.`,
+    historia:`Se relaciona con causas, consecuencias, actores y procesos de cambio o continuidad.`,
+    lengua:`Se relaciona con otras categorías gramaticales, textuales o literarias dentro del análisis.`,
+    anatomia:`Se relaciona con estructuras vecinas y con la función del sistema anatómico correspondiente.`,
+    biologia:`Se relaciona con otros niveles de organización, procesos celulares o mecanismos de regulación.`,
+    medicina:`Se relaciona con diagnóstico, fisiopatología, tratamiento, prevención o pronóstico.`,
+    fisiologia:`Se relaciona con mecanismos de regulación, homeostasis y sistemas corporales.`,
+    psicologia:`Se relaciona con teorías, variables, conducta, cognición o emoción.`,
+    sociologia:`Se relaciona con estructura social, instituciones, normas, roles o desigualdad.`,
+    contabilidad:`Se relaciona con el registro contable, las cuentas y los estados financieros.`,
+    general:`Se relaciona con otros conceptos del tema porque permite construir una explicación completa.`
+  };
+  return relations[domain] || relations.general;
+}
+
+function fallbackConcepts(domain,text,focus,quantity){
+  const profile = DOMAIN_PROFILES[domain] || DOMAIN_PROFILES.general;
+  const terms = extractTerms(domain,text + "\n" + focus).slice(0, quantity);
+  return terms.map(term => interpretTermByDomain(domain,term));
+}
+
+function extractTerms(domain,text){
+  const profile = DOMAIN_PROFILES[domain] || DOMAIN_PROFILES.general;
   const sentences = splitSentences(text);
   const scores = {};
+
   sentences.forEach(sentence => {
-    const matches = sentence.match(/\b[A-ZÁÉÍÓÚÑa-záéíóúñ]{5,}(?:\s+(?:de|del|la|las|los|el|en|por|con|sin|y))?(?:\s+[A-ZÁÉÍÓÚÑa-záéíóúñ]{4,}){0,4}\b/g) || [];
+    const matches = sentence.match(/\b[A-ZÁÉÍÓÚÑa-záéíóúñ]{4,}(?:\s+(?:de|del|la|las|los|el|en|por|con|sin|y|e|a))?(?:\s+[A-ZÁÉÍÓÚÑa-záéíóúñ]{3,}){0,5}\b/g) || [];
     matches.forEach(raw => {
-      const t = raw.trim();
-      if(t.length < 5 || t.length > 80) return;
-      if(/datos que|fuentes|identifica|concepto relevante|modo precision|wordreference|cambridge|rae|boe/i.test(t)) return;
-      const key = normalize(t);
-      scores[t] = (scores[t] || 0) + scoreTerm(t);
+      const term = raw.trim();
+      const key = normalize(term);
+      if(term.length < 4 || term.length > 90) return;
+      if(isBadTerm(term)) return;
+
+      let score = 1;
+      profile.priority.forEach(p => {
+        if(key.includes(normalize(p))) score += 6;
+      });
+      if(term.split(/\s+/).length >= 2) score += 2;
+      scores[smartCap(term)] = (scores[smartCap(term)] || 0) + score;
     });
   });
-  return Object.entries(scores).sort((a,b)=>b[1]-a[1]).map(x=>smartCap(x[0]));
+
+  return Object.entries(scores).sort((a,b)=>b[1]-a[1]).map(x=>x[0]);
 }
 
-function scoreTerm(term){
-  let score = 1;
-  if(/capacidad|contrato|obligaci[oó]n|acreedor|deudor|fianza|pago|cumplimiento|nulidad|persona|jur[ií]dica|representaci[oó]n|consentimiento/i.test(term)) score += 6;
-  if(term.split(/\s+/).length >= 2) score += 2;
-  return score;
+function isBadTerm(term){
+  return /datos que|fuentes|identifica|concepto relevante|modo precision|modo precisión|wordreference|cambridge|rae|boe|profesor|apuntes|tema|página|pagina|ejemplo|importante|general/i.test(term);
 }
 
-function interpretGeneric(term,evidence){
+function interpretTermByDomain(domain,term){
+  const profile = DOMAIN_PROFILES[domain] || DOMAIN_PROFILES.general;
+  const templates = {
+    derecho:{
+      direct:`${term} es un concepto jurídico que debe entenderse por su función dentro de una relación, acto o institución jurídica.`,
+      explanation:`Para estudiarlo correctamente, identifica qué sujetos intervienen, qué efectos produce, qué requisitos exige y qué límite lo diferencia de conceptos próximos.`,
+      critical:`No basta con memorizar el nombre: deben aparecer sujetos, efectos, requisitos, límites y posible norma aplicable si el temario la menciona.`,
+      example:`En un caso práctico, habría que explicar cómo afecta ${term} a la validez, cumplimiento, responsabilidad o posición de las partes.`,
+      error:`Quedarse en una definición abstracta sin explicar efectos jurídicos.`
+    },
+    economia:{
+      direct:`${term} es un concepto económico que debe interpretarse por la relación entre variables y decisiones.`,
+      explanation:`Para entenderlo, identifica qué variable cambia, qué causa ese cambio y qué efecto tiene sobre agentes, mercados, incentivos o equilibrio.`,
+      critical:`No puede faltar la relación causal: qué aumenta, qué disminuye, bajo qué supuesto y con qué consecuencia económica.`,
+      example:`Puede aplicarse a un mercado concreto explicando cómo reaccionan consumidores, empresas o instituciones ante un cambio.`,
+      error:`Memorizar la definición sin explicar el mecanismo económico.`
+    },
+    historia:{
+      direct:`${term} es un concepto histórico que debe ubicarse en un proceso, contexto y periodo concreto.`,
+      explanation:`Para explicarlo bien, relaciona causas, actores, desarrollo y consecuencias. La historia no se estudia como hechos aislados, sino como procesos conectados.`,
+      critical:`No puede faltar cronología aproximada, contexto, causa principal, consecuencia y actores implicados si aparecen en el temario.`,
+      example:`Puede aparecer en una pregunta que pida explicar por qué ocurrió un proceso o qué consecuencias tuvo.`,
+      error:`Contarlo como una anécdota sin causas ni consecuencias.`
+    },
+    lengua:{
+      direct:`${term} es un concepto lingüístico o literario que debe explicarse por su función dentro de la lengua, la oración o el texto.`,
+      explanation:`Para dominarlo, identifica categoría, función, rasgos y ejemplo. En lengua no basta con definir: hay que saber reconocerlo y analizarlo.`,
+      critical:`No puede faltar su función, un ejemplo correcto y la diferencia con una categoría parecida.`,
+      example:`Puede aplicarse en una oración, un texto o un análisis literario según el tema.`,
+      error:`Aprender la definición sin saber detectarlo en un ejemplo.`
+    },
+    anatomia:{
+      direct:`${term} es una estructura o concepto anatómico que debe estudiarse por localización, forma, función y relaciones.`,
+      explanation:`Para explicarlo profesionalmente, ubica la estructura, indica su función y relaciónala con elementos cercanos o sistemas corporales.`,
+      critical:`No puede faltar localización, función y relación anatómica relevante. Si procede, origen, inserción, irrigación o inervación.`,
+      example:`Puede aplicarse en una pregunta de identificación anatómica o relación estructura-función.`,
+      error:`Aprender el nombre sin localización ni función.`
+    },
+    biologia:{
+      direct:`${term} es un concepto biológico que debe entenderse por su estructura, función o proceso.`,
+      explanation:`Para explicarlo bien, indica qué hace, dónde ocurre, qué elementos intervienen y qué consecuencia tiene para el sistema vivo.`,
+      critical:`No puede faltar mecanismo, función, nivel biológico y consecuencia.`,
+      example:`Puede aplicarse a una célula, organismo, proceso molecular o sistema biológico.`,
+      error:`Memorizar la palabra sin entender el proceso.`
+    },
+    medicina:{
+      direct:`${term} es un concepto médico que debe analizarse por su relevancia clínica o fisiopatológica.`,
+      explanation:`Para estudiarlo bien, relaciona mecanismo, manifestación clínica, diagnóstico, tratamiento o prevención según corresponda.`,
+      critical:`No puede faltar si es signo, síntoma, mecanismo, diagnóstico, tratamiento, factor de riesgo o complicación.`,
+      example:`Puede aparecer en un caso clínico donde haya que interpretar signos, síntomas o decisiones terapéuticas.`,
+      error:`Aprenderlo como definición aislada sin conexión clínica.`
+    },
+    fisiologia:{
+      direct:`${term} es un concepto fisiológico relacionado con el funcionamiento y regulación del organismo.`,
+      explanation:`Debe explicarse como mecanismo: estímulo, receptor, respuesta, regulación y consecuencia funcional.`,
+      critical:`No puede faltar el mecanismo y su papel en la homeostasis o función corporal.`,
+      example:`Puede aplicarse explicando qué ocurre cuando el sistema se activa, se inhibe o se altera.`,
+      error:`Describir el fenómeno sin explicar el mecanismo.`
+    },
+    psicologia:{
+      direct:`${term} es un concepto psicológico relacionado con conducta, cognición, emoción o procesos mentales.`,
+      explanation:`Para entenderlo, identifica el proceso implicado, variables que lo influyen y cómo se manifiesta en la conducta o experiencia.`,
+      critical:`No puede faltar proceso, variable, teoría o ejemplo aplicado.`,
+      example:`Puede aplicarse a una conducta, situación experimental o caso cotidiano.`,
+      error:`Usarlo de forma coloquial sin precisión psicológica.`
+    },
+    sociologia:{
+      direct:`${term} es un concepto sociológico que debe analizarse como fenómeno social, no solo individual.`,
+      explanation:`Para explicarlo bien, relaciona estructura social, normas, roles, instituciones, poder o desigualdad.`,
+      critical:`No puede faltar dimensión social: grupo, institución, norma, estructura o relación de poder.`,
+      example:`Puede aplicarse a familia, escuela, trabajo, clase social, cultura o desigualdad.`,
+      error:`Explicarlo únicamente por decisiones individuales.`
+    },
+    contabilidad:{
+      direct:`${term} es un concepto contable que debe entenderse por su registro, valoración o efecto en los estados financieros.`,
+      explanation:`Para estudiarlo bien, identifica qué cuenta afecta, si va al debe o al haber, y cómo impacta en balance o resultado.`,
+      critical:`No puede faltar efecto contable: cuenta, reconocimiento, valoración y repercusión patrimonial o en resultados.`,
+      example:`Puede aplicarse mediante un asiento contable o analizando su efecto en activo, pasivo, patrimonio neto, ingreso o gasto.`,
+      error:`Memorizar la definición sin saber registrar la operación.`
+    },
+    general:{
+      direct:`${term} es un concepto relevante del tema que debe explicarse por su función.`,
+      explanation:`Para estudiarlo bien, identifica definición, función, ejemplo, diferencia y error típico.`,
+      critical:`No puede faltar qué significa, por qué importa y cómo se aplica.`,
+      example:`Puede aparecer como definición, relación o aplicación práctica.`,
+      error:`Memorizarlo sin entenderlo.`
+    }
+  };
+
+  const t = templates[domain] || templates.general;
   return {
     term: smartCap(term),
-    direct: buildGenericDirect(term,evidence),
-    explanation: buildGenericExplanation(term,evidence),
-    critical: buildGenericCritical(term,evidence),
-    example: buildGenericExample(term,evidence),
-    error: "El error típico es memorizar el nombre del concepto sin explicar su función, sus límites o su diferencia con conceptos próximos.",
-    relation: "Debe relacionarse con el bloque del tema en el que aparece para no estudiarlo como una idea aislada.",
-    source:"interpretación genérica"
+    direct:t.direct,
+    explanation:t.explanation,
+    critical:t.critical,
+    example:t.example,
+    error:t.error,
+    relation:domainRelation(domain,term),
+    source:"perfil " + domain
   };
 }
 
-function buildGenericDirect(term,evidence){
-  if(/requisito|condici[oó]n/i.test(term)) return `${term} es un elemento que debe cumplirse para que el acto o situación produzca correctamente sus efectos.`;
-  if(/efecto|consecuencia/i.test(term)) return `${term} expresa la consecuencia jurídica o práctica que se deriva de una situación del temario.`;
-  return `${term} es un concepto relevante del tema que debe definirse por su función y no solo por su nombre.`;
-}
+function getCards(subject,domain,text,focus,quantity,mode){
+  let concepts = knowledgeCards(domain,text,focus);
 
-function buildGenericExplanation(term,evidence){
-  const short = paraphraseEvidence(evidence);
-  if(short) return `La idea debe entenderse dentro del contexto del tema. ${short} Lo importante es explicar qué papel cumple, qué problema resuelve y qué consecuencia produce.`;
-  return `Para estudiarlo bien, conviene identificar qué significa, en qué parte del tema aparece, qué lo diferencia de otros conceptos y qué dato concreto podría pedir el profesor.`;
-}
-
-function buildGenericCritical(term,evidence){
-  if(/no puede|prohib|excepto|salvo|l[ií]mite|art[ií]culo|requisito/i.test(evidence)){
-    return paraphraseEvidence(evidence);
-  }
-  return `No basta con nombrarlo. Debe aparecer su definición, su utilidad, un matiz diferencial y un posible error de examen.`;
-}
-
-function buildGenericExample(term,evidence){
-  if(/contrato|obligaci[oó]n|acreedor|deudor/i.test(evidence)) return "Ejemplo: en un caso práctico habría que identificar quién ocupa cada posición jurídica y qué efecto produce el concepto.";
-  return "Ejemplo: puede convertirse en una pregunta de examen pidiendo definición, diferencia con otro concepto o aplicación a un caso breve.";
-}
-
-function paraphraseEvidence(evidence){
-  if(!evidence || evidence.length < 40) return "";
-  const clean = evidence
-    .replace(/\s+/g," ")
-    .replace(/^[-–•\d.]+\s*/,"")
-    .trim();
-
-  if(clean.length > 220) return "";
-  return "Según el apunte, este concepto aparece vinculado a una regla o matiz que conviene explicar con tus propias palabras, no copiar literalmente.";
-}
-
-function getCards(subject,text,focus,quantity,mode){
-  let concepts = detectKnowledgeConcepts(subject,text,focus);
-  if(concepts.length < Math.min(quantity,8)){
-    const fallback = fallbackConcepts(text,focus);
-    fallback.forEach(c => {
+  if(concepts.length < Math.min(quantity,10)){
+    fallbackConcepts(domain,text,focus,quantity).forEach(c => {
       if(!concepts.some(x => normalize(x.term) === normalize(c.term))) concepts.push(c);
     });
   }
 
-  const ordered = orderConcepts(concepts, focus).slice(0, quantity);
-  return ordered.map((c,i) => makeCard(c,i,ordered,subject,mode));
+  concepts = orderConcepts(domain,concepts,focus).slice(0,quantity);
+  return concepts.map((c,i) => makeCard(domain,c,i,concepts,subject,mode));
 }
 
-function orderConcepts(concepts, focus){
+function orderConcepts(domain,concepts,focus){
+  const profile = DOMAIN_PROFILES[domain] || DOMAIN_PROFILES.general;
   const f = normalize(focus);
   return concepts.sort((a,b) => {
-    const af = f.includes(normalize(a.term)) ? 10 : 0;
-    const bf = f.includes(normalize(b.term)) ? 10 : 0;
-    return bf - af;
+    let as = 0, bs = 0;
+    if(f.includes(normalize(a.term))) as += 20;
+    if(f.includes(normalize(b.term))) bs += 20;
+    profile.priority.forEach(p => {
+      if(normalize(a.term).includes(normalize(p))) as += 4;
+      if(normalize(b.term).includes(normalize(p))) bs += 4;
+    });
+    return bs - as;
   });
 }
 
-function makeCard(c,index,all,subject,mode){
+function makeCard(domain,c,index,all,subject,mode){
+  const profile = DOMAIN_PROFILES[domain] || DOMAIN_PROFILES.general;
   const next = all[(index+1) % all.length];
-  const type = cardType(index,mode);
-  let question = `¿Qué significa "${c.term}" y qué matiz no puede faltar en ${subject}?`;
+  const type = cardType(index,mode,domain);
 
-  if(type === "Diferencia") question = `Diferencia "${c.term}" de un concepto cercano del tema.`;
-  if(type === "Caso práctico") question = `¿Cómo aplicarías "${c.term}" en un caso práctico de ${subject}?`;
+  let question = `¿Qué significa "${c.term}" y cuál es su ${profile.critical} en ${subject}?`;
+  if(type === "Aplicación") question = `¿Cómo se aplica "${c.term}" en un ejemplo de ${subject}?`;
+  if(type === "Diferencia") question = `¿Con qué concepto se puede confundir "${c.term}" y cómo lo diferenciarías?`;
+  if(type === "Mecanismo") question = `¿Qué mecanismo o proceso explica "${c.term}"?`;
   if(type === "Error típico") question = `¿Qué error típico debes evitar al explicar "${c.term}"?`;
 
   return {
@@ -863,46 +1018,49 @@ function makeCard(c,index,all,subject,mode){
     critical:c.critical,
     example:c.example,
     error:c.error,
-    relation:c.relation || (`Se relaciona con ${next ? next.term : "otros conceptos del tema"} porque forman parte del mismo bloque de estudio.`)
+    relation:c.relation || domainRelation(domain,next ? next.term : c.term)
   };
 }
 
-function cardType(i,mode){
+function cardType(i,mode,domain){
   if(mode === "errores") return i % 2 === 0 ? "Error típico" : "Definición";
   if(mode === "relaciones") return i % 2 === 0 ? "Diferencia" : "Relación";
-  if(mode === "examen") return ["Definición","Matiz de examen","Caso práctico","Error típico"][i % 4];
-  return ["Definición","Comprensión","Matiz de examen","Relación"][i % 4];
+  if(["biologia","medicina","fisiologia","anatomia"].includes(domain)) return ["Definición","Mecanismo","Aplicación","Error típico"][i % 4];
+  if(mode === "examen") return ["Definición","Matiz de examen","Aplicación","Error típico"][i % 4];
+  return ["Definición","Comprensión","Aplicación","Relación"][i % 4];
 }
 
 function generateCards(){
   const subject = v("subject") || "la asignatura";
+  const selectedDomain = v("domain") || "auto";
   const quantity = parseInt(v("quantity") || "20");
-  const difficulty = v("difficulty") || "alta";
   const mode = v("cardMode") || "examen";
   const focus = v("teacherFocus");
   const text = cleanInputText(v("notes"));
 
-  if(text.split(/\s+/).length < 60){
+  if(text.split(/\s+/).length < 50){
     openResult("<h2>Falta material</h2><p>Añade apuntes o un resumen más completo para crear flashcards útiles.</p>");
     return;
   }
 
-  const cards = getCards(subject,text,focus,quantity,mode);
-  lastOutput = buildPlainOutput(subject,cards);
+  const domain = detectDomain(subject,text + " " + focus,selectedDomain);
+  const profile = DOMAIN_PROFILES[domain] || DOMAIN_PROFILES.general;
+  const cards = getCards(subject,domain,text,focus,quantity,mode);
+  lastOutput = buildPlainOutput(subject,profile.label,cards);
 
   const html = `
     <button class="tecnia-result-close" onclick="closeTecnIAResult()">Cerrar ×</button>
 
     <div class="result-title">
-      <h2>Flashcards interpretadas de ${esc(subject)}</h2>
-      <p>Estas tarjetas priorizan explicación profesional y matices de examen. La herramienta evita usar frases largas copiadas literalmente del apunte.</p>
+      <h2>Flashcards profesionales de ${esc(subject)}</h2>
+      <p>Área aplicada: <strong>${esc(profile.label)}</strong>. Las tarjetas usan una estructura adaptada a la materia para evitar explicaciones genéricas o copia literal de apuntes.</p>
     </div>
 
     <div class="result-dashboard">
       <div class="dash-card"><span>Tarjetas</span><strong>${cards.length}</strong></div>
-      <div class="dash-card"><span>Dificultad</span><strong>${esc(difficulty)}</strong></div>
+      <div class="dash-card"><span>Área</span><strong>${esc(profile.label)}</strong></div>
       <div class="dash-card"><span>Modo</span><strong>${esc(mode)}</strong></div>
-      <div class="dash-card"><span>Estilo</span><strong>Interpretado</strong></div>
+      <div class="dash-card"><span>Estilo</span><strong>Profesional</strong></div>
     </div>
 
     <div class="flashcard-list">
@@ -925,27 +1083,27 @@ function generateCards(){
           </div>
 
           <div class="explanation">
-            <h4>Explicación clara</h4>
+            <h4>Explicación profesional</h4>
             <p>${esc(card.explanation)}</p>
 
             <div class="critical-box">
-              <strong>Lo que no puede faltar</strong>
+              <strong>${esc(profile.critical.charAt(0).toUpperCase() + profile.critical.slice(1))}</strong>
               ${esc(card.critical)}
             </div>
 
             <div class="explanation-grid">
               <div class="explanation-box">
-                <strong>Ejemplo o aplicación</strong>
+                <strong>${esc(profile.example.charAt(0).toUpperCase() + profile.example.slice(1))}</strong>
                 <p>${esc(card.example)}</p>
               </div>
               <div class="explanation-box">
-                <strong>Error típico que evita</strong>
+                <strong>${esc(profile.error.charAt(0).toUpperCase() + profile.error.slice(1))}</strong>
                 <p>${esc(card.error)}</p>
               </div>
             </div>
 
             <div class="explanation-box" style="margin-top:14px;">
-              <strong>Conexión con el temario</strong>
+              <strong>${esc(profile.relation.charAt(0).toUpperCase() + profile.relation.slice(1))}</strong>
               <p>${esc(card.relation)}</p>
             </div>
           </div>
@@ -953,16 +1111,17 @@ function generateCards(){
       `).join("")}
     </div>
 
-    <div class="warning-box"><strong>Limitación honesta:</strong> esta versión interpreta con una base interna y reglas. Para una interpretación 100% tipo ChatGPT habría que conectar una API de IA. Esta mejora evita mucho el copia-pega, pero no sustituye una IA real conectada.</div>
+    <div class="warning-box"><strong>Limitación honesta:</strong> esta versión es multidisciplinar y adapta vocabulario/estructura, pero sigue siendo una web estática. Para interpretación perfecta de cualquier tema habría que conectar una API de IA real.</div>
   `;
 
   openResult(html);
-  document.getElementById("preview").innerHTML = `<h2>Flashcards generadas</h2><div class="empty">Revisa si ahora explican y no copian. Si una tarjeta sale mal, mándame captura de esa tarjeta concreta.</div>`;
+  document.getElementById("preview").innerHTML = `<h2>Flashcards generadas</h2><div class="empty">Área aplicada: ${esc(profile.label)}. Revisa si el vocabulario y el enfoque encajan con la asignatura.</div>`;
 }
 
-function buildPlainOutput(subject,cards){
+function buildPlainOutput(subject,domainLabel,cards){
   return [
-    `FLASHCARDS INTERPRETADAS - ${subject}`,
+    `FLASHCARDS PROFESIONALES - ${subject}`,
+    `ÁREA: ${domainLabel}`,
     "",
     ...cards.map((c,i)=>[
       `FLASHCARD ${i+1}: ${c.term}`,
@@ -970,10 +1129,10 @@ function buildPlainOutput(subject,cards){
       `Pregunta: ${c.question}`,
       `Respuesta directa: ${c.direct}`,
       `Explicación: ${c.explanation}`,
-      `Lo que no puede faltar: ${c.critical}`,
+      `Dato esencial: ${c.critical}`,
       `Ejemplo: ${c.example}`,
       `Error típico: ${c.error}`,
-      `Conexión: ${c.relation}`
+      `Relación: ${c.relation}`
     ].join("\n"))
   ].join("\n\n");
 }
@@ -1009,12 +1168,16 @@ function resetTool(){
   document.getElementById("fileList").innerHTML = "";
   extractedFiles = [];
   lastOutput = "";
-  document.getElementById("preview").innerHTML = `<h2>Resultado</h2><div class="empty">Las flashcards se abrirán en una ventana grande. Deben estar explicadas, no copiadas.</div>`;
+  document.getElementById("preview").innerHTML = `<h2>Resultado</h2><div class="empty">Las flashcards se abrirán en una ventana grande y se adaptarán al área de conocimiento seleccionada.</div>`;
 }
 
 function smartCap(text){
   text = String(text || "").trim();
   return text ? text.charAt(0).toUpperCase() + text.slice(1) : "";
+}
+
+function escapeReg(text){
+  return String(text || "").replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
 }
 
 function esc(text){
