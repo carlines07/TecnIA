@@ -1,0 +1,18 @@
+export const glossary: { term: string; def: string }[] = [
+  { term: "Acumulación", def: "Clase de un fondo o ETF que reinvierte los dividendos o cupones en lugar de repartirlos." },
+  { term: "Bono", def: "Título de deuda a medio o largo plazo que paga intereses periódicos (cupones) y devuelve el nominal al vencimiento." },
+  { term: "Cupón", def: "Pago periódico de intereses que realiza un bono a su titular." },
+  { term: "Custodia", def: "Servicio de depósito y administración de valores. Algunas entidades cobran por él." },
+  { term: "Distribución", def: "Clase de un fondo o ETF que reparte periódicamente dividendos o cupones." },
+  { term: "Duración", def: "Medida de la sensibilidad del precio de un bono o ETF de bonos a los cambios en los tipos de interés." },
+  { term: "ETF", def: "Exchange Traded Fund. Fondo de inversión que cotiza en bolsa y suele replicar un índice." },
+  { term: "Letra del Tesoro", def: "Valor de deuda pública a corto plazo emitido al descuento: se compra por menos del nominal y se recibe el nominal al vencimiento." },
+  { term: "Nominal", def: "Valor facial de un título de deuda, el importe que se devuelve al vencimiento." },
+  { term: "Mercado secundario", def: "Mercado donde se compran y venden valores ya emitidos entre inversores." },
+  { term: "Spread", def: "Diferencia entre el precio de compra (ask) y el de venta (bid). Varía según la liquidez y las condiciones de mercado." },
+  { term: "Subasta", def: "Procedimiento por el que el Tesoro emite deuda pública y fija su precio a partir de las ofertas recibidas." },
+  { term: "TAE", def: "Tasa Anual Equivalente. Expresa el coste o rendimiento anual de un producto incluyendo intereses y ciertas comisiones." },
+  { term: "TER", def: "Total Expense Ratio. Gastos corrientes anuales de un fondo o ETF, expresados en porcentaje y descontados de su valor." },
+  { term: "Valor liquidativo", def: "Precio de cada participación de un fondo de inversión, calculado normalmente una vez al día." },
+  { term: "Vencimiento", def: "Fecha en la que el emisor devuelve el nominal de un título de deuda." },
+];
